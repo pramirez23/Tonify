@@ -18,9 +18,7 @@ class Api::UsersController < ApplicationController
       :email,
       :first_name,
       :last_name,
-      :birthday,
       :gender,
-      :country
     )
   end
 end
