@@ -9,6 +9,7 @@ import {
 import GreetingContainer from "./greeting/greeting_container";
 import LoginContainer from "./session/login_container";
 import SignupContainer from "./session/signup_container";
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
   <div>
@@ -16,9 +17,11 @@ const App = () => (
       <h1>Tonify</h1>
       <GreetingContainer />
     </header>
+    <Switch>
+      <AuthRoute path="/login" component={LoginContainer} />
+      <AuthRoute path="/signup" component={SignupContainer} />
 
-    <Route path="/login" component={LoginContainer} />
-    <Route path="/signup" component={SignupContainer} />
+    </Switch>
   </div>
 );
 
