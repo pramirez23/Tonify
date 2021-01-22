@@ -1,0 +1,98 @@
+#splash {
+  background-image: url("splash_background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-size: cover;
+  height: 944px;
+  width: auto;
+  text-align: center;
+}
+
+.splash-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  position: fixed; 
+  top: 0; 
+  width: 100%;
+}
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+ }
+
+.splash-logo {
+  height: 60px;
+  width: auto;
+}
+#tagline {
+  font-size: 100px;
+}
+
+#tagline-1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #34D360;
+  height: 150px;
+  text-align: center;
+  margin-top: 300px;
+  font-size: calc(80px + 1.5vw);
+}
+
+#tagline-2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #34D360;
+  height: 150px;
+  text-align: center;
+  margin-top: -39px;
+  font-size: calc(67px + 1.5vw);
+  margin-bottom: -24px;
+}
+
+#sub-tagline {
+  font-size: 18px;
+  font-weight: 100;
+  text-align: center;
+  color: #34D360;
+  letter-spacing: 0.1px;
+  margin-bottom: 36px;
+}
+
+#splash-demo-button {
+  border: 0px;
+  background-color: #34D360;
+  color: #2D4EB9;
+  border-radius: 26px;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 13px;
+  height: 47px;
+  width: 250px;
+  margin: 3px auto;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#splash-demo-button:hover {
+  background: #ffffff;
+}
+
+#splash-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}

@@ -7,7 +7,7 @@
   height: auto;
 }
 
-button:focus {
+button:focus, input {
   outline:0;
 }
 
