@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
 
@@ -53,14 +54,14 @@ class Login extends React.Component {
   render() { 
     return (
       <div className="login">
-        <h2>To continue, log in to Tonify.</h2>
+        <h2 className="session-form-heading">To continue, log in to Tonify.</h2>
         <button
           className="demo-button"
           onClick={ () => this.handleDemo() }>
           Log in as a Demo User
         </button>
         <div className="login-errors">{this.renderErrors()}</div>
-          <form onSubmit={this.handleSubmit}>
+          <form className="session-form" onSubmit={this.handleSubmit}>
             <label>Username
                 <input
                 type="text"
@@ -78,6 +79,10 @@ class Login extends React.Component {
               />
             </label>
             <button type="submit">Log In</button>
+            <p className="signup-link-heading">Don't have an account yet?</p>
+            <Link to="/signup">
+              <button id="sign-up" type="button">SIGN UP FOR TONIFY</button>
+            </Link>
           </form>
       </div>
     );

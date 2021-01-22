@@ -35,92 +35,87 @@ class Signup extends React.Component {
       .then(() => this.props.history.push('/library'));
   }
 
-  // renderErrors() {
-  //   const errors = this.props.errors.map((error, i) => (
-  //     <li key={i}>{error}</li>
-  //   ));
-
-  //   return (
-  //     <ul className="errors">
-  //       {errors}
-  //     </ul>
-  //   );
-  // }
-
   render() { 
     const errors = this.props.errors;
 
     return (
       <div className="signup">
+        <h2 className="session-form-heading">Sign up for free to start listening.</h2>
+          <form className="session-form" onSubmit={this.handleSubmit}>
 
-        <h2>Sign up for free to start listening.</h2>
-          <form onSubmit={this.handleSubmit}>
-            <label className="form-input-title">What's your email?
+            <div className="form-input-container">
+            <p className="form-prompt">What's your email?</p>
               <input
                 type="text"
                 value={this.props.email}
                 placeholder="Enter your email."
                 onChange={this.handleInput('email')}
+                className="signup-input"
               />
             <p className="error-message">{errors.email}</p>
-            </label>
-            <label className="form-input-title">What should we call you?
-              <input
-                type="text"
-                value={this.props.username}
-                placeholder="Enter a username."
-                onChange={this.handleInput('username')}
-              />
-              <p className={errors.username ? "error-message" : ""}>
-                  {errors.username ? errors.username : "This appears on your profile."}
-              </p>
-            </label>
-            <label className="form-input-title">Create a password
+            </div>
+
+            <div className="form-input-container">
+            <p className="form-prompt">Create a password</p>
               <input
                 type="password"
                 value={this.props.password}
                 placeholder="Create a password."
                 onChange={this.handleInput('password')}
+                className="signup-input"
               />
               <p className="error-message">{errors.password}</p>
-            </label>
-            <label className="form-input-title">What's your gender?
-              <div className="male">
-                <label className="gender-input-title">
-                  Male
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="M"
-                    onChange={this.handleInput("gender")}
-                  />
-                </label>
-              </div>
-              <div className="female">
-                <label className="gender-input-title">
-                  Female
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="F"
-                    onChange={this.handleInput("gender")}
-                  />
-                </label>
-              </div>
-              <div className="nonbinary">
-                <label className="gender-input-title">
-                  Non-binary
+            </div>
+
+            <div className="form-input-container">
+            <p className="form-prompt">What should we call you?</p>
+              <input
+                type="text"
+                value={this.props.username}
+                placeholder="Enter a username."
+                onChange={this.handleInput('username')}
+                className="signup-input"
+              />
+              <p className={errors.username ? "error-message" : "username-notice"}>
+                {errors.username ? errors.username : "This appears on your profile."}
+              </p>
+            </div>
+
+            <div className="form-input-container">
+              <p className="form-prompt">What's your gender?</p>
+              <div className="signup-radios">
+                  <label className="gender-radio">
                     <input
-                    type="radio"
-                    name="gender"
-                    value="NB"
-                    onChange={this.handleInput("gender")}
+                      type="radio"
+                      name="gender"
+                      value="M"
+                      onChange={this.handleInput("gender")}
+                      />
+                      Male
+                  </label>
+                  <label className="gender-radio">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="F"
+                      onChange={this.handleInput("gender")}
                     />
-                </label>
+                    Female
+                  </label>
+                  <label className="gender-radio">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="NB"
+                      onChange={this.handleInput("gender")}
+                    />
+                    Non-binary
+                  </label>
               </div>
-              <p className="error-message">{errors.gender}</p>
-            </label>
-            <button type="submit">Sign Up</button>
+                <p className="error-message">{errors.gender}</p>
+            </div>
+            <button id="submit-button" type="submit">SIGN UP</button>
+          <p id="login-redirect">Have an account? <Link to="/login">Log In</Link>.</p>
           </form>
       </div>
     );

@@ -1,0 +1,136 @@
+.signup {
+  text-align: center
+}
+
+.session-form-heading {
+  font-weight: 500;
+  font-size: 21px;
+  padding: 20px;
+  text-align: center;
+}
+
+.session-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input-container {
+  box-sizing: border-box;
+  width: 304px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 10px 0px 0px 0px;
+}
+
+.form-prompt {
+  box-sizing: border-box;
+  width: 59.73%;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+input[type="text"], input[type="password"] {
+  border: 1px solid #BDBDBD;
+  border-radius: 2px;
+  width: 298px;
+  height: 26px;
+  margin: 0 auto;
+  font-family: 'Rubik', sans-serif;
+  font-size: 9.5px;
+  padding-left: 5px;
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+  color: #757575;
+  font-size: 9.5px;
+  font-family: 'Rubik', sans-serif;
+  padding-left: 5px;
+  
+}
+
+.error-message {
+  box-sizing: border-box;
+  width: 59.73%;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: #e22235;
+  margin-top: 8px;
+}
+
+.username-notice {
+  box-sizing: border-box;
+  width: 59.73%;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  margin-top: 8px;
+}
+
+.signup-radios {
+  display: flex;
+  align-content: flex-start;
+}
+
+.gender-radio {
+  box-sizing: border-box;
+  width: 215px;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  margin-top: 11px;
+  margin-right: 0px;
+}
+
+label {
+  margin: 0px 0px 5px 2px;
+}
+
+input[type="radio"] {
+  margin-top: -2px;
+  margin-right: 9px;
+  margin-left: -1px;
+  vertical-align: middle;
+}
+
+#submit-button {
+  background-color: #1DB954;
+  color: white;
+  border: 0px;
+  border-radius: 19px;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 10px;
+  height: 36px;
+  width: 320px;
+  margin: 10px auto;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+#submit-button:hover {
+  transform: scale(1.02);
+  background: #22da62;
+}
+
+#login-redirect {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.24px;
+}
+
+#login-redirect > a:link {
+  color: #1DB954
+}
+
+#login-redirect > a:visited {
+  color: #10612d
+}
