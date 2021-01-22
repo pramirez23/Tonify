@@ -78,7 +78,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 
 .error-message {
   box-sizing: border-box;
-  width: 292px;
+  width: 450px;
   text-align: left;
   font-size: 15px;
   letter-spacing: 0.5px;
