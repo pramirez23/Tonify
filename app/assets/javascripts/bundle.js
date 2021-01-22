@@ -436,7 +436,8 @@ var Login = /*#__PURE__*/function (_React$Component) {
         type: "text",
         value: this.state.username,
         placeholder: "Username",
-        onChange: this.handleInput('username')
+        onChange: this.handleInput('username'),
+        className: this.props.errors[0] ? "input-error" : "login-input"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
@@ -445,7 +446,8 @@ var Login = /*#__PURE__*/function (_React$Component) {
         type: "password",
         placeholder: "Password",
         value: this.state.password,
-        onChange: this.handleInput('password')
+        onChange: this.handleInput('password'),
+        className: this.props.errors[0] ? "input-error" : "login-input"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         id: "login-button",
         type: "submit"
@@ -577,6 +579,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       country: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -642,7 +645,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         value: this.props.email,
         placeholder: "Enter your email.",
         onChange: this.handleInput('email'),
-        className: "signup-input"
+        className: errors.email ? "input-error" : "signup-input"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "error-message"
       }, errors.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -654,7 +657,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         value: this.props.password,
         placeholder: "Create a password.",
         onChange: this.handleInput('password'),
-        className: "signup-input"
+        className: errors.password ? "input-error" : "signup-input"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "error-message"
       }, errors.password)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -666,7 +669,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         value: this.props.username,
         placeholder: "Enter a username.",
         onChange: this.handleInput('username'),
-        className: "signup-input"
+        className: errors.username ? "input-error" : "signup-input"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: errors.username ? "error-message" : "username-notice"
       }, errors.username ? errors.username : "This appears on your profile.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

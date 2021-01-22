@@ -59,7 +59,7 @@ button:focus {
   margin-bottom: 7px;
 }
 
-input[type="text"], input[type="password"] {
+.signup-input, .login-input {
   border: 1px solid #BDBDBD;
   border-radius: 5px;
   width: 434px;
@@ -222,4 +222,15 @@ input[type="radio"] {
   letter-spacing: 0.15px;
   text-align: center;
   padding: 39px 0px 18px 0px;
+}
+
+.input-error {
+  border: 1px solid #E22235;
+  border-radius: 5px;
+  width: 434px;
+  height: 45px;
+  margin: 0 auto;
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  padding: 0px 0px 0px 10px;
 }

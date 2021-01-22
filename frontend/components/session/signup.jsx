@@ -17,6 +17,7 @@ class Signup extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   componentWillUnmount() {
@@ -46,14 +47,13 @@ class Signup extends React.Component {
 
   render() { 
     const errors = this.props.errors;
-
     return (
       <div className="signup">
         <img className="session-logo" src={window.tonifyBlackURL} />
         <h2 id="signup-form-heading">Sign up for free to start listening.</h2>
           
           <form className="session-form" onSubmit={this.handleSubmit}>
-            
+
             <div className="form-input-container">
             <p className="form-prompt">What's your email?</p>
               <input
@@ -61,7 +61,7 @@ class Signup extends React.Component {
                 value={this.props.email}
                 placeholder="Enter your email."
                 onChange={this.handleInput('email')}
-                className="signup-input"
+                className={errors.email ? "input-error" : "signup-input" }
               />
             <p className="error-message">{errors.email}</p>
             </div>
@@ -73,7 +73,7 @@ class Signup extends React.Component {
                 value={this.props.password}
                 placeholder="Create a password."
                 onChange={this.handleInput('password')}
-                className="signup-input"
+              className={errors.password ? "input-error" : "signup-input" }
               />
               <p className="error-message">{errors.password}</p>
             </div>
@@ -85,7 +85,7 @@ class Signup extends React.Component {
                 value={this.props.username}
                 placeholder="Enter a username."
                 onChange={this.handleInput('username')}
-                className="signup-input"
+                className={errors.username ?  "input-error" : "signup-input"}
               />
               <p className={errors.username ? "error-message" : "username-notice"}>
                 {errors.username ? errors.username : "This appears on your profile."}

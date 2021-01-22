@@ -42,14 +42,12 @@ class Login extends React.Component {
   render() { 
     return (
       <div className="login">
+
         <img className="session-logo" src={window.tonifyBlackURL} />
-
         <span id="header-border"></span>
-
         <h2 id="login-form-heading">To continue, log in to Tonify.</h2>
-  
         <div className="login-error-message">{this.props.errors[0]}</div>
-          
+
         <form className="session-form" onSubmit={this.handleSubmit}>
 
           <div className="form-input-container">
@@ -59,6 +57,7 @@ class Login extends React.Component {
                 value={this.state.username}
                 placeholder="Username"
                 onChange={this.handleInput('username')}
+                className={this.props.errors[0] ? "input-error" : "login-input"}
               />
           </div>
 
@@ -69,6 +68,7 @@ class Login extends React.Component {
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleInput('password')}
+                className={this.props.errors[0] ? "input-error" : "login-input"}
               />
           </div>
 
