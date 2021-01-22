@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "logoutCurrentUser": () => /* binding */ logoutCurrentUser,
 /* harmony export */   "signup": () => /* binding */ signup,
 /* harmony export */   "login": () => /* binding */ login,
+/* harmony export */   "loginDemo": () => /* binding */ loginDemo,
 /* harmony export */   "logout": () => /* binding */ logout
 /* harmony export */ });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
@@ -143,6 +144,13 @@ var login = function login(user) {
       dispatch(receiveCurrentUser(user));
     }, function (err) {
       dispatch(receiveErrors(err.responseJSON));
+    });
+  };
+};
+var loginDemo = function loginDemo(demoUser) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__.login(demoUser).then(function (demoUser) {
+      dispatch(receiveCurrentUser(demoUser));
     });
   };
 };
@@ -431,7 +439,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
         className: "form-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "form-prompt"
-      }, "Username"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+      }, "Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         type: "password",
         placeholder: "Password",
         value: this.state.password,
@@ -601,7 +609,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         username: "demo",
         password: "demopassword123"
       };
-      this.props.login(demo).then(function () {
+      this.props.loginDemo(demo).then(function () {
         return _this4.props.history.push('/library');
       });
     }
@@ -742,19 +750,9 @@ var mDTP = function mDTP(dispatch) {
     clearErrors: function clearErrors() {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.clearErrors)());
     },
-    login: function (_login) {
-      function login(_x) {
-        return _login.apply(this, arguments);
-      }
-
-      login.toString = function () {
-        return _login.toString();
-      };
-
-      return login;
-    }(function (user) {
-      return dispatch(login(user));
-    })
+    loginDemo: function loginDemo(user) {
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.loginDemo)(user));
+    }
   };
 };
 

@@ -60,7 +60,7 @@ class Login extends React.Component {
           </div>
 
           <div className="form-input-container">
-            <p className="form-prompt">Username</p>
+            <p className="form-prompt">Password</p>
                 <input
                 type="password"
                 placeholder="Password"

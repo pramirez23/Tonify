@@ -40,7 +40,7 @@ class Signup extends React.Component {
       username: "demo",
       password: "demopassword123"
     }
-    this.props.login(demo)
+    this.props.loginDemo(demo)
       .then(() => this.props.history.push('/library'));
   }
 

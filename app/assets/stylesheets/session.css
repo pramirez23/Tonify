@@ -2,6 +2,10 @@
   text-align: center
 }
 
+button:focus {
+  outline:0;
+}
+
 #signup-form-heading {
   font-weight: 500;
   font-size: 21px;
@@ -46,7 +50,7 @@ input[type="text"], input[type="password"] {
   border: 1px solid #BDBDBD;
   border-radius: 2px;
   width: 292px;
-  height: 26px;
+  height: 30px;
   margin: 0 auto;
   font-family: 'Rubik', sans-serif;
   font-size: 9.5px;
@@ -83,7 +87,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
   display: flex;
   align-content: flex-start;
   height: 13px;
-  margin: -4px 0px 0px 0px;
+  margin: -4px 0px 9px 0px;
 }
 
 .gender-radio {
