@@ -2,23 +2,36 @@
   text-align: center
 }
 
+.session-logo {
+  width: 150px; 
+  height: auto;
+}
+
 button:focus {
   outline:0;
 }
 
+#header-border {
+  border-bottom: 1px solid #BDBDBD;
+  display: block;
+  margin-top: 28px;
+}
+
 #signup-form-heading {
   font-weight: 500;
-  font-size: 21px;
+  font-size: 30px;
   padding: 20px;
   text-align: center;
+  margin: 13px auto;
 }
 
 #login-form-heading {
   font-weight: bold;
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 0.2px;
-  padding: 20px;
+  padding: 15px;
   text-align: center;
+  margin-top: 22px;
 }
 
 .session-form {
@@ -28,19 +41,19 @@ button:focus {
 
 .form-input-container {
   box-sizing: border-box;
-  width: 304px;
+  width: 450px;
   justify-content: center;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 0px 0px 12px 0px;
+  padding: 0px 0px 21px 0px;
 }
 
 .form-prompt {
   box-sizing: border-box;
-  width: 292px;
+  width: 290px;
   text-align: left;
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 0.5px;
   font-weight: 500;
   margin-bottom: 7px;
@@ -48,18 +61,18 @@ button:focus {
 
 input[type="text"], input[type="password"] {
   border: 1px solid #BDBDBD;
-  border-radius: 2px;
-  width: 292px;
-  height: 30px;
+  border-radius: 5px;
+  width: 434px;
+  height: 45px;
   margin: 0 auto;
   font-family: 'Rubik', sans-serif;
-  font-size: 9.5px;
+  font-size: 13px;
   padding: 0px 0px 0px 10px;
 }
 
 input[type="text"]::placeholder, input[type="password"]::placeholder {
   color: #757575;
-  font-size: 9px;
+  font-size: 13px;
   font-family: 'Rubik', sans-serif;  
 }
 
@@ -67,38 +80,49 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
   box-sizing: border-box;
   width: 292px;
   text-align: left;
-  font-size: 9px;
+  font-size: 15px;
   letter-spacing: 0.5px;
   color: #e22235;
   margin-top: 8px;
+}
+
+.login-error-message {
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  color: #e22235;
+  margin-top: 8px;
+  margin-bottom: 15px
 }
 
 .username-notice {
   box-sizing: border-box;
   width: 292px;
   text-align: left;
-  font-size: 9px;
-  letter-spacing: 0.5px;
+  font-size: 12px;
   font-weight: 400;
+  letter-spacing: 0.5px;
   margin-top: 8px;
+  margin-bottom: 5px;
 }
 
 .signup-radios {
   display: flex;
   align-content: flex-start;
   height: 13px;
-  margin: -4px 0px 9px 0px;
+  margin: -4px 0px 23px 0px;
 }
 
 .gender-radio {
   box-sizing: border-box;
-  width: 74px;
+  width: 90px;
   text-align: left;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   font-weight: 400;
-  margin-top: 11px;
-  margin-right: 0px;
+  margin-top: 15px;
+  margin-left: 4px;
 }
 
 label {
@@ -114,13 +138,13 @@ input[type="radio"] {
 
 
 #signup-submit-button, #demo-button, #login-button, #signup-button {
-  border-radius: 19px;
+  border-radius: 26px;
   font-family: 'Rubik', sans-serif;
   letter-spacing: 2px;
   font-weight: 500;
-  font-size: 9.5px;
-  height: 34px;
-  width: 320px;
+  font-size: 13px;
+  height: 47px;
+  width: 450px;
   margin: 3px auto;
   cursor: pointer;
   transition: all .2s ease-in-out;
@@ -140,7 +164,7 @@ input[type="radio"] {
 #signup-button {
   background-color: white;
   color: #616467;
-  border: 1.5px solid #616467;
+  border: 2px solid #616467;
 }
 
 #signup-button:hover {
@@ -157,17 +181,16 @@ input[type="radio"] {
   color: white;
 }
 
-
 #demo-button:hover {
   transform: scale(1.02);
   background: #4669b5;
 }
 
 #login-redirect {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.24px;
-  margin: 15px auto;
+  margin: 30px auto;
 }
 
 #login-redirect > a:link {
@@ -184,15 +207,19 @@ input[type="radio"] {
   color: #157938
 }
 
-#signup-link-heading {
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 0.15px;
-  text-align: center;
-  padding: 33px 0px 13px 0px;
+#bottom-border {
+  position: relative;
+  border-bottom: 1px solid #BDBDBD;
+  margin: auto;
+  width: 450px;
+  margin-top: 37px;
+  margin-bottom: -2px;
 }
 
-.session-logo {
-  width: 66px; 
-  height: auto;
+#signup-link-heading {
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.15px;
+  text-align: center;
+  padding: 39px 0px 18px 0px;
 }

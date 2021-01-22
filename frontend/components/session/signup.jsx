@@ -53,7 +53,7 @@ class Signup extends React.Component {
         <h2 id="signup-form-heading">Sign up for free to start listening.</h2>
           
           <form className="session-form" onSubmit={this.handleSubmit}>
-
+            
             <div className="form-input-container">
             <p className="form-prompt">What's your email?</p>
               <input

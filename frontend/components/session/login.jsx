@@ -43,9 +43,12 @@ class Login extends React.Component {
     return (
       <div className="login">
         <img className="session-logo" src={window.tonifyBlackURL} />
+
+        <span id="header-border"></span>
+
         <h2 id="login-form-heading">To continue, log in to Tonify.</h2>
   
-        <div className="error-message">{this.props.errors[0]}</div>
+        <div className="login-error-message">{this.props.errors[0]}</div>
           
         <form className="session-form" onSubmit={this.handleSubmit}>
 
@@ -76,6 +79,8 @@ class Login extends React.Component {
             onClick={() => this.handleDemo()}>
             LOG IN AS A DEMO USER
           </button>
+
+          <div id="bottom-border"></div>
 
           <p id="signup-link-heading">Don't have an account?</p>
 
