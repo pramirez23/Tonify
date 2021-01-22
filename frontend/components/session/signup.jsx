@@ -35,12 +35,23 @@ class Signup extends React.Component {
       .then(() => this.props.history.push('/library'));
   }
 
+  handleDemo(e) {
+    const demo = {
+      username: "demo",
+      password: "demopassword123"
+    }
+    this.props.login(demo)
+      .then(() => this.props.history.push('/library'));
+  }
+
   render() { 
     const errors = this.props.errors;
 
     return (
       <div className="signup">
-        <h2 className="session-form-heading">Sign up for free to start listening.</h2>
+        <img className="session-logo" src={window.tonifyBlackURL} />
+        <h2 id="signup-form-heading">Sign up for free to start listening.</h2>
+          
           <form className="session-form" onSubmit={this.handleSubmit}>
 
             <div className="form-input-container">
@@ -114,7 +125,14 @@ class Signup extends React.Component {
               </div>
                 <p className="error-message">{errors.gender}</p>
             </div>
-            <button id="submit-button" type="submit">SIGN UP</button>
+            <button id="signup-submit-button" type="submit">SIGN UP</button>
+
+            <button
+              id="demo-button"
+              onClick={() => this.handleDemo()}>
+              LOG IN AS A DEMO USER INSTEAD
+            </button>
+
           <p id="login-redirect">Have an account? <Link to="/login">Log In</Link>.</p>
           </form>
       </div>

@@ -1,10 +1,18 @@
-.signup {
+.signup, .login {
   text-align: center
 }
 
-.session-form-heading {
+#signup-form-heading {
   font-weight: 500;
   font-size: 21px;
+  padding: 20px;
+  text-align: center;
+}
+
+#login-form-heading {
+  font-weight: bold;
+  font-size: 10px;
+  letter-spacing: 0.2px;
   padding: 20px;
   text-align: center;
 }
@@ -21,12 +29,12 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 10px 0px 0px 0px;
+  padding: 0px 0px 12px 0px;
 }
 
 .form-prompt {
   box-sizing: border-box;
-  width: 59.73%;
+  width: 292px;
   text-align: left;
   font-size: 9px;
   letter-spacing: 0.5px;
@@ -37,25 +45,23 @@
 input[type="text"], input[type="password"] {
   border: 1px solid #BDBDBD;
   border-radius: 2px;
-  width: 298px;
+  width: 292px;
   height: 26px;
   margin: 0 auto;
   font-family: 'Rubik', sans-serif;
   font-size: 9.5px;
-  padding-left: 5px;
+  padding: 0px 0px 0px 10px;
 }
 
 input[type="text"]::placeholder, input[type="password"]::placeholder {
   color: #757575;
-  font-size: 9.5px;
-  font-family: 'Rubik', sans-serif;
-  padding-left: 5px;
-  
+  font-size: 9px;
+  font-family: 'Rubik', sans-serif;  
 }
 
 .error-message {
   box-sizing: border-box;
-  width: 59.73%;
+  width: 292px;
   text-align: left;
   font-size: 9px;
   letter-spacing: 0.5px;
@@ -65,7 +71,7 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 
 .username-notice {
   box-sizing: border-box;
-  width: 59.73%;
+  width: 292px;
   text-align: left;
   font-size: 9px;
   letter-spacing: 0.5px;
@@ -76,11 +82,13 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
 .signup-radios {
   display: flex;
   align-content: flex-start;
+  height: 13px;
+  margin: -4px 0px 0px 0px;
 }
 
 .gender-radio {
   box-sizing: border-box;
-  width: 215px;
+  width: 74px;
   text-align: left;
   font-size: 9px;
   letter-spacing: 0.5px;
@@ -100,37 +108,87 @@ input[type="radio"] {
   vertical-align: middle;
 }
 
-#submit-button {
-  background-color: #1DB954;
-  color: white;
-  border: 0px;
+
+#signup-submit-button, #demo-button, #login-button, #signup-button {
   border-radius: 19px;
   font-family: 'Rubik', sans-serif;
   letter-spacing: 2px;
-  font-weight: 700;
-  font-size: 10px;
-  height: 36px;
+  font-weight: 500;
+  font-size: 9.5px;
+  height: 34px;
   width: 320px;
-  margin: 10px auto;
+  margin: 3px auto;
   cursor: pointer;
   transition: all .2s ease-in-out;
 }
 
-#submit-button:hover {
+#signup-submit-button, #login-button {
+  border: 0px;
+  background-color: #1DB954;
+  color: white;
+}
+
+#signup-submit-button:hover, #login-button:hover {
   transform: scale(1.02);
-  background: #22da62;
+  background: #1ec95a;
+}
+
+#signup-button {
+  background-color: white;
+  color: #616467;
+  border: 1.5px solid #616467;
+}
+
+#signup-button:hover {
+  background-color: #616467;
+  color: white;
+  border: 1.5px solid #616467;
+  transform: scale(1.02);
+  transition: all .3s ease-in-out;
+}
+
+#demo-button {
+  border: 0px;
+  background-color: #3B5998;
+  color: white;
+}
+
+
+#demo-button:hover {
+  transform: scale(1.02);
+  background: #4669b5;
 }
 
 #login-redirect {
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.24px;
+  margin: 15px auto;
 }
 
 #login-redirect > a:link {
   color: #1DB954
 }
 
+#login-redirect > a:hover {
+  transform: scale(1.02);
+  transition: all .2s ease-in-out;
+  color: #1ec95a;
+}
+
 #login-redirect > a:visited {
-  color: #10612d
+  color: #157938
+}
+
+#signup-link-heading {
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.15px;
+  text-align: center;
+  padding: 33px 0px 13px 0px;
+}
+
+.session-logo {
+  width: 66px; 
+  height: auto;
 }

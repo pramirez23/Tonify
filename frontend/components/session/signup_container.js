@@ -11,7 +11,8 @@ const mSTP = (state) => {
 
 const mDTP = dispatch => ({
   signup: formUser => dispatch(signup(formUser)),
-  clearErrors: () => dispatch(clearErrors())
+  clearErrors: () => dispatch(clearErrors()),
+  login: (user) => dispatch(login(user))
 });
 
 export default connect(mSTP, mDTP)(Signup)

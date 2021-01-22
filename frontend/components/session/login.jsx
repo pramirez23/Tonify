@@ -39,51 +39,51 @@ class Login extends React.Component {
       .then(() => this.props.history.push('/library'));
   }
 
-  renderErrors() {
-    const errors = this.props.errors.map( (error, i) => (
-      <li key={i}>{error}</li>
-    ));
-
-    return (
-      <ul className="errors">
-        {errors}
-      </ul>
-    );
-  }
-
   render() { 
     return (
       <div className="login">
-        <h2 className="session-form-heading">To continue, log in to Tonify.</h2>
-        <button
-          className="demo-button"
-          onClick={ () => this.handleDemo() }>
-          Log in as a Demo User
-        </button>
-        <div className="login-errors">{this.renderErrors()}</div>
-          <form className="session-form" onSubmit={this.handleSubmit}>
-            <label>Username
+        <img className="session-logo" src={window.tonifyBlackURL} />
+        <h2 id="login-form-heading">To continue, log in to Tonify.</h2>
+  
+        <div className="error-message">{this.props.errors[0]}</div>
+          
+        <form className="session-form" onSubmit={this.handleSubmit}>
+
+          <div className="form-input-container">
+            <p className="form-prompt">Username</p>
                 <input
                 type="text"
                 value={this.state.username}
                 placeholder="Username"
                 onChange={this.handleInput('username')}
               />
-            </label>
-            <label>Password
+          </div>
+
+          <div className="form-input-container">
+            <p className="form-prompt">Username</p>
                 <input
                 type="password"
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleInput('password')}
               />
-            </label>
-            <button type="submit">Log In</button>
-            <p className="signup-link-heading">Don't have an account yet?</p>
-            <Link to="/signup">
-              <button id="sign-up" type="button">SIGN UP FOR TONIFY</button>
-            </Link>
-          </form>
+          </div>
+
+          <button id="login-button" type="submit">LOG IN</button>
+
+          <button
+            id="demo-button"
+            onClick={() => this.handleDemo()}>
+            LOG IN AS A DEMO USER
+          </button>
+
+          <p id="signup-link-heading">Don't have an account?</p>
+
+          <Link to="/signup">
+            <button id="signup-button" type="button">SIGN UP FOR TONIFY</button>
+          </Link>
+
+        </form>
       </div>
     );
   }
