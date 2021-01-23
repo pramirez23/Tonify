@@ -5,6 +5,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
   const sessionLinks = () => {
 
     const handleDemo = (e) => {
+      e.preventDefault();
       const demo = {
         username: "demo",
         password: "demopassword123"
@@ -38,7 +39,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
           
           <button
             id="splash-demo-button"
-            onClick={() => handleDemo()}>
+            onClick={handleDemo}>
             LOG IN AS A DEMO USER
           </button>
         </main>

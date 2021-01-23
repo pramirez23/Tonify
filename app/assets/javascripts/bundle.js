@@ -716,6 +716,7 @@ var Splash = function Splash(_ref) {
 
   var sessionLinks = function sessionLinks() {
     var handleDemo = function handleDemo(e) {
+      e.preventDefault();
       var demo = {
         username: "demo",
         password: "demopassword123"
@@ -766,9 +767,7 @@ var Splash = function Splash(_ref) {
       id: "sub-tagline"
     }, "Millions of songs. No credit card needed."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       id: "splash-demo-button",
-      onClick: function onClick() {
-        return handleDemo();
-      }
+      onClick: handleDemo
     }, "LOG IN AS A DEMO USER")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("footer", {
       id: "splash-footer"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
