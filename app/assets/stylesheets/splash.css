@@ -46,6 +46,7 @@
   text-align: center;
   padding: 16px 0px;
 }
+
 .splash-link {
   margin-right: 7px;
   width: 64px;
@@ -184,6 +185,7 @@ a:hover {
 #tech-stack-list li {
   padding: 27px 0px 0px 0px;
   text-align: center;
+  transition: 0.3s;
 }
 
 #tech-stack-list li:hover, #made-with-love:hover {
@@ -193,7 +195,7 @@ a:hover {
 }
 
 #made-with-love {
-margin-right: 0px;
+  margin-right: 0px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -204,4 +206,5 @@ margin-right: 0px;
   margin-top: 100px;
   width: 130px;
   height: 40px;
+  transition: 0.3s;
 }
