@@ -17,12 +17,12 @@ const Splash = ({ currentUser, logout, login, history }) => {
       <div className="splash-container">
         <nav className="splash-nav">
           <img className="splash-logo" src={window.tonifyWhiteURL} />
-          <ul class="splash-links-container">
-            <li><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
-            <li><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
-            <li><span> | </span></li>
-            <li><Link to="/signup">Sign Up</Link></li>
-            <li><Link to="/login">Log in</Link></li>
+          <ul className="splash-links-list">
+            <li className="splash-link"><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
+            <li className="splash-link"><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
+            <li className="splash-link"><span> | </span></li>
+            <li className="splash-link"><Link to="/signup">Sign up</Link></li>
+            <li className="splash-link"><Link to="/login">Log in</Link></li>
           </ul>
         </nav>
 
@@ -46,13 +46,14 @@ const Splash = ({ currentUser, logout, login, history }) => {
         <footer id="splash-footer">
           <img className="splash-logo" src={window.tonifyWhiteURL} />
           <p id="tech-stack-title">Tech Stack</p>
-          <ul id="Tech Stack">
+          <ul id="tech-stack">
             <li>HTML 3</li>
             <li>CSS 5</li>
             <li>JavaScript</li>
             <li>React</li>
             <li>Redux</li>
             <li>Rails</li> 
+            <li>PostgreSQL</li> 
           </ul>
         </footer>
       </div>

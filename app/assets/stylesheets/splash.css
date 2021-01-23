@@ -20,6 +20,39 @@
   position: fixed; 
   top: 0; 
   width: 100%;
+  height: 80px;
+}
+
+.splash-links-list {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 18px 392px 0px 0px;
+  margin: 0;
+}
+
+.splash-link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+}
+
+.splash-link a {
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: #34D360; 
+  cursor: pointer;  
 }
 
 .splash-container {
@@ -30,9 +63,11 @@
  }
 
 .splash-logo {
-  height: 60px;
+  height: 41px;
   width: auto;
+  padding: 18px 0px 0px 380px;
 }
+
 #tagline {
   font-size: 100px;
 }
