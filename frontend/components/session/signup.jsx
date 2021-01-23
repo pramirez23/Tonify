@@ -9,6 +9,7 @@ class Signup extends React.Component {
       username: "",
       password: "",
       email: "",
+      email_confirmation: "",
       first_name: "",
       last_name: "",
       birthday: "",
@@ -26,7 +27,7 @@ class Signup extends React.Component {
 
   handleInput(field) {
     return (e) => {
-      this.setState({ [field]: e.target.value });
+      this.setState({ [field]: e.currentTarget.value });
     }
   }
 
@@ -66,7 +67,20 @@ class Signup extends React.Component {
                 onChange={this.handleInput('email')}
                 className={errors.email ? "input-error" : "signup-input" }
               />
+
             <p className="error-message">{errors.email}</p>
+            </div>
+
+            <div className="form-input-container">
+              <p className="form-prompt">Confirm your email</p>
+              <input
+                type="text"
+                value={this.props.email}
+                placeholder="Enter your email again."
+                onChange={this.handleInput('email_confirmation')}
+                className={errors.email_confirmation ? "input-error" : "signup-input"}
+              />
+              <p className="error-message">{errors.email_confirmation}</p>
             </div>
 
             <div className="form-input-container">
@@ -91,7 +105,7 @@ class Signup extends React.Component {
                 className={errors.username ?  "input-error" : "signup-input"}
               />
               <p className={errors.username ? "error-message" : "username-notice"}>
-                {errors.username ? errors.username : "This appears on your profile."}
+              {errors.username ? errors.username : "This appears on your profile."}
               </p>
             </div>
 

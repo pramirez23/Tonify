@@ -17,7 +17,9 @@ const Splash = ({ currentUser, logout, login, history }) => {
     return (
       <div className="splash-container">
         <nav className="splash-nav">
-          <img id="splash-nav-logo" src={window.tonifyWhiteURL} />
+          <Link to="/">
+            <img id="splash-nav-logo" src={window.tonifyWhiteURL} />
+          </Link>
           <ul className="splash-links-list">
             <li className="splash-link"><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
             <li className="splash-link"><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
@@ -45,7 +47,9 @@ const Splash = ({ currentUser, logout, login, history }) => {
         </main>
 
         <footer id="splash-footer">
-          <img id="splash-footer-logo" src={window.tonifyWhiteURL} />
+          <Link to="/">
+            <img id="splash-footer-logo" src={window.tonifyWhiteURL} />
+          </Link>
             <div id="tech-stack-list">
               <p id="tech-stack-title">TECH STACK</p>
               <ul id="tech-stack">

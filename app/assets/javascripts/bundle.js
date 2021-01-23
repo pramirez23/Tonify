@@ -498,6 +498,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       username: "",
       password: "",
       email: "",
+      email_confirmation: "",
       first_name: "",
       last_name: "",
       birthday: "",
@@ -520,7 +521,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        _this2.setState(_defineProperty({}, field, e.target.value));
+        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
       };
     }
   }, {
@@ -576,6 +577,18 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "error-message"
       }, errors.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "form-input-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "form-prompt"
+      }, "Confirm your email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        value: this.props.email,
+        placeholder: "Enter your email again.",
+        onChange: this.handleInput('email_confirmation'),
+        className: errors.email_confirmation ? "input-error" : "signup-input"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "error-message"
+      }, errors.email_confirmation)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "form-prompt"
@@ -730,10 +743,12 @@ var Splash = function Splash(_ref) {
       className: "splash-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
       className: "splash-nav"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      to: "/"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       id: "splash-nav-logo",
       src: window.tonifyWhiteURL
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
       className: "splash-links-list"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       className: "splash-link"
@@ -770,10 +785,12 @@ var Splash = function Splash(_ref) {
       onClick: handleDemo
     }, "LOG IN AS A DEMO USER")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("footer", {
       id: "splash-footer"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      to: "/"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       id: "splash-footer-logo",
       src: window.tonifyWhiteURL
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       id: "tech-stack-list"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
       id: "tech-stack-title"

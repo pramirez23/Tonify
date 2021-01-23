@@ -2,7 +2,9 @@ class User < ApplicationRecord
   
   validates :email, :username, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
-  validates :gender, :password_digest, :session_token, presence: true
+  validates :gender, :password_digest, :session_token, presence: true 
+  validates :email, confirmation: { message: "does not match"}
+  validates :email_confirmation, presence: true
 
   attr_reader :password
 
