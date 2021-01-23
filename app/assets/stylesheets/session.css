@@ -21,7 +21,7 @@ button:focus, input {
 }
 
 #header-border {
-  border-bottom: 1px solid #BDBDBD;
+  border-bottom: 1px solid rgba(0,0,0, 0.14);
   display: block;
   margin-top: 9px;
 }
@@ -218,7 +218,7 @@ input[type="radio"] {
 
 #bottom-border {
   position: relative;
-  border-bottom: 1px solid #BDBDBD;
+  border-bottom: 1px solid rgba(0,0,0, 0.14);
   margin: auto;
   width: 450px;
   margin-top: 37px;
