@@ -43,7 +43,10 @@ class Login extends React.Component {
     return (
       <div className="login">
 
-        <img className="session-logo" src={window.tonifyBlackURL} />
+        <Link to="/">
+          <img id="login-logo" src={window.tonifyBlackURL} />
+        </Link>
+
         <span id="header-border"></span>
         <h2 id="login-form-heading">To continue, log in to Tonify.</h2>
         <div className="login-error-message">{this.props.errors[0]}</div>

@@ -2,9 +2,18 @@
   text-align: center
 }
 
-.session-logo {
-  width: 150px; 
+#signup-logo {
+  width: 140px;
   height: auto;
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
+
+#login-logo {
+  width: 195px;
+  height: auto;
+  margin-top: 23px;
+  margin-bottom: 13px;
 }
 
 button:focus, input {
@@ -14,7 +23,7 @@ button:focus, input {
 #header-border {
   border-bottom: 1px solid #BDBDBD;
   display: block;
-  margin-top: 28px;
+  margin-top: 9px;
 }
 
 #signup-form-heading {

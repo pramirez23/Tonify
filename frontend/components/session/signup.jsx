@@ -49,7 +49,9 @@ class Signup extends React.Component {
     const errors = this.props.errors;
     return (
       <div className="signup">
-        <img className="session-logo" src={window.tonifyBlackURL} />
+        <Link to="/">
+          <img id="signup-logo" src={window.tonifyBlackURL} />      
+        </Link>
         <h2 id="signup-form-heading">Sign up for free to start listening.</h2>
           
           <form className="session-form" onSubmit={this.handleSubmit}>
@@ -73,7 +75,7 @@ class Signup extends React.Component {
                 value={this.props.password}
                 placeholder="Create a password."
                 onChange={this.handleInput('password')}
-              className={errors.password ? "input-error" : "signup-input" }
+                className={errors.password ? "input-error" : "signup-input" }
               />
               <p className="error-message">{errors.password}</p>
             </div>
