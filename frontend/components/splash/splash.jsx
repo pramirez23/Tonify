@@ -16,7 +16,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
     return (
       <div className="splash-container">
         <nav className="splash-nav">
-          <img className="splash-logo" src={window.tonifyWhiteURL} />
+          <img id="splash-nav-logo" src={window.tonifyWhiteURL} />
           <ul className="splash-links-list">
             <li className="splash-link"><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
             <li className="splash-link"><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
@@ -44,17 +44,24 @@ const Splash = ({ currentUser, logout, login, history }) => {
         </main>
 
         <footer id="splash-footer">
-          <img className="splash-logo" src={window.tonifyWhiteURL} />
-          <p id="tech-stack-title">Tech Stack</p>
-          <ul id="tech-stack">
-            <li>HTML 3</li>
-            <li>CSS 5</li>
-            <li>JavaScript</li>
-            <li>React</li>
-            <li>Redux</li>
-            <li>Rails</li> 
-            <li>PostgreSQL</li> 
-          </ul>
+          <img id="splash-footer-logo" src={window.tonifyWhiteURL} />
+            <div id="tech-stack-list">
+              <p id="tech-stack-title">TECH STACK</p>
+              <ul id="tech-stack">
+                <li>HTML 3</li>
+                <li>CSS 5</li>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>Redux</li>
+                <li>Rails</li> 
+                <li>PostgreSQL</li> 
+              </ul>
+            </div>
+
+          <div id="made-with-love">
+            <p>Made with <i className="fas fa-heart"></i></p>
+            <p>by Paul Ramirez</p>
+          </div>
         </footer>
       </div>
     )
