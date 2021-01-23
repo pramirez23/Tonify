@@ -12,7 +12,7 @@
 .splash-nav {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: black;
   box-sizing: border-box;
   padding: 0;
@@ -23,19 +23,35 @@
   height: 80px;
 }
 
+.splash-logo {
+  height: 41px;
+  width: auto;
+  padding: 18px 0px 0px 80px;
+  float: left;
+}
+
 .splash-links-list {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
-  padding: 18px 392px 0px 0px;
+  padding: 17px 70px 0px 0px;
   margin: 0;
 }
 
-.splash-link {
+.splash-link, .splash-link-break {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 16px 0px;
+}
+.splash-link {
+  margin-right: 7px;
+  width: 64px;
+}
+
+.splash-link-break {
+  width: 30px;
+  margin-right: 5px;
 }
 
 .splash-link a {
@@ -62,11 +78,6 @@ a:hover {
   overflow: hidden;
  }
 
-.splash-logo {
-  height: 41px;
-  width: auto;
-  padding: 18px 0px 0px 380px;
-}
 
 #tagline {
   font-size: 100px;
@@ -127,6 +138,7 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   background-color: black;
+  color: white;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
