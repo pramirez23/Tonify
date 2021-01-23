@@ -21,6 +21,7 @@
   top: 0; 
   width: 100%;
   height: 80px;
+  z-index: 1;
 }
 
 #splash-nav-logo {
@@ -79,9 +80,15 @@ a:hover {
   overflow: hidden;
 }
 
-
 #tagline {
   font-size: 100px;
+  transition: transform .3s;
+}
+
+#tagline:hover {
+  transform: scale(1.04);
+  color: white;
+  cursor: default;
 }
 
 #tagline-1 {
