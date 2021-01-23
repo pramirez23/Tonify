@@ -92,6 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "LOGOUT_CURRENT_USER": () => /* binding */ LOGOUT_CURRENT_USER,
 /* harmony export */   "RECEIVE_SESSION_ERRORS": () => /* binding */ RECEIVE_SESSION_ERRORS,
 /* harmony export */   "CLEAR_ERRORS": () => /* binding */ CLEAR_ERRORS,
+/* harmony export */   "CLEAR_FORM_INPUTS": () => /* binding */ CLEAR_FORM_INPUTS,
 /* harmony export */   "receiveErrors": () => /* binding */ receiveErrors,
 /* harmony export */   "clearErrors": () => /* binding */ clearErrors,
 /* harmony export */   "receiveCurrentUser": () => /* binding */ receiveCurrentUser,
@@ -107,6 +108,7 @@ var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 var RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 var CLEAR_ERRORS = "CLEAR_ERRORS";
+var CLEAR_FORM_INPUTS = "CLEAR_FORM_INPUTS";
 var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_SESSION_ERRORS,
@@ -326,6 +328,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
     value: function handleDemo(e) {
       var _this4 = this;
 
+      e.preventDefault();
       var demo = {
         username: "demo",
         password: "demopassword123"
@@ -337,8 +340,6 @@ var Login = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "login"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -380,9 +381,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
         type: "submit"
       }, "LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         id: "demo-button",
-        onClick: function onClick() {
-          return _this5.handleDemo();
-        }
+        onClick: this.handleDemo
       }, "LOG IN AS A DEMO USER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "bottom-border"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
@@ -539,19 +538,18 @@ var Signup = /*#__PURE__*/function (_React$Component) {
     value: function handleDemo(e) {
       var _this4 = this;
 
+      e.preventDefault();
       var demo = {
         username: "demo",
         password: "demopassword123"
       };
-      this.props.loginDemo(demo).then(function () {
+      this.props.login(demo).then(function () {
         return _this4.props.history.push('/library');
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
-
       var errors = this.props.errors;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "signup"
@@ -635,9 +633,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         type: "submit"
       }, "SIGN UP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         id: "demo-button",
-        onClick: function onClick() {
-          return _this5.handleDemo();
-        }
+        onClick: this.handleDemo
       }, "LOG IN AS A DEMO USER INSTEAD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         id: "login-redirect"
       }, "Have an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -686,8 +682,8 @@ var mDTP = function mDTP(dispatch) {
     clearErrors: function clearErrors() {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.clearErrors)());
     },
-    loginDemo: function loginDemo(user) {
-      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.loginDemo)(user));
+    login: function login(user) {
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__.login)(user));
     }
   };
 };

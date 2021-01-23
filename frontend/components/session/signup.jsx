@@ -37,11 +37,12 @@ class Signup extends React.Component {
   }
 
   handleDemo(e) {
+    e.preventDefault();
     const demo = {
       username: "demo",
       password: "demopassword123"
     }
-    this.props.loginDemo(demo)
+    this.props.login(demo)
       .then(() => this.props.history.push('/library'));
   }
 
@@ -131,7 +132,7 @@ class Signup extends React.Component {
 
             <button
               id="demo-button"
-              onClick={() => this.handleDemo()}>
+              onClick={this.handleDemo}>
               LOG IN AS A DEMO USER INSTEAD
             </button>
 
