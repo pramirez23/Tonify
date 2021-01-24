@@ -48,7 +48,7 @@ button:focus, input {
   flex-direction: column;
 }
 
-.form-input-container {
+.form-input-container, .policies {
   box-sizing: border-box;
   width: 450px;
   justify-content: center;
@@ -58,7 +58,7 @@ button:focus, input {
   padding: 0px 0px 21px 0px;
 }
 
-.form-prompt {
+.form-prompt, #birthday-prompt {
   box-sizing: border-box;
   width: 290px;
   text-align: left;
@@ -68,8 +68,38 @@ button:focus, input {
   margin-bottom: 7px;
 }
 
-.signup-input, .login-input {
+#birthday-prompt {
+  box-sizing: border-box;
+  width: 450px;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0px 0px 21px 0px;
+}
+
+.day-input, .year-input, .day-input-error, .year-input-error {
   border: 1px solid #BDBDBD;
+  border-radius: 5px;
+  margin: 0 auto;
+  height: 45px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  padding: 0px 0px 0px 10px;
+  margin-left: 27px;
+}
+
+.day-input, .day-input-error {
+  width: 77px;
+}
+
+.year-input, .year-input-error {
+  width: 100px;
+}
+
+.day-input-error, .year-input-error, .input-error {
+  border: 1px solid #E22235;
+}
+
+.signup-input, .login-input, .input-error {
   border-radius: 5px;
   width: 434px;
   height: 45px;
@@ -77,6 +107,28 @@ button:focus, input {
   font-family: 'Rubik', sans-serif;
   font-size: 13px;
   padding: 0px 0px 0px 10px;
+}
+
+.signup-input, .login-input {
+  border: 1px solid #BDBDBD;
+}
+
+select, .month-error {
+  border-radius: 5px;
+  height: 47px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  color: #757575;
+  padding: 0px 0px 0px 8px;
+  width: 194px;
+}
+
+select {
+  border: 1px solid #BDBDBD;
+}
+
+.month-error {
+  border: 1px solid #E22235;
 }
 
 input[type="text"]::placeholder, input[type="password"]::placeholder {
@@ -143,6 +195,13 @@ input[type="radio"] {
   margin-right: 9px;
   margin-left: -1px;
   vertical-align: middle;
+}
+
+.birthday-container {
+  box-sizing: border-box;
+  width: 450px;
+  margin: 0 auto;
+  padding: 0px 0px 21px 0px;
 }
 
 
@@ -233,13 +292,7 @@ input[type="radio"] {
   padding: 39px 0px 18px 0px;
 }
 
-.input-error {
-  border: 1px solid #E22235;
-  border-radius: 5px;
-  width: 434px;
-  height: 45px;
-  margin: 0 auto;
-  font-family: 'Rubik', sans-serif;
+.policies {
   font-size: 13px;
-  padding: 0px 0px 0px 10px;
+  color: #757575;
 }

@@ -2,6 +2,21 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+const months = {
+  "January": "01",
+  "February": "02",
+  "March": "03",
+  "April": "04",
+  "May": "05",
+  "June": "06",
+  "July": "07",
+  "August": "08",
+  "September": "09",
+  "October": "10",
+  "November": "11",
+  "December": "12"
+}
+
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -10,11 +25,10 @@ class Signup extends React.Component {
       password: "",
       email: "",
       email_confirmation: "",
-      first_name: "",
-      last_name: "",
-      birthday: "",
+      month: "",
+      day: "",
+      year: "",
       gender: "",
-      country: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,13 +41,29 @@ class Signup extends React.Component {
 
   handleInput(field) {
     return (e) => {
-      this.setState({ [field]: e.currentTarget.value });
+      this.setState({ [field]: e.target.value });
     }
+  }
+  
+  organizedState() {
+    const { username, password, email, email_confirmation, month, day, year, gender } = this.state
+   
+    const newState = { 
+      username,
+      password,
+      email,
+      email_confirmation,
+      birthday: `${year}-${month}-${day}`,
+      gender
+    }
+
+    return newState;
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.signup(this.state)
+
+    this.props.signup(this.organizedState())
       .then(() => this.props.history.push('/library'));
   }
 
@@ -46,6 +76,7 @@ class Signup extends React.Component {
     this.props.login(demo)
       .then(() => this.props.history.push('/library'));
   }
+
 
   render() { 
     const errors = this.props.errors;
@@ -109,6 +140,38 @@ class Signup extends React.Component {
               </p>
             </div>
 
+              <p id="birthday-prompt">What's your date of birth?</p>
+              <div className="birthday-container">
+                <select
+                  defaultValue="Month"
+                  onChange={this.handleInput('month')}
+                  id="month" placeholder="Month"
+                  className={errors.birthday ? "month-error" : "" }
+                >
+                  <option disabled>Month</option>
+                  {Object.keys(months).map( 
+                    (month) => <option key={month} value={months[month]}>{month}</option>
+                  )}
+                </select>
+
+                <input
+                  type="text"
+                  value={this.props.day}
+                  placeholder="DD"
+                  onChange={this.handleInput('day')}
+                  className={errors.birthday ? "day-input-error" : "day-input"}
+                />
+
+                <input
+                  type="text"
+                  value={this.props.year}
+                  placeholder="YYYY"
+                  onChange={this.handleInput('year')}
+                  className={errors.birthday ? "year-input-error" : "year-input"}
+                />
+              <p className="error-message">{errors.birthday}</p>
+            </div>
+
             <div className="form-input-container">
               <p className="form-prompt">What's your gender?</p>
               <div className="signup-radios">
@@ -142,6 +205,17 @@ class Signup extends React.Component {
               </div>
                 <p className="error-message">{errors.gender}</p>
             </div>
+
+            <div className="policies">
+              <p>
+                By clicking on Sign up, you agree to Spotify's Terms and Conditions of Use.
+              </p>
+
+              <p>
+                To learn more about how Spotify collects, uses, shares and protects your personal data please read Spotify's Privacy Policy.
+              </p>
+            </div>
+
             <button id="signup-submit-button" type="submit">SIGN UP</button>
 
             <button

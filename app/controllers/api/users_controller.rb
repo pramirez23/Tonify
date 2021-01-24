@@ -9,6 +9,7 @@ class Api::UsersController < ApplicationController
       render json: {
         email: @user.errors.full_messages_for(:email),
         email_confirmation: @user.errors.full_messages_for(:email_confirmation),
+        birthday: @user.errors.full_messages_for(:birthday),
         username: @user.errors.full_messages_for(:username),
         password: @user.errors.full_messages_for(:password),
         gender: @user.errors.full_messages_for(:gender)
@@ -24,9 +25,8 @@ class Api::UsersController < ApplicationController
       :password,
       :email,
       :email_confirmation,
-      :first_name,
-      :last_name,
       :gender,
+      :birthday
     )
   end
   

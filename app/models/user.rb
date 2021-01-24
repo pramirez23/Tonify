@@ -2,9 +2,10 @@ class User < ApplicationRecord
   
   validates :email, :username, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
-  validates :gender, :password_digest, :session_token, presence: true 
+  validates :gender, :birthday, :password_digest, :session_token, presence: true 
   validates :email, confirmation: { message: "does not match"}
   validates :email_confirmation, presence: true
+  validate :valid_birthday, if: proc { |user| user.birthday.present? }
 
   attr_reader :password
 
@@ -27,13 +28,17 @@ class User < ApplicationRecord
 
   def reset_session_token!
     self.session_token = User.generate_session_token
-    self.save!
+    self.save!(:validate => false)
     self.session_token
   end
 
   def self.generate_session_token
     SecureRandom::urlsafe_base64
   end 
+
+  def valid_birthday
+    errors.add(:birthday, "is not a valid date") if birthday > Date.today || !birthday
+  end
 
   private
 

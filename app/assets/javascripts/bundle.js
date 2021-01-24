@@ -482,6 +482,20 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var months = {
+  "January": "01",
+  "February": "02",
+  "March": "03",
+  "April": "04",
+  "May": "05",
+  "June": "06",
+  "July": "07",
+  "August": "08",
+  "September": "09",
+  "October": "10",
+  "November": "11",
+  "December": "12"
+};
 
 var Signup = /*#__PURE__*/function (_React$Component) {
   _inherits(Signup, _React$Component);
@@ -499,11 +513,10 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       password: "",
       email: "",
       email_confirmation: "",
-      first_name: "",
-      last_name: "",
-      birthday: "",
-      gender: "",
-      country: ""
+      month: "",
+      day: "",
+      year: "",
+      gender: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_this));
@@ -521,8 +534,30 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       return function (e) {
-        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+        _this2.setState(_defineProperty({}, field, e.target.value));
       };
+    }
+  }, {
+    key: "organizedState",
+    value: function organizedState() {
+      var _this$state = this.state,
+          username = _this$state.username,
+          password = _this$state.password,
+          email = _this$state.email,
+          email_confirmation = _this$state.email_confirmation,
+          month = _this$state.month,
+          day = _this$state.day,
+          year = _this$state.year,
+          gender = _this$state.gender;
+      var newState = {
+        username: username,
+        password: password,
+        email: email,
+        email_confirmation: email_confirmation,
+        birthday: "".concat(year, "-").concat(month, "-").concat(day),
+        gender: gender
+      };
+      return newState;
     }
   }, {
     key: "handleSubmit",
@@ -530,7 +565,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.props.signup(this.state).then(function () {
+      this.props.signup(this.organizedState()).then(function () {
         return _this3.props.history.push('/library');
       });
     }
@@ -612,7 +647,38 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         className: errors.username ? "input-error" : "signup-input"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: errors.username ? "error-message" : "username-notice"
-      }, errors.username ? errors.username : "This appears on your profile.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, errors.username ? errors.username : "This appears on your profile.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        id: "birthday-prompt"
+      }, "What's your date of birth?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "birthday-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("select", {
+        defaultValue: "Month",
+        onChange: this.handleInput('month'),
+        id: "month",
+        placeholder: "Month",
+        className: errors.birthday ? "month-error" : ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+        disabled: true
+      }, "Month"), Object.keys(months).map(function (month) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("option", {
+          key: month,
+          value: months[month]
+        }, month);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        value: this.props.day,
+        placeholder: "DD",
+        onChange: this.handleInput('day'),
+        className: errors.birthday ? "day-input-error" : "day-input"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        value: this.props.year,
+        placeholder: "YYYY",
+        onChange: this.handleInput('year'),
+        className: errors.birthday ? "year-input-error" : "year-input"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "error-message"
+      }, errors.birthday)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "form-input-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "form-prompt"
@@ -641,7 +707,9 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         onChange: this.handleInput("gender")
       }), "Non-binary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "error-message"
-      }, errors.gender)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      }, errors.gender)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "policies"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By clicking on Sign up, you agree to Spotify's Terms and Conditions of Use."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "To learn more about how Spotify collects, uses, shares and protects your personal data please read Spotify's Privacy Policy.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         id: "signup-submit-button",
         type: "submit"
       }, "SIGN UP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
