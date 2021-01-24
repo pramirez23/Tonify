@@ -40,21 +40,19 @@
   margin: 0;
 }
 
-.splash-link, .splash-link-break {
+.splash-link-break {
   display: block;
   color: white;
   text-align: center;
   padding: 16px 0px;
+  width: 30px;
+  margin-left: 2px;
 }
 
 .splash-link {
-  margin-right: 7px;
-  width: 64px;
-}
-
-.splash-link-break {
-  width: 30px;
-  margin-right: 5px;
+  width: 69px;
+  padding: 14px 4px 0px 4px;
+  text-align: center;
 }
 
 .splash-link a {
@@ -158,8 +156,7 @@ a:hover {
 #splash-footer-logo {
   height: 41px;
   width: auto;
-  padding: 86px 0px 0px 7px;
-  float: left;
+  padding: 86px 0px 0px 19px;
   margin-right: 0;
 }
 
@@ -173,8 +170,8 @@ a:hover {
 }
 
 #tech-stack-list {
-  padding: 0px 0px 0px 0px;
-  margin-right: 0px;
+  padding: 0px 8px 0px 0px;
+  margin-right: 16px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -196,7 +193,7 @@ a:hover {
 }
 
 #made-with-love {
-  margin-right: 0px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -208,4 +205,5 @@ a:hover {
   width: 130px;
   height: 40px;
   transition: 0.3s;
+}
 }
