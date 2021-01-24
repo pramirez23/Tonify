@@ -21,8 +21,8 @@ const Splash = ({ currentUser, logout, login, history }) => {
             <img id="splash-nav-logo" src={window.tonifyWhiteURL} />
           </Link>
           <ul className="splash-links-list">
-            <li className="splash-link"><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
-            <li className="splash-link"><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
+            <li id="github-splash" className="splash-link"><a href="https://github.com/pramirez23/Tonify" target="_blank">GitHub</a></li>
+            <li id="linkedin-splash" className="splash-link"><a href="https://www.linkedin.com/in/paul-ramirez-432786152/" target="_blank">LinkedIn</a></li>
             <li className="splash-link-break"><span> | </span></li>
             <li className="splash-link"><Link to="/signup">Sign up</Link></li>
             <li className="splash-link"><Link to="/login">Log in</Link></li>

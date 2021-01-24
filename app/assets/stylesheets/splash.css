@@ -64,6 +64,14 @@
   font-size: 15px;
 }
 
+#github-splash {
+  margin-right: 6px;
+}
+
+#linkedin-splash {
+  margin-right: 3px;
+}
+
 a:visited {
   color: white;
 }
@@ -171,7 +179,7 @@ a:hover {
 
 #tech-stack-list {
   padding: 0px 8px 0px 0px;
-  margin-right: 16px;
+  margin-right: -3px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

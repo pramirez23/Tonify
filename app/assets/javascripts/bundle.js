@@ -829,11 +829,13 @@ var Splash = function Splash(_ref) {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
       className: "splash-links-list"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      id: "github-splash",
       className: "splash-link"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "https://github.com/pramirez23/Tonify",
       target: "_blank"
     }, "GitHub")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      id: "linkedin-splash",
       className: "splash-link"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
       href: "https://www.linkedin.com/in/paul-ramirez-432786152/",
