@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  artist_id: 1
+  title: MyString
+  year: 1
+  single: false
+  genre: MyString
+  duration: 1
+
+two:
+  artist_id: 1
+  title: MyString
+  year: 1
+  single: false
+  genre: MyString
+  duration: 1
