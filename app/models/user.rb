@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  
   validates :email, :username, presence: true, uniqueness: true
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :gender, :birthday, :password_digest, :session_token, presence: true 
@@ -45,5 +44,4 @@ class User < ApplicationRecord
   def ensure_session_token
     self.session_token ||= User.generate_session_token
   end
-  
 end
