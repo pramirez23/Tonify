@@ -141,6 +141,13 @@ class Signup extends React.Component {
             </div>
 
               <p id="birthday-prompt">What's your date of birth?</p>
+
+              <div className="birthday-labels">
+                <p id="month-label">Month</p>
+                <p id="day-label">Day</p>
+                <p id="year-label">Year</p>
+              </div>
+
               <div className="birthday-container">
                 <select
                   defaultValue="Month"
@@ -207,12 +214,12 @@ class Signup extends React.Component {
             </div>
 
             <div className="policies">
-              <p>
-                By clicking on Sign up, you agree to Spotify's Terms and Conditions of Use.
+              <p id="toc">
+                By clicking on Sign up, you agree to Tonify's Terms and Conditions of Use.
               </p>
 
               <p>
-                To learn more about how Spotify collects, uses, shares and protects your personal data please read Spotify's Privacy Policy.
+                To learn more about how Tonify collects, uses, shares and protects your personal data please read Tonify's Privacy Policy.
               </p>
             </div>
 

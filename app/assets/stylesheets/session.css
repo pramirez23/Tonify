@@ -204,6 +204,30 @@ input[type="radio"] {
   padding: 0px 0px 21px 0px;
 }
 
+.birthday-labels {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  box-sizing: border-box;
+  width: 450px;
+  margin: 0 auto;
+  letter-spacing: 0.5px;
+  font-size: 13px;
+  margin-bottom: 13px;
+  margin-top: -7px;
+}
+
+#month-label {
+  margin-left: -87px;
+}
+
+#day-label {
+  margin-right: -87px;
+}
+
+#year-label {
+  margin-right: -11px;
+}
 
 #signup-submit-button, #demo-button, #login-button, #signup-button {
   border-radius: 26px;
@@ -259,6 +283,7 @@ input[type="radio"] {
   font-weight: 400;
   letter-spacing: 0.24px;
   margin: 30px auto;
+  margin-bottom: 150px;
 }
 
 #login-redirect > a:link {
@@ -293,6 +318,11 @@ input[type="radio"] {
 }
 
 .policies {
-  font-size: 13px;
+  font-size: 12.1px;
   color: #757575;
+  letter-spacing: 0.5px;
+}
+
+#toc {
+  margin-bottom: 10px;
 }
