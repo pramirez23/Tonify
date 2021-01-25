@@ -151,6 +151,10 @@ div#login-error-container {
   margin-top: -19px;
 }
 
+div#login-error-pending {
+  margin-top: 33px;
+}
+
 .login-error-message {
   box-sizing: border-box;
   /* text-align: center; */

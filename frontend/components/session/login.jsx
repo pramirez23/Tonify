@@ -52,7 +52,7 @@ class Login extends React.Component {
         <h2 id="login-form-heading">To continue, log in to Tonify.</h2>
        
         <div id="login-error-container">
-          {this.props.errors[0] ? <div className="login-error-message">{this.props.errors[0]}</div> : null}
+          {this.props.errors[0] ? <div className="login-error-message">{this.props.errors[0]}</div> : <div id="login-error-pending"></div>}
         </div>
 
         <form className="session-form" onSubmit={this.handleSubmit}>
