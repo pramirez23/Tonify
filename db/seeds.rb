@@ -8,7 +8,8 @@
 
 # Album Seed
 album1 = Album.create!(title: "Coloring Book", year: 2016, single: false, genre: "Hip hop", duration: 3434)
-
+album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
+album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
 
@@ -27,3 +28,33 @@ song11 = Song.create!(title: "How Great (feat. Jay Electronica and my cousin Nic
 song12 = Song.create!(title: "Smoke Break (feat. Future)", track_num: 12, duration: 226, album_id: album1.id)
 song13 = Song.create!(title: "Finish Line / Drown (feat. T-Pain, Kirk Franklin, Eryn Allen Kane and Noname)", track_num: 13, duration: 406, album_id: album1.id)
 song14 = Song.create!(title: "Blessings (feat. Ty Dolla Sign, Raury, BJ the Chicago Kid and Anderson Paak)", track_num: 14, duration: 230, album_id: album1.id)
+
+song1_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3') 
+song2_audio = open('ttps://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3') 
+song3_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3') 
+song4_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/04+-+DRAM+Sings+Special.mp3') 
+song5_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/05+-+Blessings.mp3') 
+song6_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/06+-+Same+Drugs.mp3') 
+song7_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/07+-+Mixtape+feat+Young+Thug+and+Lil+Yachty.mp3') 
+song8_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/08+-+Angels+feat+Saba.mp3') 
+song9_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/09+-+Luke+Jam+feat+Justin+Bieber+and+Towkio.mp3') 
+song10_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/10+-+All+Night+feat+Knox+Fortune.mp3') 
+song11_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/11+-+How+Great+feat+Jay+Electronica+and+My+Cousin+Nicole.mp3') 
+song12_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/12+-+Smoke+Break+feat+Future.mp3') 
+song13_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3') 
+song14_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/14+-+Blessings+(Explicit+Version).mp3') 
+
+song1.audio_file.attach(io: song1_audio, filename: '01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3')
+song2.audio_file.attach(io: song2_audio, filename: '02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3')
+song3.audio_file.attach(io: song3_audio, filename: '03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3')
+song4.audio_file.attach(io: song4_audio, filename: '04+-+DRAM+Sings+Special.mp3')
+song5.audio_file.attach(io: song5_audio, filename: '05+-+Blessings.mp3')
+song6.audio_file.attach(io: song6_audio, filename: '06+-+Same+Drugs.mp3')
+song7.audio_file.attach(io: song7_audio, filename: '07+-+Mixtape+feat+Young+Thug+and+Lil+Yachty.mp3')
+song8.audio_file.attach(io: song8_audio, filename: '08+-+Angels+feat+Saba.mp3')
+song9.audio_file.attach(io: song9_audio, filename: '09+-+Luke+Jam+feat+Justin+Bieber+and+Towkio.mp3')
+song10.audio_file.attach(io: song10_audio, filename: '10+-+All+Night+feat+Knox+Fortune.mp3')
+song11.audio_file.attach(io: song11_audio, filename: '11+-+How+Great+feat+Jay+Electronica+and+My+Cousin+Nicole.mp3')
+song12.audio_file.attach(io: song12_audio, filename: '12+-+Smoke+Break+feat+Future.mp3')
+song13.audio_file.attach(io: song13_audio, filename: '13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3')
+song14.audio_file.attach(io: song14_audio, filename: '14+-+Blessings+(Explicit+Version).mp3')

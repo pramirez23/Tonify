@@ -3,7 +3,7 @@ class Album < ApplicationRecord
   
   has_many :likes, as: :likable
   
-  has_one_attached :photo
+  has_one_attached :cover_art
 
   belongs_to :artist,
     primary_key: :id,
