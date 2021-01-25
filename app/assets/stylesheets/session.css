@@ -147,14 +147,23 @@ input[type="text"]::placeholder, input[type="password"]::placeholder {
   margin-top: 8px;
 }
 
+div#login-error-container {
+  margin-top: -19px;
+}
+
 .login-error-message {
   box-sizing: border-box;
-  text-align: center;
-  font-size: 15px;
+  /* text-align: center; */
+  font-size: 11px;
   letter-spacing: 0.5px;
-  color: #e22235;
+  color: white;
   margin-top: 8px;
-  margin-bottom: 15px
+  background: #E22235;
+  margin-bottom: 20px;
+  margin: 18px auto;
+  width: 450px;
+  height: 42px;
+  padding: 15px;
 }
 
 .username-notice {
