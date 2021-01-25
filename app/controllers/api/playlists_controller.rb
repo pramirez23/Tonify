@@ -1,5 +1,4 @@
 class Api::PlaylistsController < ApplicationController
-  
   def index
   end
   
@@ -14,5 +13,4 @@ class Api::PlaylistsController < ApplicationController
 
   def destroy
   end
-  
 end

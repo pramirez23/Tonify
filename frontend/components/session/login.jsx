@@ -79,7 +79,7 @@ class Login extends React.Component {
           <button id="login-button" type="submit">LOG IN</button>
 
           <button
-            id="demo-button"
+            id="demo-button-login"
             onClick={this.handleDemo}>
             LOG IN AS A DEMO USER
           </button>

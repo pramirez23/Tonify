@@ -10,8 +10,13 @@
 album1 = Album.create!(title: "Coloring Book", year: 2016, single: false, genre: "Hip hop", duration: 3434)
 album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
+
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
+artist1_portrait = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/profile/chance_profile.jpg')
+artist1_banner = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/banner/chance_banner.jpg')
+artist1.photos.attach(io: artist1_portrait, filename: 'chance_profile.jpg')
+artist1.photos.attach(io: artist1_banner, filename: 'chance_banner.jpg')
 
 # Song Seed
 song1 = Song.create!(title: "All We Got (feat. Kanye West and Chicago Children's Choir", track_num: 1, duration: 203, album_id: album1.id)

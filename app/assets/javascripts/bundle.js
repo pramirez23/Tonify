@@ -380,7 +380,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
         id: "login-button",
         type: "submit"
       }, "LOG IN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        id: "demo-button",
+        id: "demo-button-login",
         onClick: this.handleDemo
       }, "LOG IN AS A DEMO USER"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "bottom-border"
@@ -723,7 +723,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
         id: "signup-submit-button",
         type: "submit"
       }, "SIGN UP"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        id: "demo-button",
+        id: "demo-button-signup",
         onClick: this.handleDemo
       }, "LOG IN AS A DEMO USER INSTEAD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         id: "login-redirect"
