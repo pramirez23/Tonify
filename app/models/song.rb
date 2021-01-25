@@ -3,6 +3,8 @@ class Song < ApplicationRecord
   
   has_many :likes, as: :likable
 
+  has_one_attached :audio_file
+
   belongs_to :album,
     primary_key: :id,
     foreign_key: :song_id,
