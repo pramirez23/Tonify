@@ -1170,6 +1170,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  // import { signup, login, logout } from "./actions/session_actions"
+// import { fetchPlaylist, fetchPlaylists, createPlaylist, updatePlaylist, deletePlaylist, addSong, removeSong } from "./util/playlist_api_util"
+// const playlist1 = {
+//   user_id: 1,
+//   name: "Second Playlist",
+//   private: false,
+//   description: nil
+// }
+// const updatedPlaylist1 = {
+//   id: 1,
+//   user_id: 1,
+//   name: "I'VE UPDATED!",
+//   private: false,
+//   description: "This wasn't here before .__."
+// }
 
 document.addEventListener("DOMContentLoaded", function () {
   // TESTING START
@@ -1179,6 +1193,13 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.store = store;
   // window.getState = store.getState;
   // window.dispatch = store.dispatch;
+  // window.fetchPlaylist = fetchPlaylist;
+  // window.fetchPlaylists = fetchPlaylists;
+  // window.createPlaylist = createPlaylist;
+  // window.updatePlaylist = updatePlaylist;
+  // window.deletePlaylist = deletePlaylist;
+  // window.addSong = addSong;
+  // window.removeSong = removeSong;
   // TESTING END
   var store;
 

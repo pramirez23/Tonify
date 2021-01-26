@@ -20,7 +20,7 @@ export const receivePlaylist = playlist => {
   }
 };
 
-export const removePlaylist = id => {
+export const removePlaylist = () => {
   return {
     type: REMOVE_PLAYLIST
   }
@@ -33,10 +33,10 @@ export const receivePlaylist = playlist => {
   }
 };
 
-export const receivePlaylistErrors = playlists => {
+export const receivePlaylistErrors = errors => {
   return {
-    type: RECEIVE_PLAYLISTS,
-    playlists
+    type: RECEIVE_PLAYLIST_ERRORS,
+    errors
   }
 };
 
