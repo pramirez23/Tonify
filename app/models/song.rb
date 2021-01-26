@@ -3,7 +3,7 @@ class Song < ApplicationRecord
   
   has_many :likes, as: :likable
 
-  has_one_attached :audio_file
+  has_one_attached :audio_file, dependent: :destroy
 
   belongs_to :album,
     primary_key: :id,
@@ -14,4 +14,7 @@ class Song < ApplicationRecord
     primary_key: :id,
     foreign_key: :song_id,
     class_name: :PlaylistSong
+
+  has_one :artist, through: :album
+  has_many :playlists, through: :playlist_songs
 end
