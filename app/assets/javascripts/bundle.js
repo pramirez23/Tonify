@@ -92,7 +92,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "LOGOUT_CURRENT_USER": () => /* binding */ LOGOUT_CURRENT_USER,
 /* harmony export */   "RECEIVE_SESSION_ERRORS": () => /* binding */ RECEIVE_SESSION_ERRORS,
 /* harmony export */   "CLEAR_ERRORS": () => /* binding */ CLEAR_ERRORS,
-/* harmony export */   "CLEAR_FORM_INPUTS": () => /* binding */ CLEAR_FORM_INPUTS,
 /* harmony export */   "receiveErrors": () => /* binding */ receiveErrors,
 /* harmony export */   "clearErrors": () => /* binding */ clearErrors,
 /* harmony export */   "receiveCurrentUser": () => /* binding */ receiveCurrentUser,
@@ -108,7 +107,6 @@ var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 var LOGOUT_CURRENT_USER = 'LOGOUT_CURRENT_USER';
 var RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
 var CLEAR_ERRORS = "CLEAR_ERRORS";
-var CLEAR_FORM_INPUTS = "CLEAR_FORM_INPUTS";
 var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_SESSION_ERRORS,

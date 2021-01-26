@@ -3,9 +3,8 @@ class Api::PlaylistSongsController < ApplicationController
 
   def create
     @playlist_song = PlaylistSong.new(playlist_song_params)
-    @playlist.user_id = current_user.id
 
-    if @playlist.save
+    if @playlist_song.save
       render json: ['Added to playlist']
     else
       render json: @playlist_song.errors.full_messages, status: 422
