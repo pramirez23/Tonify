@@ -1,10 +1,9 @@
 class Api::SessionsController < ApplicationController
 
   def create
-    
     username = params[:user][:username]
     password = params[:user][:password]
-``
+
     @user = User.find_by_credentials(username, password)
 
     if @user
@@ -26,5 +25,4 @@ class Api::SessionsController < ApplicationController
       render json: ["There is no user logged in."], status: 404
     end
   end 
-
 end

@@ -9,13 +9,13 @@ require 'open-uri'
 
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
-artist1_portrait = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/profile/chance_profile.jpg')
+artist1_portrait = open('https://tonify-dev.s3.Songamazonaws.com/artist_photos/Chance+the+Rapper/profile/chance_profile.jpg')
 artist1_banner = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/banner/chance_banner.jpg')
 artist1.photos.attach(io: artist1_portrait, filename: 'chance_profile.jpg')
 artist1.photos.attach(io: artist1_banner, filename: 'chance_banner.jpg')
 
 # Album Seed
-album1 = Album.create!(title: "Coloring Book", artist:"Chance the Rapper", year: 2016, single: false, genre: "Hip hop", duration: 3434)
+album1 = Album.create!(title: "Coloring Book", artist: artist1, year: 2016, single: false, genre: "Hip hop", duration: 3434)
 album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
@@ -36,7 +36,7 @@ song13 = Song.create!(title: "Finish Line / Drown (feat. T-Pain, Kirk Franklin, 
 song14 = Song.create!(title: "Blessings (feat. Ty Dolla Sign, Raury, BJ the Chicago Kid and Anderson Paak)", track_num: 14, duration: 230, album_id: album1.id)
 
 song1_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3') 
-song2_audio = open('ttps://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3') 
+song2_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3') 
 song3_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3') 
 song4_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/04+-+DRAM+Sings+Special.mp3') 
 song5_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/05+-+Blessings.mp3') 

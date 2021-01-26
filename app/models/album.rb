@@ -1,6 +1,6 @@
 class Album < ApplicationRecord
-  validates :title, :year, :artist_id, :single, :genre, :duration, presence: true
-  
+  validates :title, :year, :artist_id, :genre, :duration, presence: true
+  validates :single, presence: true, allow_blank: true, inclusion: { in: [true, false] }
   has_many :likes, as: :likable
   
   has_one_attached :cover_art
@@ -10,8 +10,5 @@ class Album < ApplicationRecord
     foreign_key: :artist_id,
     class_name: :Artist
 
-  has_many :songs,
-    primary_key: :id,
-    foreign_key: :album_id,
-    class_name: :Song
+  has_many :songs, dependent: :destroy
 end
