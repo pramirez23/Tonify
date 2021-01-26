@@ -5,11 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-# Album Seed
-album1 = Album.create!(title: "Coloring Book", year: 2016, single: false, genre: "Hip hop", duration: 3434)
-album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
-album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
+require 'open-uri'
 
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
@@ -17,6 +13,11 @@ artist1_portrait = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chanc
 artist1_banner = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/banner/chance_banner.jpg')
 artist1.photos.attach(io: artist1_portrait, filename: 'chance_profile.jpg')
 artist1.photos.attach(io: artist1_banner, filename: 'chance_banner.jpg')
+
+# Album Seed
+album1 = Album.create!(title: "Coloring Book", artist:"Chance the Rapper", year: 2016, single: false, genre: "Hip hop", duration: 3434)
+album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
+album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
 # Song Seed
 song1 = Song.create!(title: "All We Got (feat. Kanye West and Chicago Children's Choir", track_num: 1, duration: 203, album_id: album1.id)
