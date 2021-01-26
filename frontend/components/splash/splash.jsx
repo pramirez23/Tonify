@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 const Splash = ({ currentUser, logout, login, history }) => {
-  const sessionLinks = () => {
+  const splashContent = () => {
 
     const handleDemo = (e) => {
       e.preventDefault();
@@ -80,7 +80,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
     </div>
   );
 
-  return currentUser ? personalGreeting() : sessionLinks();
+  return currentUser ? personalGreeting() : splashContent();
 };
 
 

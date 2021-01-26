@@ -809,7 +809,7 @@ var Splash = function Splash(_ref) {
       login = _ref.login,
       history = _ref.history;
 
-  var sessionLinks = function sessionLinks() {
+  var splashContent = function splashContent() {
     var handleDemo = function handleDemo(e) {
       e.preventDefault();
       var demo = {
@@ -893,7 +893,7 @@ var Splash = function Splash(_ref) {
     }, "Log Out"));
   };
 
-  return currentUser ? personalGreeting() : sessionLinks();
+  return currentUser ? personalGreeting() : splashContent();
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Splash);
