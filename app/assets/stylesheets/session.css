@@ -306,19 +306,20 @@ input[type="radio"] {
   margin-bottom: 150px;
 }
 
-#login-redirect > a:link {
-  color: #1DB954
+#login-redirect a:link {
+  color: #1bb14f
 }
 
-#login-redirect > a:hover {
+#login-redirect a:visited {
+  color: #1bb14f
+}
+
+#login-redirect a:hover {
   transform: scale(1.02);
   transition: all .2s ease-in-out;
   color: #1ec95a;
 }
 
-#login-redirect > a:visited {
-  color: #157938
-}
 
 #bottom-border {
   position: relative;

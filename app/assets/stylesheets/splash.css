@@ -76,7 +76,7 @@ a:visited {
   color: white;
 }
 
-a:hover {
+.splash-links-list a:hover {
   color: #34D360; 
   cursor: pointer;  
 }

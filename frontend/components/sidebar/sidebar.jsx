@@ -34,14 +34,47 @@ class Sidebar extends React.Component {
 
     return (
       <div className="user-data-directory">
-        <button onClick={this.handleCreate}>
-            <i className="fas fa-plus-square"></i>
-            <p>Create Playlist</p>
-        </button> 
+        <Link to="/">
+          <img id="sidebar-logo" src={window.tonifyWhiteURL} />
+        </Link>
 
+        <div className="sidebar-directory">
+          <button className="sidebar-button" onClick={() => this.props.history.push('/')}>
+              <i className="medium material-icons">home</i>
+              <p>Home</p>
+          </button>
+
+          <button className="sidebar-button" onClick={() => this.props.history.push('/search')}>
+              <i className="medium material-icons">search</i>
+              <p>Search</p>
+          </button>
+
+          <button className="sidebar-button" onClick={() => this.props.history.push('/library')}>
+              <i className="medium material-icons">library_music</i>
+              <p>Your Library</p>
+          </button>
+        </div>
+
+
+        <div className="library-buttons">
+          <span id="sidebar-divider">PLAYLISTS</span>
+          <button className="library-button" onClick={this.handleCreate}>
+              <i id="plus-square" className="fas fa-plus-square"></i>
+              <p>Create Playlist</p>
+          </button> 
+
+
+          <button className="library-button" onClick={() => this.props.history.push('/library/songs')}>
+            <img id="liked-songs-icon" src={window.likedSongsIcon} />
+            <p id="liked-">Liked Songs</p>
+          </button> 
+        </div>
+
+        <div id="line-break"></div>
+        
         <ul className="playlist-links">
           {userPlaylists.slice(0).reverse().map(playlist =>
-              <li key={playlist.id}>
+              <li className="playlist-link"key={playlist.id}>
                 <Link to={`/playlists/${playlist.id}`}>
                   <div className="sidebar-playlist-item">
                     {playlist.name}
