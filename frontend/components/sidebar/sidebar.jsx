@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -14,15 +15,15 @@ class Sidebar extends React.Component {
 
   handleCreate(e) {
     e.preventDefault();
-    const userPlaylistLength = Object.values(this.props.playlists).length
+    const userPlaylists = Object.values(this.props.playlists)
     const newPlaylist = {
         user_id: this.props.currentUser,
-        name: `My Playlist #${userPlaylistLength + 1}`,
+        name: `My Playlist #${userPlaylists.length + 1}`,
         private: false
     }
     this.props.createPlaylist(newPlaylist)
-      .then((newPlaylist) => this.props.history.push(`/playlists/${newPlaylist.id}`));
-  }
+      .then(() => this.props.history.push(`/playlists/${this.props.lastPlaylist}`));
+  };
 
   render() {
     // console.log(this.props.playlists)
@@ -33,13 +34,12 @@ class Sidebar extends React.Component {
 
     return (
       <div className="user-data-directory">
-
         <button onClick={this.handleCreate}>
             <i className="fas fa-plus-square"></i>
             <p>Create Playlist</p>
         </button> 
 
-        <ul>
+        <ul className="playlist-links">
           {userPlaylists.slice(0).reverse().map(playlist =>
               <li key={playlist.id}>
                 <Link to={`/playlists/${playlist.id}`}>
@@ -50,10 +50,9 @@ class Sidebar extends React.Component {
               </li>
           )}
         </ul>
-        
       </div>
     );
   }
 }
  
-export default Sidebar;
+export default withRouter(Sidebar);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import Main from '../main/Main'
 
 const Splash = ({ currentUser, logout, login, history }) => {
@@ -12,7 +13,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
         password: "demopassword123"
       }
       login(demo)
-        .then(() => history.push('/library'));
+        .then(() => history.push('/library/playlists'));
     }
 
     return (
@@ -87,4 +88,4 @@ const Splash = ({ currentUser, logout, login, history }) => {
 };
 
 
-export default Splash;
+export default withRouter(Splash);

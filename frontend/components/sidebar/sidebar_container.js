@@ -7,7 +7,8 @@ const mSTP = (state, ownProps) => {
   const { playlists } = state.entities;
   return ({
     playlists,
-    currentUser: currentUser
+    currentUser: currentUser,
+    lastPlaylist: Object.keys(playlists).slice(-1)[0]
   });
 };
 
