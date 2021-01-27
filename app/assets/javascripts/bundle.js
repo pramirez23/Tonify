@@ -962,9 +962,13 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Sidebar);
 
   function Sidebar(props) {
+    var _this;
+
     _classCallCheck(this, Sidebar);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.handleCreate = _this.handleCreate.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Sidebar, [{
@@ -973,21 +977,45 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       this.props.fetchPlaylists();
     }
   }, {
+    key: "handleCreate",
+    value: function handleCreate(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var userPlaylistLength = Object.values(this.props.playlists).length;
+      var newPlaylist = {
+        user_id: this.props.currentUser,
+        name: "My Playlist #".concat(userPlaylistLength + 1),
+        "private": false
+      };
+      this.props.createPlaylist(newPlaylist).then(function (newPlaylist) {
+        return _this2.props.history.push("/playlists/".concat(newPlaylist.id));
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this3 = this;
 
       // console.log(this.props.playlists)
       var playlistIndex = this.props.playlists;
       var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
-        return playlist.user_id === _this.props.currentUser;
+        return playlist.user_id === _this3.props.currentUser;
       });
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, userPlaylists.map(function (playlist) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-data-directory"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        onClick: this.handleCreate
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fas fa-plus-square"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Create Playlist")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, userPlaylists.slice(0).reverse().map(function (playlist) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
           key: playlist.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
           to: "/playlists/".concat(playlist.id)
-        }, playlist.name));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "sidebar-playlist-item"
+        }, playlist.name)));
       })));
     }
   }]);
@@ -1030,6 +1058,9 @@ var mDTP = function mDTP(dispatch) {
   return {
     fetchPlaylists: function fetchPlaylists() {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.fetchPlaylists)());
+    },
+    createPlaylist: function createPlaylist(playlist) {
+      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.createPlaylist)(playlist));
     }
   };
 };

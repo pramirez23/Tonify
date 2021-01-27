@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Sidebar from "./sidebar"
-import { fetchPlaylists } from "../../actions/playlist_actions"
+import { createPlaylist, fetchPlaylists } from "../../actions/playlist_actions"
 
 const mSTP = (state, ownProps) => {
   const currentUser = state.session.id;
@@ -13,8 +13,9 @@ const mSTP = (state, ownProps) => {
 
 const mDTP = dispatch => {
   return {
-    fetchPlaylists: () => dispatch(fetchPlaylists())
+    fetchPlaylists: () => dispatch(fetchPlaylists()),
+    createPlaylist: (playlist) => dispatch(createPlaylist(playlist))
   }
 };
 
-export default connect(mSTP, mDTP)(Sidebar);
+export default connect(mSTP, mDTP)(Sidebar); 
