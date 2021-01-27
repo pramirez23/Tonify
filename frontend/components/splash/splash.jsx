@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import Main from '../main/Main'
 
 const Splash = ({ currentUser, logout, login, history }) => {
   const splashContent = () => {
@@ -73,14 +74,16 @@ const Splash = ({ currentUser, logout, login, history }) => {
   }
 
 
-  const personalGreeting = () => (
+  const mainContent = () => {
+    return (
     <div>
-      <h2>Welcome back to Tonify, {currentUser.username}!</h2>
+      <Main history={history} location={location}/>
       <button onClick={logout}>Log Out</button>
     </div>
-  );
+    )
+  };
 
-  return currentUser ? personalGreeting() : splashContent();
+  return currentUser ? mainContent() : splashContent();
 };
 
 

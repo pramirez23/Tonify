@@ -26,13 +26,6 @@ export const removePlaylist = () => {
   }
 };
 
-export const receivePlaylist = playlist => {
-  return {
-    type: RECEIVE_PLAYLIST,
-    playlist
-  }
-};
-
 export const receivePlaylistErrors = errors => {
   return {
     type: RECEIVE_PLAYLIST_ERRORS,
@@ -45,6 +38,20 @@ export const clearPlaylistErrors = () => {
     type: CLEAR_PLAYLIST_ERRORS
   }
 };
+
+export const fetchPlaylists = () => dispatch => {
+  return PlaylistAPIUtil.fetchPlaylists()
+    .then(
+      playlists => dispatch(receivePlaylists(playlists))
+    )
+}
+
+export const fetchPlaylist = id => dispatch => {
+  return PlaylistAPIUtil.fetchPlaylist(id)
+    .then(
+      playlist => dispatch(receivePlaylist(playlist))
+    )
+}
 
 export const createPlaylist = playlist => dispatch => {
   return PlaylistAPIUtil.createPlaylist(playlist)

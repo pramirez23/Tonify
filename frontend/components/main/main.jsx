@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+import SideBarContainer from '../sidebar/sidebar_container'
 import { logout } from '../../actions/session_actions';
 
-const main = (props) => {
-
+const Main = (props) => {
   return (
-    <div id="main-page">
-      <NavBarContainer />
+    <div id="main">
+      {/* <NavBarContainer /> */}
       <SideBarContainer />
-      <PlayBarContainer />
+      {/* <PlayBarContainer /> */}
     </div>
   )
 }
+
+export default Main;

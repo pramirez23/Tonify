@@ -64,7 +64,7 @@ class Signup extends React.Component {
     e.preventDefault();
 
     this.props.signup(this.organizedState())
-      .then(() => this.props.history.push('/library'));
+      .then(() => this.props.history.push('/library/playlists'));
   }
 
   handleDemo(e) {

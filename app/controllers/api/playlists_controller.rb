@@ -3,7 +3,7 @@ class Api::PlaylistsController < ApplicationController
   
   def index
     @playlists = current_user.playlists
-    render 'api/playlists/index'
+    render :index
   end
   
   def create
@@ -34,7 +34,13 @@ class Api::PlaylistsController < ApplicationController
 
   def destroy
     @playlist = current_user.playlists.find(params[:id])
-    @playlist.destroy
+
+    if @playlist
+      @playlist.destroy
+      render :index
+    else
+      render json: @playlist.errors.full_messages, status: 404
+    end
   end
 
   private
