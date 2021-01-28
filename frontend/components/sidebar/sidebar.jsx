@@ -34,7 +34,7 @@ class Sidebar extends React.Component {
 
     return (
       <div className="user-data-directory">
-        <Link to="/">
+        <Link id="sidebar-logo-link"to="/">
           <img id="sidebar-logo" src={window.tonifyWhiteURL} />
         </Link>
 

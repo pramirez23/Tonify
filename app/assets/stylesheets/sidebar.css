@@ -23,6 +23,10 @@ img#sidebar-logo {
   padding: 23px 0px 0px 19px;
 }
 
+#sidebar-logo-link {
+  z-index: 1000;
+}
+
 .sidebar-button .material-icons {
   font-size: 34px;
   color: #B3B3B3;
@@ -92,7 +96,8 @@ span#sidebar-divider {
 
 .sidebar-button {
   padding: 11px 0px 0px 12px;
-  color: #B3B3B3
+  color: #B3B3B3;
+  z-index: 1000;
 }
 
 .sidebar-directory a:link, .sidebar-directory a:visited {
@@ -107,6 +112,7 @@ span#sidebar-divider {
   padding: 23px 0px 9px 0px;
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 }
 
 .library-button {
@@ -144,6 +150,7 @@ ul.playlist-links {
   height: 452px;
   overflow: hidden;
   overflow-y: scroll;
+  z-index: 1000;
 }
 
 ul.playlist-links::-webkit-scrollbar-track {
