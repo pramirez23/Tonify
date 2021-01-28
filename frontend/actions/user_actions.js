@@ -1,6 +1,6 @@
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const RECEIVE_USER = "RECEIVE_USER";
-import * as UserUtil from "../util/user_util"
+import * as UserAPIUtil from "../util/user_util"
 
 const receiveUsers = users => {
   return {
@@ -15,10 +15,10 @@ const receiveUser = user => {
   }
 }
 export const fetchUsers = () => dispatch => {
-  return UserUtil.fetchUsers()
+  return UserAPIUtil.fetchUsers()
     .then(users => dispatch(receiveUsers(users)))
 }
 
 export const fetchUser = id => dispatch => {
-  return UserUtil.fetchUser(id).then(user => dispatch(receiveUser(user)))
+  return UserAPIUtil.fetchUser(id).then(user => dispatch(receiveUser(user)))
 }

@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'open-uri'
 
+# LOOK UP HOW TO DELETE EXISTING MODELS IN DATABASE BEFORE RESEEDING ************************************
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
 artist1_portrait = open('https://tonify-dev.s3.Songamazonaws.com/artist_photos/Chance+the+Rapper/profile/chance_profile.jpg')
@@ -14,12 +15,34 @@ artist1_banner = open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+
 artist1.photos.attach(io: artist1_portrait, filename: 'chance_profile.jpg')
 artist1.photos.attach(io: artist1_banner, filename: 'chance_banner.jpg')
 
+artist2 = Artist.create!(name: "Ariana Grande")
+artist2_portrait = open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/singer-songwriter-ariana-grande-performs-during-the-62nd-news-photo-1580092474.jpg')
+artist2_banner = open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/ariana-grande-press-photo-by-dave-meyers-2018-billboard-1548-compressed.jpg')
+artist2.photos.attach(io: artist2_portrait, filename: 'singer-songwriter-ariana-grande-performs-during-the-62nd-news-photo-1580092474.jpg')
+artist2.photos.attach(io: artist2_banner, filename: 'ariana-grande-press-photo-by-dave-meyers-2018-billboard-1548-compressed.jpg')
+
+artist3 = Artist.create!(name: "Jay Park")
+artist3_portrait = open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/jay-park-2018-cr-Cynthia-Parkhurst-billboard-1548-compressed.jpg')
+artist3_banner = open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/jay-park-2018-cr-Cynthia-Parkhurst-billboard-1548-compressed.jpg')
+artist3.photos.attach(io: artist3_portrait, filename: 'jay-park-2018-cr-Cynthia-Parkhurst-billboard-1548-compressed.jpg')
+artist3.photos.attach(io: artist3_banner, filename: 'jay-park-2018-cr-Cynthia-Parkhurst-billboard-1548-compressed.jpg')
+
+
 # Album Seed
 album1 = Album.create!(title: "Coloring Book", artist: artist1, year: 2016, single: false, genre: "Hip hop", duration: 3434)
 album1_art = open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
-# Song Seed
+album2 = Album.create!(title: "positions", artist: artist1, year: 2020, single: false, genre: "Pop", duration: 2467)
+album2_art = open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/Positions_%E2%80%93_Album_Cover.jpg')
+album2.cover_art.attach(io: album2_art, filename: 'Positions_%E2%80%93_Album_Cover.jpg')
+
+album3 = Album.create!(title: "Yacht", artist: artist1, year: 2017, single: true, genre: "Hip hop", duration: 246)
+album3_art = open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/yacht.jpg')
+album3.cover_art.attach(io: album3_art, filename: 'yacht.jpg')
+
+# Song Seeds
+# Chance the Rapper Songs
 song1 = Song.create!(title: "All We Got (feat. Kanye West and Chicago Children's Choir", track_num: 1, duration: 203, album_id: album1.id)
 song2 = Song.create!(title: "No Problem (feat. Lil Wayne and 2 Chainz)", track_num: 2, duration: 305, album_id: album1.id)
 song3 = Song.create!(title: "Summer Friends (feat. Jeremih and Francis and the Lights)", track_num: 3, duration: 290, album_id: album1.id)
@@ -35,21 +58,35 @@ song12 = Song.create!(title: "Smoke Break (feat. Future)", track_num: 12, durati
 song13 = Song.create!(title: "Finish Line / Drown (feat. T-Pain, Kirk Franklin, Eryn Allen Kane and Noname)", track_num: 13, duration: 406, album_id: album1.id)
 song14 = Song.create!(title: "Blessings (feat. Ty Dolla Sign, Raury, BJ the Chicago Kid and Anderson Paak)", track_num: 14, duration: 230, album_id: album1.id)
 
-song1_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3') 
-song2_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3') 
-song3_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3') 
-song4_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/04+-+DRAM+Sings+Special.mp3') 
-song5_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/05+-+Blessings.mp3') 
-song6_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/06+-+Same+Drugs.mp3') 
-song7_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/07+-+Mixtape+feat+Young+Thug+and+Lil+Yachty.mp3') 
-song8_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/08+-+Angels+feat+Saba.mp3') 
-song9_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/09+-+Luke+Jam+feat+Justin+Bieber+and+Towkio.mp3') 
-song10_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/10+-+All+Night+feat+Knox+Fortune.mp3') 
-song11_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/11+-+How+Great+feat+Jay+Electronica+and+My+Cousin+Nicole.mp3') 
-song12_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/12+-+Smoke+Break+feat+Future.mp3') 
-song13_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3') 
-song14_audio = open('https://tonify-dev.s3.amazonaws.com/songs/Chance+The+Rapper/Coloring+Book/14+-+Blessings+(Explicit+Version).mp3') 
+# Ariana Grande Songs
+song15 = Song.create!(title:"34 + 35", track_num: 2, duration:173, album_id: album2.id)
+song16 = Song.create!(title:"positions", track_num: 1, duration:172, album_id: album2.id)
 
+# Jay Park Songs
+song17 = Song.create!(title:"Yacht (K) (feat. Sik-K)", track_num: 1, duration: 246, album_id: album3.id)
+
+# Open Song URI
+song1_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3') 
+song2_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3') 
+song3_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3') 
+song4_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/04+-+DRAM+Sings+Special.mp3') 
+song5_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/05+-+Blessings.mp3') 
+song6_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/06+-+Same+Drugs.mp3') 
+song7_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/07+-+Mixtape+feat+Young+Thug+and+Lil+Yachty.mp3') 
+song8_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/08+-+Angels+feat+Saba.mp3') 
+song9_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/09+-+Luke+Jam+feat+Justin+Bieber+and+Towkio.mp3') 
+song10_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/10+-+All+Night+feat+Knox+Fortune.mp3') 
+song11_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/11+-+How+Great+feat+Jay+Electronica+and+My+Cousin+Nicole.mp3') 
+song12_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/12+-+Smoke+Break+feat+Future.mp3') 
+song13_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3') 
+song14_audio = open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring+Book/14+-+Blessings+(Explicit+Version).mp3') 
+
+song15_audio = open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/Ariana+Grande+-+34%2B35.mp3')
+song16_audio = open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/Ariana+Grande+-+positions.mp3')
+
+song17_audio = open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/Jay+Park+-+Yacht+(K)+(Feat.+Sik-K).mp3')
+
+# Attach audio
 song1.audio_file.attach(io: song1_audio, filename: '01+-+All+We+Got+feat+Kanye+West+and+The+Chicago+Childrens+Choir.mp3')
 song2.audio_file.attach(io: song2_audio, filename: '02+-+No+Problem+feat+Lil+Wayne+and+2+Chainz.mp3')
 song3.audio_file.attach(io: song3_audio, filename: '03+-+Summer+Friends+feat+Jeremih+Francis+and+The+Lights.mp3')
@@ -64,3 +101,7 @@ song11.audio_file.attach(io: song11_audio, filename: '11+-+How+Great+feat+Jay+El
 song12.audio_file.attach(io: song12_audio, filename: '12+-+Smoke+Break+feat+Future.mp3')
 song13.audio_file.attach(io: song13_audio, filename: '13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3')
 song14.audio_file.attach(io: song14_audio, filename: '14+-+Blessings+(Explicit+Version).mp3')
+
+song15.audio_file.attach(io: song14_audio, filename: 'Ariana+Grande+-+34%2B35.mp3')
+song16.audio_file.attach(io: song14_audio, filename: 'Ariana+Grande+-+positions.mp3')
+song17.audio_file.attach(io: song14_audio, filename: 'Jay+Park+-+Yacht+(K)+(Feat.+Sik-K).mp3')

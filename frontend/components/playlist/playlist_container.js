@@ -15,6 +15,7 @@ const mSTP = (state, ownProps) => {
 const mDTP = dispatch => {
   return {
     fetchPlaylists: () => dispatch(fetchPlaylists()),
+    fetchSongs: () => dispatch(fetchSongs()),
     fetchUsers: () => dispatch(fetchUsers())
   }
 };

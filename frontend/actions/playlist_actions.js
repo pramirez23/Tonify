@@ -44,14 +44,14 @@ export const fetchPlaylists = () => dispatch => {
     .then(
       playlists => dispatch(receivePlaylists(playlists))
     )
-}
+};
 
 export const fetchPlaylist = id => dispatch => {
   return PlaylistAPIUtil.fetchPlaylist(id)
     .then(
       playlist => dispatch(receivePlaylist(playlist))
     )
-}
+};
 
 export const createPlaylist = playlist => dispatch => {
   return PlaylistAPIUtil.createPlaylist(playlist)
@@ -59,7 +59,7 @@ export const createPlaylist = playlist => dispatch => {
       playlist => dispatch(receivePlaylist(playlist)),
       err => dispatch(receivePlaylistErrors(err.responseJSON))
     )
-}
+};
 
 export const updatePlaylist = playlist => dispatch => {
   return PlaylistAPIUtil.updatePlaylist(playlist)
@@ -67,9 +67,9 @@ export const updatePlaylist = playlist => dispatch => {
       playlist => dispatch(receivePlaylist(playlist)),
       err => dispatch(receivePlaylistErrors(err.responseJSON))
     )
-}
+};
 
 export const deletePlaylist = id => dispatch => {
   return PlaylistAPIUtil.deletePlaylist(id)
     .then(() => dispatch(removePlaylist()))
-}
+};

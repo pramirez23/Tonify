@@ -22,9 +22,9 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :show, :index]
     resource :session, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
-    resources :songs, only: [:show]
-    resources :albums, only: [:show]
-    resources :artists, only: [:show]
+    resources :songs, only: [:show, :index]
+    resources :albums, only: [:show, :index]
+    resources :artists, only: [:show, :index]
     resources :playlists, only: [:create, :update, :destroy, :index, :show]
     resources :playlist_songs, only: [:create, :destroy]
   end

@@ -608,6 +608,19 @@ var mDTP = function mDTP(dispatch) {
     fetchPlaylists: function fetchPlaylists() {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPlaylists)());
     },
+    fetchSongs: function (_fetchSongs) {
+      function fetchSongs() {
+        return _fetchSongs.apply(this, arguments);
+      }
+
+      fetchSongs.toString = function () {
+        return _fetchSongs.toString();
+      };
+
+      return fetchSongs;
+    }(function () {
+      return dispatch(fetchSongs());
+    }),
     fetchUsers: function fetchUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.fetchUsers)());
     }
