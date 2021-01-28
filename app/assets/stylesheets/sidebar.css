@@ -6,6 +6,9 @@
   width: 185px;
   padding: 0px 0px 10px 12px;
   background-color: black;
+  margin-right: -30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-directory {

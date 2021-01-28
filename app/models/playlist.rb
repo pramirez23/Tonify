@@ -3,6 +3,8 @@ class Playlist < ApplicationRecord
   validates :private, presence: true, allow_blank: true, inclusion: { in: [true, false] }
   has_many :likes, as: :likable
 
+  has_one_attached :photo
+
   belongs_to :user,
     primary_key: :id,
     foreign_key: :user_id,

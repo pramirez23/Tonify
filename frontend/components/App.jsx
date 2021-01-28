@@ -10,10 +10,11 @@ import {
 import LoginContainer from "./session/login_container";
 import SignupContainer from "./session/signup_container";
 import SplashContainer from "./splash/splash_container";
-import { AuthRoute } from '../util/route_util';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
+import Playlist from "./playlist/playlist"
 
 const App = () => (
-  <div>
+  <div id="app">
     <Switch>
       <AuthRoute path="/login" component={LoginContainer} />
       <AuthRoute path="/signup" component={SignupContainer} />

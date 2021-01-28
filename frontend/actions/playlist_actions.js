@@ -71,7 +71,5 @@ export const updatePlaylist = playlist => dispatch => {
 
 export const deletePlaylist = id => dispatch => {
   return PlaylistAPIUtil.deletePlaylist(id)
-    .then( 
-      () => dispatch(removePlaylist())
-    )
+    .then(() => dispatch(removePlaylist()))
 }

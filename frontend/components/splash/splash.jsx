@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
+// import SidebarContainer from '../sidebar/sidebar_container'
+// import Playbar from '../playbar/playbar'
 import Main from '../main/Main'
 
 const Splash = ({ currentUser, logout, login, history }) => {
@@ -78,7 +80,9 @@ const Splash = ({ currentUser, logout, login, history }) => {
   const mainContent = () => {
     return (
     <div>
+      {/* <SidebarContainer /> */}
       <Main history={history} location={location}/>
+      {/* <Playbar /> */}
       <button onClick={logout}>Log Out</button>
     </div>
     )

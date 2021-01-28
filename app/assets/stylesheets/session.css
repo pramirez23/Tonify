@@ -1,5 +1,6 @@
 .signup, .login {
-  text-align: center
+  text-align: center;
+  background: white;
 }
 
 #signup-logo {
