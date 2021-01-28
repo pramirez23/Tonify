@@ -5,5 +5,37 @@
   position: absolute;
   bottom: 0%;
   width: 100%;
-  z-index: 1001
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+#playbar-controls {
+  display: flex;
+  justify-content: space-around;
+  font-size: 13px;
+  width: 200px;
+  height: 54px;
+  align-items: center;
+}
+
+#random, #back, #forward, #repeat {
+  transition: all 0.3s ease-out;
+  color: #B3B3B3;
+}
+
+#play {
+  color: white;
+  font-size: 28px;
+  transition: all 0.2s ease-out;
+}
+
+#play:hover {
+  transform: scale(1.07);
+}
+
+#random:hover, #back:hover, #forward:hover, #repeat:hover {
+  color: white;
+}
+

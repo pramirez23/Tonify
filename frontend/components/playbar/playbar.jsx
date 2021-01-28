@@ -9,7 +9,13 @@ class Playbar extends React.Component {
   render() { 
     return (
       <div className="playbar-container">
-        playbar
+        <div id="playbar-controls">
+          <i id="random" className="fas fa-random"></i>
+          <i id="back" className="fas fa-step-backward"></i>
+          <i id="play" className="fas fa-play-circle"></i>
+          <i id="forward" className="fas fa-step-forward"></i>
+          <i id="repeat" className="fas fa-redo"></i>
+        </div>
       </div>
     );
   }
