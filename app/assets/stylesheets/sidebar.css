@@ -1,14 +1,14 @@
-#main {
-  background: #121212;
-}
+
 
 .user-data-directory {
   width: 185px;
+  height: 812px;
   padding: 0px 0px 10px 12px;
   background-color: black;
-  margin-right: -30px;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  margin-bottom: 2px;
 }
 
 .sidebar-directory {
@@ -25,6 +25,7 @@ img#sidebar-logo {
 
 #sidebar-logo-link {
   z-index: 1000;
+  height: 100px;
 }
 
 .sidebar-button .material-icons {
@@ -147,7 +148,7 @@ ul.playlist-links {
   font-weight: 400;
   font-family: 'Rubik';
   letter-spacing: 0.2px;
-  height: 452px;
+  height: 433px;
   overflow: hidden;
   overflow-y: scroll;
   z-index: 1000;

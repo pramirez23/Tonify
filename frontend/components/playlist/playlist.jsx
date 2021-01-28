@@ -24,13 +24,15 @@ class Playlist extends React.Component {
     return (
       <div id="playlist-show">
           <div className="playlist-header">
-            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
             
+            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlistName}</h1>
               <p className="username">{username}</p>
             </div>
+
+
           </div>
 
       </div>
