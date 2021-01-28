@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 #     get 'likes/destroy'
 #   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "static_pages#root"  
+  root to: "static_pages#root"
   
   namespace :api, defaults: {format: :json} do 
     resources :users, only: [:create, :show, :index]
@@ -25,7 +25,11 @@ Rails.application.routes.draw do
     resources :songs, only: [:show, :index]
     resources :albums, only: [:show, :index]
     resources :artists, only: [:show, :index]
-    resources :playlists, only: [:create, :update, :destroy, :index, :show]
-    resources :playlist_songs, only: [:create, :destroy]
+
+    resources :playlists, only: [:create, :update, :destroy, :index, :show] do
+      resources :songs, only: [:index]
+    end
+
+    resources :playlist_songs, only: [:create, :destroy, :index]
   end
 end

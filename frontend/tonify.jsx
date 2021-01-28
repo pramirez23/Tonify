@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import configureStore from "./store/store";
 import Root from "./components/root";
-// import { signup, login, logout } from "./actions/session_actions"
+import { fetchPlaylistSongs } from "./actions/song_actions"
 // import { fetchPlaylist, fetchPlaylists, createPlaylist, updatePlaylist, deletePlaylist, addSong, removeSong } from "./util/playlist_api_util"
 
 // const playlist1 = {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // window.deletePlaylist = deletePlaylist;
   // window.addSong = addSong;
   // window.removeSong = removeSong;
-
+  window.fetchPlaylistSongs = fetchPlaylistSongs;
   // TESTING END
   
   let store;

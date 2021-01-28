@@ -26,6 +26,10 @@ class Api::PlaylistSongsController < ApplicationController
     end
   end
 
+  def index
+    @playlist_songs = PlaylistSong.
+  end 
+
   private
 
   def playlist_song_params
