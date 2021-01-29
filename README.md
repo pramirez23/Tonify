@@ -12,13 +12,13 @@
 
 ## Features
 - Users can sign up for an account:
-<br>
-![Signup Demo](https://github.com/pramirez23/Tonify/blob/main/app/assets/images/signup_demo.gif)
-
+<br/>
+<div><img src="/app/assets/images/signup_demo.gif" alt="signup-demo"></div>
+<br/>
 - User can generate playlists:
-<br>
-![Playlist Demo](https://github.com/pramirez23/Tonify/blob/main/app/assets/images/playlist_demo.gif)
-
+<br/>
+<div><img src="/app/assets/images/playlist_demo.gif" alt="playlist-demo"></div>
+<br/>
 ## Coming Soon
 - Users will be able to stream and continuously listen to music
 - Users will be able to visit artist and album pages to stream music and add songs to their library or playlist
