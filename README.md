@@ -1,4 +1,6 @@
-<div><img src="app/assets/images/Tonify_RGB.png" alt="logo" width="500" style="vertical-align:middle"></div>
+<div align="center">
+  <img src="app/assets/images/Tonify_RGB.png" alt="logo" width="500" style="vertical-align:middle">
+</div>
 
 [Tonify](https://tonify.herokyapp.com/#/) is a clone of [Spotify](https://www.spotify.com/). It's also an audio streaming service that allows users to curate their own playlists and create a personal library of songs, albums, artists, and playlists created by other users via likes.
 
