@@ -13,7 +13,6 @@ export const fetchSong = id => {
 };
 
 export const fetchPlaylistSongs = playlistId => {
-  debugger
   return $.ajax({
     method: "GET",
     url: `/api/playlists/${playlistId}/songs`,

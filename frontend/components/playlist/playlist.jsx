@@ -13,8 +13,14 @@ class Playlist extends React.Component {
     // this.props.fetchPlaylistSongs(id);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      const { id } = this.props.match.params;
+      this.props.fetchPlaylist(id)
+    }
+  }
+
   render() { 
-    
     if (!this.props.playlist) {
       return null;
     }
@@ -22,7 +28,8 @@ class Playlist extends React.Component {
     const playlistName = this.props.playlist.name;
     const userId = this.props.playlist.user_id;
     const username = this.props.users[userId].username;
-    const songs = this.props.songs
+    const songs = this.props.songs;
+
     return (
       <div id="playlist-show">
           <div className="playlist-header">
@@ -36,7 +43,7 @@ class Playlist extends React.Component {
 
           <div className="show-page-controls">
             <img id="show-page-play" src={window.playButton} />
-            <i class="fas fa-ellipsis-h"></i>
+            <i className="fas fa-ellipsis-h"></i>
           </div>
 
           <div className="song-columns">
@@ -54,7 +61,7 @@ class Playlist extends React.Component {
 
           <div className="playlist-song-list">
             <ul className="song-list">
-              {songs.map(song => 
+              { !songs ? null : songs.map(song => 
                 <SongListItem song={song} key={song.id} />
               )}
             </ul>

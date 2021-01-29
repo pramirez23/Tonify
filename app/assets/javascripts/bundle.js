@@ -468,7 +468,9 @@ __webpack_require__.r(__webpack_exports__);
 var Main = function Main(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__.default, {
+    history: props.history
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
     exact: true,
     path: "/playlists/:id",
     component: _playlist_playlist_container__WEBPACK_IMPORTED_MODULE_3__.default
@@ -618,6 +620,14 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       this.props.fetchPlaylist(id); // this.props.fetchPlaylistSongs(id);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.match.params.id !== prevProps.match.params.id) {
+        var id = this.props.match.params.id;
+        this.props.fetchPlaylist(id);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       if (!this.props.playlist) {
@@ -647,7 +657,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         id: "show-page-play",
         src: window.playButton
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        "class": "fas fa-ellipsis-h"
+        className: "fas fa-ellipsis-h"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-columns"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -670,7 +680,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: "playlist-song-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
         className: "song-list"
-      }, songs.map(function (song) {
+      }, !songs ? null : songs.map(function (song) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
           song: song,
           key: song.id
@@ -1943,7 +1953,6 @@ var songsReducer = function songsReducer() {
 
   switch (action.type) {
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONGS:
-      debugger;
       return Object.assign({}, state, action.songs);
 
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONG:
@@ -2344,7 +2353,6 @@ var fetchSong = function fetchSong(id) {
   });
 };
 var fetchPlaylistSongs = function fetchPlaylistSongs(playlistId) {
-  debugger;
   return $.ajax({
     method: "GET",
     url: "/api/playlists/".concat(playlistId, "/songs")
