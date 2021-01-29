@@ -18,7 +18,7 @@
 <div><img src="/app/assets/images/signup_demo.gif" alt="signup-demo"></div>
 <br/>
 
-- User can generate playlists:
+- Users can generate playlists:
 
 <br/>
 <div><img src="/app/assets/images/playlist_demo.gif" alt="playlist-demo"></div>
