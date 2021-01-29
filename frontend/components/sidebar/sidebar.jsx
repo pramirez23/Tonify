@@ -25,6 +25,11 @@ class Sidebar extends React.Component {
       .then(() => this.props.history.push(`/playlists/${this.props.lastPlaylist}`));
   };
 
+  handleClick(e) {
+    
+    this.props.fetchPlaylist()
+  }
+
   render() {
     // console.log(this.props.playlists)
     let playlistIndex = this.props.playlists;

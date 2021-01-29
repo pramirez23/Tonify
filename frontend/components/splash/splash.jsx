@@ -57,8 +57,8 @@ const Splash = ({ currentUser, logout, login, history }) => {
             <div id="tech-stack-list">
               <p id="tech-stack-title">TECH STACK</p>
               <ul id="tech-stack">
-                <li>HTML 3</li>
-                <li>CSS 5</li>
+                <li>HTML 5</li>
+                <li>CSS 3</li>
                 <li>JavaScript</li>
                 <li>React</li>
                 <li>Redux</li>

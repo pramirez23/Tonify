@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SongListItem = ({ song }) => {
     return(
-      <div>
+      <div className="song">
         <p>{song.title}</p>
         <p>{song.track_num}</p>
         <p>{song.duration}</p>

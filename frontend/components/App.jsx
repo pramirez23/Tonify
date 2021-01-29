@@ -11,13 +11,14 @@ import LoginContainer from "./session/login_container";
 import SignupContainer from "./session/signup_container";
 import SplashContainer from "./splash/splash_container";
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
-import Playlist from "./playlist/playlist"
+// import PlaylistContainer from "./playlist/playlist_container"
 
 const App = () => (
   <div id="app">
     <Switch>
       <AuthRoute path="/login" component={LoginContainer} />
       <AuthRoute path="/signup" component={SignupContainer} />
+      {/* <ProtectedRoute exact path="/playlists/:playlistId" component={PlaylistContainer} /> */}
       <Route path="/" component={SplashContainer}/>
     </Switch>
   </div>
