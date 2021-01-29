@@ -79,7 +79,7 @@ class Sidebar extends React.Component {
         
         <ul className="playlist-links">
           {userPlaylists.slice(0).reverse().map(playlist =>
-              <li className="playlist-link"key={playlist.id}>
+              <li className="playlist-link" key={playlist.id}>
                 <Link to={`/playlists/${playlist.id}`}>
                   <div className="sidebar-playlist-item">
                     {playlist.name}

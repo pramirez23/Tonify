@@ -6,13 +6,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'open-uri'
+require 'resolv-replace'
 
+User.destroy_all
+Song.destroy_all
+Album.destroy_all
+Artist.destroy_all
+Playlist.destroy_all
+PlaylistSong.destroy_all
 
 # LOOK UP HOW TO DELETE EXISTING MODELS IN DATABASE BEFORE RESEEDING ************************************
 # Artist Seed
 artist1 = Artist.create!(name: "Chance the Rapper")
-artist1_portrait = URI.open('https://tonify-dev.s3.Songamazonaws.com/artist_photos/Chance+the+Rapper/profile/chance_profile.jpg')
-artist1_banner = URI.open('https://tonify-dev.s3.amazonaws.com/artist_photos/Chance+the+Rapper/banner/chance_banner.jpg')
+artist1_portrait = URI.open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/chance_profile.jpg')
+artist1_banner = URI.open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/chance_banner.jpg')
 artist1.photos.attach(io: artist1_portrait, filename: 'chance_profile.jpg')
 artist1.photos.attach(io: artist1_banner, filename: 'chance_banner.jpg')
 
@@ -31,7 +38,7 @@ artist3.photos.attach(io: artist3_banner, filename: 'jay-park-2018-cr-Cynthia-Pa
 
 # Album Seed
 album1 = Album.create!(title: "Coloring Book", artist: artist1, year: 2016, single: false, genre: "Hip hop", duration: 3434)
-album1_art = URI.open('https://tonify-dev.s3.amazonaws.com/albumart/Chance+the+Rapper/Coloring_Book.jpg')
+album1_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
 album2 = Album.create!(title: "positions", artist: artist1, year: 2020, single: false, genre: "Pop", duration: 2467)
@@ -103,6 +110,43 @@ song12.audio_file.attach(io: song12_audio, filename: '12+-+Smoke+Break+feat+Futu
 song13.audio_file.attach(io: song13_audio, filename: '13+-+Finish+Line++Drown+feat+TPain+Kirk+Franklin+Eryn+Allen+Kane+and+No+Name.mp3')
 song14.audio_file.attach(io: song14_audio, filename: '14+-+Blessings+(Explicit+Version).mp3')
 
-song15.audio_file.attach(io: song14_audio, filename: 'Ariana+Grande+-+34%2B35.mp3')
-song16.audio_file.attach(io: song14_audio, filename: 'Ariana+Grande+-+positions.mp3')
-song17.audio_file.attach(io: song14_audio, filename: 'Jay+Park+-+Yacht+(K)+(Feat.+Sik-K).mp3')
+song15.audio_file.attach(io: song15_audio, filename: 'Ariana+Grande+-+34%2B35.mp3')
+song16.audio_file.attach(io: song16_audio, filename: 'Ariana+Grande+-+positions.mp3')
+song17.audio_file.attach(io: song17_audio, filename: 'Jay+Park+-+Yacht+(K)+(Feat.+Sik-K).mp3')
+
+# User seed
+user1 = User.create!(username: "Demo User", password: "demopassword123", email: "demoemail@demo.com", email_confirmation: "demoemail@demo.com", gender: "NB", birthday:"1997/12/23")
+
+# Playlist seed
+playlist1 = Playlist.create!(user_id: user1.id, name: "Shower Time!", description: "Songs to shower to...", private: "false")
+playlist2 = Playlist.create!(user_id: user1.id, name: "Workout Jams", description: "GET PUMPED", private: "false")
+playlist3 = Playlist.create!(user_id: user1.id, name: "Coding Beats", description: "Songs to listen to while debugging at 4AM", private: "false")
+
+# Playlist song seed (Add songs to playlist)
+playlistSong1 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song10.id)
+playlistSong2 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song1.id)
+playlistSong3 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song2.id)
+playlistSong4 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song8.id)
+playlistSong5 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song4.id)
+playlistSong6 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song5.id)
+playlistSong7 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song9.id)
+playlistSong8 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song12.id)
+playlistSong9 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song11.id)
+playlistSong10 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song16.id)
+playlistSong11 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song15.id)
+playlistSong12 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song4.id)
+
+playlistSong13 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song17.id)
+playlistSong14 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song16.id)
+playlistSong15 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song15.id)
+playlistSong16 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song7.id)
+playlistSong17 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song3.id)
+playlistSong18 = PlaylistSong.create!(playlist_id: playlist2.id, song_id: song9.id)
+
+playlistSong19 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song2.id)
+playlistSong20 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song6.id)
+playlistSong21 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song7.id)
+playlistSong22 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song15.id)
+playlistSong23 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song12.id)
+playlistSong24 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song17.id)
+

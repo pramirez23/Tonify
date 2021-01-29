@@ -70,7 +70,7 @@ class Signup extends React.Component {
   handleDemo(e) {
     e.preventDefault();
     const demo = {
-      username: "demo",
+      username: "Demo User",
       password: "demopassword123"
     }
     this.props.login(demo)

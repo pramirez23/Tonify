@@ -673,17 +673,17 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }, "DATE ADDED"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
         className: "song-column-duration"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        "class": "far fa-clock"
+        className: "far fa-clock"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         id: "border-bottom"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "playlist-song-list"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
         className: "song-list"
-      }, !songs ? null : songs.map(function (song) {
+      }, !songs ? null : songs.map(function (song, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
           song: song,
-          key: song.id
+          key: idx
         });
       }))));
     }
@@ -873,7 +873,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
 
       e.preventDefault();
       var demo = {
-        username: "demo",
+        username: "Demo User",
         password: "demopassword123"
       };
       this.props.login(demo).then(function () {
@@ -1123,7 +1123,7 @@ var Signup = /*#__PURE__*/function (_React$Component) {
 
       e.preventDefault();
       var demo = {
-        username: "demo",
+        username: "Demo User",
         password: "demopassword123"
       };
       this.props.login(demo).then(function () {
@@ -1600,7 +1600,7 @@ var Splash = function Splash(_ref) {
     var handleDemo = function handleDemo(e) {
       e.preventDefault();
       var demo = {
-        username: "demo",
+        username: "Demo User",
         password: "demopassword123"
       };
       login(demo).then(function () {

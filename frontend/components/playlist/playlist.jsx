@@ -54,15 +54,15 @@ class Playlist extends React.Component {
               </div>
               <li className="song-column-album">ALBUM</li>
               <li className="song-column-date">DATE ADDED</li>
-              <li className="song-column-duration"><i class="far fa-clock"></i></li>
+              <li className="song-column-duration"><i className="far fa-clock"></i></li>
             </ul>
               <span id="border-bottom"></span>
           </div>
 
           <div className="playlist-song-list">
             <ul className="song-list">
-              { !songs ? null : songs.map(song => 
-                <SongListItem song={song} key={song.id} />
+              { !songs ? null : songs.map((song, idx) => 
+                <SongListItem song={song} key={idx} />
               )}
             </ul>
           </div>

@@ -11,7 +11,7 @@ const Splash = ({ currentUser, logout, login, history }) => {
     const handleDemo = (e) => {
       e.preventDefault();
       const demo = {
-        username: "demo",
+        username: "Demo User",
         password: "demopassword123"
       }
       login(demo)
