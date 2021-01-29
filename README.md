@@ -10,7 +10,6 @@
 
 ![Splash Page](https://github.com/pramirez23/Tonify/blob/main/app/assets/images/Tonify_Splash.png)
 
-
 ## Features
 - Users can sign up for an account:
 <br>
@@ -18,7 +17,7 @@
 
 - User can generate playlists:
 <br>
-![Signup Demo](https://github.com/pramirez23/Tonify/blob/main/app/assets/images/playlist_demo.gif)
+![Playlist Demo](https://github.com/pramirez23/Tonify/blob/main/app/assets/images/playlist_demo.gif)
 
 ## Coming Soon
 - Users will be able to stream and continuously listen to music
