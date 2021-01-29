@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 // import SidebarContainer from '../sidebar/sidebar_container'
 // import Playbar from '../playbar/playbar'
-import Main from '../main/Main'
+import Main from '../main/main'
 
 const Splash = ({ currentUser, logout, login, history }) => {
   const splashContent = () => {

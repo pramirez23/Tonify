@@ -439,9 +439,9 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./frontend/components/main/Main.jsx":
+/***/ "./frontend/components/main/main.jsx":
 /*!*******************************************!*\
-  !*** ./frontend/components/main/Main.jsx ***!
+  !*** ./frontend/components/main/main.jsx ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -1580,7 +1580,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _main_Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/Main */ "./frontend/components/main/Main.jsx");
+/* harmony import */ var _main_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main/main */ "./frontend/components/main/main.jsx");
 
 
  // import SidebarContainer from '../sidebar/sidebar_container'
@@ -1673,7 +1673,7 @@ var Splash = function Splash(_ref) {
   };
 
   var mainContent = function mainContent() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_main_Main__WEBPACK_IMPORTED_MODULE_1__.default, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_main_main__WEBPACK_IMPORTED_MODULE_1__.default, {
       history: history,
       location: location
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
