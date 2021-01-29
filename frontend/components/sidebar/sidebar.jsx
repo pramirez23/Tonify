@@ -79,15 +79,17 @@ class Sidebar extends React.Component {
         
         <ul className="playlist-links">
           {userPlaylists.slice(0).reverse().map(playlist =>
-              <li className="playlist-link" key={playlist.id}>
-                <Link to={`/playlists/${playlist.id}`}>
-                  <div className="sidebar-playlist-item">
-                    {playlist.name}
-                  </div>
-                </Link>
-              </li>
+            <li className="playlist-link" key={playlist.id}>
+              <Link to={`/playlists/${playlist.id}`}>
+                <div className="sidebar-playlist-item">
+                  {playlist.name}
+                </div>
+              </Link>
+            </li>
           )}
         </ul>
+
+        <button id="logout" onClick={this.props.logout}>LOG OUT</button>
       </div>
     );
   }

@@ -96,6 +96,8 @@ p.username {
   flex-direction: row;
   width: 100%;
   padding: 10px 0px 0px 0px;
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 li.song-column-num {
@@ -119,12 +121,12 @@ li.song-column-album {
 }
 
 ul.song-list {
-  width: 73%;
+  width: 80%;
   display: table;
   color: white;
   letter-spacing: 0.1px;
   font-size: 20px;
-  padding: 0px 0px 221px 0px;
+  padding: 8px 170px 221px 0px;
 }
 
 .song {

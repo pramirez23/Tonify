@@ -1483,7 +1483,10 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "sidebar-playlist-item"
         }, playlist.name)));
-      })));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        id: "logout",
+        onClick: this.props.logout
+      }, "LOG OUT"));
     }
   }]);
 
@@ -1508,6 +1511,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar */ "./frontend/components/sidebar/sidebar.jsx");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 
@@ -1532,6 +1537,9 @@ var mDTP = function mDTP(dispatch) {
     },
     createPlaylist: function createPlaylist(playlist) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.createPlaylist)(playlist));
+    },
+    logout: function logout() {
+      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.logout)());
     }
   };
 };
@@ -1590,7 +1598,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var Splash = function Splash(_ref) {
   var currentUser = _ref.currentUser,
-      logout = _ref.logout,
       login = _ref.login,
       history = _ref.history;
 
@@ -1676,9 +1683,7 @@ var Splash = function Splash(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_main_main__WEBPACK_IMPORTED_MODULE_1__.default, {
       history: history,
       location: location
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      onClick: logout
-    }, "Log Out"));
+    }));
   };
 
   return currentUser ? mainContent() : splashContent();
@@ -1719,9 +1724,19 @@ var mDTP = function mDTP(dispatch) {
     login: function login(user) {
       return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__.login)(user));
     },
-    logout: function logout() {
-      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__.logout)());
-    }
+    logout: function (_logout) {
+      function logout() {
+        return _logout.apply(this, arguments);
+      }
+
+      logout.toString = function () {
+        return _logout.toString();
+      };
+
+      return logout;
+    }(function () {
+      return dispatch(logout());
+    })
   };
 };
 

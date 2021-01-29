@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 // import Playbar from '../playbar/playbar'
 import Main from '../main/main'
 
-const Splash = ({ currentUser, logout, login, history }) => {
+const Splash = ({ currentUser, login, history }) => {
   const splashContent = () => {
 
     const handleDemo = (e) => {
@@ -83,7 +83,6 @@ const Splash = ({ currentUser, logout, login, history }) => {
       {/* <SidebarContainer /> */}
       <Main history={history} location={location}/>
       {/* <Playbar /> */}
-      <button onClick={logout}>Log Out</button>
     </div>
     )
   };
