@@ -1,7 +1,8 @@
 div#playlist-show {
-  width: 100%;
+  width: 89.6%;
   height: 100%;
   background: #121212;
+  float: right;
 }
 
 img.playlist-photo {
@@ -71,7 +72,7 @@ p.username {
   align-items: center;
   height: 74%;
   background: #121212;
-  margin: 16px 0px -35px 198px;
+  /* margin: 16px 0px -35px 198px; */
   width: 86%;
   overflow-x: hidden;
   overflow-y: auto;
