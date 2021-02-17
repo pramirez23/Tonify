@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 
-const SongListItem = ({ song }) => {
+const SongListItem = ({ song, num }) => {
     return(
-      <div className="song">
-        <p>{song.title}</p>
-        <p>{song.track_num}</p>
-        <p>{song.duration}</p>
-      </div>
+      <tr className="song">
+        <td>{num}</td>
+        <td>{song.title}</td>
+        <td>{song.duration}</td>
+      </tr>
     )
 };
 

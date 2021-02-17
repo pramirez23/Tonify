@@ -44,11 +44,10 @@ img.playlist-photo {
 .show-page-controls {
   display: flex;
   justify-content: space-evenly;
-  margin-left: 200px;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 30px;
   align-items: center;
-  position: absolute;
   color: #ADAEAE;
   width: 215px;
   padding: 0px;
@@ -71,13 +70,13 @@ p.username {
   letter-spacing: 0.5px;
 }
 
-.playlist-song-list {
+/* .playlist-song-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 74%;
   background: #121212;
-  /* margin: 16px 0px -35px 198px; */
+  margin: 16px 0px -35px 198px;
   width: 86%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -106,13 +105,13 @@ p.username {
   position: sticky;
 }
 
-li.song-column-num {
+.song-column-num {
   font-size: 18px;
   margin-top: -3px;
   margin-right: 14px;
 }
 
-li.song-column-album {
+.song-column-album {
   margin-left: 389px;
 }
 
@@ -139,4 +138,27 @@ ul.song-list {
   display: flex;
   flex-direction: row;
   padding: 21px;
+} */
+
+table.song-columns {
+  width: 100%;
+  color: #B3B3B3;
+  position: absolute;
+  padding: 0 50px 0 50px;
+  border-collapse: separate;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  /* background-color: #4CAF50; */
+  color: white;
+}
+
+td {
+ max-width: 100px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
 }

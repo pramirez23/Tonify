@@ -32,38 +32,50 @@ class Playlist extends React.Component {
 
     return (
       <div id="playlist-show">
-          <div className="playlist-header">
-            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
-            <div className="playlist-details">
-              <span>PLAYLIST</span>
-              <h1 className="playlist-name">{playlistName}</h1>
-              <p className="username">{username}</p>
+        <div className="playlist-header">
+          <img className="playlist-photo" src={window.defaultPlaylistPicture} />
+          <div className="playlist-details">
+            <span>PLAYLIST</span>
+            <h1 className="playlist-name">{playlistName}</h1>
+            <p className="username">{username}</p>
+          </div>
+        </div>
+
+        <div className="show-page-controls">
+          <img id="show-page-play" src={window.playButton} />
+          <i className="fas fa-ellipsis-h"></i>
+        </div>
+
+        {/* <div className="song-columns">
+          <ul>
+            <div className="num-title">
+              <li className="song-column-num">#</li>
+              <li className="song-column-title">TITLE</li>
             </div>
-          </div>
-
-          <div className="show-page-controls">
-            <img id="show-page-play" src={window.playButton} />
-            <i className="fas fa-ellipsis-h"></i>
-          </div>
-
-          <div className="song-columns">
-            <ul>
-              <div className="num-title">
-                <li className="song-column-num">#</li>
-                <li className="song-column-title">TITLE</li>
-              </div>
-              <li className="song-column-album">ALBUM</li>
-              <li className="song-column-date">DATE ADDED</li>
-              <li className="song-column-duration"><i className="far fa-clock"></i></li>
-            </ul>
-              <span id="border-bottom"></span>
-          </div>
-
-          <ul className="song-list">
-            { !songs ? null : songs.map((song, idx) => 
-              <SongListItem song={song} key={idx} />
-            )}
+            <li className="song-column-album">ALBUM</li>
+            <li className="song-column-date">DATE ADDED</li>
+            <li className="song-column-duration"><i className="far fa-clock"></i></li>
           </ul>
+            <span id="border-bottom"></span>
+        </div> */}
+
+        <table className="song-columns">
+          <thead>
+            <tr>
+              <th className="song-column-num">#</th>
+              <th className="song-column-title">TITLE</th>
+              <th className="song-column-album">ALBUM</th>
+              <th className="song-column-date">DATE ADDED</th>
+              <th className="song-column-duration"><i className="far fa-clock"></i></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            { !songs ? null : songs.map((song, idx) => 
+              <SongListItem song={song} key={idx} num={(idx + 1)} />
+            )}
+          </tbody>
+        </table>
       </div>
     );
   }
