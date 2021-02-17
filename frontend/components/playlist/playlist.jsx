@@ -59,13 +59,11 @@ class Playlist extends React.Component {
               <span id="border-bottom"></span>
           </div>
 
-          <div className="playlist-song-list">
-            <ul className="song-list">
-              { !songs ? null : songs.map((song, idx) => 
-                <SongListItem song={song} key={idx} />
-              )}
-            </ul>
-          </div>
+          <ul className="song-list">
+            { !songs ? null : songs.map((song, idx) => 
+              <SongListItem song={song} key={idx} />
+            )}
+          </ul>
       </div>
     );
   }

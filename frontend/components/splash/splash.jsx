@@ -79,11 +79,7 @@ const Splash = ({ currentUser, login, history }) => {
 
   const mainContent = () => {
     return (
-    <div>
-      {/* <SidebarContainer /> */}
       <Main history={history} location={location}/>
-      {/* <Playbar /> */}
-    </div>
     )
   };
 

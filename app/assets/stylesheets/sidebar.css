@@ -1,13 +1,11 @@
-
-
 .user-data-directory {
-  width: 185px;
-  height: 88vh;
+  width: 186px;
+  height: 90vh;
   padding: 0px 0px 10px 12px;
   background-color: black;
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: relative;
   margin-bottom: 2px;
   z-index: 1000;
 }

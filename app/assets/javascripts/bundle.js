@@ -407,13 +407,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _session_login_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session/login_container */ "./frontend/components/session/login_container.js");
 /* harmony import */ var _session_signup_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./session/signup_container */ "./frontend/components/session/signup_container.js");
 /* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sidebar/sidebar_container */ "./frontend/components/sidebar/sidebar_container.js");
+/* harmony import */ var _playbar_playbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./playbar/playbar */ "./frontend/components/playbar/playbar.jsx");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 
  // import GreetingContainer from "./greeting/greeting_container";
+
+
 
 
 
@@ -423,16 +427,22 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "app"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__.AuthRoute, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__.ProtectedRoute, {
+    path: "/",
+    component: _sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__.default
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__.AuthRoute, {
     path: "/login",
     component: _session_login_container__WEBPACK_IMPORTED_MODULE_1__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_4__.AuthRoute, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__.AuthRoute, {
     path: "/signup",
     component: _session_signup_container__WEBPACK_IMPORTED_MODULE_2__.default
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_3__.default
-  })));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__.ProtectedRoute, {
+    path: "/",
+    component: _playbar_playbar__WEBPACK_IMPORTED_MODULE_5__.default
+  }));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -452,27 +462,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _playlist_playlist_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../playlist/playlist_container */ "./frontend/components/playlist/playlist_container.js");
-/* harmony import */ var _sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../sidebar/sidebar_container */ "./frontend/components/sidebar/sidebar_container.js");
-/* harmony import */ var _playbar_playbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../playbar/playbar */ "./frontend/components/playbar/playbar.jsx");
 
 
 
 
-
-
-
+ // import SidebarContainer from '../sidebar/sidebar_container';
+// import Playbar from '../playbar/playbar';
 
 var Main = function Main(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     id: "main"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_sidebar_sidebar_container__WEBPACK_IMPORTED_MODULE_4__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Route, {
     exact: true,
     path: "/playlists/:id",
     component: _playlist_playlist_container__WEBPACK_IMPORTED_MODULE_3__.default
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_playbar_playbar__WEBPACK_IMPORTED_MODULE_5__.default, null));
+  })));
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Main);
@@ -674,16 +681,14 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: "far fa-clock"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         id: "border-bottom"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "playlist-song-list"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
         className: "song-list"
       }, !songs ? null : songs.map(function (song, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
           song: song,
           key: idx
         });
-      }))));
+      })));
     }
   }]);
 
@@ -1680,10 +1685,10 @@ var Splash = function Splash(_ref) {
   };
 
   var mainContent = function mainContent() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_main_main__WEBPACK_IMPORTED_MODULE_1__.default, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_main_main__WEBPACK_IMPORTED_MODULE_1__.default, {
       history: history,
       location: location
-    }));
+    });
   };
 
   return currentUser ? mainContent() : splashContent();

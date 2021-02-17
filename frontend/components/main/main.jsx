@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { logout } from '../../actions/session_actions';
 import PlaylistContainer from '../playlist/playlist_container';
-import SidebarContainer from '../sidebar/sidebar_container';
-import Playbar from '../playbar/playbar';
+// import SidebarContainer from '../sidebar/sidebar_container';
+// import Playbar from '../playbar/playbar';
 
 const Main = (props) => {
   return (
     <div id="main">
-      <SidebarContainer />
+      {/* <SidebarContainer /> */}
         <Switch>
           {/* <Route path="/search" component={SearchIndex} /> */}
           {/* <Route path="/library/playlists" component={PlaylistIndex} /> */}
@@ -19,7 +19,7 @@ const Main = (props) => {
           {/* <Route path="/artists/:id" component={ArtistShow} /> */}
           {/* <Route path="/albums/:id" component={AlbumShow} /> */}
         </Switch>
-        <Playbar />
+        {/* <Playbar /> */}
     </div>
   )
 }
