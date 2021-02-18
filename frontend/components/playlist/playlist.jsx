@@ -58,10 +58,10 @@ class Playlist extends React.Component {
           </ul>
             <span id="border-bottom"></span>
         </div> */}
-
+        
         <table className="song-columns">
           <thead>
-            <tr>
+            <tr className="song-column-header">
               <th className="song-column-num">#</th>
               <th className="song-column-title">TITLE</th>
               <th className="song-column-album">ALBUM</th>
@@ -69,9 +69,9 @@ class Playlist extends React.Component {
               <th className="song-column-duration"><i className="far fa-clock"></i></th>
             </tr>
           </thead>
-
+          
           <tbody>
-            { !songs ? null : songs.map((song, idx) => 
+            {songs.map((song, idx) => 
               <SongListItem song={song} key={idx} num={(idx + 1)} />
             )}
           </tbody>

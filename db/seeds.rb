@@ -51,7 +51,7 @@ album3.cover_art.attach(io: album3_art, filename: 'yacht.jpg')
 
 # Song Seeds
 # Chance the Rapper Songs
-song1 = Song.create!(title: "All We Got (feat. Kanye West and Chicago Children's Choir", track_num: 1, duration: 203, album_id: album1.id)
+song1 = Song.create!(title: "All We Got (feat. Kanye West and Chicago Children's Choir)", track_num: 1, duration: 203, album_id: album1.id)
 song2 = Song.create!(title: "No Problem (feat. Lil Wayne and 2 Chainz)", track_num: 2, duration: 305, album_id: album1.id)
 song3 = Song.create!(title: "Summer Friends (feat. Jeremih and Francis and the Lights)", track_num: 3, duration: 290, album_id: album1.id)
 song4 = Song.create!(title: "D.R.A.M. Sings Special", track_num: 4, duration: 101, album_id: album1.id)

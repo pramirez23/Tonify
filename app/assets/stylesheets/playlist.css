@@ -70,90 +70,32 @@ p.username {
   letter-spacing: 0.5px;
 }
 
-/* .playlist-song-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 74%;
-  background: #121212;
-  margin: 16px 0px -35px 198px;
-  width: 86%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.song-columns {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 0px 192px auto;
-  padding: 94px 0px 7px 0px;
-  color: #B3B3B3;
-  font-size: 12px;
-  letter-spacing: 1px;
-  height: 35px;
-}
-
-.song-columns ul {
-  display: flex;
-  justify-content: space-between;
-  margin: 2px auto 2px 86px;
-  flex-direction: row;
-  width: 100%;
-  padding: 10px 0px 0px 0px;
-  position: -webkit-sticky;
-  position: sticky;
-}
-
-.song-column-num {
-  font-size: 18px;
-  margin-top: -3px;
-  margin-right: 14px;
-}
-
-.song-column-album {
-  margin-left: 389px;
-}
-
-#border-bottom {
-  border-bottom: 0.1px solid #363636;
-  width: 108%;
-  margin: 7px 0px 0px 52px;
-}
-
-.num-title {
-  display: flex;
-}
-
-ul.song-list {
-  width: 80%;
-  display: table;
-  color: white;
-  letter-spacing: 0.1px;
-  font-size: 20px;
-  padding: 8px 170px 221px 0px;
-}
-
-.song {
-  display: flex;
-  flex-direction: row;
-  padding: 21px;
-} */
-
 table.song-columns {
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
   color: #B3B3B3;
-  position: absolute;
+  position: relative;
   padding: 0 50px 0 50px;
-  border-collapse: separate;
+  border-collapse: collapse;
+  border-spacing: 0 5px;
 }
 
 th {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
   text-align: left;
   /* background-color: #4CAF50; */
   color: white;
+}
+
+th.song-column-duration, td#duration-column {
+  text-align: right;
+}
+
+table th, table td{
+  display: table-cell;
+  vertical-align: middle;
 }
 
 td {
@@ -161,4 +103,38 @@ td {
  overflow: hidden;
  text-overflow: ellipsis;
  white-space: nowrap;
+ line-height: 100px;
+ /* height: 56px; */
+ vertical-align: middle;
+}
+
+/* .td-container {
+  height: 56px;
+} */
+
+#num-column {
+  width: 45px;
+}
+
+#title-column {
+  width: 45%;
+  height:  50px;
+}
+
+#album-column {
+  width: 30%;
+}
+
+tr.song-column-header {
+  border-bottom: 1px solid red;
+  height: 32px;
+}
+
+.song {
+  height: 56px;
+  vertical-align: middle;
+}
+
+tbody:first-child {
+  margin-top: 15px;
 }
