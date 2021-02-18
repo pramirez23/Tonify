@@ -4,27 +4,19 @@ import { Link } from 'react-router-dom';
 const SongListItem = ({ song, num }) => {
     return(
       <tr className="song">
-        <td id="num-column">
-          <div className="td-container">{num}</div>
+        <td className="num-column">{num}</td>
+
+        <td className="title-column">
+          {song.title}
+          <br/>
+          "this is the artist's name"
         </td>
 
-        <td id="title-column">
-          <div className="td-container">{song.title}</div>
-          <div>"this is the artist's name</div>
-        </td>
+        <td className="album-column">Album title placeholder</td>
 
-        <td id="album-column">
-          <div className="td-container">{song.album}
-          </div>
-        </td>
+        <td className="date-added-column">Date added here</td>
 
-        <td id="date-added-column">
-          <div className="td-container">Date added here</div>
-        </td>
-
-        <td id="duration-column">
-          <div className="td-container">{song.duration}</div>
-        </td>
+        <td className="duration-column">{song.duration}</td>
       </tr>
     )
 };

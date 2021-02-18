@@ -68,9 +68,11 @@ class Playlist extends React.Component {
               <th className="song-column-date">DATE ADDED</th>
               <th className="song-column-duration"><i className="far fa-clock"></i></th>
             </tr>
+
           </thead>
-          
+
           <tbody>
+            <tr className="null-row"><td className="null-td"></td></tr>
             {songs.map((song, idx) => 
               <SongListItem song={song} key={idx} num={(idx + 1)} />
             )}

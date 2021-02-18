@@ -99,29 +99,26 @@ table th, table td{
 }
 
 td {
- max-width: 100px;
- overflow: hidden;
- text-overflow: ellipsis;
- white-space: nowrap;
- line-height: 100px;
- /* height: 56px; */
- vertical-align: middle;
+  max-width: 100px;
+  vertical-align: middle;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* white-space: pre; */
 }
 
-/* .td-container {
-  height: 56px;
-} */
-
-#num-column {
+.num-column {
   width: 45px;
 }
 
-#title-column {
+.title-column {
   width: 45%;
-  height:  50px;
+  line-height: 1.45;
+  height: 50px;
 }
 
-#album-column {
+.album-column {
   width: 30%;
 }
 
@@ -137,4 +134,8 @@ tr.song-column-header {
 
 tbody:first-child {
   margin-top: 15px;
+}
+
+.null-td {
+  height: 15px;
 }
