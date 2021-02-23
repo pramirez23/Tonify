@@ -95,6 +95,21 @@ th.song-column-duration, td.duration-column {
   text-align: right;
 }
 
+th.song-column-num {
+  min-width: 25px;
+  width: 25px;
+}
+
+th.song-column-title {
+  width: 36vw;
+}
+
+th.song-column-album {
+  width: 30vw;
+}
+
+
+
 table th, table td{
   display: table-cell;
   vertical-align: middle;
