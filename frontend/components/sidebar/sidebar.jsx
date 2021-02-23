@@ -26,7 +26,6 @@ class Sidebar extends React.Component {
   };
 
   handleClick(e) {
-    
     this.props.fetchPlaylist()
   }
 

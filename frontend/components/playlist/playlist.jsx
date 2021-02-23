@@ -10,13 +10,12 @@ class Playlist extends React.Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchPlaylist(id);
-    // this.props.fetchPlaylistSongs(id);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       const { id } = this.props.match.params;
-      this.props.fetchPlaylist(id)
+      this.props.fetchPlaylist(id);
     }
   }
 
@@ -28,7 +27,7 @@ class Playlist extends React.Component {
     const playlistName = this.props.playlist.name;
     const userId = this.props.playlist.user_id;
     const username = this.props.users[userId].username;
-    const songs = this.props.songs;
+    // const songs = this.props.songs;
 
     return (
       <div id="playlist-show">
@@ -73,9 +72,9 @@ class Playlist extends React.Component {
 
           <tbody>
             <tr className="null-row"><td className="null-td"></td></tr>
-            {songs.map((song, idx) => 
+            {/* {songs.map((song, idx) => 
               <SongListItem song={song} key={idx} num={(idx + 1)} />
-            )}
+            )} */}
           </tbody>
         </table>
       </div>

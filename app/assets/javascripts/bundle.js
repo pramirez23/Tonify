@@ -121,10 +121,10 @@ var receivePlaylists = function receivePlaylists(playlists) {
     playlists: playlists
   };
 };
-var receivePlaylist = function receivePlaylist(playlist) {
+var receivePlaylist = function receivePlaylist(payload) {
   return {
     type: RECEIVE_PLAYLIST,
-    playlist: playlist
+    payload: payload
   };
 };
 var removePlaylist = function removePlaylist() {
@@ -622,7 +622,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var id = this.props.match.params.id;
-      this.props.fetchPlaylist(id); // this.props.fetchPlaylistSongs(id);
+      this.props.fetchPlaylist(id);
     }
   }, {
     key: "componentDidUpdate",
@@ -641,8 +641,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
 
       var playlistName = this.props.playlist.name;
       var userId = this.props.playlist.user_id;
-      var username = this.props.users[userId].username;
-      var songs = this.props.songs;
+      var username = this.props.users[userId].username; // const songs = this.props.songs;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "playlist-show"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -683,13 +683,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: "null-row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "null-td"
-      })), songs.map(function (song, idx) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
-          song: song,
-          key: idx,
-          num: idx + 1
-        });
-      }))));
+      })))));
     }
   }]);
 
@@ -1837,7 +1831,7 @@ var playlistsReducer = function playlistsReducer() {
       return action.playlists;
 
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST:
-      return Object.assign({}, state, _defineProperty({}, action.playlist.id, action.playlist));
+      return Object.assign({}, state, _defineProperty({}, action.payload.playlist.id, action.payload.playlist));
 
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.REMOVE_PLAYLIST:
       var newState = Object.assign({}, state);
@@ -1971,8 +1965,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/song_actions */ "./frontend/actions/song_actions.js");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -1984,12 +1976,15 @@ var songsReducer = function songsReducer() {
   switch (action.type) {
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONGS:
       return Object.assign({}, state, action.songs);
-
-    case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONG:
-      return Object.assign({}, state, _defineProperty({}, action.song.id, action.song));
+    // case RECEIVE_SONG:
+    //   return Object.assign({}, state, { [action.song.id]: action.song });
 
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_PLAYLIST:
-      return action.playlist.songs;
+      if (typeof action.payload.songs === 'undefined') {
+        return {};
+      } else {
+        return action.payload.songs;
+      }
 
     default:
       return state;
@@ -2382,10 +2377,10 @@ var fetchSong = function fetchSong(id) {
     url: "api/songs/".concat(id)
   });
 };
-var fetchPlaylistSongs = function fetchPlaylistSongs(playlistId) {
+var fetchPlaylistSongs = function fetchPlaylistSongs(id) {
   return $.ajax({
     method: "GET",
-    url: "/api/playlists/".concat(playlistId, "/songs")
+    url: "/api/playlists/".concat(id, "/songs")
   });
 };
 
