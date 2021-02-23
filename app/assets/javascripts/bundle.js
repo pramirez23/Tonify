@@ -641,8 +641,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
 
       var playlistName = this.props.playlist.name;
       var userId = this.props.playlist.user_id;
-      var username = this.props.users[userId].username; // const songs = this.props.songs;
-
+      var username = this.props.users[userId].username;
+      var songs = this.props.playlistSongs;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "playlist-show"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -683,7 +683,13 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: "null-row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "null-td"
-      })))));
+      })), songs.map(function (song, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
+          song: song,
+          key: idx,
+          num: idx + 1
+        });
+      }))));
     }
   }]);
 
@@ -724,9 +730,10 @@ var mSTP = function mSTP(state, ownProps) {
       songs = _state$entities.songs,
       users = _state$entities.users;
   var playlist = playlists[ownProps.match.params.id];
+  var playlistSongs = Object.values(songs);
   return {
     playlist: playlist,
-    songs: songs,
+    playlistSongs: playlistSongs,
     users: users
   };
 };
@@ -735,9 +742,6 @@ var mDTP = function mDTP(dispatch) {
   return {
     fetchPlaylist: function fetchPlaylist(id) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPlaylist)(id));
-    },
-    fetchPlaylistSongs: function fetchPlaylistSongs(playlistId) {
-      return dispatch((0,_actions_song_actions__WEBPACK_IMPORTED_MODULE_3__.fetchPlaylistSongs)(playlistId));
     },
     fetchUsers: function fetchUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.fetchUsers)());

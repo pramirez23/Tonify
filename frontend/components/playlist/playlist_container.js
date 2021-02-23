@@ -8,9 +8,11 @@ import Playlist from "./playlist"
 const mSTP = (state, ownProps) => {
   const { playlists, songs, users } = state.entities;
   const playlist = playlists[ownProps.match.params.id];
+  const playlistSongs = Object.values(songs);
+
   return {
     playlist,
-    songs,
+    playlistSongs,
     users
   };
 };
@@ -18,7 +20,6 @@ const mSTP = (state, ownProps) => {
 const mDTP = dispatch => {
   return {
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
-    fetchPlaylistSongs: playlistId => dispatch(fetchPlaylistSongs(playlistId)),
     fetchUsers: () => dispatch(fetchUsers())
   }
 };

@@ -27,7 +27,7 @@ class Playlist extends React.Component {
     const playlistName = this.props.playlist.name;
     const userId = this.props.playlist.user_id;
     const username = this.props.users[userId].username;
-    // const songs = this.props.songs;
+    const songs = this.props.playlistSongs;
 
     return (
       <div id="playlist-show">
@@ -72,9 +72,9 @@ class Playlist extends React.Component {
 
           <tbody>
             <tr className="null-row"><td className="null-td"></td></tr>
-            {/* {songs.map((song, idx) => 
+            {songs.map((song, idx) => 
               <SongListItem song={song} key={idx} num={(idx + 1)} />
-            )} */}
+            )}
           </tbody>
         </table>
       </div>
