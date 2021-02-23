@@ -54,18 +54,18 @@ const Splash = ({ currentUser, login, history }) => {
           <Link to="/">
             <img id="splash-footer-logo" src={window.tonifyWhiteURL} />
           </Link>
-            <div id="tech-stack-list">
-              <p id="tech-stack-title">TECH STACK</p>
-              <ul id="tech-stack">
-                <li>HTML 5</li>
-                <li>CSS 3</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Redux</li>
-                <li>Rails</li> 
-                <li>PostgreSQL</li> 
-              </ul>
-            </div>
+          <div id="tech-stack-list">
+            <p id="tech-stack-title">TECH STACK</p>
+            <ul id="tech-stack">
+              <li>HTML 5</li>
+              <li>CSS 3</li>
+              <li>JavaScript</li>
+              <li>React</li>
+              <li>Redux</li>
+              <li>Rails</li>
+              <li>PostgreSQL</li>
+            </ul>
+          </div>
 
           <div id="made-with-love">
             <p>Made with <i className="fas fa-heart"></i></p>
