@@ -10,12 +10,24 @@ class SongListItem extends React.Component {
     };
     
     this.handleHover = this.handleHover.bind(this);
+    this.renderTime = this.renderTime.bind(this);
   }
 
   handleHover() {
     this.setState({
       isHovering: !this.state.isHovering
     });
+  }
+  
+  renderTime(duration) {
+    let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+    
+    return `${minutes}:${seconds}`
   }
 
   render() {
@@ -44,13 +56,13 @@ class SongListItem extends React.Component {
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
-              <p>"this is the artist's name"</p>
+              <Link to={`/artists/${song.artist_id}`}>{song.artist}</Link>
             </div>
           </div>
         </td>
-        <td className="album-column">Album title placeholder</td>
+        <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">Date added here</td>
-        <td className="duration-column">{song.duration}</td>
+        <td className="duration-column">{this.renderTime(song.duration)}</td>
       </tr>
     )
   }

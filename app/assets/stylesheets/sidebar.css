@@ -182,7 +182,7 @@ ul.playlist-links::-webkit-scrollbar-thumb {
   padding: 15px 0px 1px 14px;
   font-weight: 100;
   font-size: 14px;
-  transition: all 0.3s ease-out;
+  /* transition: all 0.3s ease-out; */
 }
 
 .sidebar-playlist-item:hover {

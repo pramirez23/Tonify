@@ -41,11 +41,11 @@ album1 = Album.create!(title: "Coloring Book", artist: artist1, year: 2016, sing
 album1_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
-album2 = Album.create!(title: "positions", artist: artist1, year: 2020, single: false, genre: "Pop", duration: 2467)
+album2 = Album.create!(title: "positions", artist: artist2, year: 2020, single: false, genre: "Pop", duration: 2467)
 album2_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/Positions_%E2%80%93_Album_Cover.jpg')
 album2.cover_art.attach(io: album2_art, filename: 'Positions_%E2%80%93_Album_Cover.jpg')
 
-album3 = Album.create!(title: "Yacht", artist: artist1, year: 2017, single: true, genre: "Hip hop", duration: 246)
+album3 = Album.create!(title: "Yacht", artist: artist3, year: 2017, single: true, genre: "Hip hop", duration: 246)
 album3_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/yacht.jpg')
 album3.cover_art.attach(io: album3_art, filename: 'yacht.jpg')
 

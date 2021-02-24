@@ -141,6 +141,16 @@ td {
   /* white-space: pre; */
 }
 
+td > a, .title-artist-container > a, td > a:visited,
+.title-artist-container > a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+td > a:hover, .title-artist-container > a:hover {
+  text-decoration: underline;
+}
+
 .num-column {
   width: 45px;
 }
@@ -188,6 +198,7 @@ tr.song-column-header {
   height: 60px;
   vertical-align: middle;
   border-radius: 9px;
+  cursor: default;
 }
 
 .song:hover {
