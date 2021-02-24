@@ -99,6 +99,7 @@ th {
 
 th.song-column-duration, td.duration-column {
   text-align: center;
+  width: 5vw;
 }
 
 th.song-column-num, td.num-column {
@@ -107,7 +108,7 @@ th.song-column-num, td.num-column {
 }
 
 th.song-column-title, td.title-column {
-  width: 30vw;
+  width: 35vw;
 }
 
 th.song-column-title {
@@ -199,6 +200,7 @@ tr.song-column-header {
   vertical-align: middle;
   border-radius: 9px;
   cursor: default;
+  font-size: 14px;
 }
 
 .song:hover {
@@ -227,3 +229,14 @@ tbody:first-child {
   margin-right: 15px;
   margin-left: 20px;
 }
+
+.song-controls-container {
+  position: inherit;
+}
+
+.song-controls {
+  display: flex;
+  justify-content: space-around;
+  position: inherit;
+}
+

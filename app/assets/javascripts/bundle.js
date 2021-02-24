@@ -1635,14 +1635,24 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
 
       var song = this.props.song;
       var isHovering = this.state.isHovering;
+      var renderTime = this.renderTime;
       var playOrNum;
+      var songControls;
 
       if (isHovering) {
         playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-play"
         });
+        songControls = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "song-controls"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          "class": "far fa-heart"
+        }), renderTime(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          className: "fas fa-ellipsis-h"
+        }));
       } else {
         playOrNum = this.props.num;
+        songControls = this.renderTime(song.duration);
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -1677,9 +1687,11 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         to: "/albums/".concat(song.album_id)
       }, song.album)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "date-added-column"
-      }, "Date added here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      }, song.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "duration-column"
-      }, this.renderTime(song.duration)));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "song-controls-container"
+      }, songControls)));
     }
   }]);
 

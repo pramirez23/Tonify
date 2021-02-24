@@ -33,13 +33,22 @@ class SongListItem extends React.Component {
   render() {
     const song = this.props.song;
     const isHovering = this.state.isHovering;
-
+    const renderTime = this.renderTime;
     let playOrNum;
+    let songControls;
 
     if (isHovering) {
       playOrNum = <i className="fas fa-play"></i>;
+      songControls = (
+        <div className="song-controls">
+          <i class="far fa-heart"></i>
+          {renderTime(song.duration)}
+          <i className="fas fa-ellipsis-h"></i>
+        </div>
+      )
     } else {
       playOrNum = this.props.num;
+      songControls = this.renderTime(song.duration)
     }
 
     return (
@@ -61,8 +70,12 @@ class SongListItem extends React.Component {
           </div>
         </td>
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
-        <td className="date-added-column">Date added here</td>
-        <td className="duration-column">{this.renderTime(song.duration)}</td>
+        <td className="date-added-column">{song.created_at}</td>
+        <td className="duration-column">
+          <div className="song-controls-container">
+            {songControls}
+          </div>
+        </td>
       </tr>
     )
   }
