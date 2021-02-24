@@ -100,6 +100,7 @@ th {
 th.song-column-duration, td.duration-column {
   text-align: center;
   width: 5vw;
+  min-width: 90px;
 }
 
 th.song-column-num, td.num-column {
@@ -108,7 +109,8 @@ th.song-column-num, td.num-column {
 }
 
 th.song-column-title, td.title-column {
-  width: 35vw;
+  width: 30vw;
+  padding-right: 25px;
 }
 
 th.song-column-title {
@@ -240,3 +242,12 @@ tbody:first-child {
   position: inherit;
 }
 
+@media only screen and (max-width: 957px) {
+  th.song-column-date, td.date-added-column {
+    display: none;
+  }
+
+  h1.playlist-name {
+    font-size: 40px;
+  }
+}

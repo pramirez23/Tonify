@@ -70,7 +70,10 @@ class SongListItem extends React.Component {
           </div>
         </td>
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
-        <td className="date-added-column">{song.created_at}</td>
+        <td className="date-added-column">
+          {/* {song.created_at} */}
+          Feb 12, 2021
+        </td>
         <td className="duration-column">
           <div className="song-controls-container">
             {songControls}
