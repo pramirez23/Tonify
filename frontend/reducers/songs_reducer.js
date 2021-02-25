@@ -6,10 +6,14 @@ const songsReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.songs)
-    case RECEIVE_SONG:
-      return Object.assign({}, state, { [action.song.id]: action.song });
+    // case RECEIVE_SONG:
+    //   return Object.assign({}, state, { [action.song.id]: action.song });
     case RECEIVE_PLAYLIST:
-      return action.playlist.songs;
+      if (typeof action.payload.songs === 'undefined') {
+        return {};
+      } else {
+        return action.payload.songs
+      }
     default:
       return state;
   }

@@ -6,11 +6,15 @@ import { withRouter } from "react-router-dom"
 import Playlist from "./playlist"
 
 const mSTP = (state, ownProps) => {
+  const { id } = state.session
   const { playlists, songs, users } = state.entities;
   const playlist = playlists[ownProps.match.params.id];
+  const playlistSongs = Object.values(songs);
+
   return {
+    currentUser: id,
     playlist,
-    songs,
+    playlistSongs,
     users
   };
 };
@@ -18,7 +22,6 @@ const mSTP = (state, ownProps) => {
 const mDTP = dispatch => {
   return {
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
-    fetchPlaylistSongs: playlistId => dispatch(fetchPlaylistSongs(playlistId)),
     fetchUsers: () => dispatch(fetchUsers())
   }
 };

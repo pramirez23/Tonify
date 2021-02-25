@@ -41,11 +41,11 @@ album1 = Album.create!(title: "Coloring Book", artist: artist1, year: 2016, sing
 album1_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Chance+The+Rapper/Coloring_Book.jpg')
 album1.cover_art.attach(io: album1_art, filename: 'Coloring_Book.jpg')
 
-album2 = Album.create!(title: "positions", artist: artist1, year: 2020, single: false, genre: "Pop", duration: 2467)
+album2 = Album.create!(title: "positions", artist: artist2, year: 2020, single: false, genre: "Pop", duration: 2467)
 album2_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Ariana+Grande/Positions_%E2%80%93_Album_Cover.jpg')
 album2.cover_art.attach(io: album2_art, filename: 'Positions_%E2%80%93_Album_Cover.jpg')
 
-album3 = Album.create!(title: "Yacht", artist: artist1, year: 2017, single: true, genre: "Hip hop", duration: 246)
+album3 = Album.create!(title: "Yacht", artist: artist3, year: 2017, single: true, genre: "Hip hop", duration: 246)
 album3_art = URI.open('https://tonify-seeds.s3.amazonaws.com/Jay+Park/yacht.jpg')
 album3.cover_art.attach(io: album3_art, filename: 'yacht.jpg')
 
@@ -118,10 +118,18 @@ song17.audio_file.attach(io: song17_audio, filename: 'Jay+Park+-+Yacht+(K)+(Feat
 user1 = User.create!(username: "Demo User", password: "demopassword123", email: "demoemail@demo.com", email_confirmation: "demoemail@demo.com", gender: "NB", birthday:"1997/12/23")
 
 # Playlist seed
+
 playlist1 = Playlist.create!(user_id: user1.id, name: "Shower Time!", description: "Songs to shower to...", private: "false")
 playlist2 = Playlist.create!(user_id: user1.id, name: "Workout Jams", description: "GET PUMPED", private: "false")
 playlist3 = Playlist.create!(user_id: user1.id, name: "Coding Beats", description: "Songs to listen to while debugging at 4AM", private: "false")
 
+playlist_photo1 = URI.open('https://tonify-seeds.s3.amazonaws.com/default_playlist_image.png')
+playlist_photo2 = URI.open('https://tonify-seeds.s3.amazonaws.com/default_playlist_image.png')
+playlist_photo3 = URI.open('https://tonify-seeds.s3.amazonaws.com/default_playlist_image.png')
+
+playlist1.photo.attach(io: playlist_photo1, filename: 'default_playlist_image.png')
+playlist2.photo.attach(io: playlist_photo2, filename: 'default_playlist_image.png')
+playlist3.photo.attach(io: playlist_photo3, filename: 'default_playlist_image.png')
 # Playlist song seed (Add songs to playlist)
 playlistSong1 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song10.id)
 playlistSong2 = PlaylistSong.create!(playlist_id: playlist1.id, song_id: song1.id)

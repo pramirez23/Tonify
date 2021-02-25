@@ -9,7 +9,7 @@ class Api::SongsController < ApplicationController
   end
 
   def index
-    @songs = Song.joins(:playlists).where(playlists: { id: params[:id]})
+    @songs = Song.joins(:playlists).where(playlists: {id: params[:playlist_id]})
     render :index
   end 
 end
