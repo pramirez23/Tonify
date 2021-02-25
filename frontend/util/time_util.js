@@ -95,7 +95,7 @@ export const renderDateAdded = (date) => {
 
   } else if (convertToMinutes(timeDiff) >= 1) {
 
-    let numMins = convertToHours(timeDiff);
+    let numMins = convertToMinutes(timeDiff);
     if (numMins === 1) {
       return `${numMins} minute ago`;
     } else {
@@ -104,7 +104,7 @@ export const renderDateAdded = (date) => {
 
   } else if (convertToSeconds(timeDiff) >= 1) {
 
-    let numSecs = convertToHours(timeDiff);
+    let numSecs = convertToSeconds(timeDiff);
     if (numSecs === 1) {
       return `${numSecs} second ago`;
     } else {

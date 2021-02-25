@@ -614,9 +614,17 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   var _super = _createSuper(Playlist);
 
   function Playlist(props) {
+    var _this;
+
     _classCallCheck(this, Playlist);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      hideDropdown: true,
+      isLiked: false
+    };
+    _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Playlist, [{
@@ -634,6 +642,14 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "handleDropDown",
+    value: function handleDropDown(e) {
+      this.setState({
+        hideDropdown: !this.state.hideDropdown
+      });
+      e.stopPropagation();
+    }
+  }, {
     key: "render",
     value: function render() {
       if (!this.props.playlist) {
@@ -641,6 +657,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }
 
       var playlistName = this.props.playlist.name;
+      var currentUser = this.props.currentUser;
       var userId = this.props.playlist.user_id;
       var username = this.props.users[userId].username;
       var songs = this.props.playlistSongs;
@@ -664,11 +681,13 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
           id: "show-page-play",
           src: window.playButton
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "".concat(currentUser === userId ? "hidden" : "")
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "far fa-heart"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-ellipsis-h"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
           className: "song-columns"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
           className: "song-column-header"
@@ -757,6 +776,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mSTP = function mSTP(state, ownProps) {
+  var id = state.session.id;
   var _state$entities = state.entities,
       playlists = _state$entities.playlists,
       songs = _state$entities.songs,
@@ -764,6 +784,7 @@ var mSTP = function mSTP(state, ownProps) {
   var playlist = playlists[ownProps.match.params.id];
   var playlistSongs = Object.values(songs);
   return {
+    currentUser: id,
     playlist: playlist,
     playlistSongs: playlistSongs,
     users: users
@@ -1635,6 +1656,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, SongListItem);
 
     _this = _super.call(this, props);
+    _this.dateAdded = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderDateAdded)(_this.props.song.created_at);
     _this.state = {
       isHovering: false
     };
@@ -1707,7 +1729,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         to: "/albums/".concat(song.album_id)
       }, song.album)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "date-added-column"
-      }, (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderDateAdded)(song.created_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      }, this.dateAdded), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "duration-column"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-controls-container"
@@ -2610,7 +2632,7 @@ var renderDateAdded = function renderDateAdded(date) {
       return "".concat(numHours, " hours ago");
     }
   } else if (convertToMinutes(timeDiff) >= 1) {
-    var numMins = convertToHours(timeDiff);
+    var numMins = convertToMinutes(timeDiff);
 
     if (numMins === 1) {
       return "".concat(numMins, " minute ago");
@@ -2618,7 +2640,7 @@ var renderDateAdded = function renderDateAdded(date) {
       return "".concat(numMins, " minutes ago");
     }
   } else if (convertToSeconds(timeDiff) >= 1) {
-    var numSecs = convertToHours(timeDiff);
+    var numSecs = convertToSeconds(timeDiff);
 
     if (numSecs === 1) {
       return "".concat(numSecs, " second ago");

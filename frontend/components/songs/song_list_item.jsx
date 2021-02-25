@@ -5,7 +5,7 @@ import { renderDuration, renderDateAdded } from '../../util/time_util'
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.dateAdded = renderDateAdded(this.props.song.created_at)
     this.state = {
       isHovering: false
     };
@@ -60,7 +60,7 @@ class SongListItem extends React.Component {
         </td>
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">
-          {renderDateAdded(song.created_at)}
+          {this.dateAdded}
         </td>
         <td className="duration-column">
           <div className="song-controls-container">

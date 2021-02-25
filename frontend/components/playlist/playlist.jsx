@@ -5,6 +5,13 @@ import SongListItem from '../songs/song_list_item'
 class Playlist extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      hideDropdown: true,
+      isLiked: false
+    }
+
+    this.handleDropDown = this.handleDropDown.bind(this);
   }
 
   componentDidMount() {
@@ -19,12 +26,20 @@ class Playlist extends React.Component {
     }
   }
 
+  handleDropDown(e) {
+    this.setState({
+      hideDropdown: !this.state.hideDropdown
+    })
+    e.stopPropagation();
+  }
+
   render() { 
     if (!this.props.playlist) {
       return null;
     }
 
     const playlistName = this.props.playlist.name;
+    const currentUser = this.props.currentUser;
     const userId = this.props.playlist.user_id;
     const username = this.props.users[userId].username;
     const songs = this.props.playlistSongs;
@@ -43,8 +58,14 @@ class Playlist extends React.Component {
   
           <div className="show-page-controls">
             <img id="show-page-play" src={window.playButton} />
-            <i className="far fa-heart"></i>
-            <i className="fas fa-ellipsis-h"></i>
+
+            <div className={`${currentUser === userId ? "hidden" : ""}`}>
+              <i className="far fa-heart"></i>
+            </div>
+
+            <div>
+              <i className="fas fa-ellipsis-h"></i>
+            </div>
           </div>
           
           <table className="song-columns">
@@ -56,7 +77,6 @@ class Playlist extends React.Component {
                 <th className="song-column-date">DATE ADDED</th>
                 <th className="song-column-duration"><i className="far fa-clock"></i></th>
               </tr>
-  
             </thead>
   
             <tbody>
