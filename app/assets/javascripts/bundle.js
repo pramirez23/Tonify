@@ -1564,7 +1564,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_time_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/time_util */ "./frontend/util/time_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1590,6 +1591,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var SongListItem = /*#__PURE__*/function (_React$Component) {
   _inherits(SongListItem, _React$Component);
 
@@ -1605,7 +1607,6 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       isHovering: false
     };
     _this.handleHover = _this.handleHover.bind(_assertThisInitialized(_this));
-    _this.renderTime = _this.renderTime.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1617,25 +1618,12 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "renderTime",
-    value: function renderTime(duration) {
-      var minutes = Math.floor(duration / 60);
-      var seconds = duration % 60;
-
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-
-      return "".concat(minutes, ":").concat(seconds);
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       var song = this.props.song;
       var isHovering = this.state.isHovering;
-      var renderTime = this.renderTime;
       var playOrNum;
       var songControls;
 
@@ -1646,13 +1634,13 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         songControls = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "song-controls"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-          "class": "far fa-heart"
-        }), renderTime(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          className: "far fa-heart"
+        }), (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderDuration)(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-ellipsis-h"
         }));
       } else {
         playOrNum = this.props.num;
-        songControls = this.renderTime(song.duration);
+        songControls = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderDuration)(song.duration);
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -1679,15 +1667,15 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         className: "title-artist-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "song-title"
-      }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         to: "/artists/".concat(song.artist_id)
       }, song.artist)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "album-column"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
         to: "/albums/".concat(song.album_id)
       }, song.album)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "date-added-column"
-      }, "Feb 12, 2021"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      }, (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderDateAdded)(song.created_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "duration-column"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-controls-container"
@@ -2499,6 +2487,115 @@ var fetchPlaylistSongs = function fetchPlaylistSongs(id) {
     method: "GET",
     url: "/api/playlists/".concat(id, "/songs")
   });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/time_util.js":
+/*!************************************!*\
+  !*** ./frontend/util/time_util.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderDuration": () => /* binding */ renderDuration,
+/* harmony export */   "renderDateAdded": () => /* binding */ renderDateAdded
+/* harmony export */ });
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // convert units of time to milliseconds
+
+var second = 1000;
+var minute = second * 60;
+var hour = minute * 60;
+var day = hour * 24;
+var week = day * 7;
+var month = week * 4; // convert milliseconds from renderDateAdded function back to correct units
+
+var convertToSeconds = function convertToSeconds(ms) {
+  return Math.floor(ms / second);
+};
+
+var convertToMinutes = function convertToMinutes(ms) {
+  return Math.floor(ms / minute);
+};
+
+var convertToHours = function convertToHours(ms) {
+  return Math.floor(ms / hour);
+};
+
+var convertToDays = function convertToDays(ms) {
+  return Math.floor(ms / day);
+};
+
+var convertToWeeks = function convertToWeeks(ms) {
+  return Math.floor(ms / week);
+};
+
+var convertToMonths = function convertToMonths(ms) {
+  return Math.floor(ms / month);
+};
+
+var renderDuration = function renderDuration(duration) {
+  var minutes = Math.floor(duration / 60);
+  var seconds = duration % 60;
+
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+
+  return "".concat(minutes, ":").concat(seconds);
+};
+var renderDateAdded = function renderDateAdded(date) {
+  var currentTime = new Date();
+  var dateAdded = new Date(date);
+  var timeDiff = Math.abs(dateAdded - currentTime);
+
+  if (convertToMonths(timeDiff) > 1) {
+    return "".concat(months[dateAdded.getMonth()], " ").concat(dateAdded.getDate(), ", ").concat(dateAdded.getFullYear());
+  } else if (convertToWeeks(timeDiff) >= 1) {
+    var numWeeks = convertToWeeks(timeDiff);
+
+    if (numWeeks === 1) {
+      return "".concat(numWeeks, " week ago");
+    } else {
+      return "".concat(numWeeks, " weeks ago");
+    }
+  } else if (convertToDays(timeDiff) >= 1) {
+    var numDays = convertToDays(timeDiff);
+
+    if (numDays === 1) {
+      return "".concat(numDays, " day ago");
+    } else {
+      return "".concat(numDays, " days ago");
+    }
+  } else if (convertToHours(timeDiff) >= 1) {
+    var numHours = convertToHours(timeDiff);
+
+    if (numHours === 1) {
+      return "".concat(numHours, " hour ago");
+    } else {
+      return "".concat(numHours, " hours ago");
+    }
+  } else if (convertToMinutes(timeDiff) >= 1) {
+    var numMins = convertToHours(timeDiff);
+
+    if (numMins === 1) {
+      return "".concat(numMins, " minute ago");
+    } else {
+      return "".concat(numMins, " minutes ago");
+    }
+  } else if (convertToSeconds(timeDiff) >= 1) {
+    var numSecs = convertToHours(timeDiff);
+
+    if (numSecs === 1) {
+      return "".concat(numSecs, " second ago");
+    } else {
+      return "".concat(numSecs, " seconds ago");
+    }
+  } else {
+    return "Just now";
+  }
 };
 
 /***/ }),

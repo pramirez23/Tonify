@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
+import { renderDuration, renderDateAdded } from '../../util/time_util'
 
 class SongListItem extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ class SongListItem extends React.Component {
     };
     
     this.handleHover = this.handleHover.bind(this);
-    this.renderTime = this.renderTime.bind(this);
   }
 
   handleHover() {
@@ -18,22 +18,11 @@ class SongListItem extends React.Component {
       isHovering: !this.state.isHovering
     });
   }
-  
-  renderTime(duration) {
-    let minutes = Math.floor(duration / 60);
-    let seconds = duration % 60;
-
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-    
-    return `${minutes}:${seconds}`
-  }
 
   render() {
     const song = this.props.song;
     const isHovering = this.state.isHovering;
-    const renderTime = this.renderTime;
+
     let playOrNum;
     let songControls;
 
@@ -41,14 +30,14 @@ class SongListItem extends React.Component {
       playOrNum = <i className="fas fa-play"></i>;
       songControls = (
         <div className="song-controls">
-          <i class="far fa-heart"></i>
-          {renderTime(song.duration)}
+          <i className="far fa-heart"></i>
+          {renderDuration(song.duration)}
           <i className="fas fa-ellipsis-h"></i>
         </div>
       )
     } else {
       playOrNum = this.props.num;
-      songControls = this.renderTime(song.duration)
+      songControls = renderDuration(song.duration)
     }
 
     return (
@@ -71,8 +60,8 @@ class SongListItem extends React.Component {
         </td>
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">
-          {/* {song.created_at} */}
-          Feb 12, 2021
+          {renderDateAdded(song.created_at)}
+          {/* Feb 12, 2021 */}
         </td>
         <td className="duration-column">
           <div className="song-controls-container">
