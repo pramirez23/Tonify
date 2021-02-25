@@ -29,56 +29,68 @@ class Playlist extends React.Component {
     const username = this.props.users[userId].username;
     const songs = this.props.playlistSongs;
 
-    return (
-      <div id="playlist-show">
-        <div className="playlist-header">
-          <img className="playlist-photo" src={window.defaultPlaylistPicture} />
-          <div className="playlist-details">
-            <span>PLAYLIST</span>
-            <h1 className="playlist-name">{playlistName}</h1>
-            <p className="username">{username}</p>
+    const playlistContent = () => {
+      return (
+        <div id="playlist-show">
+          <div className="playlist-header">
+            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
+            <div className="playlist-details">
+              <span>PLAYLIST</span>
+              <h1 className="playlist-name">{playlistName}</h1>
+              <p className="username">{username}</p>
+            </div>
+          </div>
+  
+          <div className="show-page-controls">
+            <img id="show-page-play" src={window.playButton} />
+            <i className="far fa-heart"></i>
+            <i className="fas fa-ellipsis-h"></i>
+          </div>
+          
+          <table className="song-columns">
+            <thead>
+              <tr className="song-column-header">
+                <th className="song-column-num">#</th>
+                <th className="song-column-title">TITLE</th>
+                <th className="song-column-album">ALBUM</th>
+                <th className="song-column-date">DATE ADDED</th>
+                <th className="song-column-duration"><i className="far fa-clock"></i></th>
+              </tr>
+  
+            </thead>
+  
+            <tbody>
+              <tr className="null-row"><td className="null-td"></td></tr>
+              {songs.map((song, idx) => 
+                <SongListItem song={song} key={idx} num={(idx + 1)} />
+              )}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
+    const emptyPlaylist = () => {
+      return (
+        <div id="playlist-show">
+          <div className="playlist-header">
+            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
+            <div className="playlist-details">
+              <span>PLAYLIST</span>
+              <h1 className="playlist-name">{playlistName}</h1>
+              <p className="username">{username}</p>
+            </div>
+          </div>
+          <div className="empty-playlist">
+            <i className="fas fa-compact-disc"></i>
+            <p>It looks like you don't have anything in this playlist yet.</p>
+            <p> <Link to="/search">Search</Link> for some songs to add!</p>
           </div>
         </div>
-
-        <div className="show-page-controls">
-          <img id="show-page-play" src={window.playButton} />
-          <i className="fas fa-ellipsis-h"></i>
-        </div>
-
-        {/* <div className="song-columns">
-          <ul>
-            <div className="num-title">
-              <li className="song-column-num">#</li>
-              <li className="song-column-title">TITLE</li>
-            </div>
-            <li className="song-column-album">ALBUM</li>
-            <li className="song-column-date">DATE ADDED</li>
-            <li className="song-column-duration"><i className="far fa-clock"></i></li>
-          </ul>
-            <span id="border-bottom"></span>
-        </div> */}
-        
-        <table className="song-columns">
-          <thead>
-            <tr className="song-column-header">
-              <th className="song-column-num">#</th>
-              <th className="song-column-title">TITLE</th>
-              <th className="song-column-album">ALBUM</th>
-              <th className="song-column-date">DATE ADDED</th>
-              <th className="song-column-duration"><i className="far fa-clock"></i></th>
-            </tr>
-
-          </thead>
-
-          <tbody>
-            <tr className="null-row"><td className="null-td"></td></tr>
-            {songs.map((song, idx) => 
-              <SongListItem song={song} key={idx} num={(idx + 1)} />
-            )}
-          </tbody>
-        </table>
-      </div>
-    );
+      )
+    }
+    // debugger
+    return songs.length === 0 ? emptyPlaylist() : playlistContent();
   }
 }   
 export default Playlist;

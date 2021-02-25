@@ -45,6 +45,7 @@ img.playlist-photo {
   display: flex;
   justify-content: space-evenly;
   margin-top: 20px;
+  margin-left: 20px;
   margin-bottom: 20px;
   font-size: 30px;
   align-items: center;
@@ -242,6 +243,45 @@ tbody:first-child {
   position: inherit;
 }
 
+.empty-playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: #9F9F9F;
+  font-size: 25px;
+  height: 43vh;
+  justify-content: center;
+  position: inherit;
+  line-height: 35px;
+}
+
+.empty-playlist > a, .empty-playlist > a:visited {
+  color: #9F9F9F;
+  text-decoration: none;
+}
+
+.empty-playlist > i {
+  font-size: 150px;
+  color: #9F9F9F;
+  margin-bottom: 15px;
+  -webkit-animation: rotate 5s linear infinite;
+  -moz-animation: rotate 5s linear infinite;
+  -ms-animation: rotate 5s linear infinite;
+  -o-animation: rotate 5s linear infinite;
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media only screen and (max-width: 957px) {
   th.song-column-date, td.date-added-column {
     display: none;
@@ -251,3 +291,4 @@ tbody:first-child {
     font-size: 40px;
   }
 }
+
