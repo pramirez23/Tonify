@@ -621,8 +621,10 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       hideDropdown: true,
-      isLiked: false
+      isLiked: false,
+      isLoading: true
     };
+    _this.dropDown = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -630,15 +632,27 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   _createClass(Playlist, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var id = this.props.match.params.id;
-      this.props.fetchPlaylist(id);
+      this.props.fetchPlaylist(id).then(function () {
+        _this2.setState({
+          isLoading: false
+        });
+      });
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
       if (this.props.match.params.id !== prevProps.match.params.id) {
         var id = this.props.match.params.id;
-        this.props.fetchPlaylist(id);
+        this.props.fetchPlaylist(id).then(function () {
+          _this3.setState({
+            isLoading: false
+          });
+        });
       }
     }
   }, {
@@ -652,14 +666,24 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
+      if (this.state.isLoading) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "spinner-container"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          className: "fas fa-spinner"
+        }));
+      }
+
       if (!this.props.playlist) {
         return null;
       }
 
-      var playlistName = this.props.playlist.name;
+      var playlist = this.props.playlist;
       var currentUser = this.props.currentUser;
-      var userId = this.props.playlist.user_id;
-      var username = this.props.users[userId].username;
+      var playlistCreator = this.props.playlist.user_id;
+      var username = this.props.users[playlistCreator].username;
       var songs = this.props.playlistSongs;
 
       var playlistContent = function playlistContent() {
@@ -674,7 +698,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
           className: "playlist-name"
-        }, playlistName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        }, playlist.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           className: "username"
         }, username))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "show-page-controls"
@@ -682,10 +706,16 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           id: "show-page-play",
           src: window.playButton
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "".concat(currentUser === userId ? "hidden" : "")
+          className: "".concat(currentUser === playlistCreator ? "hidden" : "")
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "far fa-heart"
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "dropdown",
+          onClick: _this4.handleDropDown,
+          ref: function ref(div) {
+            return _this4.dropDown = div;
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-ellipsis-h"
         }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
           className: "song-columns"
@@ -728,9 +758,19 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
           className: "playlist-name"
-        }, playlistName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        }, playlist.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           className: "username"
         }, username))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "empty-playlist-controls"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "dropdown",
+          onClick: _this4.handleDropDown,
+          ref: function ref(div) {
+            return _this4.dropDown = div;
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          className: "fas fa-ellipsis-h"
+        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "empty-playlist"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-compact-disc"
@@ -765,10 +805,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
 /* harmony import */ var _actions_user_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/user_actions */ "./frontend/actions/user_actions.js");
-/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _playlist__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./playlist */ "./frontend/components/playlist/playlist.jsx");
-
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _playlist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./playlist */ "./frontend/components/playlist/playlist.jsx");
 
 
 
@@ -796,13 +834,19 @@ var mDTP = function mDTP(dispatch) {
     fetchPlaylist: function fetchPlaylist(id) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.fetchPlaylist)(id));
     },
+    updatePlaylist: function updatePlaylist(id) {
+      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.updatePlaylist)(id));
+    },
+    deletePlaylist: function deletePlaylist(id) {
+      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_1__.deletePlaylist)(id));
+    },
     fetchUsers: function fetchUsers() {
       return dispatch((0,_actions_user_actions__WEBPACK_IMPORTED_MODULE_2__.fetchUsers)());
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mSTP, mDTP)(_playlist__WEBPACK_IMPORTED_MODULE_4__.default)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mSTP, mDTP)(_playlist__WEBPACK_IMPORTED_MODULE_3__.default)));
 
 /***/ }),
 

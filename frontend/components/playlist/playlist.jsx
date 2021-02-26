@@ -8,21 +8,31 @@ class Playlist extends React.Component {
 
     this.state = {
       hideDropdown: true,
-      isLiked: false
+      isLiked: false,
+      isLoading: true
     }
 
+    this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchPlaylist(id);
+    this.props.fetchPlaylist(id).then( () => {
+      this.setState({
+        isLoading: false
+      })
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       const { id } = this.props.match.params;
-      this.props.fetchPlaylist(id);
+      this.props.fetchPlaylist(id).then(() => {
+        this.setState({
+          isLoading: false 
+        })
+      });
     }
   }
 
@@ -34,14 +44,22 @@ class Playlist extends React.Component {
   }
 
   render() { 
+    if (this.state.isLoading) {
+      return (
+        <div className="spinner-container">
+          <i className="fas fa-spinner"></i>
+        </div>
+      )
+    }
+
     if (!this.props.playlist) {
       return null;
     }
 
-    const playlistName = this.props.playlist.name;
+    const playlist = this.props.playlist;
     const currentUser = this.props.currentUser;
-    const userId = this.props.playlist.user_id;
-    const username = this.props.users[userId].username;
+    const playlistCreator = this.props.playlist.user_id;
+    const username = this.props.users[playlistCreator].username;
     const songs = this.props.playlistSongs;
 
     const playlistContent = () => {
@@ -51,7 +69,7 @@ class Playlist extends React.Component {
             <img className="playlist-photo" src={window.defaultPlaylistPicture} />
             <div className="playlist-details">
               <span>PLAYLIST</span>
-              <h1 className="playlist-name">{playlistName}</h1>
+              <h1 className="playlist-name">{playlist.name}</h1>
               <p className="username">{username}</p>
             </div>
           </div>
@@ -59,11 +77,11 @@ class Playlist extends React.Component {
           <div className="show-page-controls">
             <img id="show-page-play" src={window.playButton} />
 
-            <div className={`${currentUser === userId ? "hidden" : ""}`}>
+            <div className={`${currentUser === playlistCreator ? "hidden" : ""}`}>
               <i className="far fa-heart"></i>
             </div>
 
-            <div>
+            <div className="dropdown" onClick={this.handleDropDown} ref={div => this.dropDown = div} >
               <i className="fas fa-ellipsis-h"></i>
             </div>
           </div>
@@ -97,10 +115,17 @@ class Playlist extends React.Component {
             <img className="playlist-photo" src={window.defaultPlaylistPicture} />
             <div className="playlist-details">
               <span>PLAYLIST</span>
-              <h1 className="playlist-name">{playlistName}</h1>
+              <h1 className="playlist-name">{playlist.name}</h1>
               <p className="username">{username}</p>
             </div>
           </div>
+
+          <div className="empty-playlist-controls">
+            <div className="dropdown" onClick={this.handleDropDown} ref={div => this.dropDown = div} >
+              <i className="fas fa-ellipsis-h"></i>
+            </div>
+          </div>
+
           <div className="empty-playlist">
             <i className="fas fa-compact-disc"></i>
             <p>It looks like you don't have anything in this playlist yet.</p>
