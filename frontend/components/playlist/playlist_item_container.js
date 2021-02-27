@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { fetchPlaylist, updatePlaylist, deletePlaylist } from "../../actions/playlist_actions"
+import { fetchPlaylist } from "../../actions/playlist_actions"
 import { fetchUsers } from "../../actions/user_actions"
 import { withRouter } from "react-router-dom"
-import Playlist from "./playlist"
+import PlaylistItem from "./playlist_item"
 
 const mSTP = (state, ownProps) => {
   const { id } = state.session
@@ -27,4 +27,4 @@ const mDTP = dispatch => {
   }
 };
 
-export default withRouter(connect(mSTP, mDTP)(Playlist)); 
+export default withRouter(connect(mSTP, mDTP)(PlaylistItem)); 

@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { updatePlaylist, deletePlaylist } from "../../actions/playlist_actions"
 import SongListItem from '../songs/song_list_item'
 
 class Playlist extends React.Component {
@@ -17,15 +20,8 @@ class Playlist extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.fetchPlaylist(id).then( () => {
-      this.setState({
-        isLoading: false
-      })
-    });
-
     this.dropDownListener = e => {
-      if (!this.dropDown.contains(e.target)) this.setState({
+      if (this.dropDown &&!this.dropDown.contains(e.target)) this.setState({
         hideDropDown: true
       });
     }
@@ -34,19 +30,7 @@ class Playlist extends React.Component {
   }
 
   componentWillUnmount() {
-
     document.removeEventListener('click', this.dropDownListener);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.id !== prevProps.match.params.id) {
-      const { id } = this.props.match.params;
-      this.props.fetchPlaylist(id).then(() => {
-        this.setState({
-          isLoading: false 
-        })
-      });
-    }
   }
 
   handleDropDown(e) {
@@ -56,23 +40,15 @@ class Playlist extends React.Component {
   }
 
   render() { 
-    if (this.state.isLoading) {
-      return (
-        <div className="spinner-container">
-          <i className="fas fa-spinner"></i>
-        </div>
-      )
-    }
-
-    if (!this.props.playlist) {
+    if (!this.props.playlist || !this.props.songs) {
       return null;
     }
 
     const playlist = this.props.playlist;
     const currentUser = this.props.currentUser;
-    const playlistCreator = this.props.playlist.user_id;
-    const username = this.props.users[playlistCreator].username;
-    const songs = this.props.playlistSongs;
+    const playlistCreator = this.props.playlistCreator;
+    const username = this.props.username
+    const songs = this.props.songs;
 
     const playlistContent = () => {
       return (
@@ -160,8 +136,16 @@ class Playlist extends React.Component {
         </div>
       )
     }
-    // debugger
+
     return songs.length === 0 ? emptyPlaylist() : playlistContent();
   }
-}   
-export default Playlist;
+}  
+
+const mDTP = dispatch => {
+  return {
+    updatePlaylist: id => dispatch(updatePlaylist(id)),
+    deletePlaylist: id => dispatch(deletePlaylist(id)),
+  }
+};
+
+export default withRouter(connect(null, mDTP)(Playlist)); 
