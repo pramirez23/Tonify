@@ -77,6 +77,7 @@ img.playlist-photo {
   justify-content: center;
   color: #ADAEAE;
   position: absolute;
+  z-index: 1000;
 }
 
 img#show-page-play {
@@ -163,6 +164,10 @@ th.song-column-num, td.num-column {
   -ms-animation: rotate 2s linear infinite;
   -o-animation: rotate 2s linear infinite;
   animation: rotate 2s linear infinite;
+}
+
+.fa-ellipsis-h:hover {
+  color: white;
 }
 
 table th, table td{
@@ -305,6 +310,35 @@ tbody:first-child {
   -ms-animation: rotate 5s linear infinite;
   -o-animation: rotate 5s linear infinite;
   animation: rotate 5s linear infinite;
+}
+
+.playlist-dropdown-options {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: #282828;
+  height: 80px;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.playlist-dropdown-options > div {
+  color: white;
+  font-size: 15px;
+  letter-spacing: 1px;
+  height: 10px;
+  display: flex;
+  width: 136px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.playlist-dropdown-options > div:hover {
+  background: #4f4f4f;
 }
 
 @keyframes rotate {

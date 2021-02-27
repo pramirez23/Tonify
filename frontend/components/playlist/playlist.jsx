@@ -7,9 +7,9 @@ class Playlist extends React.Component {
     super(props);
 
     this.state = {
-      hideDropdown: true,
+      hideDropDown: true,
       isLiked: false,
-      isLoading: true
+      isLoading: true,
     }
 
     this.dropDown = React.createRef();
@@ -23,6 +23,19 @@ class Playlist extends React.Component {
         isLoading: false
       })
     });
+
+    this.dropDownListener = e => {
+      if (!this.dropDown.contains(e.target)) this.setState({
+        hideDropDown: true
+      });
+    }
+
+    document.addEventListener('click', this.dropDownListener, false);
+  }
+
+  componentWillUnmount() {
+
+    document.removeEventListener('click', this.dropDownListener);
   }
 
   componentDidUpdate(prevProps) {
@@ -38,9 +51,8 @@ class Playlist extends React.Component {
 
   handleDropDown(e) {
     this.setState({
-      hideDropdown: !this.state.hideDropdown
+      hideDropDown: !this.state.hideDropDown
     })
-    e.stopPropagation();
   }
 
   render() { 
@@ -81,8 +93,15 @@ class Playlist extends React.Component {
               <i className="far fa-heart"></i>
             </div>
 
-            <div className="dropdown" onClick={this.handleDropDown} ref={div => this.dropDown = div} >
+            <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
+              {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
+                <div onClick={() => editPlaylist(playlist.id)} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.props.deletePlaylist(playlist.id)
+                  .then(() => this.props.history.push("/library"))} className="delete-playlist">
+                  Delete
+                </div>
+              </div>}
             </div>
           </div>
           
@@ -121,8 +140,15 @@ class Playlist extends React.Component {
           </div>
 
           <div className="empty-playlist-controls">
-            <div className="dropdown" onClick={this.handleDropDown} ref={div => this.dropDown = div} >
+            <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
+              {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
+                <div onClick={() => editPlaylist(playlist.id)} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.props.deletePlaylist(playlist.id)
+                  .then(() => this.props.history.push("/library"))} className="delete-playlist">
+                    Delete
+                </div>
+              </div>}
             </div>
           </div>
 

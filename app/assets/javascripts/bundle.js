@@ -127,9 +127,10 @@ var receivePlaylist = function receivePlaylist(payload) {
     payload: payload
   };
 };
-var removePlaylist = function removePlaylist() {
+var removePlaylist = function removePlaylist(id) {
   return {
-    type: REMOVE_PLAYLIST
+    type: REMOVE_PLAYLIST,
+    playlistId: id
   };
 };
 var receivePlaylistErrors = function receivePlaylistErrors(errors) {
@@ -178,7 +179,7 @@ var updatePlaylist = function updatePlaylist(playlist) {
 var deletePlaylist = function deletePlaylist(id) {
   return function (dispatch) {
     return _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_0__.deletePlaylist(id).then(function () {
-      return dispatch(removePlaylist());
+      return dispatch(removePlaylist(id));
     });
   };
 };
@@ -620,7 +621,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      hideDropdown: true,
+      hideDropDown: true,
       isLiked: false,
       isLoading: true
     };
@@ -640,6 +641,19 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           isLoading: false
         });
       });
+
+      this.dropDownListener = function (e) {
+        if (!_this2.dropDown.contains(e.target)) _this2.setState({
+          hideDropDown: true
+        });
+      };
+
+      document.addEventListener('click', this.dropDownListener, false);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      document.removeEventListener('click', this.dropDownListener);
     }
   }, {
     key: "componentDidUpdate",
@@ -659,9 +673,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     key: "handleDropDown",
     value: function handleDropDown(e) {
       this.setState({
-        hideDropdown: !this.state.hideDropdown
+        hideDropDown: !this.state.hideDropDown
       });
-      e.stopPropagation();
     }
   }, {
     key: "render",
@@ -711,13 +724,32 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "far fa-heart"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "dropdown",
-          onClick: _this4.handleDropDown,
+          onClick: function onClick() {
+            return _this4.handleDropDown();
+          },
           ref: function ref(div) {
             return _this4.dropDown = div;
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-ellipsis-h"
-        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+        }), !_this4.state.hideDropDown && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "playlist-dropdown-options",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          onClick: function onClick() {
+            return editPlaylist(playlist.id);
+          },
+          className: "edit-playlist"
+        }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          onClick: function onClick() {
+            return _this4.props.deletePlaylist(playlist.id).then(function () {
+              return _this4.props.history.push("/library");
+            });
+          },
+          className: "delete-playlist"
+        }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
           className: "song-columns"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
           className: "song-column-header"
@@ -764,13 +796,32 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "empty-playlist-controls"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "dropdown",
-          onClick: _this4.handleDropDown,
+          onClick: function onClick() {
+            return _this4.handleDropDown();
+          },
           ref: function ref(div) {
             return _this4.dropDown = div;
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-ellipsis-h"
-        }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        }), !_this4.state.hideDropDown && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          className: "playlist-dropdown-options",
+          onClick: function onClick(e) {
+            return e.stopPropagation();
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          onClick: function onClick() {
+            return editPlaylist(playlist.id);
+          },
+          className: "edit-playlist"
+        }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          onClick: function onClick() {
+            return _this4.props.deletePlaylist(playlist.id).then(function () {
+              return _this4.props.history.push("/library");
+            });
+          },
+          className: "delete-playlist"
+        }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "empty-playlist"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-compact-disc"
