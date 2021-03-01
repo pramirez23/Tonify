@@ -21,9 +21,10 @@ export const receivePlaylist = payload => {
   }
 };
 
-export const removePlaylist = () => {
+export const removePlaylist = (id) => {
   return {
-    type: REMOVE_PLAYLIST
+    type: REMOVE_PLAYLIST,
+    playlistId: id
   }
 };
 
@@ -72,7 +73,7 @@ export const updatePlaylist = playlist => dispatch => {
 
 export const deletePlaylist = id => dispatch => {
   return PlaylistAPIUtil.deletePlaylist(id)
-    .then(() => dispatch(removePlaylist()))
+    .then(() => dispatch(removePlaylist(id)))
 };
 
 export const addSongToPlaylist = playlistSong => dispatch => {

@@ -31,7 +31,7 @@ export const updatePlaylist = playlist => {
 export const deletePlaylist = id => {
   return $.ajax({
     method: 'DELETE',
-    url: `/api/playlists/${id}`
+    url: `/api/playlists/${id}`,
   })
 };
 

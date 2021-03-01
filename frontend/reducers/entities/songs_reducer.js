@@ -1,5 +1,5 @@
-import { RECEIVE_SONGS, RECEIVE_SONG } from "../actions/song_actions";
-import { RECEIVE_PLAYLIST } from "../actions/playlist_actions";
+import { RECEIVE_SONGS, RECEIVE_SONG } from "../../actions/song_actions";
+import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
 
 const songsReducer = (state = {}, action) => {
   Object.freeze(state);

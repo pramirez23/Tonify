@@ -9,6 +9,18 @@ div#playlist-show {
   bottom: 91px;
 }
 
+.spinner-container {
+  height: 100%;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  bottom: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 img.playlist-photo {
   width: 232px;
   height: 232px;
@@ -52,6 +64,21 @@ img.playlist-photo {
   color: #ADAEAE;
   width: 215px;
   padding: 0px;
+}
+
+.empty-playlist-controls {
+  display: flex;
+  height: 67px;
+  width: 100px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  color: #ADAEAE;
+  position: absolute;
+  z-index: 1000;
 }
 
 img#show-page-play {
@@ -118,16 +145,34 @@ th.song-column-title {
   padding-left: 20px;
 }
 
-th.song-column-album {
-  width: 30vw;
+th.song-column-album, td.album-column {
+  width: 20vw;
 }
 
 th.song-column-num, td.num-column {
   text-align: right;
 }
 
+th.song-column-date, td.date-added-column {
+  width: 20vw;
+}
+
 .fa-play {
   font-size: 14px;
+}
+
+.fa-spinner {
+  font-size: 165px;
+  color: #9f9f9f;
+  -webkit-animation: rotate 2s linear infinite;
+  -moz-animation: rotate 2s linear infinite;
+  -ms-animation: rotate 2s linear infinite;
+  -o-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+}
+
+.fa-ellipsis-h:hover {
+  color: white;
 }
 
 table th, table td{
@@ -235,6 +280,7 @@ tbody:first-child {
 
 .song-controls-container {
   position: inherit;
+  height: 15px;
 }
 
 .song-controls {
@@ -270,6 +316,36 @@ tbody:first-child {
   -ms-animation: rotate 5s linear infinite;
   -o-animation: rotate 5s linear infinite;
   animation: rotate 5s linear infinite;
+}
+
+.playlist-dropdown-options {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: #282828;
+  height: 80px;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.playlist-dropdown-options > div {
+  color: white;
+  font-size: 15px;
+  letter-spacing: 1px;
+  height: 10px;
+  display: flex;
+  width: 136px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.playlist-dropdown-options > div:hover {
+  background: #4f4f4f;
 }
 
 @keyframes rotate {
