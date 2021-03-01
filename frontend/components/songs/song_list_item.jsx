@@ -1,22 +1,60 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
-import { renderDuration, renderDateAdded } from '../../util/time_util'
+import { renderSongDuration, renderDateAdded } from '../../util/time_util'
 
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
-    this.dateAdded = renderDateAdded(this.props.song.created_at)
+
     this.state = {
-      isHovering: false
+      isHovering: false,
+      hideDropDown: true,
+      mousePos: null
     };
     
-    this.handleHover = this.handleHover.bind(this);
+    this.dateAdded = renderDateAdded(this.props.song.created_at)
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave =  this.handleMouseLeave.bind(this);
+    this.handleDropDown = this.handleDropDown.bind(this);
   }
 
-  handleHover() {
+  componentDidMount() {
+    this.dropDownListener = e => {
+      if (this.dropDown && !this.dropDown.contains(e.target)) this.setState({
+        hideDropDown: true
+      });
+    }
+
+    document.addEventListener('click', this.dropDownListener, false);
+    document.addEventListener('contextmenu', this.dropDownListener, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.dropDownListener);
+    document.removeEventListener('contextmenu', this.dropDownListener);
+  }
+
+  handleMouseEnter() {
     this.setState({
-      isHovering: !this.state.isHovering
-    });
+      isHovering: true
+    })
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      isHovering: false
+    })
+  }
+
+  handleDropDown(e) {
+    const mousePos = {
+      x: e.pageX - 200,
+      y: e.pageY
+    }
+    this.setState({
+      hideDropDown: !this.state.hideDropDown,
+      mousePos
+    })
   }
 
   render() {
@@ -31,26 +69,34 @@ class SongListItem extends React.Component {
       songControls = (
         <div className="song-controls">
           <i className="far fa-heart"></i>
-          {renderDuration(song.duration)}
-          <i className="fas fa-ellipsis-h"></i>
+          {renderSongDuration(song.duration)}
+          <div
+            className="dropdown"
+            onClick={(e) => this.handleDropDown(e)}
+            onContextMenu={(e) => this.handleDropDown(e)}
+            ref={div => this.dropDown = div}
+          >
+            <i className="fas fa-ellipsis-h"></i>
+          </div>
         </div>
       )
     } else {
       playOrNum = this.props.num;
-      songControls = renderDuration(song.duration)
+      songControls = renderSongDuration(song.duration)
     }
 
     return (
       <tr
         className="song"
-        onMouseEnter={() => this.handleHover()}
-        onMouseLeave={() => this.handleHover()}
+        onMouseEnter={() => this.handleMouseEnter()}
+        onMouseLeave={() => this.handleMouseLeave()}
+        onContextMenu={(e) => this.handleDropDown(e)}
       >
         <td className="num-column">{playOrNum}</td>
         <td className="title-column"> 
           <div className="title-details">
             <div className="item-art-container">
-              <img className="item-album-art" src={song.cover_art} alt="cover art" />
+              <img className="item-album-art" src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
@@ -66,6 +112,13 @@ class SongListItem extends React.Component {
           <div className="song-controls-container">
             {songControls}
           </div>
+          {!this.state.hideDropDown && <div className="song-dropdown-options" onClick={e => e.stopPropagation()}>
+            <div onClick={()=> console.log("You clicked papi")}>Add to queue</div>
+            <div onClick={()=> console.log("You clicked papi")}>Go to artist</div>
+            <div onClick={()=> console.log("You clicked papi")}>Go to album</div>
+            <div onClick={()=> console.log("You clicked papi")}>Remove from this playlist</div>
+            <div onClick={()=> console.log("You clicked papi")}>Add to playlist</div>
+          </div>}
         </td>
       </tr>
     )

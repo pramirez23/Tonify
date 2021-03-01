@@ -18,6 +18,7 @@ div#playlist-show {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 img.playlist-photo {
@@ -275,6 +276,7 @@ tbody:first-child {
 
 .song-controls-container {
   position: inherit;
+  height: 15px;
 }
 
 .song-controls {

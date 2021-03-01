@@ -46,7 +46,7 @@ const convertToMonths = (ms) => {
   return Math.floor(ms/month);
 }
 
-export const renderDuration = (duration) => {
+export const renderSongDuration = (duration) => {
   let minutes = Math.floor(duration / 60);
   let seconds = duration % 60;
 
@@ -55,6 +55,14 @@ export const renderDuration = (duration) => {
   }
 
   return `${minutes}:${seconds}`
+}
+
+export const renderTotalDuration = (duration) => {
+  let hours = Math.floor(duration / 3600);
+  let minutes = Math.floor(duration / 60);
+  let seconds = duration % 60;
+
+  return hours > 0 ? `${hours} hr ${minutes} min` : `${minutes} min ${seconds} sec`
 }
 
 export const renderDateAdded = (date) => {

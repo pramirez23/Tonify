@@ -1,0 +1,28 @@
+.song-dropdown-options {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: #282828;
+  height: 180px;
+  width: 170px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.song-dropdown-options > div {
+  color: white;
+  font-size: 15px;
+  letter-spacing: 1px;
+  height: 10px;
+  display: flex;
+  width: 136px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.song-dropdown-options > div:hover {
+  background: #4f4f4f;
+}

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { updatePlaylist, deletePlaylist } from "../../actions/playlist_actions"
+import { renderTotalDuration } from '../../util/time_util'
 import SongListItem from '../songs/song_list_item'
 
 class Playlist extends React.Component {
@@ -12,7 +13,6 @@ class Playlist extends React.Component {
     this.state = {
       hideDropDown: true,
       isLiked: false,
-      isLoading: true,
     }
 
     this.dropDown = React.createRef();
@@ -40,15 +40,13 @@ class Playlist extends React.Component {
   }
 
   render() { 
-    if (!this.props.playlist || !this.props.songs) {
+    const { playlist, currentUser, playlistCreator, username, songs } = this.props
+    const playlistDuration = Object.values(songs).map(song => song.duration).reduce((a, b) => a + b, 0);
+    const renderPlaylistDuration = renderTotalDuration(playlistDuration);
+
+    if (!playlist || !songs) {
       return null;
     }
-
-    const playlist = this.props.playlist;
-    const currentUser = this.props.currentUser;
-    const playlistCreator = this.props.playlistCreator;
-    const username = this.props.username
-    const songs = this.props.songs;
 
     const playlistContent = () => {
       return (
@@ -58,7 +56,7 @@ class Playlist extends React.Component {
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>
-              <p className="username">{username}</p>
+              <p className="username">{username} • {`${songs.length} songs, ${renderPlaylistDuration}`}</p>
             </div>
           </div>
   
@@ -95,7 +93,11 @@ class Playlist extends React.Component {
             <tbody>
               <tr className="null-row"><td className="null-td"></td></tr>
               {songs.map((song, idx) => 
-                <SongListItem song={song} key={idx} num={(idx + 1)} />
+                <SongListItem
+                  song={song}
+                  key={idx}
+                  num={(idx + 1)}
+                />
               )}
             </tbody>
           </table>
@@ -143,7 +145,7 @@ class Playlist extends React.Component {
 
 const mDTP = dispatch => {
   return {
-    updatePlaylist: id => dispatch(updatePlaylist(id)),
+    editPlaylist: id => dispatch(updatePlaylist(id)),
     deletePlaylist: id => dispatch(deletePlaylist(id)),
   }
 };
