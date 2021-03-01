@@ -145,8 +145,8 @@ class Playlist extends React.Component {
 
 const mDTP = dispatch => {
   return {
-    editPlaylist: id => dispatch(updatePlaylist(id)),
-    deletePlaylist: id => dispatch(deletePlaylist(id)),
+    editPlaylist: id => dispatch(openModal(id, 'editPlaylist')),
+    deletePlaylist: id => dispatch(openModal(id, 'deletePlaylist'))
   }
 };
 

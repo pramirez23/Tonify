@@ -145,12 +145,16 @@ th.song-column-title {
   padding-left: 20px;
 }
 
-th.song-column-album {
-  width: 30vw;
+th.song-column-album, td.album-column {
+  width: 20vw;
 }
 
 th.song-column-num, td.num-column {
   text-align: right;
+}
+
+th.song-column-date, td.date-added-column {
+  width: 20vw;
 }
 
 .fa-play {
@@ -324,6 +328,7 @@ tbody:first-child {
   justify-content: center;
   align-items: center;
   border-radius: 6px;
+  z-index: 1000;
 }
 
 .playlist-dropdown-options > div {
