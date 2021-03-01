@@ -565,7 +565,7 @@ var Modal = function Modal(props) {
       return props.closeModal();
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "modal-child",
+    className: props.modal.modal === "editPlaylist" ? "edit-modal-child" : "delete-modal-child",
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
@@ -710,13 +710,17 @@ var DeletePlaylistConfirmation = function DeletePlaylistConfirmation(props) {
     className: "delete-playlist-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "delete-playlist-prompt"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "`Delete $", playlist.name, "?`"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "This action cannot be undone.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "delete-modal-title"
+  }, "Delete ", playlist.name, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "This action cannot be undone.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "delete-playlist-buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "cancel-button",
     onClick: function onClick() {
       return props.closeModal();
     }
   }, "CANCEL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    className: "delete-button",
     onClick: function onClick() {
       return handleDelete(playlist.id);
     }

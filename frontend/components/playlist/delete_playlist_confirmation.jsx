@@ -20,13 +20,13 @@ const DeletePlaylistConfirmation = (props) => {
   return (
     <div className="delete-playlist-container">
       <div className="delete-playlist-prompt">
-        <p>`Delete ${playlist.name}?`</p>
+        <p className="delete-modal-title">Delete {playlist.name}?</p>
         <p>This action cannot be undone.</p>
       </div>
 
       <div className="delete-playlist-buttons">
-        <button onClick={() => props.closeModal()}>CANCEL</button>
-        <button onClick={() => handleDelete(playlist.id)}>DELETE</button>
+        <button className="cancel-button" onClick={() => props.closeModal()}>CANCEL</button>
+        <button className="delete-button" onClick={() => handleDelete(playlist.id)}>DELETE</button>
       </div>
     </div>
   )

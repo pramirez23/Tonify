@@ -21,7 +21,9 @@ const Modal = (props) => {
 
   return (
     <div className="modal-background" onClick={() => props.closeModal()}>
-      <div className="modal-child" onClick={e => e.stopPropagation()}>
+      <div
+        className={ props.modal.modal === "editPlaylist" ? "edit-modal-child" : "delete-modal-child" }
+        onClick={e => e.stopPropagation()}>
         {component}
       </div>
     </div>

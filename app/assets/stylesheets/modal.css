@@ -6,27 +6,97 @@
   left: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 10000;
-}
-
-.delete-modal-container {
-  text-align: center;
-  color: white;
-  width: 450px;
-  height: 500px;
   display: flex;
-  justify-content: space-around;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10001;
+  justify-content: center;
+  align-items: center;
 }
 
-.modal-child {
+.delete-modal-child {
   text-align: center;
   background: white;
-  width: 450px;
-  height: 500px;
+  display: flex;
+  height: 119px;
+  width: 303px;
+  border-radius: 10px;
+  padding: 16px;
+  justify-content: space-between;
+  flex-direction: column;
+  position: absolute;
+  top: 32%;
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+  animation: deleteModal 0.55s;
+  animation-fill-mode: forwards;
+}
+.delete-playlist-container {
+  text-align: start;
+  justify-content: center;
+  position: absolute;
+  z-index: 10001;
+  height: 120px;
+  position: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.delete-playlist-prompt {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50px;
+  letter-spacing: 0.2px;
+  font-size: 13px;
+}
+
+.delete-modal-title {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.delete-playlist-buttons {
+  float: right;
+  text-align: end;
+  width: 300px;  
+}
+
+.delete-playlist-buttons > button {
+  border: 0px;
+  border-radius: 26px;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 400;
+  font-size: 13px;
+  height: 37px;
+  width: 131px;
+  margin: 3px auto;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background: transparent;
+  color: #909090;
+  z-index: 9999;
+}
+
+.cancel-button:hover {
+  transform: scale(1.05);
+}
+
+.delete-button:hover {
+  transform: scale(1.05);
+  background: #36e066; 
+}
+
+.delete-button {
+  background: #2CB954;
+  color: white;
+  z-index: 10002;
+}
+
+.edit-modal-child {
+  text-align: center;
+  background: white;
   display: flex;
   justify-content: space-around;
   position: absolute;
@@ -48,4 +118,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10001;
+}
+
+@keyframes deleteModal {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(50%);
+    opacity: 1;
+  }
 }
