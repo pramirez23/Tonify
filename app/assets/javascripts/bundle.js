@@ -918,6 +918,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     };
     _this.dropDown = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
+    _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
+    _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -945,6 +947,22 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       this.setState({
         hideDropDown: !this.state.hideDropDown
       });
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      this.setState({
+        hideDropDown: true
+      });
+      this.props.editPlaylist(id);
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      this.setState({
+        hideDropDown: true
+      });
+      this.props.deletePlaylist(id);
     }
   }, {
     key: "render",
@@ -1008,12 +1026,12 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           onClick: function onClick() {
-            return _this3.props.editPlaylist(playlist.id, "editPlaylist");
+            return _this3.handleEdit(playlist.id);
           },
           className: "edit-playlist"
         }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           onClick: function onClick() {
-            return _this3.props.deletePlaylist(playlist.id, "deletePlaylist");
+            return _this3.handleDelete(playlist.id);
           },
           className: "delete-playlist"
         }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
@@ -1078,12 +1096,12 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           onClick: function onClick() {
-            return _this3.props.editPlaylist(playlist.id, "editPlaylist");
+            return _this3.handleEdit(playlist.id);
           },
           className: "edit-playlist"
         }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           onClick: function onClick() {
-            return _this3.props.deletePlaylist(playlist.id, "deletePlaylist");
+            return _this3.handleDelete(playlist.id);
           },
           className: "delete-playlist"
         }, "Delete")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {

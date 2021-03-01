@@ -17,6 +17,8 @@ class Playlist extends React.Component {
 
     this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +39,20 @@ class Playlist extends React.Component {
     this.setState({
       hideDropDown: !this.state.hideDropDown
     })
+  }
+
+  handleEdit(id) {
+    this.setState({
+      hideDropDown: true
+    })
+    this.props.editPlaylist(id)
+  }
+
+  handleDelete(id) {
+    this.setState({
+      hideDropDown: true
+    })
+    this.props.deletePlaylist(id)
   }
 
   render() { 
@@ -70,8 +86,8 @@ class Playlist extends React.Component {
             <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
               {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
-                <div onClick={() => this.props.editPlaylist(playlist.id, "editPlaylist")} className="edit-playlist">Edit details</div>
-                <div onClick={() => this.props.deletePlaylist(playlist.id, "deletePlaylist")} className="delete-playlist">Delete</div>
+                <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.handleDelete(playlist.id)} className="delete-playlist">Delete</div>
               </div>}
             </div>
           </div>
@@ -118,8 +134,8 @@ class Playlist extends React.Component {
             <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
               {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
-                <div onClick={() => this.props.editPlaylist(playlist.id, "editPlaylist")} className="edit-playlist">Edit details</div>
-                <div onClick={() => this.props.deletePlaylist(playlist.id, "deletePlaylist")} className="delete-playlist">Delete</div>
+                <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.handleDelete(playlist.id)} className="delete-playlist">Delete</div>
               </div>}
             </div>
           </div>
