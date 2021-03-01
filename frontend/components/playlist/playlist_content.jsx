@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { updatePlaylist, deletePlaylist } from "../../actions/playlist_actions"
+import { openModal } from '../../actions/modal_actions'
 import { renderTotalDuration } from '../../util/time_util'
 import SongListItem from '../songs/song_list_item'
 
@@ -70,11 +70,8 @@ class Playlist extends React.Component {
             <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
               {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
-                <div onClick={() => editPlaylist(playlist.id)} className="edit-playlist">Edit details</div>
-                <div onClick={() => this.props.deletePlaylist(playlist.id)
-                  .then(() => this.props.history.push("/library"))} className="delete-playlist">
-                  Delete
-                </div>
+                <div onClick={() => this.props.editPlaylist(playlist.id, "editPlaylist")} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.props.deletePlaylist(playlist.id, "deletePlaylist")} className="delete-playlist">Delete</div>
               </div>}
             </div>
           </div>
@@ -121,11 +118,8 @@ class Playlist extends React.Component {
             <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
               <i className="fas fa-ellipsis-h"></i>
               {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
-                <div onClick={() => editPlaylist(playlist.id)} className="edit-playlist">Edit details</div>
-                <div onClick={() => this.props.deletePlaylist(playlist.id)
-                  .then(() => this.props.history.push("/library"))} className="delete-playlist">
-                    Delete
-                </div>
+                <div onClick={() => this.props.editPlaylist(playlist.id, "editPlaylist")} className="edit-playlist">Edit details</div>
+                <div onClick={() => this.props.deletePlaylist(playlist.id, "deletePlaylist")} className="delete-playlist">Delete</div>
               </div>}
             </div>
           </div>

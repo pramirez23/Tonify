@@ -4,15 +4,15 @@ import { closeModal } from '../actions/modal_actions';
 import EditPlaylistForm from './playlist/edit_playlist_form';
 import DeletePlaylistConfirmation from './playlist/delete_playlist_confirmation';
 
-const Modal = ({ modal }) => {
-  if (!modal) return null;
+const Modal = (props) => {
+  if (!props.modal) return null;
   let component;
 
-  switch (modal) {
-    case 'Edit Playlist':
+  switch (props.modal.modal) {
+    case 'editPlaylist':
       component = <EditPlaylistForm />;
       break;
-    case 'Delete Playlist':
+    case 'deletePlaylist':
       component = <DeletePlaylistConfirmation />;
       break;
     default:
@@ -20,16 +20,13 @@ const Modal = ({ modal }) => {
   }
 
   return (
-    <div className={modal === "signup" ? "modal-background" : 'editP-background'} >
-      <div className={modal === "signup" ? "modal-child" : 'editP-child'} onClick={e => e.stopPropagation()}>
+    <div className="modal-background" onClick={() => props.closeModal()}>
+      <div className="modal-child" onClick={e => e.stopPropagation()}>
         {component}
       </div>
     </div>
   )
 }
-
-// onClick = { modal === "editprofile" ? closeModal : null}
-
 
 const mSTP = ({ ui }) => ({
   modal: ui.modal
@@ -39,4 +36,4 @@ const mDTP = dispatch => ({
   closeModal: () => dispatch(closeModal())
 });
 
-export default connect(mstp, mdtp)(Modal);
+export default connect(mSTP, mDTP)(Modal);

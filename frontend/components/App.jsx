@@ -7,6 +7,7 @@ import {
   HashRouter
 } from 'react-router-dom';
 // import GreetingContainer from "./greeting/greeting_container";
+import Modal from './modal';
 import LoginContainer from "./session/login_container";
 import SignupContainer from "./session/signup_container";
 import SplashContainer from "./splash/splash_container";
@@ -17,6 +18,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
   <div id="app">
+    <Modal />
     <ProtectedRoute path="/" component={SidebarContainer} />
     <Switch>
       <AuthRoute path="/login" component={LoginContainer} />
