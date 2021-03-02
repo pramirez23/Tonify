@@ -805,9 +805,19 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, EditPlaylistForm);
 
     _this = _super.call(this, props);
-    _this.state = _this.props.playlist;
-    _this.state.playlistUrl = null;
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    var _this$props$playlist = _this.props.playlist,
+        name = _this$props$playlist.name,
+        description = _this$props$playlist.description;
+    _this.state = {
+      name: name,
+      description: description,
+      nameFocused: false,
+      descriptionFocused: false,
+      playlistUrl: null
+    }; // this.handleSubmit = this.handleSubmit.bind(this);
+
+    _this.handleNameFocus = _this.handleNameFocus.bind(_assertThisInitialized(_this));
+    _this.handleDescriptionFocus = _this.handleDescriptionFocus.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -821,9 +831,102 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       };
     }
   }, {
+    key: "handleInput",
+    value: function handleInput(field) {
+      var _this3 = this;
+
+      return function (e) {
+        _this3.setState(_defineProperty({}, field, e.target.value));
+      };
+    }
+  }, {
+    key: "handleNameFocus",
+    value: function handleNameFocus() {
+      this.setState({
+        nameFocused: true
+      });
+    }
+  }, {
+    key: "handleNameBlur",
+    value: function handleNameBlur() {
+      this.setState({
+        nameFocused: false
+      });
+    }
+  }, {
+    key: "handleDescriptionFocus",
+    value: function handleDescriptionFocus() {
+      this.setState({
+        descriptionFocused: true
+      });
+    }
+  }, {
+    key: "handleDescriptionBlur",
+    value: function handleDescriptionBlur() {
+      this.setState({
+        descriptionFocused: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "This is the edit form"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, this.state));
+      var _this4 = this;
+
+      var _this$state = this.state,
+          name = _this$state.name,
+          description = _this$state.description;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "edit-playlist-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "edit-playlist-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "edit-playlist-title"
+      }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "close-modal-button",
+        onClick: function onClick() {
+          return _this4.props.closeModal();
+        }
+      }, "\u2715")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "edit-playlist-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "file"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "edit-playlist-inputs"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: this.state.nameFocused ? "playlist-name-label" : "hide-input",
+        htmlFor: "playlist-name-input"
+      }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        id: "playlist-name-input",
+        type: "text",
+        value: name,
+        onChange: this.handleInput('name'),
+        onFocus: function onFocus() {
+          return _this4.handleNameFocus();
+        },
+        onBlur: function onBlur() {
+          return _this4.handleNameBlur();
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: this.state.descriptionFocused ? "playlist-description-label" : "hide-input",
+        htmlFor: "playlist-description-input"
+      }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
+        id: "playlist-description-input",
+        placeholder: "Add an optional description",
+        value: description ? description : "",
+        onChange: this.handleInput('description'),
+        onFocus: function onFocus() {
+          return _this4.handleDescriptionFocus();
+        },
+        onBlur: function onBlur() {
+          return _this4.handleDescriptionBlur();
+        }
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "edit-playlist-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "save-button-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "save-button"
+      }, "SAVE")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By proceeding, you agree to give Tonify access to the image you choose to upload. Please make sure you have the right to upload the image.")));
     }
   }]);
 
@@ -834,7 +937,7 @@ var mSTP = function mSTP(_ref) {
   var playlists = _ref.entities.playlists,
       ui = _ref.ui;
   return {
-    playlist: playlists[ui.id]
+    playlist: playlists[ui.modal.id]
   };
 };
 
@@ -1231,17 +1334,19 @@ var PlaylistItem = /*#__PURE__*/function (_React$Component) {
         return null;
       }
 
-      var playlist = this.props.playlist;
-      var currentUser = this.props.currentUser;
-      var playlistCreator = this.props.playlist.user_id;
-      var username = this.props.users[playlistCreator].username;
-      var songs = this.props.playlistSongs;
+      var _this$props = this.props,
+          playlist = _this$props.playlist,
+          playlistSongs = _this$props.playlistSongs,
+          currentUser = _this$props.currentUser,
+          users = _this$props.users;
+      var playlistCreator = playlist.user_id;
+      var username = users[playlistCreator].username;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_playlist_content__WEBPACK_IMPORTED_MODULE_1__.default, {
         playlist: playlist,
         currentUser: currentUser,
         playlistCreator: playlistCreator,
         username: username,
-        songs: songs
+        songs: playlistSongs
       });
     }
   }]);
