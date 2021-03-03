@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { renderSongDuration, renderDateAdded } from '../../util/time_util'
+import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_song_actions'
 
 class SongListItem extends React.Component {
   constructor(props) {
@@ -26,13 +28,11 @@ class SongListItem extends React.Component {
       });
     }
 
-    document.addEventListener('mousedown', this.dropDownListener);
-    document.addEventListener('contextmenu', this.dropDownListener);
+    document.addEventListener('click', this.dropDownListener, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.dropDownListener);
-    document.removeEventListener('contextmenu', this.dropDownListener);
+    document.removeEventListener('click', this.dropDownListener);
   }
 
   handleMouseEnter() {
@@ -48,15 +48,10 @@ class SongListItem extends React.Component {
   }
 
   handleDropDown(e) {
-    e.preventDefault();
-    const mousePos = {
-      x: e.pageX - 200,
-      y: e.pageY
-    }
     this.setState({
       hideDropDown: !this.state.hideDropDown,
-      mousePos
     })
+    e.stopPropagation();
   }
 
   render() {
@@ -76,7 +71,6 @@ class SongListItem extends React.Component {
         className="song"
         onMouseEnter={() => this.handleMouseEnter()}
         onMouseLeave={() => this.handleMouseLeave()}
-        onContextMenu={(e) => this.handleDropDown(e)}
       >
         <td className="num-column">{playOrNum}</td>
         <td className="title-column"> 
@@ -101,18 +95,17 @@ class SongListItem extends React.Component {
               {renderSongDuration(song.duration)}
               <div
                 className={this.state.isHovering ? "dropdown" : "hidden"}
-                onMouseDown={(e) => this.handleDropDown(e)}
-                onContextMenu={(e) => this.handleDropDown(e)}
+                onMouseDown={this.handleDropDown}
                 ref={div => this.dropDown = div}
               ><i className="fas fa-ellipsis-h"></i></div>
             </div>
           </div>
           {!this.state.hideDropDown && <div className="song-dropdown-options">
-            <div onClick={()=> console.log("You clicked papi")}>Add to queue</div>
-            <div onClick={()=> console.log("You clicked papi")}>Go to artist</div>
-            <div onClick={()=> console.log("You clicked papi")}>Go to album</div>
-            <div onClick={()=> console.log("You clicked papi")}>Remove from this playlist</div>
-            <div onClick={()=> console.log("You clicked papi")}>Add to playlist</div>
+            <div onClick={() => console.log("You clicked papi")}>Add to queue</div>
+            <div onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
+            <div onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
+            <div onClick={() => console.log("You clicked papi")}>Remove from this playlist</div>
+            <div onClick={() => console.log("You clicked papi")}>Add to playlist</div>
           </div>}
         </td>
       </tr>
@@ -120,4 +113,11 @@ class SongListItem extends React.Component {
   }
 }
 
-export default withRouter(SongListItem);
+const mDTP = dispatch => {
+  return {
+    addSongToPlaylist: (playlistId, songId) => dispatch(addSongToPlaylist(playlistId, songId)),
+    removeSongFromPlaylist: (playlistId, songId) => dispatch(removeSongFromPlaylist(playlistId, songId))
+  }
+};
+
+export default withRouter(connect(null, mDTP)(SongListItem));

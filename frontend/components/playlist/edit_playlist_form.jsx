@@ -34,10 +34,6 @@ class EditPlaylistForm extends React.Component {
     }
   }
   
-  handleHover() {
-    
-  }
-
   handleEnter(e) {
     if (e.key === 'Enter') { e.preventDefault() }  
   }

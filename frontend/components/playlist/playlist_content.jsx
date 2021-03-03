@@ -113,6 +113,7 @@ class Playlist extends React.Component {
                   song={song}
                   key={idx}
                   num={(idx + 1)}
+                  history={this.props.history}
                 />
               )}
             </tbody>
