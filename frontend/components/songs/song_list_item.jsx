@@ -15,6 +15,7 @@ class SongListItem extends React.Component {
       mousePos: null
     };
     
+    this.dropDown = React.createRef()
     this.dateAdded = renderDateAdded(this.props.song.created_at)
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
@@ -28,11 +29,11 @@ class SongListItem extends React.Component {
       });
     }
 
-    document.addEventListener('click', this.dropDownListener, false);
+    document.addEventListener('mousedown', this.dropDownListener, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.dropDownListener);
+    document.removeEventListener('mousedown', this.dropDownListener);
   }
 
   handleMouseEnter() {
@@ -95,12 +96,12 @@ class SongListItem extends React.Component {
               {renderSongDuration(song.duration)}
               <div
                 className={this.state.isHovering ? "dropdown" : "hidden"}
-                onMouseDown={this.handleDropDown}
+                onClick={this.handleDropDown}
                 ref={div => this.dropDown = div}
               ><i className="fas fa-ellipsis-h"></i></div>
             </div>
           </div>
-          {!this.state.hideDropDown && <div className="song-dropdown-options">
+          {!this.state.hideDropDown && <div className="song-dropdown-options" onMouseDown={(e) => e.stopPropagation()}>
             <div onClick={() => console.log("You clicked papi")}>Add to queue</div>
             <div onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
             <div onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>

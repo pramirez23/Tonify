@@ -2437,6 +2437,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       hideDropDown: true,
       mousePos: null
     };
+    _this.dropDown = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.dateAdded = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_2__.renderDateAdded)(_this.props.song.created_at);
     _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
     _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
@@ -2455,12 +2456,12 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         });
       };
 
-      document.addEventListener('click', this.dropDownListener, false);
+      document.addEventListener('mousedown', this.dropDownListener, false);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      document.removeEventListener('click', this.dropDownListener);
+      document.removeEventListener('mousedown', this.dropDownListener);
     }
   }, {
     key: "handleMouseEnter",
@@ -2543,14 +2544,17 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         className: this.state.isHovering ? "far fa-heart" : "hidden"
       }), (0,_util_time_util__WEBPACK_IMPORTED_MODULE_2__.renderSongDuration)(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: this.state.isHovering ? "dropdown" : "hidden",
-        onMouseDown: this.handleDropDown,
+        onClick: this.handleDropDown,
         ref: function ref(div) {
           return _this3.dropDown = div;
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "fas fa-ellipsis-h"
       })))), !this.state.hideDropDown && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "song-dropdown-options"
+        className: "song-dropdown-options",
+        onMouseDown: function onMouseDown(e) {
+          return e.stopPropagation();
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         onClick: function onClick() {
           return console.log("You clicked papi");
