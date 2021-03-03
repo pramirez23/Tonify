@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   position: absolute;
+  right: 5px;
   background: #282828;
-  height: 180px;
-  width: 170px;
+  height: 182px;
+  width: 240px;
   justify-content: center;
   align-items: center;
   border-radius: 6px;
@@ -16,7 +17,7 @@
   letter-spacing: 1px;
   height: 10px;
   display: flex;
-  width: 136px;
+  width: 205px;
   align-items: center;
   padding: 12px;
   border-radius: 6px;

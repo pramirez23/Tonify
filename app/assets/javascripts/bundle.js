@@ -818,13 +818,15 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       nameFocused: false,
       descriptionFocused: false,
       photoPreview: null,
-      photoFile: null
+      photoFile: null,
+      isHovering: false
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
+    _this.handleEnter = _this.handleEnter.bind(_assertThisInitialized(_this));
+    _this.handleHover = _this.handleHover.bind(_assertThisInitialized(_this));
     _this.handleNameFocus = _this.handleNameFocus.bind(_assertThisInitialized(_this));
     _this.handleDescriptionFocus = _this.handleDescriptionFocus.bind(_assertThisInitialized(_this));
-    _this.handleEnter = _this.handleEnter.bind(_assertThisInitialized(_this));
+    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -837,6 +839,9 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         _this2.setState(_defineProperty({}, field, e.target.value));
       };
     }
+  }, {
+    key: "handleHover",
+    value: function handleHover() {}
   }, {
     key: "handleEnter",
     value: function handleEnter(e) {
@@ -926,7 +931,6 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
           name = _this$state2.name,
           description = _this$state2.description;
       var playlist = this.props.playlist;
-      console.log(this.state);
 
       var photoPreview = function photoPreview() {
         if (_this4.state.photoPreview) {
@@ -973,8 +977,11 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         type: "file",
         hidden: true
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-        className: "photo-preview",
+        className: "photo-overlay",
+        onHover: this.handleHover,
         htmlFor: "photo-upload"
+      }, window.photoOverlay), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "photo-preview"
       }, photoPreview())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-inputs"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
@@ -2347,6 +2354,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _util_time_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/time_util */ "./frontend/util/time_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2369,6 +2377,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -2408,13 +2417,13 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         });
       };
 
-      document.addEventListener('click', this.dropDownListener, false);
-      document.addEventListener('contextmenu', this.dropDownListener, false);
+      document.addEventListener('mousedown', this.dropDownListener);
+      document.addEventListener('contextmenu', this.dropDownListener);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      document.removeEventListener('click', this.dropDownListener);
+      document.removeEventListener('mousedown', this.dropDownListener);
       document.removeEventListener('contextmenu', this.dropDownListener);
     }
   }, {
@@ -2434,6 +2443,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleDropDown",
     value: function handleDropDown(e) {
+      e.preventDefault();
       var mousePos = {
         x: e.pageX - 200,
         y: e.pageY
@@ -2451,33 +2461,13 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var song = this.props.song;
       var isHovering = this.state.isHovering;
       var playOrNum;
-      var songControls;
 
       if (isHovering) {
         playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-play"
         });
-        songControls = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "song-controls"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-          className: "far fa-heart"
-        }), (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderSongDuration)(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "dropdown",
-          onClick: function onClick(e) {
-            return _this3.handleDropDown(e);
-          },
-          onContextMenu: function onContextMenu(e) {
-            return _this3.handleDropDown(e);
-          },
-          ref: function ref(div) {
-            return _this3.dropDown = div;
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-          className: "fas fa-ellipsis-h"
-        })));
       } else {
         playOrNum = this.props.num;
-        songControls = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderSongDuration)(song.duration);
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -2519,11 +2509,25 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         className: "duration-column"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-controls-container"
-      }, songControls), !this.state.hideDropDown && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "song-dropdown-options",
-        onClick: function onClick(e) {
-          return e.stopPropagation();
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "song-controls"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: this.state.isHovering ? "far fa-heart" : "hidden"
+      }), (0,_util_time_util__WEBPACK_IMPORTED_MODULE_1__.renderSongDuration)(song.duration), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: this.state.isHovering ? "dropdown" : "hidden",
+        onMouseDown: function onMouseDown(e) {
+          return _this3.handleDropDown(e);
+        },
+        onContextMenu: function onContextMenu(e) {
+          return _this3.handleDropDown(e);
+        },
+        ref: function ref(div) {
+          return _this3.dropDown = div;
         }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fas fa-ellipsis-h"
+      })))), !this.state.hideDropDown && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "song-dropdown-options"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         onClick: function onClick() {
           return console.log("You clicked papi");
@@ -2551,7 +2555,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
   return SongListItem;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SongListItem);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router__WEBPACK_IMPORTED_MODULE_3__.withRouter)(SongListItem));
 
 /***/ }),
 

@@ -16,14 +16,16 @@ class EditPlaylistForm extends React.Component {
       nameFocused: false,
       descriptionFocused: false,
       photoPreview: null,
-      photoFile: null
+      photoFile: null,
+      isHovering: false
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePhoto = this.handlePhoto.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleHover = this.handleHover.bind(this);
     this.handleNameFocus = this.handleNameFocus.bind(this);
     this.handleDescriptionFocus = this.handleDescriptionFocus.bind(this);
-    this.handleEnter = this.handleEnter.bind(this);
+    this.handlePhoto = this.handlePhoto.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInput(field) {
@@ -32,6 +34,10 @@ class EditPlaylistForm extends React.Component {
     }
   }
   
+  handleHover() {
+    
+  }
+
   handleEnter(e) {
     if (e.key === 'Enter') { e.preventDefault() }  
   }
@@ -89,7 +95,7 @@ class EditPlaylistForm extends React.Component {
   render() { 
     const { name, description } = this.state;
     const playlist = this.props.playlist;
-    console.log(this.state)
+
     const photoPreview = () => {
       if (this.state.photoPreview) {
         return <img className="edit-playlist-photo" src={this.state.photoPreview} alt="Playlist Photo"/>
@@ -113,7 +119,8 @@ class EditPlaylistForm extends React.Component {
         <div className="edit-playlist-form">
           <div className="photo-upload-container">
             <input id="photo-upload"className="photo-upload-form" onChange={this.handlePhoto} type="file" hidden/>
-            <label className="photo-preview" htmlFor="photo-upload">{photoPreview()}</label>
+            <label className="photo-overlay" onHover={this.handleHover} htmlFor="photo-upload">{window.photoOverlay}</label>
+            <div className="photo-preview">{photoPreview()}</div>
           </div>
 
           <div className="edit-playlist-inputs">

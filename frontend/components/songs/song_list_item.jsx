@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
+import { withRouter } from 'react-router';
 import { renderSongDuration, renderDateAdded } from '../../util/time_util'
 
 class SongListItem extends React.Component {
@@ -25,12 +26,12 @@ class SongListItem extends React.Component {
       });
     }
 
-    document.addEventListener('click', this.dropDownListener, false);
-    document.addEventListener('contextmenu', this.dropDownListener, false);
+    document.addEventListener('mousedown', this.dropDownListener);
+    document.addEventListener('contextmenu', this.dropDownListener);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.dropDownListener);
+    document.removeEventListener('mousedown', this.dropDownListener);
     document.removeEventListener('contextmenu', this.dropDownListener);
   }
 
@@ -47,6 +48,7 @@ class SongListItem extends React.Component {
   }
 
   handleDropDown(e) {
+    e.preventDefault();
     const mousePos = {
       x: e.pageX - 200,
       y: e.pageY
@@ -62,27 +64,11 @@ class SongListItem extends React.Component {
     const isHovering = this.state.isHovering;
 
     let playOrNum;
-    let songControls;
 
     if (isHovering) {
       playOrNum = <i className="fas fa-play"></i>;
-      songControls = (
-        <div className="song-controls">
-          <i className="far fa-heart"></i>
-          {renderSongDuration(song.duration)}
-          <div
-            className="dropdown"
-            onClick={(e) => this.handleDropDown(e)}
-            onContextMenu={(e) => this.handleDropDown(e)}
-            ref={div => this.dropDown = div}
-          >
-            <i className="fas fa-ellipsis-h"></i>
-          </div>
-        </div>
-      )
     } else {
       playOrNum = this.props.num;
-      songControls = renderSongDuration(song.duration)
     }
 
     return (
@@ -110,9 +96,18 @@ class SongListItem extends React.Component {
         </td>
         <td className="duration-column">
           <div className="song-controls-container">
-            {songControls}
+            <div className="song-controls">
+              <i className={this.state.isHovering ? "far fa-heart" : "hidden"}></i>
+              {renderSongDuration(song.duration)}
+              <div
+                className={this.state.isHovering ? "dropdown" : "hidden"}
+                onMouseDown={(e) => this.handleDropDown(e)}
+                onContextMenu={(e) => this.handleDropDown(e)}
+                ref={div => this.dropDown = div}
+              ><i className="fas fa-ellipsis-h"></i></div>
+            </div>
           </div>
-          {!this.state.hideDropDown && <div className="song-dropdown-options" onClick={e => e.stopPropagation()}>
+          {!this.state.hideDropDown && <div className="song-dropdown-options">
             <div onClick={()=> console.log("You clicked papi")}>Add to queue</div>
             <div onClick={()=> console.log("You clicked papi")}>Go to artist</div>
             <div onClick={()=> console.log("You clicked papi")}>Go to album</div>
@@ -125,4 +120,4 @@ class SongListItem extends React.Component {
   }
 }
 
-export default SongListItem;
+export default withRouter(SongListItem);
