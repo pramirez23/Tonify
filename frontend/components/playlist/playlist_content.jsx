@@ -72,8 +72,10 @@ class Playlist extends React.Component {
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>
-              <p className="playlist-description">{playlist.description}</p>
-              <p className="username">{username} • {`${songs.length} songs, ${renderPlaylistDuration}`}</p>
+              <div className="description-name-container">
+                <p className={playlist.description ? "playlist-description" : "hide-description"}>{playlist.description}</p>
+                <p className="username">{username} • {`${songs.length} songs, ${renderPlaylistDuration}`}</p>
+              </div>
             </div>
           </div>
   
@@ -127,7 +129,10 @@ class Playlist extends React.Component {
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>
-              <p className="username">{username}</p>
+              <div className="description-name-container">
+                <p className={playlist.description ? "playlist-description" : "hidden"}>{playlist.description}</p>
+                <p className="username">{username}</p>
+              </div>
             </div>
           </div>
 
