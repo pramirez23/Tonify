@@ -28,6 +28,7 @@ img.playlist-photo {
   position: absolute;
   margin-left: 35px;
   top: 160px;
+  object-fit: cover;
 }
 
 .playlist-header {

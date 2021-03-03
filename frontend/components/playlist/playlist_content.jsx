@@ -59,7 +59,7 @@ class Playlist extends React.Component {
     const { playlist, currentUser, playlistCreator, username, songs } = this.props
     const playlistDuration = Object.values(songs).map(song => song.duration).reduce((a, b) => a + b, 0);
     const renderPlaylistDuration = renderTotalDuration(playlistDuration);
-
+  
     if (!playlist || !songs) {
       return null;
     }
@@ -68,7 +68,7 @@ class Playlist extends React.Component {
       return (
         <div id="playlist-show">
           <div className="playlist-header">
-            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
+            <img className="playlist-photo" src={ playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture} />
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>
@@ -125,7 +125,7 @@ class Playlist extends React.Component {
       return (
         <div id="playlist-show">
           <div className="playlist-header">
-            <img className="playlist-photo" src={window.defaultPlaylistPicture} />
+            <img className="playlist-photo" src={playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture}  />
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>

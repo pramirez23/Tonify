@@ -817,9 +817,11 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       description: description,
       nameFocused: false,
       descriptionFocused: false,
-      photo: null
+      photoPreview: null,
+      photoFile: null
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
     _this.handleNameFocus = _this.handleNameFocus.bind(_assertThisInitialized(_this));
     _this.handleDescriptionFocus = _this.handleDescriptionFocus.bind(_assertThisInitialized(_this));
     _this.handleEnter = _this.handleEnter.bind(_assertThisInitialized(_this));
@@ -834,6 +836,13 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.target.value));
       };
+    }
+  }, {
+    key: "handleEnter",
+    value: function handleEnter(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
     }
   }, {
     key: "handleNameFocus",
@@ -864,6 +873,30 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handlePhoto",
+    value: function handlePhoto(e) {
+      var _this3 = this;
+
+      var reader = new FileReader();
+      var file = e.currentTarget.files[0];
+
+      reader.onloadend = function () {
+        return _this3.setState({
+          photoPreview: reader.result,
+          photoFile: file
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        this.setState({
+          photoPreview: "",
+          photoFile: null
+        });
+      }
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
@@ -871,34 +904,52 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
           id = _this$state.id,
           name = _this$state.name,
           description = _this$state.description,
-          photo = _this$state.photo;
+          photoFile = _this$state.photoFile;
       var formData = new FormData();
       formData.append('playlist[id]', id);
       formData.append('playlist[name]', name);
       formData.append('playlist[description]', description);
 
-      if (photo) {
-        formData.append('playlist[photo]', photo);
+      if (photoFile) {
+        formData.append('playlist[photo]', photoFile);
       }
 
       ;
       this.props.updatePlaylist(formData, id).then(this.props.closeModal());
     }
   }, {
-    key: "handleEnter",
-    value: function handleEnter(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state2 = this.state,
           name = _this$state2.name,
           description = _this$state2.description;
+      var playlist = this.props.playlist;
+      console.log(this.state);
+
+      var photoPreview = function photoPreview() {
+        if (_this4.state.photoPreview) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            className: "edit-playlist-photo",
+            src: _this4.state.photoPreview,
+            alt: "Playlist Photo"
+          });
+        } else if (playlist.photo_url) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            className: "edit-playlist-photo",
+            src: playlist.photo_url,
+            alt: "Playlist Photo"
+          });
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            className: "edit-playlist-photo",
+            src: window.defaultPlaylistPicture,
+            alt: "Playlist Photo"
+          });
+        }
+      };
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -909,16 +960,25 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         type: "button",
         className: "close-modal-button",
         onClick: function onClick() {
-          return _this3.props.closeModal();
+          return _this4.props.closeModal();
         }
       }, "\u2715")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-form"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "photo-upload-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
-        type: "file"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: "photo-upload",
+        className: "photo-upload-form",
+        onChange: this.handlePhoto,
+        type: "file",
+        hidden: true
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+        className: "photo-preview",
+        htmlFor: "photo-upload"
+      }, photoPreview())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-inputs"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-        className: this.state.nameFocused ? "playlist-name-label" : "hide-input",
+        className: this.state.nameFocused ? "playlist-name-label" : "hide-name",
         htmlFor: "playlist-name-input"
       }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         id: "playlist-name-input",
@@ -927,14 +987,14 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         maxLength: "100",
         onChange: this.handleInput('name'),
         onFocus: function onFocus() {
-          return _this3.handleNameFocus();
+          return _this4.handleNameFocus();
         },
         onBlur: function onBlur() {
-          return _this3.handleNameBlur();
+          return _this4.handleNameBlur();
         },
         onKeyPress: this.handleEnter
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
-        className: this.state.descriptionFocused ? "playlist-description-label" : "hide-input",
+        className: this.state.descriptionFocused ? "playlist-description-label" : "hide-description",
         htmlFor: "playlist-description-input"
       }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("textarea", {
         id: "playlist-description-input",
@@ -943,10 +1003,10 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         maxLength: "200",
         onChange: this.handleInput('description'),
         onFocus: function onFocus() {
-          return _this3.handleDescriptionFocus();
+          return _this4.handleDescriptionFocus();
         },
         onBlur: function onBlur() {
-          return _this3.handleDescriptionBlur();
+          return _this4.handleDescriptionBlur();
         },
         onKeyPress: this.handleEnter
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1126,7 +1186,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-header"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
           className: "playlist-photo",
-          src: window.defaultPlaylistPicture
+          src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
@@ -1207,7 +1267,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-header"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
           className: "playlist-photo",
-          src: window.defaultPlaylistPicture
+          src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {

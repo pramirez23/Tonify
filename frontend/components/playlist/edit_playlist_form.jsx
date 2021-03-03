@@ -15,10 +15,12 @@ class EditPlaylistForm extends React.Component {
       description,
       nameFocused: false,
       descriptionFocused: false,
-      photo: null
+      photoPreview: null,
+      photoFile: null
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePhoto = this.handlePhoto.bind(this);
     this.handleNameFocus = this.handleNameFocus.bind(this);
     this.handleDescriptionFocus = this.handleDescriptionFocus.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
@@ -28,6 +30,10 @@ class EditPlaylistForm extends React.Component {
     return e => {
       this.setState({ [field]: e.target.value });
     }
+  }
+  
+  handleEnter(e) {
+    if (e.key === 'Enter') { e.preventDefault() }  
   }
 
   handleNameFocus() {
@@ -54,26 +60,45 @@ class EditPlaylistForm extends React.Component {
     });
   }
 
+  handlePhoto(e) {
+    const reader = new FileReader();
+    const file = e.currentTarget.files[0];
+    reader.onloadend = () =>
+      this.setState({ photoPreview: reader.result, photoFile: file });
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      this.setState({ photoPreview: "", photoFile: null });
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
-    const { id, name, description, photo } = this.state;
+    const { id, name, description, photoFile } = this.state;
     const formData = new FormData();
 
     formData.append('playlist[id]', id);
     formData.append('playlist[name]', name);
     formData.append('playlist[description]', description);
-    if (photo) { formData.append('playlist[photo]', photo) };
+    if (photoFile) { formData.append('playlist[photo]', photoFile) };
 
     this.props.updatePlaylist(formData, id).then(this.props.closeModal());
   }
 
-  handleEnter(e) {
-    if (e.key === 'Enter') { e.preventDefault() }
-  }
-
   render() { 
-    const { name, description } = this.state
+    const { name, description } = this.state;
+    const playlist = this.props.playlist;
+    console.log(this.state)
+    const photoPreview = () => {
+      if (this.state.photoPreview) {
+        return <img className="edit-playlist-photo" src={this.state.photoPreview} alt="Playlist Photo"/>
+      } else if (playlist.photo_url) {
+        return <img className="edit-playlist-photo" src={playlist.photo_url} alt="Playlist Photo"/>
+      } else {
+        return <img className="edit-playlist-photo" src={window.defaultPlaylistPicture} alt="Playlist Photo"/>
+      }
+    };
 
     return (
       <div className="edit-playlist-container">
@@ -86,11 +111,14 @@ class EditPlaylistForm extends React.Component {
         </div>
 
         <div className="edit-playlist-form">
-          <input type="file"/>
+          <div className="photo-upload-container">
+            <input id="photo-upload"className="photo-upload-form" onChange={this.handlePhoto} type="file" hidden/>
+            <label className="photo-preview" htmlFor="photo-upload">{photoPreview()}</label>
+          </div>
 
           <div className="edit-playlist-inputs">
             <label
-              className={this.state.nameFocused ? "playlist-name-label" : "hide-input"}
+              className={this.state.nameFocused ? "playlist-name-label" : "hide-name"}
               htmlFor="playlist-name-input">Name</label>
             <input
               id="playlist-name-input"
@@ -102,7 +130,7 @@ class EditPlaylistForm extends React.Component {
               onBlur={() => this.handleNameBlur()}
               onKeyPress={this.handleEnter}/>
             <label
-              className={this.state.descriptionFocused ? "playlist-description-label" : "hide-input"}
+              className={this.state.descriptionFocused ? "playlist-description-label" : "hide-description"}
               htmlFor="playlist-description-input">Description</label>
             <textarea
               id="playlist-description-input"
