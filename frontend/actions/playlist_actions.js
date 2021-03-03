@@ -63,8 +63,8 @@ export const createPlaylist = playlist => dispatch => {
     )
 };
 
-export const updatePlaylist = playlist => dispatch => {
-  return PlaylistAPIUtil.updatePlaylist(playlist)
+export const updatePlaylist = (playlist, playlistId) => dispatch => {
+  return PlaylistAPIUtil.updatePlaylist(playlist, playlistId)
     .then(
       playlist => dispatch(receivePlaylist(playlist)),
       err => dispatch(receivePlaylistErrors(err.responseJSON))

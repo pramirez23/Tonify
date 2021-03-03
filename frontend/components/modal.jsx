@@ -20,7 +20,8 @@ const Modal = (props) => {
   }
 
   return (
-    <div className="modal-background" onClick={() => props.closeModal()}>
+    <div className="modal-background">
+      <div className="modal-close" onClick={() => props.closeModal()} />
       <div
         className={ props.modal.modal === "editPlaylist" ? "edit-modal-child" : "delete-modal-child" }
         onClick={e => e.stopPropagation()}>

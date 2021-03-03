@@ -45,6 +45,6 @@ class Api::PlaylistsController < ApplicationController
   private
 
   def playlist_params
-    params.require(:playlist).permit(:name, :description, :private)
+    params.require(:playlist).permit(:name, :description, :private, :photo)
   end
 end

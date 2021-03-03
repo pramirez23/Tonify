@@ -72,6 +72,7 @@ class Playlist extends React.Component {
             <div className="playlist-details">
               <span>PLAYLIST</span>
               <h1 className="playlist-name">{playlist.name}</h1>
+              <p className="playlist-description">{playlist.description}</p>
               <p className="username">{username} • {`${songs.length} songs, ${renderPlaylistDuration}`}</p>
             </div>
           </div>

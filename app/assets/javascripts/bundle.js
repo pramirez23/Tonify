@@ -198,9 +198,9 @@ var createPlaylist = function createPlaylist(playlist) {
     });
   };
 };
-var updatePlaylist = function updatePlaylist(playlist) {
+var updatePlaylist = function updatePlaylist(playlist, playlistId) {
   return function (dispatch) {
-    return _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_0__.updatePlaylist(playlist).then(function (playlist) {
+    return _util_playlist_api_util__WEBPACK_IMPORTED_MODULE_0__.updatePlaylist(playlist, playlistId).then(function (playlist) {
       return dispatch(receivePlaylist(playlist));
     }, function (err) {
       return dispatch(receivePlaylistErrors(err.responseJSON));
@@ -560,11 +560,13 @@ var Modal = function Modal(props) {
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "modal-background",
+    className: "modal-background"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "modal-close",
     onClick: function onClick() {
       return props.closeModal();
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: props.modal.modal === "editPlaylist" ? "edit-modal-child" : "delete-modal-child",
     onClick: function onClick(e) {
       return e.stopPropagation();
@@ -806,37 +808,31 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     var _this$props$playlist = _this.props.playlist,
+        id = _this$props$playlist.id,
         name = _this$props$playlist.name,
         description = _this$props$playlist.description;
     _this.state = {
+      id: id,
       name: name,
       description: description,
       nameFocused: false,
       descriptionFocused: false,
-      playlistUrl: null
-    }; // this.handleSubmit = this.handleSubmit.bind(this);
-
+      photo: null
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleNameFocus = _this.handleNameFocus.bind(_assertThisInitialized(_this));
     _this.handleDescriptionFocus = _this.handleDescriptionFocus.bind(_assertThisInitialized(_this));
+    _this.handleEnter = _this.handleEnter.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(EditPlaylistForm, [{
-    key: "handleChange",
-    value: function handleChange(field) {
+    key: "handleInput",
+    value: function handleInput(field) {
       var _this2 = this;
 
       return function (e) {
-        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
-      };
-    }
-  }, {
-    key: "handleInput",
-    value: function handleInput(field) {
-      var _this3 = this;
-
-      return function (e) {
-        _this3.setState(_defineProperty({}, field, e.target.value));
+        _this2.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {
@@ -868,13 +864,41 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var _this$state = this.state,
+          id = _this$state.id,
+          name = _this$state.name,
+          description = _this$state.description,
+          photo = _this$state.photo;
+      var formData = new FormData();
+      formData.append('playlist[id]', id);
+      formData.append('playlist[name]', name);
+      formData.append('playlist[description]', description);
+
+      if (photo) {
+        formData.append('playlist[photo]', photo);
+      }
+
+      ;
+      this.props.updatePlaylist(formData, id).then(this.props.closeModal());
+    }
+  }, {
+    key: "handleEnter",
+    value: function handleEnter(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
-      var _this$state = this.state,
-          name = _this$state.name,
-          description = _this$state.description;
+      var _this$state2 = this.state,
+          name = _this$state2.name,
+          description = _this$state2.description;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -882,9 +906,10 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: "edit-playlist-title"
       }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        type: "button",
         className: "close-modal-button",
         onClick: function onClick() {
-          return _this4.props.closeModal();
+          return _this3.props.closeModal();
         }
       }, "\u2715")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-form"
@@ -899,13 +924,15 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         id: "playlist-name-input",
         type: "text",
         value: name,
+        maxLength: "100",
         onChange: this.handleInput('name'),
         onFocus: function onFocus() {
-          return _this4.handleNameFocus();
+          return _this3.handleNameFocus();
         },
         onBlur: function onBlur() {
-          return _this4.handleNameBlur();
-        }
+          return _this3.handleNameBlur();
+        },
+        onKeyPress: this.handleEnter
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: this.state.descriptionFocused ? "playlist-description-label" : "hide-input",
         htmlFor: "playlist-description-input"
@@ -913,19 +940,22 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         id: "playlist-description-input",
         placeholder: "Add an optional description",
         value: description ? description : "",
+        maxLength: "200",
         onChange: this.handleInput('description'),
         onFocus: function onFocus() {
-          return _this4.handleDescriptionFocus();
+          return _this3.handleDescriptionFocus();
         },
         onBlur: function onBlur() {
-          return _this4.handleDescriptionBlur();
-        }
+          return _this3.handleDescriptionBlur();
+        },
+        onKeyPress: this.handleEnter
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "save-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "save-button"
+        className: "save-button",
+        onClick: this.handleSubmit
       }, "SAVE")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "By proceeding, you agree to give Tonify access to the image you choose to upload. Please make sure you have the right to upload the image.")));
     }
   }]);
@@ -943,8 +973,8 @@ var mSTP = function mSTP(_ref) {
 
 var mDTP = function mDTP(dispatch) {
   return {
-    updatePlaylist: function updatePlaylist(playlist) {
-      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_3__.updatePlaylist)(playlist));
+    updatePlaylist: function updatePlaylist(playlist, playlistId) {
+      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_3__.updatePlaylist)(playlist, playlistId));
     },
     closeModal: function closeModal() {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__.closeModal)());
@@ -1102,6 +1132,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
           className: "playlist-name"
         }, playlist.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+          className: "playlist-description"
+        }, playlist.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           className: "username"
         }, username, " \u2022 ", "".concat(songs.length, " songs, ").concat(renderPlaylistDuration)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "show-page-controls"
@@ -3109,13 +3141,13 @@ var createPlaylist = function createPlaylist(playlist) {
     }
   });
 };
-var updatePlaylist = function updatePlaylist(playlist) {
+var updatePlaylist = function updatePlaylist(playlist, playlistId) {
   return $.ajax({
     method: "PATCH",
-    url: "api/playlists/".concat(playlist.id),
-    data: {
-      playlist: playlist
-    }
+    url: "api/playlists/".concat(playlistId),
+    data: playlist,
+    contentType: false,
+    processData: false
   });
 };
 var deletePlaylist = function deletePlaylist(id) {

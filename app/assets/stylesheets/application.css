@@ -110,3 +110,7 @@ div#app {
 .hidden {
   display: none;
 }
+
+p > a { 
+  color: white;
+}
