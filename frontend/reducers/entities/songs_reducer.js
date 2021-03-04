@@ -1,5 +1,5 @@
 import { RECEIVE_SONGS, RECEIVE_SONG } from "../../actions/song_actions";
-import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
+import { RECEIVE_PLAYLIST, REMOVE_SONG } from "../../actions/playlist_actions";
 
 const songsReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -14,6 +14,10 @@ const songsReducer = (state = {}, action) => {
       } else {
         return action.payload.songs
       }
+    case REMOVE_SONG:
+      let newState = Object.assign({}, state);
+      delete newState[action.songId];
+      return newState;
     default:
       return state;
   }

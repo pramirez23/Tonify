@@ -12,23 +12,15 @@ class Api::PlaylistSongsController < ApplicationController
   end
 
   def destroy
-    @playlist_song = PlaylistSong.find(params[:id])
-    
+    @playlist_song = PlaylistSong.find_by(playlist_song_params)
+
     if @playlist_song
-      if @playlist_song.playlist_id == current_user.id
-        @playlist_song.destroy!
-        render json: ['Successfully removed'], status: 200
-      else
-        render json: ['You are not authorized to do this.'], status: 401
-      end
+      @playlist_song.destroy!
+      render json: ['Successfully removed'], status: 200
     else
       render json: ['Song not found'], status: 404
     end
   end
-
-  # def index
-  #   @playlist_songs = PlaylistSong.
-  # end 
 
   private
 

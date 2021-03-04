@@ -11,6 +11,7 @@ class SongListItem extends React.Component {
 
     this.state = {
       isHovering: false,
+      revealPlaylists: false,
       hideDropDown: true,
       mousePos: null
     };
@@ -25,7 +26,8 @@ class SongListItem extends React.Component {
   componentDidMount() {
     this.dropDownListener = e => {
       if (this.dropDown && !this.dropDown.contains(e.target)) this.setState({
-        hideDropDown: true
+        hideDropDown: true,
+        revealPlaylists: false
       });
     }
 
@@ -36,10 +38,20 @@ class SongListItem extends React.Component {
     document.removeEventListener('mousedown', this.dropDownListener);
   }
 
-  handleMouseEnter() {
-    this.setState({
-      isHovering: true
-    })
+  handleMouseEnter(e) {
+    if (e.target.className === "add-to-playlist") {
+      this.setState({
+        revealPlaylists: true
+      })
+    } else if (e.target.className === "song-dropdown-option") {
+      this.setState({
+        revealPlaylists: false
+      })
+    } else {
+      this.setState({
+        isHovering: true
+      })
+    }
   }
 
   handleMouseLeave() {
@@ -56,7 +68,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const song = this.props.song;
+    const { song, playlist, currentUser } = this.props;
     const isHovering = this.state.isHovering;
 
     let playOrNum;
@@ -70,7 +82,7 @@ class SongListItem extends React.Component {
     return (
       <tr
         className="song"
-        onMouseEnter={() => this.handleMouseEnter()}
+        onMouseEnter={(e) => this.handleMouseEnter(e)}
         onMouseLeave={() => this.handleMouseLeave()}
       >
         <td className="num-column">{playOrNum}</td>
@@ -85,10 +97,12 @@ class SongListItem extends React.Component {
             </div>
           </div>
         </td>
+        
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">
           {this.dateAdded}
         </td>
+
         <td className="duration-column">
           <div className="song-controls-container">
             <div className="song-controls">
@@ -101,13 +115,61 @@ class SongListItem extends React.Component {
               ><i className="fas fa-ellipsis-h"></i></div>
             </div>
           </div>
-          {!this.state.hideDropDown && <div className="song-dropdown-options" onMouseDown={(e) => e.stopPropagation()}>
-            <div onClick={() => console.log("You clicked papi")}>Add to queue</div>
-            <div onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
-            <div onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
-            <div onClick={() => console.log("You clicked papi")}>Remove from this playlist</div>
-            <div onClick={() => console.log("You clicked papi")}>Add to playlist</div>
+
+          {!this.state.hideDropDown && <div className={currentUser === playlist.user_id ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
+            <div
+              className="song-dropdown-option"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => console.log("You clicked papi")}>Add to queue</div>
+
+            <div
+              className="song-dropdown-option"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
+
+            <div
+              className="song-dropdown-option"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
+
+            <div
+              className={currentUser === playlist.user_id ? "song-dropdown-option" : "hidden"}
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={ () => this.props.removeSongFromPlaylist(playlist.id, song.id)
+                .then(() => this.setState({ hideDropDown: true })) }>Remove from this playlist</div>
+
+            <div
+              className="add-to-playlist"
+              onClick={() => this.props.addSongToPlaylist(playlist.id, song.id)}
+              onMouseEnter={(e) => this.handleMouseEnter(e)}>
+              <span>Add to playlist</span>
+              <i className="fas fa-caret-right"></i> 
+            </div>
+
+            <ul className={this.state.revealPlaylists ? "playlist-selector-container" : "hidden"}>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+              <li className="playlist-item">My Playlist #5</li>
+            </ul>
           </div>}
+
         </td>
       </tr>
     )

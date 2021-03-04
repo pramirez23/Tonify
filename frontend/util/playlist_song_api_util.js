@@ -1,14 +1,25 @@
-export const addSongToPlaylist = playlistSong => {
+export const addSongToPlaylist = (playlist_id, song_id) => {
   return $.ajax({
     method: 'POST',
-    url: '/api/playlists_songs',
-    data: { playlistSong }
+    url: '/api/playlist_songs',
+    data: {
+      playlist_song: {
+        playlist_id,
+        song_id,
+      }
+    }
   });
 };
 
-export const removeSongFromPlaylist = playlistSongId => {
+export const removeSongFromPlaylist = (playlist_id, song_id) => {
   return $.ajax({
     method: 'DELETE',
-    url: `/api/playlists_songs/${playlistSongId}`,
+    url: '/api/playlist_songs/-1',
+    data: {
+      playlist_song: {
+        playlist_id,
+        song_id,
+      }
+    }
   })
 };

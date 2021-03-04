@@ -56,7 +56,7 @@ class Playlist extends React.Component {
   }
 
   render() { 
-    const { playlist, currentUser, playlistCreator, username, songs } = this.props
+    const { playlist, currentUser, playlistCreator, username, songs, history } = this.props
     const playlistDuration = Object.values(songs).map(song => song.duration).reduce((a, b) => a + b, 0);
     const renderPlaylistDuration = renderTotalDuration(playlistDuration);
   
@@ -113,7 +113,9 @@ class Playlist extends React.Component {
                   song={song}
                   key={idx}
                   num={(idx + 1)}
-                  history={this.props.history}
+                  history={history}
+                  currentUser={currentUser}
+                  playlist={playlist}
                 />
               )}
             </tbody>
