@@ -68,10 +68,10 @@ class Playlist extends React.Component {
       return (
         <div id="playlist-show">
           <div className="playlist-header">
-            <img className="playlist-photo" src={ playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture} />
+            <img className="playlist-photo" onClick={() => this.handleEdit(playlist.id)} src={ playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture} />
             <div className="playlist-details">
               <span>PLAYLIST</span>
-              <h1 className="playlist-name">{playlist.name}</h1>
+              <h1 className="playlist-name" onClick={() => this.handleEdit(playlist.id)}>{playlist.name}</h1>
               <div className="description-name-container">
                 <p className={playlist.description ? "playlist-description" : "hide-description"}>{playlist.description}</p>
                 <p className="username">{username} • {`${songs.length} songs, ${renderPlaylistDuration}`}</p>
@@ -126,10 +126,10 @@ class Playlist extends React.Component {
       return (
         <div id="playlist-show">
           <div className="playlist-header">
-            <img className="playlist-photo" src={playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture}  />
+            <img className="playlist-photo" onClick={() => this.handleEdit(playlist.id)} src={playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture}  />
             <div className="playlist-details">
               <span>PLAYLIST</span>
-              <h1 className="playlist-name">{playlist.name}</h1>
+              <h1 className="playlist-name" onClick={() => this.handleEdit(playlist.id)}>{playlist.name}</h1>
               <div className="description-name-container">
                 <p className={playlist.description ? "playlist-description" : "hidden"}>{playlist.description}</p>
                 <p className="username">{username}</p>

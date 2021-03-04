@@ -134,7 +134,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 475px;
+  width: 492px;
 }
 
 .edit-playlist-header {
@@ -168,7 +168,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 210px;
+  height: 202px;
 }
 
 .edit-playlist-inputs > input {
@@ -182,7 +182,7 @@
   font-size: 14px;
   letter-spacing: 0.25px;
   height: 40px;
-  width: 256px;
+  width: 250px;
   padding: 0 12px;
 }
 
@@ -200,8 +200,8 @@
   color: white;
   font-family: inherit;
   background: hsla(0, 0%, 100%, .1);
-  width: 264px;
-  height: 90px;
+  width: 258px;
+  height: 77px;
   padding: 8px 8px 28px;
 }
 
@@ -233,22 +233,32 @@
   line-height: 16px;
 }
 
+.photo-preview {
+  position: relative;
+}
+
 .photo-upload-container {
-  height: 182px;
-  width: 182px;
+  height: 185px;
+  width: 185px;
 }
 
 .photo-upload-form {
-  height: 182px;
-  width: 182px;
+  height: 185px;
+  width: 185px;
   z-index: 10000;
   opacity: 0;
 }
 
-img.edit-playlist-photo {
+img.photo-overlay {
   position: absolute;
-  width: 183px;
-  height: 183px;
+  width: 185px;
+  height: 185px;
+  opacity: 0.9;
+}
+
+img.edit-playlist-photo {
+  width: 185px;
+  height: 185px;
   top: 71px;
   left: 23px;
   -webkit-box-shadow: 0px 1px 12px 4px #1d1d1d; 
@@ -265,7 +275,7 @@ img.edit-playlist-photo {
 }
 
 .playlist-name-label {
-  top: 53px;
+  top: 58px;
   left: 227px;
   width: 32px;
   /* background: #282828; */
@@ -280,7 +290,7 @@ img.edit-playlist-photo {
 }
 
 .playlist-description-label {
-  top: 115px;
+  top: 122px;
   left: 227px;
   width: 62px;
   /* background: #282828; */
@@ -297,7 +307,7 @@ img.edit-playlist-photo {
 .hide-name {
   /* animation: hide  0.5s;
   animation-fill-mode: forwards; */
-  top: 53px;
+  top: 58px;
   left: 227px;
   width: 32px;
   opacity: 0;
@@ -311,7 +321,7 @@ img.edit-playlist-photo {
 .hide-description {
   /* animation: hide  0.5s;
   animation-fill-mode: forwards; */
-  top: 115px;
+  top: 122px;
   left: 227px;
   opacity: 0;
   width: 62px;

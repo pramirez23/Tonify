@@ -855,9 +855,10 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       isHovering: false
     };
     _this.handleEnter = _this.handleEnter.bind(_assertThisInitialized(_this));
-    _this.handleHover = _this.handleHover.bind(_assertThisInitialized(_this));
     _this.handleNameFocus = _this.handleNameFocus.bind(_assertThisInitialized(_this));
     _this.handleDescriptionFocus = _this.handleDescriptionFocus.bind(_assertThisInitialized(_this));
+    _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
+    _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     _this.handlePhoto = _this.handlePhoto.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -878,6 +879,20 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       if (e.key === 'Enter') {
         e.preventDefault();
       }
+    }
+  }, {
+    key: "handleMouseEnter",
+    value: function handleMouseEnter() {
+      this.setState({
+        isHovering: true
+      });
+    }
+  }, {
+    key: "handleMouseLeave",
+    value: function handleMouseLeave() {
+      this.setState({
+        isHovering: false
+      });
     }
   }, {
     key: "handleNameFocus",
@@ -999,7 +1014,9 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
       }, "\u2715")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-form"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "photo-upload-container"
+        className: "photo-upload-container",
+        onMouseEnter: this.handleMouseEnter,
+        onMouseLeave: this.handleMouseLeave
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
         id: "photo-upload",
         className: "photo-upload-form",
@@ -1008,11 +1025,14 @@ var EditPlaylistForm = /*#__PURE__*/function (_React$Component) {
         hidden: true
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: "photo-overlay",
-        onHover: this.handleHover,
         htmlFor: "photo-upload"
-      }, window.photoOverlay), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "photo-preview"
-      }, photoPreview())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: this.state.isHovering ? "photo-overlay" : "hidden",
+        src: window.photoOverlay,
+        alt: "Playlist Photo"
+      }), photoPreview()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "edit-playlist-inputs"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
         className: this.state.nameFocused ? "playlist-name-label" : "hide-name",
@@ -1223,11 +1243,17 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-header"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
           className: "playlist-photo",
+          onClick: function onClick() {
+            return _this3.handleEdit(playlist.id);
+          },
           src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
-          className: "playlist-name"
+          className: "playlist-name",
+          onClick: function onClick() {
+            return _this3.handleEdit(playlist.id);
+          }
         }, playlist.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "description-name-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
@@ -1305,11 +1331,17 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "playlist-header"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
           className: "playlist-photo",
+          onClick: function onClick() {
+            return _this3.handleEdit(playlist.id);
+          },
           src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture
         }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "playlist-details"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
-          className: "playlist-name"
+          className: "playlist-name",
+          onClick: function onClick() {
+            return _this3.handleEdit(playlist.id);
+          }
         }, playlist.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "description-name-container"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {

@@ -29,6 +29,7 @@ img.playlist-photo {
   margin-left: 35px;
   top: 160px;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .playlist-header {
@@ -103,6 +104,7 @@ h1.playlist-name {
   font-weight: 600;
   padding: 9px 0px 9px 0px;
   text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 .playlist-description {
@@ -345,11 +347,11 @@ tbody:first-child {
   flex-direction: column;
   position: absolute;
   background: #282828;
-  height: 80px;
-  width: 170px;
+  height: 76px;
+  width: 166px;
   justify-content: center;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 3px;
   z-index: 1000;
 }
 
@@ -359,10 +361,10 @@ tbody:first-child {
   letter-spacing: 1px;
   height: 10px;
   display: flex;
-  width: 136px;
+  width: 135px;
   align-items: center;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 3px;
   cursor: default;
 }
 
