@@ -44,7 +44,7 @@ class PlaylistItem extends React.Component {
       return null;
     }
 
-    const { playlist, playlistSongs, currentUser, users } = this.props;
+    const { playlist, songs, currentUser, users } = this.props;
     const playlistCreator = playlist.user_id; 
     const username = users[playlistCreator].username;
 
@@ -54,7 +54,7 @@ class PlaylistItem extends React.Component {
         currentUser={currentUser}
         playlistCreator={playlistCreator}
         username={username}
-        songs={playlistSongs}
+        songs={songs}
         history={history}
       />
     )

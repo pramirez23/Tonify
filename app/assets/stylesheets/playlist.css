@@ -74,13 +74,14 @@ img.playlist-photo {
   font-size: 30px;
   align-items: center;
   color: #ADAEAE;
+  height: 67px;
   width: 215px;
   padding: 0px;
 }
 
 .empty-playlist-controls {
   display: flex;
-  height: 67px;
+  height: 45px;
   width: 100px;
   margin-top: 20px;
   margin-left: 20px;

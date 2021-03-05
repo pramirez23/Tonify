@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { renderSongDuration, renderDateAdded } from '../../util/time_util'
-import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_song_actions'
+import { renderSongDuration, renderDateAdded } from '../../util/time_util';
+import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 
 class SongListItem extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -16,25 +18,37 @@ class SongListItem extends React.Component {
       mousePos: null
     };
     
-    this.dropDown = React.createRef()
-    this.dateAdded = renderDateAdded(this.props.song.created_at)
+    this.dropDown = React.createRef();
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
     this.handleDropDown = this.handleDropDown.bind(this);
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     this.dropDownListener = e => {
-      if (this.dropDown && !this.dropDown.contains(e.target)) this.setState({
-        hideDropDown: true,
-        revealPlaylists: false
-      });
+      if (this.dropDown && !this.dropDown.contains(e.target)) {
+        if (this._isMounted) {
+          this.setState({
+            hideDropDown: true,
+            revealPlaylists: false
+          });
+        }
+      }
     }
 
     document.addEventListener('mousedown', this.dropDownListener, false);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.dateAdded = renderDateAdded(this.props.song.created_at)
+    }
+  }
+
   componentWillUnmount() {
+    this._isMounted = false;
     document.removeEventListener('mousedown', this.dropDownListener);
   }
 
@@ -71,6 +85,11 @@ class SongListItem extends React.Component {
     const { song, playlist, currentUser } = this.props;
     const isHovering = this.state.isHovering;
 
+    let playlistIndex = this.props.playlists;
+
+    let userPlaylists = Object.values(playlistIndex).filter(playlist =>
+      playlist.user_id === this.props.currentUser);
+
     let playOrNum;
 
     if (isHovering) {
@@ -100,7 +119,7 @@ class SongListItem extends React.Component {
         
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">
-          {this.dateAdded}
+          {this.props.dateAdded}
         </td>
 
         <td className="duration-column">
@@ -135,39 +154,35 @@ class SongListItem extends React.Component {
             <div
               className={currentUser === playlist.user_id ? "song-dropdown-option" : "hidden"}
               onMouseEnter={(e) => this.handleMouseEnter(e)}
-              onClick={ () => this.props.removeSongFromPlaylist(playlist.id, song.id)
-                .then(() => this.setState({ hideDropDown: true })) }>Remove from this playlist</div>
+              onClick={ () => {
+                this.props.removeSongFromPlaylist(this.props.playlistSongId);
+                this.setState({
+                  hideDropDown: true,
+                  isHovering: false
+                });
+              }}>Remove from this playlist</div>
 
             <div
               className="add-to-playlist"
-              onClick={() => this.props.addSongToPlaylist(playlist.id, song.id)}
               onMouseEnter={(e) => this.handleMouseEnter(e)}>
               <span>Add to playlist</span>
               <i className="fas fa-caret-right"></i> 
             </div>
-
-            <ul className={this.state.revealPlaylists ? "playlist-selector-container" : "hidden"}>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-              <li className="playlist-item">My Playlist #5</li>
-            </ul>
+            
+            <div className="playlist-selector-container">
+              <ul className={this.state.revealPlaylists ? "playlist-selector" : "hidden"}>
+                {userPlaylists.slice(0).reverse().map(playlist =>
+                  <li
+                    key={playlist.id}
+                    className="playlist-item"
+                    onClick={() => this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
+                      .then(() => this.setState({
+                        hideDropDown: true,
+                        isHovering: false
+                      }))}>{playlist.name}</li>
+                )}
+              </ul>
+            </div>
           </div>}
 
         </td>
@@ -176,11 +191,21 @@ class SongListItem extends React.Component {
   }
 }
 
+const mSTP = state => {
+  const currentUser = state.session.id;
+  const { playlists } = state.entities;
+
+  return ({
+    playlists,
+    currentUser: currentUser,
+  });
+};
+
 const mDTP = dispatch => {
   return {
-    addSongToPlaylist: (playlistId, songId) => dispatch(addSongToPlaylist(playlistId, songId)),
-    removeSongFromPlaylist: (playlistId, songId) => dispatch(removeSongFromPlaylist(playlistId, songId))
+    addSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addSongToPlaylist(playlistId, songId, currentPlaylistId)),
+    removeSongFromPlaylist: (playlistSongId) => dispatch(removeSongFromPlaylist(playlistSongId))
   }
 };
 
-export default withRouter(connect(null, mDTP)(SongListItem));
+export default withRouter(connect(mSTP, mDTP)(SongListItem));
