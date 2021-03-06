@@ -41,13 +41,6 @@ class Playlist extends React.Component {
     document.addEventListener('click', this.dropDownListener, false);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.songs !== prevProps.songs) {
-  //     const { id } = this.props.match.params;
-  //     this.props.fetchPlaylist(id);
-  //   };
-  // }
-
   componentWillUnmount() {
     document.removeEventListener('click', this.dropDownListener);
   }

@@ -46,6 +46,22 @@ li.playlist-item:hover {
   background: #4f4f4f;
 }
 
+.add-to-queue:after, .add-to-playlist:before {
+  border-bottom: 1px solid #4f4f4f;
+  width: 228px;
+  right: 4px;
+  position: absolute;
+  content: "";
+}
+
+.add-to-queue:after {
+  top: 38px;
+}
+
+.add-to-playlist:before {
+  top: 140px;
+}
+
 .add-to-playlist {
   display: flex;
   justify-content: space-between;

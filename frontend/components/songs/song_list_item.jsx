@@ -137,7 +137,7 @@ class SongListItem extends React.Component {
 
           {!this.state.hideDropDown && <div className={currentUser === playlist.user_id ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
             <div
-              className="song-dropdown-option"
+              className="add-to-queue"
               onMouseEnter={(e) => this.handleMouseEnter(e)}
               onClick={() => console.log("You clicked papi")}>Add to queue</div>
 
