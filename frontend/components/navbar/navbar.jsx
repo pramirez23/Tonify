@@ -40,15 +40,15 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar">
         <div className="nav-button-container">
-          <button>
+          <div id="back-button-container">
             <i className="fas fa-chevron-circle-left"></i>
             <div className="button-background"></div>
-          </button>
+          </div>
 
-          <button>
+          <div id="forward-button-container">
             <i className="fas fa-chevron-circle-right"></i>
             <div className="button-background"></div>
-          </button>
+          </div>
         </div>
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>

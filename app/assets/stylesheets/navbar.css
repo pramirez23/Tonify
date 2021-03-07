@@ -16,31 +16,39 @@
 .nav-button-container {
   display: flex;
   width: 95px;
+  height: 31px;
   justify-content: space-around;
-  margin-left: 7px;
+  margin-left: 14px;
   font-size: 27px;
+  align-items: center;
 }
 
-.nav-button-container > button {
+#back-button-container, #forward-button-container {
   background: none;
   color: inherit;
   border: none;
   padding: 0;
   font: inherit;
-  cursor: pointer;
   outline: inherit;
   position: relative;
 }
 
+div#back-button-container, div#forward-button-container {
+  width: 15px;
+  height: 25px;
+}
+
+
 i.fas.fa-chevron-circle-right, i.fas.fa-chevron-circle-left  {
   position: absolute;
+  right: -4px;
+  cursor: pointer;
 }
 
 .button-background {
   background: white;
   width: 13px;
   height: 17px;
-  margin-left: 27px;
   margin-top: 4px;
 }
 
