@@ -36,17 +36,18 @@ class Navbar extends React.Component {
     })
   }
 
-  render() { 
+  render() {
+    console.log(this.props.history);
     return (
       <nav className="navbar">
         <div className="nav-button-container">
           <div id="back-button-container">
-            <i className="fas fa-chevron-circle-left"></i>
+            <i className="fas fa-chevron-circle-left" onClick={() => this.props.history.goBack()}></i>
             <div className="button-background"></div>
           </div>
 
           <div id="forward-button-container">
-            <i className="fas fa-chevron-circle-right"></i>
+            <i className="fas fa-chevron-circle-right" onClick={() => this.props.history.goForward()}></i>
             <div className="button-background"></div>
           </div>
         </div>

@@ -690,6 +690,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      console.log(this.props.history);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
         className: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -697,13 +698,19 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "back-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        className: "fas fa-chevron-circle-left"
+        className: "fas fa-chevron-circle-left",
+        onClick: function onClick() {
+          return _this3.props.history.goBack();
+        }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "button-background"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "forward-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        className: "fas fa-chevron-circle-right"
+        className: "fas fa-chevron-circle-right",
+        onClick: function onClick() {
+          return _this3.props.history.goForward();
+        }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "button-background"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
