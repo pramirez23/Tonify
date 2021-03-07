@@ -1,12 +1,12 @@
 import * as PlaylistSongAPIUtil from '../util/playlist_song_api_util';
-import { receivePlaylist } from './playlist_actions';
+import { removeSong, addSong } from './playlist_actions';
 
-export const addSongToPlaylist = playlistSong => dispatch => {
-  return PlaylistSongAPIUtil.addSongToPlaylist(playlistSong)
-    .then(playlist => dispatch(receivePlaylist(playlist)));
+export const addSongToPlaylist = (playlistId, song) => dispatch => {
+  return PlaylistSongAPIUtil.addSongToPlaylist(playlistId, song.id)
+    .then(() => dispatch(addSong(song)));
 }
 
-export const removeSongFromPlaylist = (playlistSongId) => dispatch => {
-  return PlaylistSongAPIUtil.removeSongFromPlaylist(playlistSongId)
-    .then(playlist => dispatch(receivePlaylist(playlist)));
+export const removeSongFromPlaylist = (playlistId, songId) => dispatch => {
+  return PlaylistSongAPIUtil.removeSongFromPlaylist(playlistId, songId)
+    .then(() => dispatch(removeSong(songId)));
 }

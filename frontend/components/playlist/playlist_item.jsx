@@ -1,7 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PlaylistContent from './playlist_content';
 
-export default class PlaylistItem extends React.Component {
+class PlaylistItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,11 +44,9 @@ export default class PlaylistItem extends React.Component {
       return null;
     }
 
-    const playlist = this.props.playlist;
-    const currentUser = this.props.currentUser;
-    const playlistCreator = this.props.playlist.user_id;
-    const username = this.props.users[playlistCreator].username;
-    const songs = this.props.playlistSongs;
+    const { playlist, songs, currentUser, users } = this.props;
+    const playlistCreator = playlist.user_id; 
+    const username = users[playlistCreator].username;
 
     return (
       <PlaylistContent 
@@ -56,7 +55,10 @@ export default class PlaylistItem extends React.Component {
         playlistCreator={playlistCreator}
         username={username}
         songs={songs}
+        history={history}
       />
     )
   }
 }
+
+export default withRouter(PlaylistItem);

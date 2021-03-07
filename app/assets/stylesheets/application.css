@@ -107,6 +107,10 @@ div#app {
   position: relative;
 }
 
-.hidden {
+.hidden, #hidden {
   display: none;
+}
+
+p > a { 
+  color: white;
 }

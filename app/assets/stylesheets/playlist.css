@@ -28,6 +28,8 @@ img.playlist-photo {
   position: absolute;
   margin-left: 35px;
   top: 160px;
+  object-fit: cover;
+  cursor: pointer;
 }
 
 .playlist-header {
@@ -47,10 +49,20 @@ img.playlist-photo {
 }
 
 .playlist-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 186px;
   margin-left: 300px;
-  margin-top: 173px;
+  margin-top: 123px;
   color: white;
   font-weight: 300;
+}
+
+.description-name-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .show-page-controls {
@@ -62,13 +74,14 @@ img.playlist-photo {
   font-size: 30px;
   align-items: center;
   color: #ADAEAE;
+  height: 67px;
   width: 215px;
   padding: 0px;
 }
 
 .empty-playlist-controls {
   display: flex;
-  height: 67px;
+  height: 45px;
   width: 100px;
   margin-top: 20px;
   margin-left: 20px;
@@ -86,16 +99,28 @@ img#show-page-play {
 }
 
 h1.playlist-name {
-  font-size: 60px;
+  font-size: 86px;
   overflow: hidden;
+  white-space: nowrap;
   font-weight: 600;
-  padding: 9px 0px 15px 0px;
+  padding: 9px 0px 9px 0px;
   text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.playlist-description {
+  font-weight: 300;
+  font-size: 12px;
+  height: 13px;
+  padding-bottom: 9px;
+  line-height: 13px;
+  letter-spacing: 0.25px;
+  color: #9F9F9F;
 }
 
 p.username {
   font-weight: 300;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.25px;
 }
 
 table.song-columns {
@@ -323,11 +348,11 @@ tbody:first-child {
   flex-direction: column;
   position: absolute;
   background: #282828;
-  height: 80px;
-  width: 170px;
+  height: 76px;
+  width: 166px;
   justify-content: center;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 3px;
   z-index: 1000;
 }
 
@@ -337,10 +362,10 @@ tbody:first-child {
   letter-spacing: 1px;
   height: 10px;
   display: flex;
-  width: 136px;
+  width: 135px;
   align-items: center;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 3px;
   cursor: default;
 }
 
@@ -358,6 +383,27 @@ tbody:first-child {
   }
 }
 
+@media only screen and (max-width: 1210px) {
+  th.song-column-date, td.date-added-column {
+    display: none;
+  }
+
+  h1.playlist-name {
+    font-size: 65px;
+  }
+
+  .playlist-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
+}
+
 @media only screen and (max-width: 957px) {
   th.song-column-date, td.date-added-column {
     display: none;
@@ -366,5 +412,15 @@ tbody:first-child {
   h1.playlist-name {
     font-size: 40px;
   }
-}
 
+  .playlist-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
+}

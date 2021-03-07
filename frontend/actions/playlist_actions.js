@@ -1,5 +1,6 @@
 import * as PlaylistAPIUtil from '../util/playlist_api_util';
 import * as PlaylistSongAPIUtil from '../util/playlist_song_api_util';
+import { openModal } from './modal_actions'
 
 export const RECEIVE_PLAYLISTS = "RECEIVE_PLAYLISTS";
 export const RECEIVE_PLAYLIST = "RECEIVE_PLAYLIST";
@@ -21,7 +22,7 @@ export const receivePlaylist = payload => {
   }
 };
 
-export const removePlaylist = (id) => {
+export const removePlaylist = id => {
   return {
     type: REMOVE_PLAYLIST,
     playlistId: id
@@ -63,8 +64,8 @@ export const createPlaylist = playlist => dispatch => {
     )
 };
 
-export const updatePlaylist = playlist => dispatch => {
-  return PlaylistAPIUtil.updatePlaylist(playlist)
+export const updatePlaylist = (playlist, playlistId) => dispatch => {
+  return PlaylistAPIUtil.updatePlaylist(playlist, playlistId)
     .then(
       playlist => dispatch(receivePlaylist(playlist)),
       err => dispatch(receivePlaylistErrors(err.responseJSON))
@@ -76,15 +77,15 @@ export const deletePlaylist = id => dispatch => {
     .then(() => dispatch(removePlaylist(id)))
 };
 
-export const addSongToPlaylist = playlistSong => dispatch => {
-  return PlaylistSongAPIUtil.addSongToPlaylist(playlistSong)
+export const addSongToPlaylist = (playlistId, songId, currentPlaylistId) => dispatch => {
+  return PlaylistSongAPIUtil.addSongToPlaylist(playlistId, songId, currentPlaylistId)
     .then(
       playlist => dispatch(receivePlaylist(playlist)),
       err => dispatch(receivePlaylistErrors(err.responseJSON))
     )
 };
 
-export const removeSongFromPlaylist = playlistSongId => dispatch => {
+export const removeSongFromPlaylist = (playlistSongId) => dispatch => {
   return PlaylistSongAPIUtil.removeSongFromPlaylist(playlistSongId)
     .then(
       playlist => dispatch(receivePlaylist(playlist)),

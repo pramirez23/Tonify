@@ -1,43 +1,71 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
-import { renderSongDuration, renderDateAdded } from '../../util/time_util'
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { renderSongDuration, renderDateAdded } from '../../util/time_util';
+import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 
 class SongListItem extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
     this.state = {
       isHovering: false,
+      revealPlaylists: false,
       hideDropDown: true,
       mousePos: null
     };
     
-    this.dateAdded = renderDateAdded(this.props.song.created_at)
+    this.dropDown = React.createRef();
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
     this.handleDropDown = this.handleDropDown.bind(this);
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     this.dropDownListener = e => {
-      if (this.dropDown && !this.dropDown.contains(e.target)) this.setState({
-        hideDropDown: true
-      });
+      if (this.dropDown && !this.dropDown.contains(e.target)) {
+        if (this._isMounted) {
+          this.setState({
+            hideDropDown: true,
+            revealPlaylists: false
+          });
+        }
+      }
     }
 
-    document.addEventListener('click', this.dropDownListener, false);
-    document.addEventListener('contextmenu', this.dropDownListener, false);
+    document.addEventListener('mousedown', this.dropDownListener, false);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.dateAdded = renderDateAdded(this.props.song.created_at)
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.dropDownListener);
-    document.removeEventListener('contextmenu', this.dropDownListener);
+    this._isMounted = false;
+    document.removeEventListener('mousedown', this.dropDownListener);
   }
 
-  handleMouseEnter() {
-    this.setState({
-      isHovering: true
-    })
+  handleMouseEnter(e) {
+    if (e.target.className === "add-to-playlist") {
+      this.setState({
+        revealPlaylists: true
+      })
+    } else if (e.target.className === "song-dropdown-option") {
+      this.setState({
+        revealPlaylists: false
+      })
+    } else {
+      this.setState({
+        isHovering: true
+      })
+    }
   }
 
   handleMouseLeave() {
@@ -47,50 +75,34 @@ class SongListItem extends React.Component {
   }
 
   handleDropDown(e) {
-    const mousePos = {
-      x: e.pageX - 200,
-      y: e.pageY
-    }
     this.setState({
       hideDropDown: !this.state.hideDropDown,
-      mousePos
     })
+    e.stopPropagation();
   }
 
   render() {
-    const song = this.props.song;
+    const { song, playlist, currentUser } = this.props;
     const isHovering = this.state.isHovering;
 
+    let playlistIndex = this.props.playlists;
+
+    let userPlaylists = Object.values(playlistIndex).filter(playlist =>
+      playlist.user_id === this.props.currentUser);
+
     let playOrNum;
-    let songControls;
 
     if (isHovering) {
       playOrNum = <i className="fas fa-play"></i>;
-      songControls = (
-        <div className="song-controls">
-          <i className="far fa-heart"></i>
-          {renderSongDuration(song.duration)}
-          <div
-            className="dropdown"
-            onClick={(e) => this.handleDropDown(e)}
-            onContextMenu={(e) => this.handleDropDown(e)}
-            ref={div => this.dropDown = div}
-          >
-            <i className="fas fa-ellipsis-h"></i>
-          </div>
-        </div>
-      )
     } else {
       playOrNum = this.props.num;
-      songControls = renderSongDuration(song.duration)
     }
 
     return (
       <tr
         className="song"
-        onMouseEnter={() => this.handleMouseEnter()}
+        onMouseEnter={(e) => this.handleMouseEnter(e)}
         onMouseLeave={() => this.handleMouseLeave()}
-        onContextMenu={(e) => this.handleDropDown(e)}
       >
         <td className="num-column">{playOrNum}</td>
         <td className="title-column"> 
@@ -104,25 +116,96 @@ class SongListItem extends React.Component {
             </div>
           </div>
         </td>
+        
         <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
         <td className="date-added-column">
-          {this.dateAdded}
+          {this.props.dateAdded}
         </td>
+
         <td className="duration-column">
           <div className="song-controls-container">
-            {songControls}
+            <div className="song-controls">
+              <i className={this.state.isHovering ? "far fa-heart" : "hidden"}></i>
+              {renderSongDuration(song.duration)}
+              <div
+                className={this.state.isHovering ? "dropdown" : "hidden"}
+                onClick={this.handleDropDown}
+                ref={div => this.dropDown = div}
+              ><i className="fas fa-ellipsis-h"></i></div>
+            </div>
           </div>
-          {!this.state.hideDropDown && <div className="song-dropdown-options" onClick={e => e.stopPropagation()}>
-            <div onClick={()=> console.log("You clicked papi")}>Add to queue</div>
-            <div onClick={()=> console.log("You clicked papi")}>Go to artist</div>
-            <div onClick={()=> console.log("You clicked papi")}>Go to album</div>
-            <div onClick={()=> console.log("You clicked papi")}>Remove from this playlist</div>
-            <div onClick={()=> console.log("You clicked papi")}>Add to playlist</div>
+
+          {!this.state.hideDropDown && <div className={currentUser === playlist.user_id ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
+            <div
+              className="add-to-queue"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => console.log("You clicked papi")}>Add to queue</div>
+
+            <div
+              className="song-dropdown-option"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
+
+            <div
+              className="song-dropdown-option"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
+
+            <div
+              className={currentUser === playlist.user_id ? "song-dropdown-option" : "hidden"}
+              onMouseEnter={(e) => this.handleMouseEnter(e)}
+              onClick={ () => {
+                this.props.removeSongFromPlaylist(this.props.playlistSongId);
+                this.setState({
+                  hideDropDown: true,
+                  isHovering: false
+                });
+              }}>Remove from this playlist</div>
+
+            <div
+              className="add-to-playlist"
+              onMouseEnter={(e) => this.handleMouseEnter(e)}>
+              <span>Add to playlist</span>
+              <i className="fas fa-caret-right"></i> 
+            </div>
+            
+            <div className="playlist-selector-container">
+              <ul className={this.state.revealPlaylists ? "playlist-selector" : "hidden"}>
+                {userPlaylists.slice(0).reverse().map(playlist =>
+                  <li
+                    key={playlist.id}
+                    className="playlist-item"
+                    onClick={() => this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
+                      .then(() => this.setState({
+                        hideDropDown: true,
+                        isHovering: false
+                      }))}>{playlist.name}</li>
+                )}
+              </ul>
+            </div>
           </div>}
+
         </td>
       </tr>
     )
   }
 }
 
-export default SongListItem;
+const mSTP = state => {
+  const currentUser = state.session.id;
+  const { playlists } = state.entities;
+
+  return ({
+    playlists,
+    currentUser: currentUser,
+  });
+};
+
+const mDTP = dispatch => {
+  return {
+    addSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addSongToPlaylist(playlistId, songId, currentPlaylistId)),
+    removeSongFromPlaylist: (playlistSongId) => dispatch(removeSongFromPlaylist(playlistSongId))
+  }
+};
+
+export default withRouter(connect(mSTP, mDTP)(SongListItem));

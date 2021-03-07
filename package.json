@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/pramirez23/Tonify#readme",
   "devDependencies": {
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
     "webpack-cli": "^4.4.0"
   }
 }

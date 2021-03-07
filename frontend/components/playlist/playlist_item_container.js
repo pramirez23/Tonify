@@ -8,12 +8,11 @@ const mSTP = (state, ownProps) => {
   const { id } = state.session
   const { playlists, songs, users } = state.entities;
   const playlist = playlists[ownProps.match.params.id];
-  const playlistSongs = Object.values(songs);
 
   return {
     currentUser: id,
     playlist,
-    playlistSongs,
+    songs,
     users
   };
 };

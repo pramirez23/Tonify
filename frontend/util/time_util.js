@@ -61,7 +61,8 @@ export const renderTotalDuration = (duration) => {
   let hours = Math.floor(duration / 3600);
   let minutes = Math.floor(duration / 60);
   let seconds = duration % 60;
-
+  if (seconds < 10) { seconds = `0${seconds}` }
+  
   return hours > 0 ? `${hours} hr ${minutes} min` : `${minutes} min ${seconds} sec`
 }
 

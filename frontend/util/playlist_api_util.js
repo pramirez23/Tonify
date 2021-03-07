@@ -20,11 +20,13 @@ export const createPlaylist = playlist => {
   })
 };
 
-export const updatePlaylist = playlist => {
+export const updatePlaylist = (playlist, playlistId) => {
   return $.ajax({
     method: "PATCH",
-    url: `api/playlists/${playlist.id}`,
-    data: { playlist }
+    url: `api/playlists/${playlistId}`,
+    data: playlist,
+    contentType: false,
+    processData: false
   })
 };
 
