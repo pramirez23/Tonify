@@ -87,8 +87,6 @@ class Sidebar extends React.Component {
             </li>
           )}
         </ul>
-
-        <button id="logout" onClick={this.props.logout}>LOG OUT</button>
       </div>
     );
   }

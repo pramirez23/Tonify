@@ -38,7 +38,7 @@ class Navbar extends React.Component {
 
   render() { 
     return (
-      <div className="navbar">
+      <nav className="navbar">
         <div className="nav-button-container">
           <button>
             <i className="fas fa-chevron-circle-left"></i>
@@ -56,15 +56,32 @@ class Navbar extends React.Component {
             <span>{this.props.currentUsername}</span>
             {this.state.hideDropDown ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
           </button>
+
           {!this.state.hideDropDown && <div className="user-dropdown-options" onClick={e => e.stopPropagation()}>
-            <div onClick={() => this.handleEdit(playlist.id)} >GitHub</div>
-            <div onClick={() => this.handleDelete(playlist.id)} >LinkedIn</div>
-            <div onClick={() => this.handleDelete(playlist.id)} >AngelList</div>
-            <div onClick={() => this.handleDelete(playlist.id)} >Portfolio</div>
-            <div onClick={() => this.handleDelete(playlist.id)} className="logout">Log out</div>
+            <div className="user-dropdown-option" onClick={() => window.open("https://github.com/pramirez23/Tonify", "_blank")} >
+              <span>GitHub</span>
+              <i className="fab fa-github"></i>
+            </div>
+
+            <div className="user-dropdown-option" onClick={() => window.open("https://www.linkedin.com/in/paul-ramirez-432786152/", "_blank")} >
+              <span>LinkedIn</span>
+                <i className="fab fa-linkedin"></i>
+            </div>
+
+            <div className="user-dropdown-option" onClick={() => window.open("https://angel.co/u/paulramirez", "_blank")} >
+              <span>AngelList</span>
+                <i className="fab fa-angellist"></i>
+            </div>
+
+            <div className="user-dropdown-option" onClick={() => window.open("http://paulramirez.dev/", "_blank")} >
+              <span>Portfolio</span>
+                <i className="fas fa-user-circle"></i>
+            </div>
+
+            <div id="logout-dropdown" onClick={this.props.logout} >Log out</div>
           </div>}
         </div>
-      </div>
+      </nav>
     );
   }
 }

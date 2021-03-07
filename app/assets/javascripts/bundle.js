@@ -690,7 +690,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
         className: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "nav-button-container"
@@ -720,26 +720,36 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           return e.stopPropagation();
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-dropdown-option",
         onClick: function onClick() {
-          return _this3.handleEdit(playlist.id);
+          return window.open("https://github.com/pramirez23/Tonify", "_blank");
         }
-      }, "GitHub"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "GitHub"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fab fa-github"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-dropdown-option",
         onClick: function onClick() {
-          return _this3.handleDelete(playlist.id);
+          return window.open("https://www.linkedin.com/in/paul-ramirez-432786152/", "_blank");
         }
-      }, "LinkedIn"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "LinkedIn"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fab fa-linkedin"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-dropdown-option",
         onClick: function onClick() {
-          return _this3.handleDelete(playlist.id);
+          return window.open("https://angel.co/u/paulramirez", "_blank");
         }
-      }, "AngelList"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "AngelList"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fab fa-angellist"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "user-dropdown-option",
         onClick: function onClick() {
-          return _this3.handleDelete(playlist.id);
+          return window.open("http://paulramirez.dev/", "_blank");
         }
-      }, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        onClick: function onClick() {
-          return _this3.handleDelete(playlist.id);
-        },
-        className: "logout"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Portfolio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "fas fa-user-circle"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: "logout-dropdown",
+        onClick: this.props.logout
       }, "Log out"))));
     }
   }]);
@@ -2502,10 +2512,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "sidebar-playlist-item"
         }, playlist.name)));
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        id: "logout",
-        onClick: this.props.logout
-      }, "LOG OUT"));
+      })));
     }
   }]);
 
@@ -2530,8 +2537,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar */ "./frontend/components/sidebar/sidebar.jsx");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-
 
 
 
@@ -2556,9 +2561,6 @@ var mDTP = function mDTP(dispatch) {
     },
     createPlaylist: function createPlaylist(playlist) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.createPlaylist)(playlist));
-    },
-    logout: function logout() {
-      return dispatch((0,_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__.logout)());
     }
   };
 };

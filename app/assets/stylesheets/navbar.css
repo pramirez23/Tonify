@@ -73,20 +73,30 @@ i.fas.fa-chevron-circle-right, i.fas.fa-chevron-circle-left  {
   padding: 12px;
   border-radius: 2px;
   cursor: default;
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user-dropdown-options > div:hover {
   background: #4f4f4f;
 }
 
-.logout:before {
+#logout-dropdown {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+
+#logout-dropdown:before {
   border-top: 1px solid #4f4f4f;
   width: 122px;
   height: 10px;
   position: absolute;
   content: "";
   top: 139px;
+  left: 3px;
 }
 
 .user-dropdown > button {
