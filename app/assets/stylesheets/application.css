@@ -73,12 +73,30 @@ body {
   letter-spacing: -1px;
 }
 
-div::-webkit-scrollbar {
+.main-content {
+  /* width: 89.6%; */
+  /* height: 100%; */
+  background: #121212;
+  position: relative;
+  /* right: 0; */
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
+}
+
+.main-content-container {
+  min-height: 0;
+  height: calc(100vh - 91px);
+  overflow: auto;
+  display: block;
+  overflow-x: hidden;
+}
+
+main::-webkit-scrollbar {
   width: 12px;
   background-color: #000000;            
 }
 
-div::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb {
   border-radius: 12px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #414141; 
@@ -113,4 +131,25 @@ div#app {
 
 p > a { 
   color: white;
+}
+
+.spinner-container {
+  height: calc(100vh - 91px);
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.fa-spinner {
+  font-size: 165px;
+  color: #9f9f9f;
+  -webkit-animation: rotate 2s linear infinite;
+  -moz-animation: rotate 2s linear infinite;
+  -ms-animation: rotate 2s linear infinite;
+  -o-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
 }

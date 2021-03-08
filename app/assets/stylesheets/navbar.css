@@ -38,11 +38,18 @@ div#back-button-container, div#forward-button-container {
   height: 25px;
 }
 
-
-i.fas.fa-chevron-circle-right, i.fas.fa-chevron-circle-left  {
-  position: absolute;
-  right: -4px;
+span.material-icons {
+  color: white;
+  background: black;
+  border-radius: 14px;
   cursor: pointer;
+  font-size: 28px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .button-background {

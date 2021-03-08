@@ -7,7 +7,8 @@ class Navbar extends React.Component {
     super(props);
 
     this.state = {
-      hideDropDown: true
+      hideDropDown: true,
+      scrollY: null
     }
     
     this.dropDown = React.createRef();
@@ -15,6 +16,12 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
+    const content = document.getElementsByClassName('main-content-container')[0];
+
+    content.onscroll = () => {
+      console.log(content.scrollTop)
+    }
+
     this.dropDownListener = e => {
       if (this.dropDown && !this.dropDown.contains(e.target)) {
         this.setState({
@@ -37,19 +44,11 @@ class Navbar extends React.Component {
   }
 
   render() {
-    console.log(this.props.history);
     return (
       <nav className="navbar">
         <div className="nav-button-container">
-          <div id="back-button-container">
-            <i className="fas fa-chevron-circle-left" onClick={() => this.props.history.goBack()}></i>
-            <div className="button-background"></div>
-          </div>
-
-          <div id="forward-button-container">
-            <i className="fas fa-chevron-circle-right" onClick={() => this.props.history.goForward()}></i>
-            <div className="button-background"></div>
-          </div>
+            <span className="material-icons" onClick={() => this.props.history.goBack()}>chevron_left</span>
+            <span className="material-icons" onClick={() => this.props.history.goForward()}>chevron_right</span>
         </div>
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>

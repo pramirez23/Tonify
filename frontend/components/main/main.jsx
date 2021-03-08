@@ -1,15 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { logout } from '../../actions/session_actions';
 import PlaylistItemContainer from '../playlist/playlist_item_container';
-// import SidebarContainer from '../sidebar/sidebar_container';
-// import Playbar from '../playbar/playbar';
+import NavbarContainer from '../navbar/navbar_container';
+
 
 const Main = (props) => {
   return (
     <div id="main">
-      {/* <SidebarContainer /> */}
+      <Route path="/" component={NavbarContainer} />
+      <main className="main-content-container">
         <Switch>
           {/* <Route path="/search" component={SearchIndex} /> */}
           {/* <Route path="/library/playlists" component={PlaylistIndex} /> */}
@@ -19,7 +18,7 @@ const Main = (props) => {
           {/* <Route path="/artists/:id" component={ArtistShow} /> */}
           {/* <Route path="/albums/:id" component={AlbumShow} /> */}
         </Switch>
-        {/* <Playbar /> */}
+      </main>
     </div>
   )
 }

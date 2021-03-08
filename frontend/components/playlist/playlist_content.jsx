@@ -131,7 +131,7 @@ class Playlist extends React.Component {
     }
 
     return (
-      <div id="playlist-show">
+      <div className="main-content">
         <div className="playlist-header">
           <img className="playlist-photo" onClick={() => this.handleEdit(playlist.id)} src={playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture} />
           <div className="playlist-details">
