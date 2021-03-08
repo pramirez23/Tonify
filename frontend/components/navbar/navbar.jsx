@@ -8,18 +8,24 @@ class Navbar extends React.Component {
 
     this.state = {
       hideDropDown: true,
-      scrollY: null
+      scrollTop: null,
+      scrollHeight: null,
+      opacity: 0
     }
     
     this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
+    this.convertOpacity = this.convertOpacity.bind(this);
+    this.renderContent = this.renderContent.bind(this);
   }
 
   componentDidMount() {
     const content = document.getElementsByClassName('main-content-container')[0];
 
     content.onscroll = () => {
-      console.log(content.scrollTop)
+      const { scrollTop, scrollHeight } = content;
+      this.setState ({ scrollTop, scrollHeight });
+      this.convertOpacity();
     }
 
     this.dropDownListener = e => {
@@ -43,13 +49,54 @@ class Navbar extends React.Component {
     })
   }
 
+  renderContent() {
+    const { playlists, albums, artists } = this.props;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+
+    switch (location) {
+      case "playlists":
+        return (
+          <h1 className="navbar-title">{playlists[pageId].name}</h1>
+        )
+      case "albums":
+        return (
+          <h1 className="navbar-title">{albums[pageId].title}</h1>
+        )
+      case "artists":
+        return (
+          <h1 className="navbar-title">{artists[pageId].name}</h1>
+        )
+      default:
+        break;
+    }
+  }
+
+  convertOpacity() {
+    const { scrollTop, scrollHeight } = this.state;
+    const oldRange = (scrollHeight - 140);
+    const newRange = (10 - 1);
+    let converted = (((scrollTop - 140) * newRange) / oldRange);
+    this.setState({ opacity: converted })
+  }
+
   render() {
+    const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
+
     return (
-      <nav className="navbar">
-        <div className="nav-button-container">
+      <nav className="navbar" style={backgroundColor}>
+        <div className="nav-content-container">
+          <div className="nav-button-container">
             <span className="material-icons" onClick={() => this.props.history.goBack()}>chevron_left</span>
             <span className="material-icons" onClick={() => this.props.history.goForward()}>chevron_right</span>
+          </div>
+
+          <div className="navbar-content">
+            {this.state.scrollTop > 254 ? this.renderContent() : ""}
+          </div>
         </div>
+
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
           <button>

@@ -19,10 +19,14 @@ class PlaylistItem extends React.Component {
       })
     });
   }
-
+  
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
+      const playlist = document.getElementsByClassName('main-content-container')[0];
       const { id } = this.props.match.params;
+
+      playlist.scrollTo({ top: 0, behavior: "auto" });
+      
       this.props.fetchPlaylist(id).then(() => {
         this.setState({
           isLoading: false

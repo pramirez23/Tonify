@@ -162,6 +162,8 @@ class SongListItem extends React.Component {
                 });
               }}>Remove from this playlist</div>
 
+            <div className={ (currentUser === playlist.user_id) ? "current-before-playlist-add" : "other-before-playlist-add"}/>
+
             <div
               className="add-to-playlist"
               onMouseEnter={(e) => this.handleMouseEnter(e)}>

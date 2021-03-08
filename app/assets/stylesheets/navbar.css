@@ -5,22 +5,61 @@
   background: none;
   position: fixed;
   top: 0;
-  width: calc(100vw - 231px);
+  width: calc(100vw - 230px);
   z-index: 999999;
-  left: 199px;
+  left: 198px;
   justify-content: space-between;
   padding: 10px;
   align-items: center;
 }
 
-.nav-button-container {
+.nav-content-container {
   display: flex;
-  width: 95px;
+  width: 100%;
   height: 31px;
-  justify-content: space-around;
-  margin-left: 14px;
+  justify-content: flex-start;
+  margin-left: 22px;
   font-size: 27px;
   align-items: center;
+}
+
+.nav-button-container {
+  width: 91px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navbar-content {
+  margin-left: 32px;
+}
+
+h1.navbar-title, h1.hide-navbar-title {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  animation: fadein 0.75s;
+}
+
+h1.hide-navbar-title {
+  animation: fadeout 0.75s;
+}
+
+@keyframes fadein {
+  from { 
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from { 
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 #back-button-container, #forward-button-container {
@@ -52,12 +91,7 @@ span.material-icons {
   user-select: none;
 }
 
-.button-background {
-  background: white;
-  width: 13px;
-  height: 17px;
-  margin-top: 4px;
-}
+.navbar
 
 .user-dropdown {
   margin-right: 4px;
@@ -130,9 +164,9 @@ span.material-icons {
   align-items: center;
   justify-content: space-around;
   color: white;
-  background: #1b1b1b;
+  background: #000000;
 }
 
 .user-dropdown > button:hover, .user-dropdown > button:focus {
-  background-color: #000000;
+  background-color: #1b1b1b;
 }

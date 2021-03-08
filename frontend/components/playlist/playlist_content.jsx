@@ -27,7 +27,6 @@ class Playlist extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-
     this.dropDownListener = e => {
       if (this.dropDown &&!this.dropDown.contains(e.target)) {
         if (this._isMounted) {

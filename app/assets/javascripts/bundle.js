@@ -648,10 +648,14 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       hideDropDown: true,
-      scrollY: null
+      scrollTop: null,
+      scrollHeight: null,
+      opacity: 0
     };
     _this.dropDown = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
+    _this.convertOpacity = _this.convertOpacity.bind(_assertThisInitialized(_this));
+    _this.renderContent = _this.renderContent.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -663,7 +667,15 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var content = document.getElementsByClassName('main-content-container')[0];
 
       content.onscroll = function () {
-        console.log(content.scrollTop);
+        var scrollTop = content.scrollTop,
+            scrollHeight = content.scrollHeight;
+
+        _this2.setState({
+          scrollTop: scrollTop,
+          scrollHeight: scrollHeight
+        });
+
+        _this2.convertOpacity();
       };
 
       this.dropDownListener = function (e) {
@@ -689,12 +701,62 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "renderContent",
+    value: function renderContent() {
+      var _this$props = this.props,
+          playlists = _this$props.playlists,
+          albums = _this$props.albums,
+          artists = _this$props.artists;
+      var pathName = this.props.location.pathname.split('/');
+      var location = pathName[1];
+      var pageId = pathName[2];
+
+      switch (location) {
+        case "playlists":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+            className: "navbar-title"
+          }, playlists[pageId].name);
+
+        case "albums":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+            className: "navbar-title"
+          }, albums[pageId].title);
+
+        case "artists":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+            className: "navbar-title"
+          }, artists[pageId].name);
+
+        default:
+          break;
+      }
+    }
+  }, {
+    key: "convertOpacity",
+    value: function convertOpacity() {
+      var _this$state = this.state,
+          scrollTop = _this$state.scrollTop,
+          scrollHeight = _this$state.scrollHeight;
+      var oldRange = scrollHeight - 140;
+      var newRange = 10 - 1;
+      var converted = (scrollTop - 140) * newRange / oldRange;
+      this.setState({
+        opacity: converted
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
+      var backgroundColor = {
+        backgroundColor: "hsla(0, 0%, 13%, ".concat(this.state.opacity, ")")
+      };
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
-        className: "navbar"
+        className: "navbar",
+        style: backgroundColor
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "nav-content-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "nav-button-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -708,6 +770,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           return _this3.props.history.goForward();
         }
       }, "chevron_right")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "navbar-content"
+      }, this.state.scrollTop > 254 ? this.renderContent() : "")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-dropdown",
         onClick: function onClick() {
           return _this3.handleDropDown();
@@ -786,10 +850,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var mSTP = function mSTP(state) {
   var currentUserId = state.session.id;
-  var users = state.entities.users;
+  var _state$entities = state.entities,
+      playlists = _state$entities.playlists,
+      albums = _state$entities.albums,
+      artists = _state$entities.artists,
+      users = _state$entities.users;
   var currentUsername = users[currentUserId].username;
   return {
-    currentUsername: currentUsername
+    currentUsername: currentUsername,
+    playlists: playlists,
+    albums: albums,
+    artists: artists
   };
 };
 
@@ -1657,7 +1728,12 @@ var PlaylistItem = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       if (this.props.match.params.id !== prevProps.match.params.id) {
+        var playlist = document.getElementsByClassName('main-content-container')[0];
         var id = this.props.match.params.id;
+        playlist.scrollTo({
+          top: 0,
+          behavior: "auto"
+        });
         this.props.fetchPlaylist(id).then(function () {
           _this3.setState({
             isLoading: false
@@ -2829,6 +2905,8 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           });
         }
       }, "Remove from this playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: currentUser === playlist.user_id ? "current-before-playlist-add" : "other-before-playlist-add"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "add-to-playlist",
         onMouseEnter: function onMouseEnter(e) {
           return _this3.handleMouseEnter(e);

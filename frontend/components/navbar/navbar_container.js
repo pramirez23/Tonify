@@ -4,11 +4,14 @@ import { logout } from '../../actions/session_actions';
 
 const mSTP = state => {
   const currentUserId = state.session.id;
-  const { users } = state.entities;
+  const { playlists, albums, artists, users } = state.entities;
   const currentUsername = users[currentUserId].username;
 
   return ({
-    currentUsername
+    currentUsername,
+    playlists,
+    albums,
+    artists
   });
 };
 

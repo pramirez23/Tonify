@@ -44,13 +44,16 @@ div.hidden {
 .song-dropdown-options > div:hover, .song-dropdown-other > div:hover,
 li.playlist-item:hover {
   background: #4f4f4f;
+  color: white;
 }
 
-.add-to-queue:after, .add-to-playlist:before {
+.add-to-queue:after, div.current-before-playlist-add, div.other-before-playlist-add {
   border-bottom: 1px solid #4f4f4f;
+  height: 1px;
   width: 228px;
   right: 4px;
   position: absolute;
+  padding: 0;
   content: "";
 }
 
@@ -58,8 +61,12 @@ li.playlist-item:hover {
   top: 38px;
 }
 
-.add-to-playlist:before {
-  top: 140px;
+div.current-before-playlist-add {
+  top: 139px;
+}
+
+div.other-before-playlist-add {
+  top: 106px;
 }
 
 .add-to-playlist {
