@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { openAlert, closeAlert } from '../../actions/alert_actions'
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 
@@ -15,7 +16,7 @@ class SongListItem extends React.Component {
       isHovering: false,
       revealPlaylists: false,
       hideDropDown: true,
-      mousePos: null
+      mousePos: null,
     };
     
     this.dropDown = React.createRef();
@@ -170,7 +171,7 @@ class SongListItem extends React.Component {
               <span>Add to playlist</span>
               <i className="fas fa-caret-right"></i> 
             </div>
-            
+
             <div className="playlist-selector-container">
               <ul className={this.state.revealPlaylists ? "playlist-selector" : "hidden"}>
                 {userPlaylists.slice(0).reverse().map(playlist =>
@@ -178,15 +179,21 @@ class SongListItem extends React.Component {
                     key={playlist.id}
                     className="playlist-item"
                     onClick={() => this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
-                      .then(() => this.setState({
-                        hideDropDown: true,
-                        isHovering: false
-                      }))}>{playlist.name}</li>
-                )}
+                        .then(() => {
+                          this.setState({
+                            hideDropDown: true,
+                            isHovering: false
+                          });
+                          this.props.openAlert();
+                          setTimeout(this.props.closeAlert, 4000);
+                        }
+                      )}>{playlist.name}
+                    </li>
+                  )}
               </ul>
             </div>
           </div>}
-
+          
         </td>
       </tr>
     )
@@ -206,7 +213,9 @@ const mSTP = state => {
 const mDTP = dispatch => {
   return {
     addSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addSongToPlaylist(playlistId, songId, currentPlaylistId)),
-    removeSongFromPlaylist: (playlistSongId) => dispatch(removeSongFromPlaylist(playlistSongId))
+    removeSongFromPlaylist: playlistSongId => dispatch(removeSongFromPlaylist(playlistSongId)),
+    openAlert: () => dispatch(openAlert()),
+    closeAlert: () => dispatch(closeAlert())
   }
 };
 

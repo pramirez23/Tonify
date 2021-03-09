@@ -153,3 +153,51 @@ p > a {
   -o-animation: rotate 2s linear infinite;
   animation: rotate 2s linear infinite;
 }
+
+.add-song-confirmation-container, .hide-alert {
+  width: 180px;
+  height: 40px;
+  position: fixed;
+  top: calc(91% - 89px);
+  left: calc(50% - 3px);
+}
+
+.add-song-confirmation-container {
+  animation: 4s showalert forwards;
+}
+
+.hide-alert {
+  display: none;
+}
+
+span.add-song-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  width: 180px;
+  height: 40px;
+  color: white;
+  letter-spacing: 0.25px;
+  background: rgb(72, 126, 241);
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 3px 21px 5px #000000;
+  box-shadow: 0px 3px 21px 5px #000000;
+  z-index: 10000;
+}
+
+@keyframes showalert {
+  0% { 
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

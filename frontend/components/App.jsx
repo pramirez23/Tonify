@@ -12,6 +12,7 @@ import SignupContainer from "./session/signup_container";
 import SplashContainer from "./splash/splash_container";
 import SidebarContainer from './sidebar/sidebar_container';
 import Playbar from './playbar/playbar';
+import Alert from './alert';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => (
@@ -23,6 +24,7 @@ const App = () => (
       <AuthRoute path="/signup" component={SignupContainer} />
       <Route path="/" component={SplashContainer}/>
     </Switch>
+    <Alert />
     <ProtectedRoute path="/" component={Playbar} />
   </div>
 );

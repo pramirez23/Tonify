@@ -83,7 +83,7 @@ class Playlist extends React.Component {
 
           <tbody>
             <tr className="null-row"><td className="null-td"></td></tr>
-            {playlistSongs.slice(0).reverse().map((song, idx) =>
+            {playlistSongs.slice(0).map((song, idx) =>
               <SongListItem
                 song={song[1]}
                 dateAdded={renderDateAdded(song[1].created_at)}
