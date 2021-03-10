@@ -1,6 +1,5 @@
 import * as PlaylistAPIUtil from '../util/playlist_api_util';
 import * as PlaylistSongAPIUtil from '../util/playlist_song_api_util';
-import { openModal } from './modal_actions'
 
 export const RECEIVE_PLAYLISTS = "RECEIVE_PLAYLISTS";
 export const RECEIVE_PLAYLIST = "RECEIVE_PLAYLIST";

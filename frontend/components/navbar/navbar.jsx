@@ -10,7 +10,8 @@ class Navbar extends React.Component {
       hideDropDown: true,
       scrollTop: null,
       scrollHeight: null,
-      opacity: 0
+      opacity: 0,
+      content: null
     }
     
     this.dropDown = React.createRef();
@@ -21,6 +22,12 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     const content = document.getElementsByClassName('main-content-container')[0];
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+    
+    this.props.loading();
+    content.scrollTo({ top: 0, behavior: "auto" });
 
     content.onscroll = () => {
       const { scrollTop, scrollHeight } = content;
@@ -35,8 +42,64 @@ class Navbar extends React.Component {
         });
       }
     }
+    
+    switch (location) {
+      case "playlists":
+        this.props.fetchPlaylist(pageId).then(() => this.renderContent());
+        break;
+      case "albums":
+        this.props.fetchAlbum(pageId).then(() => this.renderContent());
+        break;
+      case "artists":
+        this.props.fetchArtist(pageId).then(() => this.renderContent());
+        break;
+      default:
+        break;
+    }
 
     document.addEventListener('click', this.dropDownListener, false);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      const content = document.getElementsByClassName('main-content-container')[0];
+      const pathName = this.props.location.pathname.split('/');
+      const location = pathName[1];
+      const pageId = pathName[2];
+      
+      this.props.loading();
+      content.scrollTo({ top: 0, behavior: "auto" });
+
+      content.onscroll = () => {
+        const { scrollTop, scrollHeight } = content;
+        this.setState ({ scrollTop, scrollHeight });
+        this.convertOpacity();
+      }
+
+      this.dropDownListener = e => {
+        if (this.dropDown && !this.dropDown.contains(e.target)) {
+          this.setState({
+            hideDropDown: true
+          });
+        }
+      }
+
+      switch (location) {
+        case "playlists":
+          this.props.fetchPlaylist(pageId).then(() => this.renderContent());
+          break;
+        case "albums": 
+          this.props.fetchAlbum(pageId).then(() => this.renderContent());
+          break;
+        case "artists":
+          this.props.fetchArtist(pageId).then(() => this.renderContent());
+          break;
+        default:
+          break;
+      }
+
+      document.addEventListener('click', this.dropDownListener, false);
+    }
   }
 
   componentWillUnmount() {
@@ -57,17 +120,20 @@ class Navbar extends React.Component {
 
     switch (location) {
       case "playlists":
-        return (
-          <h1 className="navbar-title">{playlists[pageId].name}</h1>
-        )
+        this.setState({
+          content: playlists[pageId].name
+        })
+        break;
       case "albums":
-        return (
-          <h1 className="navbar-title">{albums[pageId].title}</h1>
-        )
+        this.setState({
+          content: albums[pageId].title
+        }) 
+        break;
       case "artists":
-        return (
-          <h1 className="navbar-title">{artists[pageId].name}</h1>
-        )
+        this.setState({
+          content: artists[pageId].name
+        })
+        break;
       default:
         break;
     }
@@ -93,10 +159,11 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-content">
-            {this.state.scrollTop > 254 ? this.renderContent() : ""}
+            <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
+              {this.state.content}
+            </h1>
           </div>
         </div>
-
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
           <button>

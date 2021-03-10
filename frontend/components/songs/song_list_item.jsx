@@ -17,16 +17,23 @@ class SongListItem extends React.Component {
       revealPlaylists: false,
       hideDropDown: true,
       mousePos: null,
+      pageType: null,
+      
     };
     
     this.dropDown = React.createRef();
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
     this.handleDropDown = this.handleDropDown.bind(this);
+    this.detectPageType = this.detectPageType.bind(this);
   }
 
   componentDidMount() {
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
     this._isMounted = true;
+
+    this.setState({pageType: location})
 
     this.dropDownListener = e => {
       if (this.dropDown && !this.dropDown.contains(e.target)) {
@@ -82,8 +89,20 @@ class SongListItem extends React.Component {
     e.stopPropagation();
   }
 
+  detectPageType() {
+    switch(this.state.pageType) {
+      case "playlists":
+
+        break;
+      case "albums":
+        break;
+      default:
+        return;
+    }
+  }
+
   render() {
-    const { song, playlist, currentUser } = this.props;
+    const { song, playlist, album, currentUser } = this.props;
     const isHovering = this.state.isHovering;
 
     let playlistIndex = this.props.playlists;
@@ -118,8 +137,11 @@ class SongListItem extends React.Component {
           </div>
         </td>
         
-        <td className="album-column"><Link to={`/albums/${song.album_id}`}>{song.album}</Link></td>
-        <td className="date-added-column">
+        <td className={this.state.pageType === "playlists" ? "album-column" : "hidden"}>
+          <Link to={`/albums/${song.album_id}`}>{song.album}</Link>
+        </td>
+
+        <td className={this.state.pageType === "playlists" ? "date-added-column" : "hidden"}>
           {this.props.dateAdded}
         </td>
 
@@ -136,7 +158,7 @@ class SongListItem extends React.Component {
             </div>
           </div>
 
-          {!this.state.hideDropDown && <div className={currentUser === playlist.user_id ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
+          {!this.state.hideDropDown && <div className={(currentUser === playlist.user_id) ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
             <div
               className="add-to-queue"
               onMouseEnter={(e) => this.handleMouseEnter(e)}
@@ -178,16 +200,17 @@ class SongListItem extends React.Component {
                   <li
                     key={playlist.id}
                     className="playlist-item"
-                    onClick={() => this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
+                    onClick={() => {
+                      this.setState({
+                        hideDropDown: true,
+                        isHovering: false
+                      });
+
+                      this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
                         .then(() => {
-                          this.setState({
-                            hideDropDown: true,
-                            isHovering: false
-                          });
                           this.props.openAlert();
                           setTimeout(this.props.closeAlert, 4000);
-                        }
-                      )}>{playlist.name}
+                        })}}>{playlist.name}
                     </li>
                   )}
               </ul>

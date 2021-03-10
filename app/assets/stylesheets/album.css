@@ -1,4 +1,4 @@
-img.playlist-photo {
+img.album-photo {
   width: 232px;
   height: 232px;
   filter: drop-shadow(3px 4px 8px #222);
@@ -9,7 +9,7 @@ img.playlist-photo {
   cursor: pointer;
 }
 
-.playlist-header {
+.album-header {
   color: white;
   display: flex;
   height: 340px;
@@ -17,14 +17,14 @@ img.playlist-photo {
   background: linear-gradient(#535353, #2A2A2A);
 }
 
-.playlist-header span {
+.album-header span {
   font-size: 12px;
   font-weight: 300;
   letter-spacing: 2px;
   cursor: default;
 }
 
-.playlist-details {
+.album-details-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,10 +35,24 @@ img.playlist-photo {
   font-weight: 300;
 }
 
-.description-name-container {
+.album-details {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+a.artist-link {
+  text-decoration: none;
+  margin-right: 4px;
+  color: white;
+}
+
+a.artist-link:hover {
+  text-decoration: underline;
+}
+
+.album-year-duration {
+  color: #9f9f9f
 }
 
 .show-page-controls {
@@ -74,37 +88,13 @@ img#show-page-play {
   width: 67px;
 }
 
-h1.playlist-name {
+h1.album-name {
   font-size: 86px;
   overflow: hidden;
   white-space: nowrap;
   font-weight: 600;
   padding: 9px 0px 9px 0px;
   text-overflow: ellipsis;
-  cursor: pointer;
-}
-
-.playlist-description {
-  font-weight: 300;
-  font-size: 12px;
-  height: 13px;
-  padding-bottom: 9px;
-  line-height: 13px;
-  letter-spacing: 0.25px;
-  color: #9F9F9F;
-}
-
-p.username {
-  color: white;
-  margin-right: 4px
-}
-
-.playlist-info {
-  display: flex;
-  font-weight: 300;
-  letter-spacing: 0.5px;
-  font-size: 14px;
-  color: #9f9f9f;
 }
 
 table.song-columns {
@@ -134,35 +124,35 @@ th {
   text-align: left;
 }
 
-th.playlist-column-duration, td.duration-column {
+th.song-column-duration, td.duration-column {
   text-align: center;
   width: 5vw;
   min-width: 90px;
 }
 
-th.playlist-column-num, td.num-column {
+th.song-column-num, td.num-column {
   min-width: 25px;
   width: 40px;
 }
 
-th.playlist-column-title, td.title-column {
+th.song-column-title, td.title-column {
   width: 30vw;
   padding-right: 25px;
 }
 
-th.playlist-column-title {
+th.song-column-title {
   padding-left: 20px;
 }
 
-th.playlist-column-album, td.album-column {
+th.song-column-album, td.album-column {
   width: 20vw;
 }
 
-th.playlist-column-num, td.num-column {
+th.song-column-num, td.num-column {
   text-align: right;
 }
 
-th.playlist-column-date, td.date-added-column {
+th.song-column-date, td.date-added-column {
   width: 20vw;
 }
 
@@ -345,56 +335,4 @@ tbody:first-child {
 
 .playlist-dropdown-options > div:hover {
   background: #4f4f4f;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media only screen and (max-width: 1210px) {
-  th.song-column-date, td.date-added-column {
-    display: none;
-  }
-
-  h1.playlist-name {
-    font-size: 65px;
-  }
-
-  .playlist-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 138px;
-    margin-left: 300px;
-    margin-top: 173px;
-    color: white;
-    font-weight: 300;
-  }
-}
-
-@media only screen and (max-width: 957px) {
-  th.song-column-date, td.date-added-column {
-    display: none;
-  }
-
-  h1.playlist-name {
-    font-size: 40px;
-  }
-
-  .playlist-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 138px;
-    margin-left: 300px;
-    margin-top: 173px;
-    color: white;
-    font-weight: 300;
-  }
 }

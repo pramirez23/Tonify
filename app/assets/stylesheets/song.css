@@ -83,6 +83,7 @@ div.playlist-selector-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  z-index: 9999;
 }
 
 div.playlist-selector-container:hover {

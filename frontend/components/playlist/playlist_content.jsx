@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { openModal } from '../../actions/modal_actions'
-import { fetchPlaylist } from '../../actions/playlist_actions'
 import { renderDateAdded, renderTotalDuration } from '../../util/time_util';
 import SongListItem from '../songs/song_list_item'
 
@@ -138,7 +137,10 @@ class Playlist extends React.Component {
             <h1 className="playlist-name" onClick={() => this.handleEdit(playlist.id)}>{playlist.name}</h1>
             <div className="description-name-container">
               <p className={playlist.description ? "playlist-description" : "hide-description"}>{playlist.description}</p>
-              <p className="username">{username} {playlistDetails()}</p>
+              <div className="playlist-info">
+                <p className="username">{username}</p>
+                {playlistDetails()}
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +177,6 @@ const mDTP = dispatch => {
   return {
     editPlaylist: id => dispatch(openModal(id, 'editPlaylist')),
     deletePlaylist: id => dispatch(openModal(id, 'deletePlaylist')),
-    fetchPlaylist: id => dispatch(fetchPlaylist(id))
   }
 };
 

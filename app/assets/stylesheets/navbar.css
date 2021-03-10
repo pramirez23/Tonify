@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   width: calc(100vw - 230px);
-  z-index: 999999;
+  z-index: 9000;
   left: 198px;
   justify-content: space-between;
   padding: 10px;
@@ -37,11 +37,23 @@ h1.navbar-title, h1.hide-navbar-title {
   color: white;
   font-weight: 500;
   letter-spacing: 0.25px;
-  animation: fadein 0.75s;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  cursor: default;
 }
 
 h1.hide-navbar-title {
-  animation: fadeout 0.75s;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -ms-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  cursor: default;
 }
 
 @keyframes fadein {
