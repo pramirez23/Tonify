@@ -28,6 +28,9 @@ Rails.application.routes.draw do
 
     resources :playlists, only: [:create, :update, :destroy, :index, :show] do
       resources :songs, only: [:index]
+      post :album, to: "playlist_songs#add_album", as: "add_album"
+      post :album_song, to: "playlist_songs#add_album_song", as: "add_album_song"
+      post :artist_song, to: "playlist_songs#add_artist_song", as: "add_artist_song"
     end
 
     resources :playlist_songs, only: [:create, :destroy, :index]

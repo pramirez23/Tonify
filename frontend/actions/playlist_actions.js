@@ -86,8 +86,8 @@ export const addSongToPlaylist = (playlistId, songId, currentPlaylistId) => disp
 
 export const removeSongFromPlaylist = (playlistSongId) => dispatch => {
   return PlaylistSongAPIUtil.removeSongFromPlaylist(playlistSongId)
-    .then(
-      playlist => dispatch(receivePlaylist(playlist)),
-      err => dispatch(receivePlaylistErrors(err.responseJSON))
+  .then(
+    playlist => dispatch(receivePlaylist(playlist)),
+    err => dispatch(receivePlaylistErrors(err.responseJSON))
     )
 };

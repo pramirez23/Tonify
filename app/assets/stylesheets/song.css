@@ -5,7 +5,7 @@
   right: 5px;
   background: #282828;
   height: 179px;
-  width: 236px;
+  width: 217px;
   justify-content: center;
   align-items: center;
   border-radius: 3px;
@@ -17,8 +17,8 @@
   position: absolute;
   right: 5px;
   background: #282828;
-  height: 144px;
-  width: 236px;
+  height: 145px;
+  width: 217px;
   justify-content: center;
   align-items: center;
   border-radius: 3px;
@@ -26,11 +26,11 @@
 
 .song-dropdown-options > div, .song-dropdown-other > div, li.playlist-item {
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 1px;
   height: 10px;
   display: flex;
-  width: 205px;
+  width: 185px;
   align-items: center;
   padding: 12px;
   border-radius: 3px;
@@ -50,7 +50,7 @@ li.playlist-item:hover {
 .add-to-queue:after, div.current-before-playlist-add, div.other-before-playlist-add {
   border-bottom: 1px solid #4f4f4f;
   height: 1px;
-  width: 228px;
+  width: 209px;
   right: 4px;
   position: absolute;
   padding: 0;
@@ -76,7 +76,7 @@ div.other-before-playlist-add {
 
 div.playlist-selector-container {
   position: absolute;
-  right: 239px;
+  right: 218px;
   top: -206px;
   /* background: red; */
   height: 373px;

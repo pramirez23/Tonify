@@ -8,7 +8,9 @@ const songsReducer = (state = {}, action) => {
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.songs)
     case RECEIVE_PLAYLIST:
-      if (typeof action.payload.songs === 'undefined') {
+      if (!action.payload) {
+        return state;
+      } else if (typeof action.payload.songs === 'undefined') {
         return {};
       } else {
         return action.payload.songs

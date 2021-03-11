@@ -6,7 +6,6 @@ img.album-photo {
   margin-left: 35px;
   top: 75px;
   object-fit: cover;
-  cursor: pointer;
 }
 
 .album-header {
@@ -39,6 +38,7 @@ img.album-photo {
   display: flex;
   letter-spacing: 0.5px;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 a.artist-link {
@@ -307,32 +307,136 @@ tbody:first-child {
   animation: rotate 5s linear infinite;
 }
 
-.playlist-dropdown-options {
+.album-dropdown-options {
   display: flex;
   flex-direction: column;
   position: absolute;
   background: #282828;
-  height: 76px;
-  width: 166px;
+  height: 110px;
+  width: 185px;
   justify-content: center;
   align-items: center;
   border-radius: 3px;
   z-index: 1000;
 }
 
-.playlist-dropdown-options > div {
+.album-dropdown-options > div {
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   letter-spacing: 1px;
   height: 10px;
   display: flex;
-  width: 135px;
+  width: 155px;
   align-items: center;
   padding: 12px;
   border-radius: 3px;
   cursor: default;
 }
 
-.playlist-dropdown-options > div:hover {
+.album-dropdown-options > div:hover {
   background: #4f4f4f;
+}
+
+div.album-playlist-selector-container {
+  position: absolute;
+  left: 198px;
+  top: -242px;
+  /* background: red; */
+  height: 373px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 9999;
+}
+
+div.album-playlist-selector-container:hover {
+  background: transparent;
+}
+
+.album-playlist-selector {
+  background: #282828;
+  height: fit-content;
+  padding: 4px;
+  border-radius: 3px;
+  right: 232px;
+  top: -239px;
+  max-height: 409px;
+  overflow-y: auto;
+  -webkit-box-shadow: 0px 3px 19px 4px #0f0f0f;
+  box-shadow: 0px 3px 19px 4px #000000;
+  font-size: 16px;
+  color: white;
+}
+
+.album-playlist-selector::-webkit-scrollbar-track {
+  background-color: #282828;
+}
+
+.album-playlist-selector::-webkit-scrollbar {
+  width: 9px;
+  background-color: #000000;
+}
+
+.album-playlist-selector::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #414141;
+}
+
+th.album-song-column-title, td.album-song-title-column {
+  width: 67vw;
+  padding-right: 25px;
+}
+
+th.album-song-column-title {
+  padding-left: 35px;
+}
+
+.title-artist-container {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.45;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1210px) {
+  h1.album-name {
+    font-size: 65px;
+  }
+
+  .album-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
+}
+
+@media only screen and (max-width: 957px) {
+  h1.album-name {
+    font-size: 40px;
+  }
+
+  .album-details {
+    font-size: 13px
+  }
+  .album-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
 }

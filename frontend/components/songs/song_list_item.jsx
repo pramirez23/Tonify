@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { openAlert, closeAlert } from '../../actions/alert_actions'
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
+import { addAlbumSongToPlaylist } from '../../actions/album_actions';
 
 class SongListItem extends React.Component {
   _isMounted = false;
@@ -18,7 +19,7 @@ class SongListItem extends React.Component {
       hideDropDown: true,
       mousePos: null,
       pageType: null,
-      
+      dropDownClass: null
     };
     
     this.dropDown = React.createRef();
@@ -33,7 +34,7 @@ class SongListItem extends React.Component {
     const location = pathName[1];
     this._isMounted = true;
 
-    this.setState({pageType: location})
+    this.setState({pageType: location});
 
     this.dropDownListener = e => {
       if (this.dropDown && !this.dropDown.contains(e.target)) {
@@ -50,8 +51,11 @@ class SongListItem extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.match.params.id !== prevProps.match.params.id) {
-      this.dateAdded = renderDateAdded(this.props.song.created_at)
+    if (this.props.location !== prevProps.location) {
+      const pathName = this.props.location.pathname.split('/');
+      const location = pathName[1];
+      this._isMounted = true;
+      this.dateAdded = renderDateAdded(this.props.song.created_at);
     }
   }
 
@@ -90,20 +94,28 @@ class SongListItem extends React.Component {
   }
 
   detectPageType() {
+    const { song, playlist, album, currentUser } = this.props;
+    let className;
+
     switch(this.state.pageType) {
       case "playlists":
-
+        (currentUser === playlist.user_id) ? className = "song-dropdown-options" : className = "song-dropdown-other";
         break;
       case "albums":
+        className = "song-dropdown-other"
         break;
       default:
         return;
     }
+
+    return className;
   }
 
   render() {
     const { song, playlist, album, currentUser } = this.props;
     const isHovering = this.state.isHovering;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
 
     let playlistIndex = this.props.playlists;
 
@@ -125,10 +137,10 @@ class SongListItem extends React.Component {
         onMouseLeave={() => this.handleMouseLeave()}
       >
         <td className="num-column">{playOrNum}</td>
-        <td className="title-column"> 
+        <td className={this.state.pageType === "playlists" ? "title-column" : "album-song-title-column"}>
           <div className="title-details">
             <div className="item-art-container">
-              <img className="item-album-art" src={song.cover_art} alt="Cover Art" />
+              <img className={this.state.pageType === "playlists" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
@@ -158,7 +170,11 @@ class SongListItem extends React.Component {
             </div>
           </div>
 
-          {!this.state.hideDropDown && <div className={(currentUser === playlist.user_id) ? "song-dropdown-options": "song-dropdown-other"} onMouseDown={(e) => e.stopPropagation()}>
+          {!this.state.hideDropDown &&
+            <div
+              className={this.detectPageType()}
+              onMouseDown={(e) => e.stopPropagation()}>
+
             <div
               className="add-to-queue"
               onMouseEnter={(e) => this.handleMouseEnter(e)}
@@ -175,7 +191,7 @@ class SongListItem extends React.Component {
               onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
 
             <div
-              className={currentUser === playlist.user_id ? "song-dropdown-option" : "hidden"}
+              className={location === "playlists" ? "song-dropdown-option" : "hidden"}
               onMouseEnter={(e) => this.handleMouseEnter(e)}
               onClick={ () => {
                 this.props.removeSongFromPlaylist(this.props.playlistSongId);
@@ -185,7 +201,7 @@ class SongListItem extends React.Component {
                 });
               }}>Remove from this playlist</div>
 
-            <div className={ (currentUser === playlist.user_id) ? "current-before-playlist-add" : "other-before-playlist-add"}/>
+            <div className={location === "playlists" ? "current-before-playlist-add" : "other-before-playlist-add"}/>
 
             <div
               className="add-to-playlist"
@@ -206,12 +222,16 @@ class SongListItem extends React.Component {
                         isHovering: false
                       });
 
-                      this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id)
-                        .then(() => {
+                      if (location === "playlists") {
+                        this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id).then(() => {
                           this.props.openAlert();
-                          setTimeout(this.props.closeAlert, 4000);
-                        })}}>{playlist.name}
-                    </li>
+                          setTimeout(this.props.closeAlert, 4000)})
+                      } else if (location === "albums") {
+                        this.props.addAlbumSongToPlaylist(playlist.id, song.id, album.id).then(() => {
+                          this.props.openAlert();
+                          setTimeout(this.props.closeAlert, 4000)
+                        })
+                      }}}>{playlist.name}</li>
                   )}
               </ul>
             </div>
@@ -236,6 +256,7 @@ const mSTP = state => {
 const mDTP = dispatch => {
   return {
     addSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addSongToPlaylist(playlistId, songId, currentPlaylistId)),
+    addAlbumSongToPlaylist: (playlistId, songId, albumId) => dispatch(addAlbumSongToPlaylist(playlistId, songId, albumId)),
     removeSongFromPlaylist: playlistSongId => dispatch(removeSongFromPlaylist(playlistSongId)),
     openAlert: () => dispatch(openAlert()),
     closeAlert: () => dispatch(closeAlert())

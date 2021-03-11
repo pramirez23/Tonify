@@ -31,9 +31,50 @@ class Api::PlaylistSongsController < ApplicationController
     end
   end
 
+  def add_album
+    playlist_id = playlist_song_params[:playlist_id]
+    album_id = playlist_song_params[:album_id]
+
+    @album = Album.find_by(id: album_id)
+
+    added_songs = @album.songs.map do |song|
+      PlaylistSong.new({
+        playlist_id: playlist_id,
+        song_id: song.id
+      })
+    end
+
+    added_songs.each do |song|
+      if song.save
+      else
+        render json: ['Something went wrong...'], status: 422
+      end
+    end
+    
+    render 'api/albums/show'
+  end
+
+  def add_album_song
+    playlist_id = playlist_song_params[:playlist_id]
+    song_id = playlist_song_params[:song_id]
+
+    @playlist_song = PlaylistSong.new({
+      playlist_id: playlist_id,
+      song_id: song_id
+    })
+      
+    @album = Album.find_by(id: playlist_song_params[:album_id])
+
+    if @playlist_song.save
+      render 'api/albums/show'
+    else
+      render json: @playlist_song.errors.full_messages, status: 422
+    end
+  end
+
   private
 
   def playlist_song_params
-    params.require(:playlist_song).permit(:id, :playlist_id, :song_id, :current_playlist_id)
+    params.require(:playlist_song).permit(:id, :playlist_id, :song_id, :current_playlist_id, :album_id)
   end
 end

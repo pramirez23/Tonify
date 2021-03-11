@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { openModal } from '../../actions/modal_actions'
 import { renderTotalDuration } from '../../util/time_util';
+import { addAlbumToPlaylist } from '../../actions/album_actions';
+import { openAlert, closeAlert } from '../../actions/alert_actions';
 import SongListItem from '../songs/song_list_item'
 
 class Album extends React.Component {
@@ -15,10 +16,12 @@ class Album extends React.Component {
     this.state = {
       hideDropDown: true,
       isLiked: false,
+      revealPlaylists: false
     }
 
     this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +30,8 @@ class Album extends React.Component {
       if (this.dropDown && !this.dropDown.contains(e.target)) {
         if (this._isMounted) {
           this.setState({
-            hideDropDown: true
+            hideDropDown: true,
+            revealPlaylists: false
           });
         }
       }
@@ -46,10 +50,25 @@ class Album extends React.Component {
     })
   }
 
+  handleMouseEnter(e) {
+    if (e.target.className === "add-to-playlist") {
+      this.setState({
+        revealPlaylists: true
+      })
+    } else if (e.target.className === "album-dropdown-option") {
+      this.setState({
+        revealPlaylists: false
+      })
+    }
+  }
+
   render() {
     const { album, songs, currentUser, playlists } = this.props;
     const albumSongs = Object.entries(songs);
     const renderAlbumDuration = renderTotalDuration(album.duration);
+
+    let userPlaylists = Object.values(playlists).filter(playlist =>
+      playlist.user_id === this.props.currentUser);
 
     const albumDetails = () => {
       if (albumSongs.length > 1) {
@@ -87,10 +106,46 @@ class Album extends React.Component {
 
           <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
-            {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
-              <div className="edit-playlist">Add to queue</div>
-              <div className="edit-playlist">Add to Your Library</div>
-              <div className="delete-playlist">Delete</div>
+            {!this.state.hideDropDown && <div className="album-dropdown-options" onClick={e => e.stopPropagation()}>
+              <div
+                className="album-dropdown-option"
+                onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to queue</div>
+
+              <div
+                className="album-dropdown-option"
+                onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to Your Library</div>
+
+              <div
+                className="add-to-playlist"
+                onMouseEnter={(e) => this.handleMouseEnter(e)}>
+                <span>Add to playlist</span>
+                <i className="fas fa-caret-right"></i>
+              </div>
+
+              <div className="album-playlist-selector-container">
+                <ul className={this.state.revealPlaylists ? "album-playlist-selector" : "hidden"}>
+                  {userPlaylists.slice(0).reverse().map(playlist =>
+                    <li
+                      key={playlist.id}
+                      className="playlist-item"
+                      onClick={() => {
+                        this.setState({
+                          hideDropDown: true,
+                          isHovering: false
+                        });
+                        
+                        
+                        this.props.addAlbumToPlaylist(playlist.id, album.id)
+                          .then(() => {
+                            this.props.openAlert();
+                            setTimeout(this.props.closeAlert, 4000);
+                           })
+                      }}>{playlist.name}
+                    </li>
+                  )}
+                </ul>
+              </div>
+
             </div>}
           </div>
         </div>
@@ -99,7 +154,7 @@ class Album extends React.Component {
           <thead>
             <tr className="song-column-header">
               <th className="song-column-num">#</th>
-              <th className="song-column-title">TITLE</th>
+              <th className="album-song-column-title">TITLE</th>
               <th className="song-column-duration"><i className="far fa-clock"></i></th>
             </tr>
           </thead>
@@ -122,11 +177,22 @@ class Album extends React.Component {
   }
 }
 
+const mSTP = state => {
+  const currentUser = state.session.id;
+  const { playlists } = state.entities;
+
+  return ({
+    playlists,
+    currentUser: currentUser,
+  });
+};
+
 const mDTP = dispatch => {
   return {
-    editPlaylist: id => dispatch(openModal(id, 'editPlaylist')),
-    deletePlaylist: id => dispatch(openModal(id, 'deletePlaylist')),
+    openAlert: () => dispatch(openAlert()),
+    closeAlert: () => dispatch(closeAlert()),
+    addAlbumToPlaylist: (playlistId, albumId) => dispatch(addAlbumToPlaylist(playlistId, albumId))
   }
 };
 
-export default withRouter(connect(null, mDTP)(Album));
+export default withRouter(connect(mSTP, mDTP)(Album));
