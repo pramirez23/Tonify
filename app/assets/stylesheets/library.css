@@ -1,3 +1,14 @@
+img.liked-songs-photo {
+  width: 232px;
+  height: 232px;
+  filter: drop-shadow(3px 4px 8px #222);
+  position: absolute;
+  margin-left: 35px;
+  top: 75px;
+  object-fit: cover;
+  cursor: default;
+}
+
 .empty-liked-songs {
   display: flex;
   flex-direction: column;
@@ -53,7 +64,8 @@ button.find-songs:hover {
   display: flex;
   height: 340px;
   margin-bottom: 10px;
-  background: linear-gradient(#535353, #2A2A2A);
+  background: rgb(40,28,81);
+  background: linear-gradient(0deg, rgba(40,28,81,1) 0%, rgba(80,56,160,1) 79%);
 }
 
 .liked-songs-header span {

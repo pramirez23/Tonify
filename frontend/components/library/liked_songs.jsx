@@ -77,7 +77,7 @@ class LikedSongs extends React.Component {
     return (
       <div className="main-content">
         <div className="liked-songs-header">
-          <img className="playlist-photo" src={window.likedSongs} />
+          <img className="liked-songs-photo" src={window.likedSongs} />
           <div className="liked-songs-details">
             <span>PLAYLIST</span>
             <h1 className="liked-songs-title">Liked Songs</h1>
