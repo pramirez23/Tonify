@@ -36,14 +36,6 @@ class PlaylistItem extends React.Component {
   // }
 
   render() {
-    if (this.props.loading) {
-      return (
-        <div className="spinner-container">
-          <i className="fas fa-spinner"></i>
-        </div>
-      )
-    }
-
     if (!this.props.playlist) {
       return null;
     }

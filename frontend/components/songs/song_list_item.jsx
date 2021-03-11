@@ -112,7 +112,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { song, playlist, album, currentUser } = this.props;
+    const { song, album } = this.props;
     const isHovering = this.state.isHovering;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];

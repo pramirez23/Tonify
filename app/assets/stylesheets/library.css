@@ -1,0 +1,119 @@
+.empty-liked-songs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: white;
+  font-size: 25px;
+  height: calc(100vh - 441px);
+  justify-content: center;
+  position: inherit;
+  line-height: 35px;
+}
+
+#empty-liked-icon {
+  background: none;
+  font-size: 80px;
+}
+
+.empty-header {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+}
+
+.empty-details {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.25px;
+}
+
+button.find-songs {
+  border: 0px;
+  background-color: white;
+  color: black;
+  border-radius: 26px;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 11px;
+  height: 37px;
+  width: 160px;
+  margin: 3px auto;
+  margin-top: 10px;
+  cursor: pointer;
+}
+button.find-songs:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+.liked-songs-header {
+  color: white;
+  display: flex;
+  height: 340px;
+  margin-bottom: 10px;
+  background: linear-gradient(#535353, #2A2A2A);
+}
+
+.liked-songs-header span {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  cursor: default;
+}
+
+.liked-songs-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160px;
+  margin-left: 300px;
+  margin-top: 151px;
+  color: white;
+  font-weight: 300;
+}
+
+h1.liked-songs-title {
+  font-size: 86px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 600;
+  padding: 9px 0px 9px 0px;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+@media only screen and (max-width: 1210px) {
+  h1.liked-songs-title {
+    font-size: 65px;
+  }
+
+  .liked-songs-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
+}
+
+@media only screen and (max-width: 957px) {
+  h1.liked-songs-title {
+    font-size: 40px;
+  }
+
+  .liked-songs-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 138px;
+    margin-left: 300px;
+    margin-top: 173px;
+    color: white;
+    font-weight: 300;
+  }
+}

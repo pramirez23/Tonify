@@ -4,12 +4,13 @@ import LikedSongs from "./liked_songs"
 
 const mSTP = state => {
   const { id } = state.session;
-  const { playlists, songs } = state.entities;
+  const { playlists, songs, users } = state.entities;
 
   return {
     currentUser: id,
     playlists,
-    songs
+    songs,
+    users
   };
 };
 
