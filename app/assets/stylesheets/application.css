@@ -140,7 +140,7 @@ p > a {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 99999;
   min-height: 0;
   overflow: auto;
   overflow-x: hidden;

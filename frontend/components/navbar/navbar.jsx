@@ -22,6 +22,7 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     const content = document.getElementsByClassName('main-content-container')[0];
+    const currentUserId = this.props.currentUserId;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     const pageId = pathName[2];
@@ -53,20 +54,25 @@ class Navbar extends React.Component {
       case "artists":
         this.props.fetchArtist(pageId).then(() => this.renderContent());
         break;
+      case "library":
+        if (pageId === "songs") {
+          this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
+        }
       default:
         break;
     }
-
+        
     document.addEventListener('click', this.dropDownListener, false);
   }
-
+      
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
+      const currentUserId = this.props.currentUserId;
       const content = document.getElementsByClassName('main-content-container')[0];
       const pathName = this.props.location.pathname.split('/');
       const location = pathName[1];
       const pageId = pathName[2];
-      
+  
       this.props.loading();
       content.scrollTo({ top: 0, behavior: "auto" });
 
@@ -94,6 +100,10 @@ class Navbar extends React.Component {
         case "artists":
           this.props.fetchArtist(pageId).then(() => this.renderContent());
           break;
+        case "library":
+          if (pageId === "songs") {
+            this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
+          }
         default:
           break;
       }
@@ -120,19 +130,18 @@ class Navbar extends React.Component {
 
     switch (location) {
       case "playlists":
-        this.setState({
-          content: playlists[pageId].name
-        })
+        this.setState({ content: playlists[pageId].name })
         break;
       case "albums":
-        this.setState({
-          content: albums[pageId].title
-        }) 
+        this.setState({ content: albums[pageId].title }) 
         break;
       case "artists":
-        this.setState({
-          content: artists[pageId].name
-        })
+        this.setState({ content: artists[pageId].name })
+        break;
+      case "library":
+        if (pageId === "songs") {
+          this.setState({ content: "Liked Songs" })
+        }
         break;
       default:
         break;

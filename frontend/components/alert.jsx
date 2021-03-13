@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { closeAlert } from '../actions/alert_actions';
 
 const Alert = (props) => {
   return (

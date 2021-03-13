@@ -25,6 +25,7 @@ img.liked-songs-photo {
 #empty-liked-icon {
   background: none;
   font-size: 80px;
+  cursor: default;
 }
 
 .empty-header {
@@ -54,6 +55,7 @@ button.find-songs {
   margin-top: 10px;
   cursor: pointer;
 }
+
 button.find-songs:hover {
   transform: scale(1.05);
   text-decoration: underline;

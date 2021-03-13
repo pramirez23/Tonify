@@ -3,7 +3,7 @@ import Navbar from "./navbar"
 import { logout } from '../../actions/session_actions';
 import { fetchPlaylist } from "../../actions/playlist_actions";
 import { fetchAlbum } from "../../actions/album_actions";
-import { fetchLikedSongs } from "../../actions/library_actions"
+import { fetchLikedSongs, fetch } from "../../actions/library_actions"
 import { loading } from '../../actions/loading_actions';
 
 const mSTP = state => {
@@ -12,6 +12,7 @@ const mSTP = state => {
   const currentUsername = users[currentUserId].username;
 
   return ({
+    currentUserId,
     currentUsername,
     playlists,
     albums,
@@ -24,7 +25,7 @@ const mDTP = dispatch => {
     logout: () => dispatch(logout()),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
     fetchAlbum: id => dispatch(fetchAlbum(id)),
-    fetchLikedSongs: (id) => dispatch(fetchLikedSongs(id)),
+    fetchLikedSongs: (currentUserId) => dispatch(fetchLikedSongs(currentUserId)),
     loading: () => dispatch(loading())
   }
 };

@@ -14,6 +14,7 @@ class SongListItem extends React.Component {
     super(props);
 
     this.state = {
+      isLiked: false,
       isHovering: false,
       revealPlaylists: false,
       hideDropDown: true,
@@ -93,6 +94,10 @@ class SongListItem extends React.Component {
     e.stopPropagation();
   }
 
+  // renderLikeButton() {
+
+  // }
+
   detectPageType() {
     const { song, playlist, album, currentUser } = this.props;
     let className;
@@ -160,6 +165,7 @@ class SongListItem extends React.Component {
         <td className="duration-column">
           <div className="song-controls-container">
             <div className="song-controls">
+
               <i className={this.state.isHovering ? "far fa-heart" : "hidden"}></i>
               {renderSongDuration(song.duration)}
               <div

@@ -191,9 +191,100 @@ var closeAlert = function closeAlert() {
 /*!*********************************************!*\
   !*** ./frontend/actions/library_actions.js ***!
   \*********************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RECEIVE_LIKED_PLAYLISTS": () => /* binding */ RECEIVE_LIKED_PLAYLISTS,
+/* harmony export */   "RECEIVE_LIKED_ARTISTS": () => /* binding */ RECEIVE_LIKED_ARTISTS,
+/* harmony export */   "RECEIVE_LIKED_ALBUMS": () => /* binding */ RECEIVE_LIKED_ALBUMS,
+/* harmony export */   "RECEIVE_LIKED_SONGS": () => /* binding */ RECEIVE_LIKED_SONGS,
+/* harmony export */   "receiveLikedPlaylists": () => /* binding */ receiveLikedPlaylists,
+/* harmony export */   "receiveLikedArtists": () => /* binding */ receiveLikedArtists,
+/* harmony export */   "receiveLikedAlbums": () => /* binding */ receiveLikedAlbums,
+/* harmony export */   "receiveLikedSongs": () => /* binding */ receiveLikedSongs,
+/* harmony export */   "fetchLikedPlaylists": () => /* binding */ fetchLikedPlaylists,
+/* harmony export */   "fetchLikedArtists": () => /* binding */ fetchLikedArtists,
+/* harmony export */   "fetchLikedAlbums": () => /* binding */ fetchLikedAlbums,
+/* harmony export */   "fetchLikedSongs": () => /* binding */ fetchLikedSongs,
+/* harmony export */   "like": () => /* binding */ like,
+/* harmony export */   "unlike": () => /* binding */ unlike
+/* harmony export */ });
+/* harmony import */ var _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/library_api_util */ "./frontend/util/library_api_util.js");
+/* harmony import */ var _user_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_actions */ "./frontend/actions/user_actions.js");
 
 
+var RECEIVE_LIKED_PLAYLISTS = "RECEIVE_LIKED_PLAYLISTS";
+var RECEIVE_LIKED_ARTISTS = "RECEIVE_LIKED_ARTISTS";
+var RECEIVE_LIKED_ALBUMS = "RECEIVE_LIKED_ALBUMS";
+var RECEIVE_LIKED_SONGS = "RECEIVE_LIKED_SONGS";
+var receiveLikedPlaylists = function receiveLikedPlaylists(likedPlaylists) {
+  return {
+    type: RECEIVE_LIKED_PLAYLISTS,
+    likedPlaylists: likedPlaylists
+  };
+};
+var receiveLikedArtists = function receiveLikedArtists(likedArtists) {
+  return {
+    type: RECEIVE_LIKED_ARTISTS,
+    likedArtists: likedArtists
+  };
+};
+var receiveLikedAlbums = function receiveLikedAlbums(likedAlbums) {
+  return {
+    type: RECEIVE_LIKED_ALBUMS,
+    likedAlbums: likedAlbums
+  };
+};
+var receiveLikedSongs = function receiveLikedSongs(likedSongs) {
+  return {
+    type: RECEIVE_LIKED_SONGS,
+    likedSongs: likedSongs
+  };
+};
+var fetchLikedPlaylists = function fetchLikedPlaylists(currentUserId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchLikedPlaylists(currentUserId).then(function (likedPlaylists) {
+      return dispatch(receiveLikedPlaylists(likedPlaylists));
+    });
+  };
+};
+var fetchLikedArtists = function fetchLikedArtists(currentUserId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchLikedArtists(currentUserId).then(function (likedArtists) {
+      return dispatch(receiveLikedArtists(likedArtists));
+    });
+  };
+};
+var fetchLikedAlbums = function fetchLikedAlbums(currentUserId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchLikedAlbums(currentUserId).then(function (likedAlbums) {
+      return dispatch(receiveLikedAlbums(likedAlbums));
+    });
+  };
+};
+var fetchLikedSongs = function fetchLikedSongs(currentUserId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchLikedSongs(currentUserId).then(function (likedSongs) {
+      return dispatch(receiveLikedSongs(likedSongs));
+    });
+  };
+};
+var like = function like(likableType, likableId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.like(likableType, likableId).then(function (user) {
+      return dispatch((0,_user_actions__WEBPACK_IMPORTED_MODULE_1__.receiveUser)(user));
+    });
+  };
+};
+var unlike = function unlike(likableType, likableId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.unlike(likableType, likableId).then(function (user) {
+      return dispatch((0,_user_actions__WEBPACK_IMPORTED_MODULE_1__.receiveUser)(user));
+    });
+  };
+};
 
 /***/ }),
 
@@ -527,6 +618,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RECEIVE_USERS": () => /* binding */ RECEIVE_USERS,
 /* harmony export */   "RECEIVE_USER": () => /* binding */ RECEIVE_USER,
+/* harmony export */   "receiveUsers": () => /* binding */ receiveUsers,
+/* harmony export */   "receiveUser": () => /* binding */ receiveUser,
 /* harmony export */   "fetchUsers": () => /* binding */ fetchUsers,
 /* harmony export */   "fetchUser": () => /* binding */ fetchUser
 /* harmony export */ });
@@ -534,21 +627,18 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_USERS = "RECEIVE_USERS";
 var RECEIVE_USER = "RECEIVE_USER";
 
-
 var receiveUsers = function receiveUsers(users) {
   return {
     type: RECEIVE_USERS,
     users: users
   };
 };
-
 var receiveUser = function receiveUser(user) {
   return {
     type: RECEIVE_USER,
     user: user
   };
 };
-
 var fetchUsers = function fetchUsers() {
   return function (dispatch) {
     return _util_user_util__WEBPACK_IMPORTED_MODULE_0__.fetchUsers().then(function (users) {
@@ -1078,8 +1168,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_alert_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/alert_actions */ "./frontend/actions/alert_actions.js");
-
 
 
 
@@ -1536,6 +1624,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var content = document.getElementsByClassName('main-content-container')[0];
+      var currentUserId = this.props.currentUserId;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var pageId = pathName[2];
@@ -1584,6 +1673,13 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           });
           break;
 
+        case "library":
+          if (pageId === "songs") {
+            this.props.fetchLikedSongs(currentUserId).then(function () {
+              return _this2.renderContent();
+            });
+          }
+
         default:
           break;
       }
@@ -1596,6 +1692,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       if (this.props.location !== prevProps.location) {
+        var currentUserId = this.props.currentUserId;
         var content = document.getElementsByClassName('main-content-container')[0];
         var pathName = this.props.location.pathname.split('/');
         var location = pathName[1];
@@ -1645,6 +1742,13 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
             });
             break;
 
+          case "library":
+            if (pageId === "songs") {
+              this.props.fetchLikedSongs(currentUserId).then(function () {
+                return _this3.renderContent();
+              });
+            }
+
           default:
             break;
         }
@@ -1692,6 +1796,15 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           this.setState({
             content: artists[pageId].name
           });
+          break;
+
+        case "library":
+          if (pageId === "songs") {
+            this.setState({
+              content: "Liked Songs"
+            });
+          }
+
           break;
 
         default:
@@ -1816,7 +1929,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
 /* harmony import */ var _actions_album_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/album_actions */ "./frontend/actions/album_actions.js");
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
-/* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_actions_library_actions__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _actions_loading_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../actions/loading_actions */ "./frontend/actions/loading_actions.js");
 
 
@@ -1835,6 +1947,7 @@ var mSTP = function mSTP(state) {
       users = _state$entities.users;
   var currentUsername = users[currentUserId].username;
   return {
+    currentUserId: currentUserId,
     currentUsername: currentUsername,
     playlists: playlists,
     albums: albums,
@@ -1853,8 +1966,8 @@ var mDTP = function mDTP(dispatch) {
     fetchAlbum: function fetchAlbum(id) {
       return dispatch((0,_actions_album_actions__WEBPACK_IMPORTED_MODULE_4__.fetchAlbum)(id));
     },
-    fetchLikedSongs: function fetchLikedSongs(id) {
-      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_5__.fetchLikedSongs)(id));
+    fetchLikedSongs: function fetchLikedSongs(currentUserId) {
+      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_5__.fetchLikedSongs)(currentUserId));
     },
     loading: function loading() {
       return dispatch((0,_actions_loading_actions__WEBPACK_IMPORTED_MODULE_6__.loading)());
@@ -3648,6 +3761,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     _defineProperty(_assertThisInitialized(_this), "_isMounted", false);
 
     _this.state = {
+      isLiked: false,
       isHovering: false,
       revealPlaylists: false,
       hideDropDown: true,
@@ -3735,7 +3849,9 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         hideDropDown: !this.state.hideDropDown
       });
       e.stopPropagation();
-    }
+    } // renderLikeButton() {
+    // }
+
   }, {
     key: "detectPageType",
     value: function detectPageType() {
@@ -4311,7 +4427,7 @@ var usersReducer = function usersReducer() {
       return Object.assign({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_USER:
-      return Object.assign({}, state, _defineProperty({}, action.user.id, action.user));
+      return Object.assign({}, state, _defineProperty({}, action.user.id, action));
 
     case _actions_user_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_USERS:
       return Object.assign({}, state, action.users);
@@ -4498,11 +4614,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
-/* harmony import */ var _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/album_actions */ "./frontend/actions/album_actions.js");
-/* harmony import */ var _actions_loading_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/loading_actions */ "./frontend/actions/loading_actions.js");
-
-
+/* harmony import */ var _actions_loading_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/loading_actions */ "./frontend/actions/loading_actions.js");
+// import {
+//   RECEIVE_PLAYLISTS,
+//   RECEIVE_PLAYLIST,
+// } from "../../actions/playlist_actions";
+// import {
+//   RECEIVE_ALBUMS,
+//   RECEIVE_ALBUM,
+// } from "../../actions/album_actions";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -4510,19 +4630,15 @@ __webpack_require__.r(__webpack_exports__);
   Object.freeze(state);
 
   switch (action.type) {
-    case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST:
-      return false;
-
-    case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLISTS:
-      return false;
-
-    case _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_ALBUM:
-      return false;
-
-    case _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_ALBUMS:
-      return false;
-
-    case _actions_loading_actions__WEBPACK_IMPORTED_MODULE_2__.LOADING:
+    // case RECEIVE_PLAYLIST:
+    //   return false;
+    // case RECEIVE_PLAYLISTS:
+    //   return false;
+    // case RECEIVE_ALBUM:
+    //   return false;
+    // case RECEIVE_ALBUMS:
+    //   return false;
+    case _actions_loading_actions__WEBPACK_IMPORTED_MODULE_0__.LOADING:
       return true;
 
     default:
@@ -4744,6 +4860,73 @@ var addAlbumSongToPlaylist = function addAlbumSongToPlaylist(playlist_id, song_i
         playlist_id: playlist_id,
         song_id: song_id,
         album_id: album_id
+      }
+    }
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/library_api_util.js":
+/*!*******************************************!*\
+  !*** ./frontend/util/library_api_util.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchLikedPlaylists": () => /* binding */ fetchLikedPlaylists,
+/* harmony export */   "fetchLikedArtists": () => /* binding */ fetchLikedArtists,
+/* harmony export */   "fetchLikedAlbums": () => /* binding */ fetchLikedAlbums,
+/* harmony export */   "fetchLikedSongs": () => /* binding */ fetchLikedSongs,
+/* harmony export */   "like": () => /* binding */ like,
+/* harmony export */   "unlike": () => /* binding */ unlike
+/* harmony export */ });
+var fetchLikedPlaylists = function fetchLikedPlaylists(currentUserId) {
+  return $.ajax({
+    type: "GET",
+    url: "/api/users/".concat(currentUserId, "/playlists")
+  });
+};
+var fetchLikedArtists = function fetchLikedArtists(currentUserId) {
+  return $.ajax({
+    type: "GET",
+    url: "api/users/".concat(currentUserId, "/artists")
+  });
+};
+var fetchLikedAlbums = function fetchLikedAlbums(currentUserId) {
+  return $.ajax({
+    type: "GET",
+    url: "/api/users/".concat(currentUserId, "/albums")
+  });
+};
+var fetchLikedSongs = function fetchLikedSongs(currentUserId) {
+  return $.ajax({
+    type: "GET",
+    url: "/api/users/".concat(currentUserId, "/songs")
+  });
+};
+var like = function like(likeable_id, likeable_type) {
+  return $.ajax({
+    type: "POST",
+    url: "api/likes",
+    data: {
+      like: {
+        likeable_id: likeable_id,
+        likeable_type: likeable_type
+      }
+    }
+  });
+};
+var unlike = function unlike(likeable_id, likeable_type) {
+  return $.ajax({
+    type: "DELETE",
+    url: "api/likes/-1",
+    data: {
+      like: {
+        likeable_id: likeable_id,
+        likeable_type: likeable_type
       }
     }
   });
