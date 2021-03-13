@@ -252,7 +252,7 @@ class SongListItem extends React.Component {
 const mSTP = state => {
   const currentUser = state.session.id;
   const { playlists } = state.entities;
-
+  const currentUserLikes = state.entities.users[currentUser]
   return ({
     playlists,
     currentUser: currentUser,
