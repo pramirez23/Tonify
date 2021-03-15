@@ -160,15 +160,16 @@ p > a {
 }
 
 .add-song-confirmation-container, .hide-alert {
-  width: 180px;
-  height: 40px;
+  width: auto;
+  display: flex;
+  height: 100vh;
   position: fixed;
-  top: calc(91% - 89px);
-  left: calc(50% - 3px);
 }
-
 .add-song-confirmation-container {
-  animation: 4s showalert forwards;
+  width: 100vw;
+  justify-content: center;
+  pointer-events: none;
+  animation: showalert 4s forwards; 
 }
 
 .hide-alert {
@@ -181,8 +182,9 @@ span.add-song-confirmation {
   justify-content: center;
   text-align: center;
   font-size: 14px;
-  width: 180px;
+  width: auto;
   height: 40px;
+  padding: 0px 18px;
   color: white;
   letter-spacing: 0.25px;
   background: rgb(72, 126, 241);
@@ -190,6 +192,8 @@ span.add-song-confirmation {
   -webkit-box-shadow: 0px 3px 21px 5px #000000;
   box-shadow: 0px 3px 21px 5px #000000;
   z-index: 10000;
+  margin-top: calc(100vh - 158px);
+  margin-left: calc(100vw - 87vw);
 }
 
 @keyframes spinnerrotate {

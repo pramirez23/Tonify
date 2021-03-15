@@ -5,7 +5,7 @@ export default (state = null, action) => {
 
   switch (action.type) {
     case OPEN_ALERT:
-      return "open";
+      return action.alert;
     case CLOSE_ALERT:
       return null;
     default:

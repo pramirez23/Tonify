@@ -1,3 +1,12 @@
+.invisible {
+  visibility: hidden;
+}
+
+#liked-song-heart {
+  color: #2CB954;
+  animation: 0.65s likesong;
+}
+
 .song-dropdown-options {
   display: flex;
   flex-direction: column;
@@ -118,4 +127,16 @@ div.playlist-selector-container:hover {
   border-radius: 12px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #414141;
+}
+
+@keyframes likesong {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.0);
+  }
 }

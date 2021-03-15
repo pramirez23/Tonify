@@ -26,27 +26,27 @@ export const fetchLikedSongs = (currentUserId) => {
   })
 }
 
-export const like = (likeable_id, likeable_type) => {
+export const like = (likable_id, likable_type) => {
   return $.ajax({
     type: "POST",
     url: "api/likes",
     data: {
       like: {
-        likeable_id,
-        likeable_type
+        likable_id,
+        likable_type
       }
     }
   })
 }
 
-export const unlike = (likeable_id, likeable_type) => {
+export const unlike = (likable_id, likable_type) => {
   return $.ajax({
     type: "DELETE",
     url: "api/likes/-1",
     data: {
       like: {
-        likeable_id,
-        likeable_type
+        likable_id,
+        likable_type
       }
     }
   })
