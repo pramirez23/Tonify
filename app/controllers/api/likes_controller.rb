@@ -30,22 +30,30 @@ class Api::LikesController < ApplicationController
 
   def fetch_liked_playlists
     @user = User.find_by(id: current_user.id)
-    @liked_playlists = @user.likes.where(likable_type: "Playlist")
+    @likes = @user.likes.where(likable_type: "Playlist").pluck(:likable_id)
+    @playlists = Playlist.where(id: @likes)
+    render 'api/playlists/index'
   end
 
   def fetch_liked_artists
     @user = User.find_by(id: current_user.id)
-    @liked_artists = @user.likes.where(likable_type: "Artist")
+    @likes = @user.likes.where(likable_type: "Artist").pluck(:likable_id)
+    @artists = Artist.where(id: @likes)
+    render 'api/artists/index'
   end
 
   def fetch_liked_albums
     @user = User.find_by(id: current_user.id)
-    @liked_albums = @user.likes.where(likable_type: "Album")
+    @likes = @user.likes.where(likable_type: "Album").pluck(:likable_id)
+    @album = Album.where(id: @likes)
+    render 'api/albums/index'
   end
 
   def fetch_liked_songs
     @user = User.find_by(id: current_user.id)
-    @liked_songs = @user.likes.where(likable_type: "Song")
+    @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id)
+    @songs = Song.where(id: @likes)
+    render 'api/songs/index'
   end
 
   private

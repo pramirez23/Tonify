@@ -7,11 +7,10 @@ import PlaylistItem from "./playlist_item"
 const mSTP = (state, ownProps) => {
   const { id } = state.session;
   const { playlists, songs, users } = state.entities;
-  const playlist = playlists[ownProps.match.params.id];
 
   return {
     currentUser: id,
-    playlist,
+    playlists,
     songs,
     users,
   };

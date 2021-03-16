@@ -55,6 +55,7 @@ class Navbar extends React.Component {
         this.props.fetchArtist(pageId).then(() => this.renderContent());
         break;
       case "library":
+        this.props.fetchUser(this.props.currentUserId);
         if (pageId === "songs") {
           this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
         }
@@ -101,6 +102,7 @@ class Navbar extends React.Component {
           this.props.fetchArtist(pageId).then(() => this.renderContent());
           break;
         case "library":
+          this.props.fetchUser(this.props.currentUserId);
           if (pageId === "songs") {
             this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
           }
@@ -112,9 +114,9 @@ class Navbar extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('click', this.dropDownListener);
-  }
+  // componentWillUnmount() {
+  //   document.removeEventListener('click', this.dropDownListener);
+  // }
 
   handleDropDown(e) {
     this.setState({
@@ -158,7 +160,7 @@ class Navbar extends React.Component {
 
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
-
+    
     return (
       <nav className="navbar" style={backgroundColor}>
         <div className="nav-content-container">

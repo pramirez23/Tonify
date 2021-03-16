@@ -15,6 +15,7 @@ class Playlist extends React.Component {
     this.state = {
       hideDropDown: true,
       isLiked: false,
+      location: null
     }
 
     this.dropDown = React.createRef();
@@ -25,18 +26,43 @@ class Playlist extends React.Component {
   }
 
   componentDidMount() {
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+
     this._isMounted = true;
     this.dropDownListener = e => {
       if (this.dropDown &&!this.dropDown.contains(e.target)) {
         if (this._isMounted) {
           this.setState({
-            hideDropDown: true
+            hideDropDown: true,
+            location
           });
         }
       }
     }
 
     document.addEventListener('click', this.dropDownListener, false);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      const pathName = this.props.location.pathname.split('/');
+      const location = pathName[1];
+
+      this._isMounted = true;
+      this.dropDownListener = e => {
+        if (this.dropDown && !this.dropDown.contains(e.target)) {
+          if (this._isMounted) {
+            this.setState({
+              hideDropDown: true,
+              location
+            });
+          }
+        }
+      }
+
+      document.addEventListener('click', this.dropDownListener, false);
+    }
   }
 
   componentWillUnmount() {
@@ -65,52 +91,116 @@ class Playlist extends React.Component {
 
   emptyOrFilled() {
     const { playlist, currentUser, songs, history } = this.props
-    const playlistSongs = Object.entries(songs);
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
 
-    if (playlistSongs.length > 0 ) {
-      return (
-        <table className="song-columns">
-          <thead>
-            <tr className="song-column-header">
-              <th className="song-column-num">#</th>
-              <th className="song-column-title">TITLE</th>
-              <th className="song-column-album">ALBUM</th>
-              <th className="song-column-date">DATE ADDED</th>
-              <th className="song-column-duration"><i className="far fa-clock"></i></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr className="null-row"><td className="null-td"></td></tr>
-            {playlistSongs.slice(0).map((song, idx) =>
-              <SongListItem
-                song={song[1]}
-                dateAdded={renderDateAdded(song[1].created_at)}
-                playlistSongId={song[0]}
-                key={idx}
-                num={(idx + 1)}
-                history={history}
-                currentUser={currentUser}
-                playlist={playlist}
-              />
-            )}
-          </tbody>
-        </table>
+    let playlistSongs;
+    let likedSongs;
+    let content;
+    
+    if (location === "playlists") {
+      playlistSongs = Object.entries(songs);
+    } else if (location === "library") {
+      likedSongs = Object.entries(songs);
+    }
+    
+    if (playlistSongs && playlistSongs.length > 0 ) {
+      content = (
+        playlistSongs.slice(0).map((song, idx) =>
+          <SongListItem
+            song={song[1]}
+            dateAdded={renderDateAdded(song[1].created_at)}
+            playlistSongId={song[0]}
+            key={idx}
+            num={(idx + 1)}
+            history={history}
+            currentUser={currentUser}
+            playlist={playlist}
+          />
+        )
       )
-    } else {
-      return (
+    } else if (likedSongs && likedSongs.length > 0) {
+      content = (
+        likedSongs.slice(0).reverse().map((song, idx) =>
+          <SongListItem
+            song={song[1]}
+            playlistSongId={song[0]}
+            key={idx}
+            num={(idx + 1)}
+          />
+        )
+      )
+    }
+      
+    let renderPlaylist = (
+      <table className="song-columns">
+        <thead>
+          <tr className="song-column-header">
+            <th className="song-column-num">#</th>
+            <th className="song-column-title">TITLE</th>
+            <th className="song-column-album">ALBUM</th>
+            <th className="song-column-date">DATE ADDED</th>
+            <th className="song-column-duration"><i className="far fa-clock"></i></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr className="null-row"><td className="null-td"></td></tr>
+          {content}
+        </tbody>
+      </table>
+    )
+
+    if (playlistSongs && playlistSongs.length === 0) {
+      renderPlaylist = (
         <div className="empty-playlist">
           <i className="fas fa-compact-disc"></i>
           <p>It looks like you don't have anything in this playlist yet.</p>
           <p> <Link to="/search">Search</Link> for some songs to add!</p>
         </div>
       )
+    } else if (likedSongs && likedSongs.length === 0) {
+      renderPlaylist = (
+        <div className="empty-liked-songs">
+          <span id="empty-liked-icon" className="material-icons">music_note</span>
+          <p className="empty-header">Songs you like will appear here</p>
+          <p className="empty-details">Save songs by tapping the heart icon.</p>
+          <button className="find-songs">FIND SONGS</button>
+        </div>
+      )
     }
+
+    return renderPlaylist;
   }
 
   render() { 
-    const { playlist, currentUser, playlistCreator, username, songs } = this.props
-    const playlistSongs = Object.entries(songs);
+    const { songs, users, currentUser, playlists } = this.props
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+
+    if (!songs || !playlists || this.props.loading) {
+      return null;
+    }
+
+    let playlist;
+    let playlistSongs;
+    let playlistCreator;
+    let username;
+    let likedSongs;
+
+    if (location === "playlists") {
+      playlist = playlists[this.props.match.params.id];
+      playlistSongs = Object.entries(songs);
+
+      if (!playlist) { return null; }
+
+      playlistCreator = playlist.user_id;
+      username = users[playlistCreator].username;
+    } else {
+      likedSongs = Object.entries(songs);
+      username = users[currentUser].username;
+    }
+
     const playlistDuration = Object.values(songs).map(song => song.duration).reduce((a, b) => a + b, 0);
     const renderPlaylistDuration = renderTotalDuration(playlistDuration);
 
@@ -124,36 +214,43 @@ class Playlist extends React.Component {
       }
     }
 
-    if (!playlist || !songs) {
-      return null;
+    const likedSongsDetails = () => {
+      if (likedSongs.length > 1) {
+        return `• ${likedSongs.length} songs`;
+      } else if (likedSongs.length === 1) {
+        return `• 1 song`;
+      } else {
+        return ""
+      }
     }
 
     return (
       <div className="main-content">
-        <div className="playlist-header">
-          <img className="playlist-photo" onClick={() => this.handleEdit(playlist.id)} src={playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture} />
-          <div className="playlist-details">
+        <div className={location === "playlists" ? "playlist-header" : "liked-songs-header"}>
+          <img className={location === "playlists" ? "playlist-photo" : "hidden"} onClick={() => this.handleEdit(playlist.id)} src={(playlist && playlist.photo_url) ? playlist.photo_url : window.defaultPlaylistPicture} />
+          <img className={location === "library" ? "liked-songs-photo" : "hidden"} src={window.likedSongs} />
+          <div className={location === "playlists" ? "playlist-details" : "liked-songs-details"}>
             <span>PLAYLIST</span>
-            <h1 className="playlist-name" onClick={() => this.handleEdit(playlist.id)}>{playlist.name}</h1>
+            <h1 className={location === "playlists" ? "playlist-name" : "liked-songs-title"} onClick={playlist ? () => this.handleEdit(playlist.id) : () => {}}>{playlist ? playlist.name : "Liked Songs"}</h1>
             <div className="description-name-container">
-              <p className={playlist.description ? "playlist-description" : "hide-description"}>{playlist.description}</p>
+              <p className={playlist && playlist.description ? "playlist-description" : "hide-description"}>{playlist ? playlist.description : ""}</p>
               <div className="playlist-info">
                 <p className="username">{username}</p>
-                {playlistDetails()}
+                {location === "playlists" ? playlistDetails() : likedSongsDetails()}
               </div>
             </div>
           </div>
         </div>
 
-        <div className={ playlistSongs.length ? "show-page-controls" : "empty-playlist-controls" }>
-          <img id={ playlistSongs.length ? "show-page-play" : "hidden"} src={window.playButton} />
+        <div className={ (playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-controls" : "empty-playlist-controls" }>
+          <img id={(playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-play" : "hidden"} src={window.playButton} />
 
-          <div className={`${currentUser === playlistCreator ? "hidden" : ""}`}>
+          <div className={`${currentUser === playlistCreator || location === "library" ? "hidden" : ""}`}>
             <i className="far fa-heart"></i>
           </div>
 
-   
-          <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
+
+          <div className={location === "playlists" ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
             {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
               <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>
@@ -169,8 +266,16 @@ class Playlist extends React.Component {
 }  
 
 const mSTP = state => {
-  const { songs } = state.entities;
-  return { songs };
+  const { songs, likes } = state.entities;
+  const likedSongsDetails = likes.songs;
+  const { loading } = state.ui.loading;
+
+  return {
+    songs,
+    likedSongsDetails,
+    loading,
+    likes
+  };
 };
 
 const mDTP = dispatch => {

@@ -36,22 +36,17 @@ class PlaylistItem extends React.Component {
   // }
 
   render() {
-    if (!this.props.playlist) {
-      return null;
-    }
-
-    const { playlist, songs, currentUser, users } = this.props;
-    const playlistCreator = playlist.user_id; 
-    const username = users[playlistCreator].username;
+    // if (!this.props.playlist) {
+    //   return null;
+    // }
+    const { playlists, songs, users, currentUser } = this.props;
 
     return (
       <PlaylistContent 
-        playlist={playlist}
-        currentUser={currentUser}
-        playlistCreator={playlistCreator}
-        username={username}
+        playlists={playlists}
         songs={songs}
-        history={history}
+        users={users}
+        currentUser={currentUser}
       />
     )
   }

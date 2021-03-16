@@ -22,7 +22,7 @@ const Main = (props) => {
           {/* <Route path="/library/playlists" component={PlaylistIndex} /> */}
           {/* <Route path="/library/artists" component={ArtistIndex} /> */}
           {/* <Route path="/library/albums" component={AlbumIndex} /> */}
-          <ProtectedRoute path="/library/songs" component={LikedSongsContainer} />
+          <ProtectedRoute path="/library/songs" component={PlaylistItemContainer} />
           <ProtectedRoute exact path="/playlists/:id" component={PlaylistItemContainer} />
           {/* <ProtectedRoute path="/artists/:id" component={ArtistShow} /> */}
           <ProtectedRoute path="/albums/:id" component={AlbumItemContainer} />

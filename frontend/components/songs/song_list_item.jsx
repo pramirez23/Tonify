@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { openAlert, closeAlert } from '../../actions/alert_actions'
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { like, unlike } from "../../actions/library_actions";
-import { addSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
+import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 import { addAlbumSongToPlaylist } from '../../actions/album_actions';
 
 class SongListItem extends React.Component {
@@ -57,7 +57,6 @@ class SongListItem extends React.Component {
       const pathName = this.props.location.pathname.split('/');
       const location = pathName[1];
       this._isMounted = true;
-      this.dateAdded = renderDateAdded(this.props.song.created_at);
     }
   }
 
@@ -110,6 +109,9 @@ class SongListItem extends React.Component {
       case "albums":
         className = "song-dropdown-other"
         break;
+      case "library":
+        className = "song-dropdown-other"
+        break;
       default:
         return;
     }
@@ -136,7 +138,7 @@ class SongListItem extends React.Component {
       playOrNum = this.props.num;
     }
 
-    if (!song) {
+    if (this.props.loading) {
       return null;
     }
   
@@ -191,7 +193,7 @@ class SongListItem extends React.Component {
         </td>
 
         <td className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "date-added-column" : "hidden"}>
-          {this.props.dateAdded}
+          {location === "playlists" && song ? this.props.dateAdded : renderDateAdded(likedSongs[song.id].created_at)}
         </td>
 
         <td className="duration-column">
@@ -260,11 +262,17 @@ class SongListItem extends React.Component {
                       });
 
                       if (location === "playlists") {
-                        this.props.addSongToPlaylist(playlist.id, song.id, this.props.match.params.id).then(() => {
+                        this.props.addPlaylistSongToPlaylist(playlist.id, song.id, this.props.match.params.id).then(() => {
                           this.props.openAlert("Playlist");
-                          setTimeout(this.props.closeAlert, 4000)})
+                          setTimeout(this.props.closeAlert, 4000)
+                        })
                       } else if (location === "albums") {
                         this.props.addAlbumSongToPlaylist(playlist.id, song.id, album.id).then(() => {
+                          this.props.openAlert("Playlist");
+                          setTimeout(this.props.closeAlert, 4000)
+                        })
+                      } else {
+                        this.props.addSongToPlaylist(playlist.id, song.id).then(() => {
                           this.props.openAlert("Playlist");
                           setTimeout(this.props.closeAlert, 4000)
                         })
@@ -282,14 +290,17 @@ class SongListItem extends React.Component {
 
 const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists } = state.entities;
+  const { playlists, likes } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
+  const { loading } = state.ui.loading;
 
   return ({
     playlists,
     currentUser: currentUser,
-    likedSongs
+    likedSongs,
+    likes,
+    loading
   });
 };
 
@@ -297,7 +308,8 @@ const mDTP = dispatch => {
   return {
     likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
-    addSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addSongToPlaylist(playlistId, songId, currentPlaylistId)),
+    addSongToPlaylist: (playlistId, songId) => dispatch(addSongToPlaylist(playlistId, songId)),
+    addPlaylistSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addPlaylistSongToPlaylist(playlistId, songId, currentPlaylistId)),
     addAlbumSongToPlaylist: (playlistId, songId, albumId) => dispatch(addAlbumSongToPlaylist(playlistId, songId, albumId)),
     removeSongFromPlaylist: playlistSongId => dispatch(removeSongFromPlaylist(playlistSongId)),
     openAlert: (alertType) => dispatch(openAlert(alertType)),

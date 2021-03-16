@@ -11,9 +11,14 @@ class Api::PlaylistSongsController < ApplicationController
     })
       
     @playlist = Playlist.find_by(id: playlist_song_params[:current_playlist_id])
+    @user = User.find_by(id: current_user.id)
 
     if @playlist_song.save
-      render 'api/playlists/show'
+      if @playlist
+        render 'api/playlists/show'
+      else
+        render 'api/users/show'
+      end
     else
       render json: @playlist_song.errors.full_messages, status: 422
     end

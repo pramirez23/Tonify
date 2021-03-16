@@ -13,7 +13,7 @@ class LikedSongs extends React.Component {
   }
 
   emptyOrFilled() {
-    const { songs } = this.props;
+    const { songs, likedSongsDetails } = this.props;
     const likedSongs = Object.entries(songs);
 
     if (likedSongs.length > 0) {
@@ -34,7 +34,7 @@ class LikedSongs extends React.Component {
             {likedSongs.slice(0).reverse().map((song, idx) =>
               <SongListItem
                 song={song[1]}
-                dateAdded={renderDateAdded(song[1].created_at)}
+                // dateAdded={renderDateAdded(likedSongsDetails[song[1].id].created_at)}
                 playlistSongId={song[0]}
                 key={idx}
                 num={(idx + 1)}
@@ -70,7 +70,7 @@ class LikedSongs extends React.Component {
       }
     }
 
-    if (!songs) {
+    if (!songs || this.props.loading) {
       return null;
     }
 
