@@ -34,7 +34,6 @@ class LikedSongs extends React.Component {
             {likedSongs.slice(0).reverse().map((song, idx) =>
               <SongListItem
                 song={song[1]}
-                // dateAdded={renderDateAdded(likedSongsDetails[song[1].id].created_at)}
                 playlistSongId={song[0]}
                 key={idx}
                 num={(idx + 1)}

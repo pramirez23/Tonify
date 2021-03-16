@@ -137,7 +137,7 @@ class Album extends React.Component {
                         
                         this.props.addAlbumToPlaylist(playlist.id, album.id)
                           .then(() => {
-                            this.props.openAlert();
+                            this.props.openAlert("Playlist");
                             setTimeout(this.props.closeAlert, 4000);
                            })
                       }}>{playlist.name}
@@ -189,7 +189,7 @@ const mSTP = state => {
 
 const mDTP = dispatch => {
   return {
-    openAlert: () => dispatch(openAlert()),
+    openAlert: (type) => dispatch(openAlert(type)),
     closeAlert: () => dispatch(closeAlert()),
     addAlbumToPlaylist: (playlistId, albumId) => dispatch(addAlbumToPlaylist(playlistId, albumId))
   }

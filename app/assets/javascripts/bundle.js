@@ -954,7 +954,7 @@ var Album = /*#__PURE__*/function (_React$Component) {
             });
 
             _this3.props.addAlbumToPlaylist(playlist.id, album.id).then(function () {
-              _this3.props.openAlert();
+              _this3.props.openAlert("Playlist");
 
               setTimeout(_this3.props.closeAlert, 4000);
             });
@@ -1002,8 +1002,8 @@ var mSTP = function mSTP(state) {
 
 var mDTP = function mDTP(dispatch) {
   return {
-    openAlert: function openAlert() {
-      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_4__.openAlert)());
+    openAlert: function openAlert(type) {
+      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_4__.openAlert)(type));
     },
     closeAlert: function closeAlert() {
       return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_4__.closeAlert)());
@@ -1388,8 +1388,7 @@ var LikedSongs = /*#__PURE__*/function (_React$Component) {
           className: "null-td"
         })), likedSongs.slice(0).reverse().map(function (song, idx) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_2__.default, {
-            song: song[1] // dateAdded={renderDateAdded(likedSongsDetails[song[1].id].created_at)}
-            ,
+            song: song[1],
             playlistSongId: song[0],
             key: idx,
             num: idx + 1
