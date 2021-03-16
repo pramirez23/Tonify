@@ -51,3 +51,17 @@ export const unlike = (likable_id, likable_type) => {
     }
   })
 }
+
+export const unlikeSongFromLibrary = (likable_id, likable_type) => {
+  return $.ajax({
+    type: "DELETE",
+    url: "api/likes/-1",
+    data: {
+      like: {
+        likable_id,
+        likable_type,
+        from_library: true
+      }
+    }
+  })
+}

@@ -101,7 +101,7 @@ class Playlist extends React.Component {
     if (location === "playlists") {
       playlistSongs = Object.entries(songs);
     } else if (location === "library") {
-      likedSongs = Object.entries(songs);
+      likedSongs = Object.values(songs);
     }
     
     if (playlistSongs && playlistSongs.length > 0 ) {
@@ -121,9 +121,10 @@ class Playlist extends React.Component {
       )
     } else if (likedSongs && likedSongs.length > 0) {
       content = (
-        likedSongs.slice(0).reverse().map((song, idx) =>
+        likedSongs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((song, idx) =>
           <SongListItem
-            song={song[1]}
+            song={song}
+            dateAdded={renderDateAdded(song.created_at)}
             playlistSongId={song[0]}
             key={idx}
             num={(idx + 1)}
@@ -192,7 +193,7 @@ class Playlist extends React.Component {
       playlist = playlists[this.props.match.params.id];
       playlistSongs = Object.entries(songs);
 
-      if (!playlist) { return null; }
+      if (!playlist) { return null }
 
       playlistCreator = playlist.user_id;
       username = users[playlistCreator].username;

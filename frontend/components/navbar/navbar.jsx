@@ -27,15 +27,14 @@ class Navbar extends React.Component {
     const location = pathName[1];
     const pageId = pathName[2];
     
-    this.props.loading();
     content.scrollTo({ top: 0, behavior: "auto" });
-
+    
     content.onscroll = () => {
       const { scrollTop, scrollHeight } = content;
       this.setState ({ scrollTop, scrollHeight });
       this.convertOpacity();
     }
-
+    
     this.dropDownListener = e => {
       if (this.dropDown && !this.dropDown.contains(e.target)) {
         this.setState({
@@ -44,6 +43,7 @@ class Navbar extends React.Component {
       }
     }
     
+    this.props.loading();
     switch (location) {
       case "playlists":
         this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -74,15 +74,14 @@ class Navbar extends React.Component {
       const location = pathName[1];
       const pageId = pathName[2];
   
-      this.props.loading();
       content.scrollTo({ top: 0, behavior: "auto" });
-
+      
       content.onscroll = () => {
         const { scrollTop, scrollHeight } = content;
         this.setState ({ scrollTop, scrollHeight });
         this.convertOpacity();
       }
-
+      
       this.dropDownListener = e => {
         if (this.dropDown && !this.dropDown.contains(e.target)) {
           this.setState({
@@ -90,7 +89,8 @@ class Navbar extends React.Component {
           });
         }
       }
-
+      
+      this.props.loading();
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -102,7 +102,6 @@ class Navbar extends React.Component {
           this.props.fetchArtist(pageId).then(() => this.renderContent());
           break;
         case "library":
-          this.props.fetchUser(this.props.currentUserId);
           if (pageId === "songs") {
             this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
           }

@@ -200,16 +200,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "RECEIVE_LIKED_ARTISTS": () => /* binding */ RECEIVE_LIKED_ARTISTS,
 /* harmony export */   "RECEIVE_LIKED_ALBUMS": () => /* binding */ RECEIVE_LIKED_ALBUMS,
 /* harmony export */   "RECEIVE_LIKED_SONGS": () => /* binding */ RECEIVE_LIKED_SONGS,
+/* harmony export */   "REMOVE_SONG": () => /* binding */ REMOVE_SONG,
 /* harmony export */   "receiveLikedPlaylists": () => /* binding */ receiveLikedPlaylists,
 /* harmony export */   "receiveLikedArtists": () => /* binding */ receiveLikedArtists,
 /* harmony export */   "receiveLikedAlbums": () => /* binding */ receiveLikedAlbums,
 /* harmony export */   "receiveLikedSongs": () => /* binding */ receiveLikedSongs,
+/* harmony export */   "removeSong": () => /* binding */ removeSong,
 /* harmony export */   "fetchLikedPlaylists": () => /* binding */ fetchLikedPlaylists,
 /* harmony export */   "fetchLikedArtists": () => /* binding */ fetchLikedArtists,
 /* harmony export */   "fetchLikedAlbums": () => /* binding */ fetchLikedAlbums,
 /* harmony export */   "fetchLikedSongs": () => /* binding */ fetchLikedSongs,
 /* harmony export */   "like": () => /* binding */ like,
-/* harmony export */   "unlike": () => /* binding */ unlike
+/* harmony export */   "unlike": () => /* binding */ unlike,
+/* harmony export */   "unlikeSongFromLibrary": () => /* binding */ unlikeSongFromLibrary
 /* harmony export */ });
 /* harmony import */ var _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/library_api_util */ "./frontend/util/library_api_util.js");
 /* harmony import */ var _user_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user_actions */ "./frontend/actions/user_actions.js");
@@ -219,6 +222,7 @@ var RECEIVE_LIKED_PLAYLISTS = "RECEIVE_LIKED_PLAYLISTS";
 var RECEIVE_LIKED_ARTISTS = "RECEIVE_LIKED_ARTISTS";
 var RECEIVE_LIKED_ALBUMS = "RECEIVE_LIKED_ALBUMS";
 var RECEIVE_LIKED_SONGS = "RECEIVE_LIKED_SONGS";
+var REMOVE_SONG = "REMOVE_SONG";
 var receiveLikedPlaylists = function receiveLikedPlaylists(likedPlaylists) {
   return {
     type: RECEIVE_LIKED_PLAYLISTS,
@@ -241,6 +245,12 @@ var receiveLikedSongs = function receiveLikedSongs(likedSongs) {
   return {
     type: RECEIVE_LIKED_SONGS,
     likedSongs: likedSongs
+  };
+};
+var removeSong = function removeSong(song) {
+  return {
+    type: REMOVE_SONG,
+    song: song
   };
 };
 var fetchLikedPlaylists = function fetchLikedPlaylists(currentUserId) {
@@ -282,6 +292,13 @@ var unlike = function unlike(likableType, likableId) {
   return function (dispatch) {
     return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.unlike(likableType, likableId).then(function (user) {
       return dispatch((0,_user_actions__WEBPACK_IMPORTED_MODULE_1__.receiveUser)(user));
+    });
+  };
+};
+var unlikeSongFromLibrary = function unlikeSongFromLibrary(likableType, likableId) {
+  return function (dispatch) {
+    return _util_library_api_util__WEBPACK_IMPORTED_MODULE_0__.unlikeSongFromLibrary(likableType, likableId).then(function (song) {
+      return dispatch(removeSong(song));
     });
   };
 };
@@ -1735,7 +1752,6 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var pageId = pathName[2];
-      this.props.loading();
       content.scrollTo({
         top: 0,
         behavior: "auto"
@@ -1760,6 +1776,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           });
         }
       };
+
+      this.props.loading();
 
       switch (location) {
         case "playlists":
@@ -1806,7 +1824,6 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         var pathName = this.props.location.pathname.split('/');
         var location = pathName[1];
         var pageId = pathName[2];
-        this.props.loading();
         content.scrollTo({
           top: 0,
           behavior: "auto"
@@ -1832,6 +1849,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           }
         };
 
+        this.props.loading();
+
         switch (location) {
           case "playlists":
             this.props.fetchPlaylist(pageId).then(function () {
@@ -1852,8 +1871,6 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
             break;
 
           case "library":
-            this.props.fetchUser(this.props.currentUserId);
-
             if (pageId === "songs") {
               this.props.fetchLikedSongs(currentUserId).then(function () {
                 return _this3.renderContent();
@@ -2738,7 +2755,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       if (location === "playlists") {
         playlistSongs = Object.entries(songs);
       } else if (location === "library") {
-        likedSongs = Object.entries(songs);
+        likedSongs = Object.values(songs);
       }
 
       if (playlistSongs && playlistSongs.length > 0) {
@@ -2755,9 +2772,12 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           });
         });
       } else if (likedSongs && likedSongs.length > 0) {
-        content = likedSongs.slice(0).reverse().map(function (song, idx) {
+        content = likedSongs.sort(function (a, b) {
+          return new Date(b.created_at) - new Date(a.created_at);
+        }).map(function (song, idx) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_4__.default, {
-            song: song[1],
+            song: song,
+            dateAdded: (0,_util_time_util__WEBPACK_IMPORTED_MODULE_3__.renderDateAdded)(song.created_at),
             playlistSongId: song[0],
             key: idx,
             num: idx + 1
@@ -4027,6 +4047,9 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         var pathName = this.props.location.pathname.split('/');
         var location = pathName[1];
         this._isMounted = true;
+        this.setState({
+          pageType: location
+        });
       }
     }
   }, {
@@ -4074,14 +4097,19 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     value: function detectPageType() {
       var _this$props = this.props,
           song = _this$props.song,
-          playlist = _this$props.playlist,
+          playlists = _this$props.playlists,
           album = _this$props.album,
           currentUser = _this$props.currentUser;
       var className;
 
       switch (this.state.pageType) {
         case "playlists":
-          currentUser === playlist.user_id ? className = "song-dropdown-options" : className = "song-dropdown-other";
+          if (currentUser === playlists[this.props.match.params.id].user_id) {
+            className = "song-dropdown-options";
+          } else {
+            className = "song-dropdown-other";
+          }
+
           break;
 
         case "albums":
@@ -4097,7 +4125,18 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }
 
       return className;
-    }
+    } // dateRender(location) { 
+    //   const { likedSongs, song } = this.props;
+    //   if (!song) return null;
+    //   if (location === "playlists") {
+    //     return this.props.dateAdded;
+    //   } else if (location === "library") {
+    //     return renderDateAdded(likedSongs[song.id].created_at);
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -4106,10 +4145,17 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var _this$props2 = this.props,
           likedSongs = _this$props2.likedSongs,
           song = _this$props2.song,
-          album = _this$props2.album;
+          album = _this$props2.album,
+          playlists = _this$props2.playlists,
+          currentUser = _this$props2.currentUser;
       var isHovering = this.state.isHovering;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
+
+      if (this.props.loading) {
+        return null;
+      }
+
       var playlistIndex = this.props.playlists;
       var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
         return playlist.user_id === _this3.props.currentUser;
@@ -4123,10 +4169,6 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         });
       } else {
         playOrNum = this.props.num;
-      }
-
-      if (this.props.loading) {
-        return null;
       }
 
       if (!likedSongs || !likedSongs[song.id]) {
@@ -4145,11 +4187,19 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           id: "liked-song-heart",
           className: "fas fa-heart",
           onClick: function onClick() {
-            return _this3.props.unlikeSong(song.id, "Song").then(function () {
-              _this3.props.openAlert("Unlike");
+            if (location === "playlists") {
+              _this3.props.unlikeSong(song.id, "Song").then(function () {
+                _this3.props.openAlert("Unlike");
 
-              setTimeout(_this3.props.closeAlert, 4000);
-            });
+                setTimeout(_this3.props.closeAlert, 4000);
+              });
+            } else {
+              _this3.props.unlikeSongFromLibrary(song.id, "Song").then(function () {
+                _this3.props.openAlert("Unlike");
+
+                setTimeout(_this3.props.closeAlert, 4000);
+              });
+            }
           }
         });
       }
@@ -4186,7 +4236,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         to: "/albums/".concat(song.album_id)
       }, song.album)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: this.state.pageType === "playlists" || this.state.pageType === "library" ? "date-added-column" : "hidden"
-      }, location === "playlists" && song ? this.props.dateAdded : (0,_util_time_util__WEBPACK_IMPORTED_MODULE_3__.renderDateAdded)(likedSongs[song.id].created_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      }, this.props.dateAdded), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "duration-column"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-controls-container"
@@ -4243,7 +4293,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           });
         }
       }, "Remove from this playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: location === "playlists" ? "current-before-playlist-add" : "other-before-playlist-add"
+        className: location === "playlists" && currentUser === playlists[this.props.match.params.id].user_id ? "current-before-playlist-add" : "other-before-playlist-add"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "add-to-playlist",
         onMouseEnter: function onMouseEnter(e) {
@@ -4317,6 +4367,9 @@ var mDTP = function mDTP(dispatch) {
     },
     unlikeSong: function unlikeSong(likableId, likableType) {
       return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_4__.unlike)(likableId, likableType));
+    },
+    unlikeSongFromLibrary: function unlikeSongFromLibrary(likableId, likableType) {
+      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_4__.unlikeSongFromLibrary)(likableId, likableType));
     },
     addSongToPlaylist: function addSongToPlaylist(playlistId, songId) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_5__.addSongToPlaylist)(playlistId, songId));
@@ -4703,6 +4756,11 @@ var songsReducer = function songsReducer() {
     case _actions_album_actions__WEBPACK_IMPORTED_MODULE_2__.RECEIVE_ALBUM:
       return action.payload.songs;
 
+    case _actions_library_actions__WEBPACK_IMPORTED_MODULE_3__.REMOVE_SONG:
+      var newState = Object.assign({}, state);
+      delete newState[action.song.id];
+      return newState;
+
     default:
       return state;
   }
@@ -4927,15 +4985,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _actions_loading_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/loading_actions */ "./frontend/actions/loading_actions.js");
-// import {
-//   RECEIVE_PLAYLISTS,
-//   RECEIVE_PLAYLIST,
-// } from "../../actions/playlist_actions";
-// import {
-//   RECEIVE_ALBUMS,
-//   RECEIVE_ALBUM,
-// } from "../../actions/album_actions";
+/* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
+/* harmony import */ var _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/album_actions */ "./frontend/actions/album_actions.js");
+/* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
+/* harmony import */ var _actions_loading_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/loading_actions */ "./frontend/actions/loading_actions.js");
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -4943,15 +4999,22 @@ __webpack_require__.r(__webpack_exports__);
   Object.freeze(state);
 
   switch (action.type) {
-    // case RECEIVE_PLAYLIST:
-    //   return false;
-    // case RECEIVE_PLAYLISTS:
-    //   return false;
-    // case RECEIVE_ALBUM:
-    //   return false;
-    // case RECEIVE_ALBUMS:
-    //   return false;
-    case _actions_loading_actions__WEBPACK_IMPORTED_MODULE_0__.LOADING:
+    case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST:
+      return false;
+
+    case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLISTS:
+      return false;
+
+    case _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_ALBUM:
+      return false;
+
+    case _actions_album_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_ALBUMS:
+      return false;
+
+    case _actions_library_actions__WEBPACK_IMPORTED_MODULE_2__.RECEIVE_LIKED_SONGS:
+      return false;
+
+    case _actions_loading_actions__WEBPACK_IMPORTED_MODULE_3__.LOADING:
       return true;
 
     default:
@@ -5194,7 +5257,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "fetchLikedAlbums": () => /* binding */ fetchLikedAlbums,
 /* harmony export */   "fetchLikedSongs": () => /* binding */ fetchLikedSongs,
 /* harmony export */   "like": () => /* binding */ like,
-/* harmony export */   "unlike": () => /* binding */ unlike
+/* harmony export */   "unlike": () => /* binding */ unlike,
+/* harmony export */   "unlikeSongFromLibrary": () => /* binding */ unlikeSongFromLibrary
 /* harmony export */ });
 var fetchLikedPlaylists = function fetchLikedPlaylists(currentUserId) {
   return $.ajax({
@@ -5240,6 +5304,19 @@ var unlike = function unlike(likable_id, likable_type) {
       like: {
         likable_id: likable_id,
         likable_type: likable_type
+      }
+    }
+  });
+};
+var unlikeSongFromLibrary = function unlikeSongFromLibrary(likable_id, likable_type) {
+  return $.ajax({
+    type: "DELETE",
+    url: "api/likes/-1",
+    data: {
+      like: {
+        likable_id: likable_id,
+        likable_type: likable_type,
+        from_library: true
       }
     }
   });

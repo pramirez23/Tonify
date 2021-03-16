@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { openAlert, closeAlert } from '../../actions/alert_actions'
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
-import { like, unlike } from "../../actions/library_actions";
+import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 import { addAlbumSongToPlaylist } from '../../actions/album_actions';
 
@@ -57,6 +57,7 @@ class SongListItem extends React.Component {
       const pathName = this.props.location.pathname.split('/');
       const location = pathName[1];
       this._isMounted = true;
+      this.setState({ pageType: location });
     }
   }
 
@@ -99,12 +100,16 @@ class SongListItem extends React.Component {
   // }
 
   detectPageType() {
-    const { song, playlist, album, currentUser } = this.props;
+    const { song, playlists, album, currentUser } = this.props;
     let className;
 
     switch(this.state.pageType) {
       case "playlists":
-        (currentUser === playlist.user_id) ? className = "song-dropdown-options" : className = "song-dropdown-other";
+        if (currentUser === playlists[this.props.match.params.id].user_id) {
+          className = "song-dropdown-options"
+        } else {
+          className = "song-dropdown-other"
+        }
         break;
       case "albums":
         className = "song-dropdown-other"
@@ -119,11 +124,28 @@ class SongListItem extends React.Component {
     return className;
   }
 
+  // dateRender(location) { 
+  //   const { likedSongs, song } = this.props;
+  //   if (!song) return null;
+
+  //   if (location === "playlists") {
+  //     return this.props.dateAdded;
+  //   } else if (location === "library") {
+  //     return renderDateAdded(likedSongs[song.id].created_at);
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
   render() {
-    const { likedSongs, song, album } = this.props;
+    const { likedSongs, song, album, playlists, currentUser } = this.props;
     const isHovering = this.state.isHovering;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
+    
+    if (this.props.loading) {
+      return null;
+    }
 
     let playlistIndex = this.props.playlists;
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
@@ -138,10 +160,6 @@ class SongListItem extends React.Component {
       playOrNum = this.props.num;
     }
 
-    if (this.props.loading) {
-      return null;
-    }
-  
     if (!likedSongs || !likedSongs[song.id]) {
       renderHeart = (
         <i
@@ -159,12 +177,21 @@ class SongListItem extends React.Component {
         <i
           id="liked-song-heart"
           className="fas fa-heart"
-          onClick={() =>
-            this.props.unlikeSong(song.id, "Song")
-              .then(() => {
-                this.props.openAlert("Unlike");
-                setTimeout(this.props.closeAlert, 4000)
-              })}>
+          onClick={() => {
+            if (location === "playlists") {
+              this.props.unlikeSong(song.id, "Song")
+                .then(() => {
+                  this.props.openAlert("Unlike");
+                  setTimeout(this.props.closeAlert, 4000)
+                })
+            } else {
+              this.props.unlikeSongFromLibrary(song.id, "Song")
+                .then(() => {
+                  this.props.openAlert("Unlike");
+                  setTimeout(this.props.closeAlert, 4000)
+                })
+            }
+          }}>
         </i>
       )
     }
@@ -193,7 +220,7 @@ class SongListItem extends React.Component {
         </td>
 
         <td className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "date-added-column" : "hidden"}>
-          {location === "playlists" && song ? this.props.dateAdded : renderDateAdded(likedSongs[song.id].created_at)}
+          {this.props.dateAdded}
         </td>
 
         <td className="duration-column">
@@ -240,7 +267,7 @@ class SongListItem extends React.Component {
                 });
               }}>Remove from this playlist</div>
 
-            <div className={location === "playlists" ? "current-before-playlist-add" : "other-before-playlist-add"}/>
+            <div className={(location === "playlists" && currentUser === playlists[this.props.match.params.id].user_id) ? "current-before-playlist-add" : "other-before-playlist-add"}/>
 
             <div
               className="add-to-playlist"
@@ -308,6 +335,7 @@ const mDTP = dispatch => {
   return {
     likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
+    unlikeSongFromLibrary: (likableId, likableType) => dispatch(unlikeSongFromLibrary(likableId, likableType)),
     addSongToPlaylist: (playlistId, songId) => dispatch(addSongToPlaylist(playlistId, songId)),
     addPlaylistSongToPlaylist: (playlistId, songId, currentPlaylistId) => dispatch(addPlaylistSongToPlaylist(playlistId, songId, currentPlaylistId)),
     addAlbumSongToPlaylist: (playlistId, songId, albumId) => dispatch(addAlbumSongToPlaylist(playlistId, songId, albumId)),
