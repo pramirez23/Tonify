@@ -104,6 +104,12 @@ class Navbar extends React.Component {
         case "library":
           if (pageId === "songs") {
             this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
+          } else if (pageId === "playlists") {
+            this.props.fetchLikedPlaylists(currentUserId).then(() => this.renderContent());
+          } else if (pageId === "artists") {
+            this.props.fetchLikedArtists(currentUserId).then(() => this.renderContent());
+          } else if (pageId === "albums") {
+            this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
           }
         default:
           break;
@@ -113,9 +119,9 @@ class Navbar extends React.Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   document.removeEventListener('click', this.dropDownListener);
-  // }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.dropDownListener);
+  }
 
   handleDropDown(e) {
     this.setState({
@@ -159,7 +165,11 @@ class Navbar extends React.Component {
 
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
-    
+    const path = this.props.location.pathname;
+    const pathName = path.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+
     return (
       <nav className="navbar" style={backgroundColor}>
         <div className="nav-content-container">
@@ -172,6 +182,19 @@ class Navbar extends React.Component {
             <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
               {this.state.content}
             </h1>
+            <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>
+              <ul className="library-selector">
+                <button
+                  className={ path === "/library/playlists" ? "selected-nav-button" : "library-nav-button" }
+                  onClick={() => this.props.history.push('/library/playlists')}>Playlists</button>
+                <button
+                  className={ path === "/library/artists" ? "selected-nav-button" : "library-nav-button" }
+                  onClick={() => this.props.history.push('/library/artists')}>Artists</button>
+                <button
+                  className={ path === "/library/albums" ? "selected-nav-button" : "library-nav-button" }
+                  onClick={() => this.props.history.push('/library/albums')}>Albums</button>
+              </ul>
+            </nav>
           </div>
         </div>
 

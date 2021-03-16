@@ -1874,6 +1874,18 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
               this.props.fetchLikedSongs(currentUserId).then(function () {
                 return _this3.renderContent();
               });
+            } else if (pageId === "playlists") {
+              this.props.fetchLikedPlaylists(currentUserId).then(function () {
+                return _this3.renderContent();
+              });
+            } else if (pageId === "artists") {
+              this.props.fetchLikedArtists(currentUserId).then(function () {
+                return _this3.renderContent();
+              });
+            } else if (pageId === "albums") {
+              this.props.fetchLikedAlbums(currentUserId).then(function () {
+                return _this3.renderContent();
+              });
             }
 
           default:
@@ -1882,10 +1894,12 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
 
         document.addEventListener('click', this.dropDownListener, false);
       }
-    } // componentWillUnmount() {
-    //   document.removeEventListener('click', this.dropDownListener);
-    // }
-
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      document.removeEventListener('click', this.dropDownListener);
+    }
   }, {
     key: "handleDropDown",
     value: function handleDropDown(e) {
@@ -1957,6 +1971,10 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var backgroundColor = {
         backgroundColor: "hsla(0, 0%, 13%, ".concat(this.state.opacity, ")")
       };
+      var path = this.props.location.pathname;
+      var pathName = path.split('/');
+      var location = pathName[1];
+      var pageId = pathName[2];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
         className: "navbar",
         style: backgroundColor
@@ -1978,7 +1996,26 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         className: "navbar-content"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"
-      }, this.state.content))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, this.state.content), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("nav", {
+        className: location === "library" && pageId !== "songs" ? "library-nav" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+        className: "library-selector"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: path === "/library/playlists" ? "selected-nav-button" : "library-nav-button",
+        onClick: function onClick() {
+          return _this4.props.history.push('/library/playlists');
+        }
+      }, "Playlists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: path === "/library/artists" ? "selected-nav-button" : "library-nav-button",
+        onClick: function onClick() {
+          return _this4.props.history.push('/library/artists');
+        }
+      }, "Artists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: path === "/library/albums" ? "selected-nav-button" : "library-nav-button",
+        onClick: function onClick() {
+          return _this4.props.history.push('/library/albums');
+        }
+      }, "Albums"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-dropdown",
         onClick: function onClick() {
           return _this4.handleDropDown();
@@ -3803,7 +3840,6 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      // console.log(this.props.playlists)
       var playlistIndex = this.props.playlists;
       var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
         return playlist.user_id === _this3.props.currentUser;
@@ -3835,7 +3871,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       }, "search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "sidebar-button",
         onClick: function onClick() {
-          return _this3.props.history.push('/library');
+          return _this3.props.history.push('/library/playlists');
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "medium material-icons"

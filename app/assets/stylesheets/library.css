@@ -1,3 +1,38 @@
+nav.library-nav {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+button.library-nav-button {
+  padding: 9px 8px;
+  margin: 0px 10px 0px 0px;
+  font-family: 'Rubik';
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+button.selected-nav-button {
+  background: #333333;
+  padding: 13px 17px;
+  margin: 0px 10px 0px 0px;
+  font-family: 'Rubik';
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 img.liked-songs-photo {
   width: 232px;
   height: 232px;
