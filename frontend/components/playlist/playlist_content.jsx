@@ -90,7 +90,7 @@ class Playlist extends React.Component {
   }
 
   emptyOrFilled() {
-    const { playlist, currentUser, songs, history } = this.props
+    const { playlist, currentUser, songs, history } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
 

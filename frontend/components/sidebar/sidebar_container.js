@@ -20,4 +20,4 @@ const mDTP = dispatch => {
   }
 };
 
-export default connect(mSTP, mDTP)(Sidebar); 
+export default connect(mSTP, mDTP)(Sidebar);

@@ -132,6 +132,54 @@ h1.liked-songs-title {
   text-overflow: ellipsis;
 }
 
+.empty-liked-playlists {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: white;
+  letter-spacing: 0.2px;
+}
+
+i.fas.fa-music {
+  color: white;
+  font-size: 68px;
+  margin-bottom: 30px;
+}
+
+p.empty-liked-playlist-title {
+  font-size: 27px;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+p.empty-liked-playlist-text {
+  margin-bottom: 30px;
+}
+
+button.liked-create-playlist {
+  border: 0px;
+  background-color: white;
+  color: black;
+  border-radius: 26px;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 11px;
+  height: 37px;
+  width: 200px;
+  margin: 3px auto;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button.liked-create-playlist:hover {
+  transform: scale(1.05);
+}
+
+
 @media only screen and (max-width: 1210px) {
   h1.liked-songs-title {
     font-size: 65px;

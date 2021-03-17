@@ -179,7 +179,7 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-content">
-            <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
+            <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hidden"}>
               {this.state.content}
             </h1>
             <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>
