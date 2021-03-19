@@ -1,15 +1,18 @@
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { createPlaylist } from "../../actions/playlist_actions"
-import LikedPlaylists from "./liked_playlists";
+import Library from "./library";
+
 const mSTP = (state) => {
   const { id } = state.session;
-  const { playlists, users } = state.entities;
+  const { loading } = state.ui;
+  const { playlists, artists, albums, songs, users } = state.entities;
   
   return {
     currentUser: id,
     playlists,
     users,
+    loading,
     lastPlaylist: Object.keys(playlists).slice(-1)[0]
   };
 };
@@ -20,4 +23,4 @@ const mDTP = dispatch => {
   }
 };
 
-export default withRouter(connect(mSTP, mDTP)(LikedPlaylists));
+export default withRouter(connect(mSTP, mDTP)(Library));

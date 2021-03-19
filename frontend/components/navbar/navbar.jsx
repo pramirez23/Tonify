@@ -151,6 +151,7 @@ class Navbar extends React.Component {
         }
         break;
       default:
+        this.setState({ content: null })
         break;
     }
   }

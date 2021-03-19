@@ -94,9 +94,7 @@ class Playlist extends React.Component {
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
 
-    let playlistSongs;
-    let likedSongs;
-    let content;
+    let playlistSongs, likedSongs, content;
     
     if (location === "playlists") {
       playlistSongs = Object.entries(songs);
@@ -183,11 +181,7 @@ class Playlist extends React.Component {
       return null;
     }
 
-    let playlist;
-    let playlistSongs;
-    let playlistCreator;
-    let username;
-    let likedSongs;
+    let playlist, playlistSongs, playlistCreator, username, likedSongs;
 
     if (location === "playlists") {
       playlist = playlists[this.props.match.params.id];

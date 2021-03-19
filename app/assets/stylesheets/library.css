@@ -179,6 +179,30 @@ button.liked-create-playlist:hover {
   transform: scale(1.05);
 }
 
+.library-container {
+  display: flex;
+  padding: 54px 40px;
+  height: 100%;
+}
+
+.playlist-index {
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+  /* grid-template-rows: repeat(auto-fill, minmax(300px, auto)); */
+  grid-auto-rows: 250px;
+  width: 100%;
+}
+.liked-songs-shortcut {
+  background: blue;
+  grid-column: span 2;
+}
+
+.library-item {
+  height: 100%;
+  width: 100%;
+  background: red;
+}
 
 @media only screen and (max-width: 1210px) {
   h1.liked-songs-title {
