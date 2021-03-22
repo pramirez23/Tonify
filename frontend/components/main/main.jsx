@@ -1,26 +1,37 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { logout } from '../../actions/session_actions';
 import PlaylistItemContainer from '../playlist/playlist_item_container';
-// import SidebarContainer from '../sidebar/sidebar_container';
-// import Playbar from '../playbar/playbar';
+import AlbumItemContainer from '../album/album_item_container';
+import NavbarContainer from '../navbar/navbar_container';
+import LibraryContainer from '../library/library_container';
+import Loading from '../loading/loading';
+import Playbar from '../playbar/playbar';
+import SidebarContainer from '../sidebar/sidebar_container';
+import { ProtectedRoute } from '../../util/route_util';
 
 const Main = (props) => {
   return (
+    <>
+    <ProtectedRoute path="/" component={SidebarContainer} />
     <div id="main">
-      {/* <SidebarContainer /> */}
+      <Route path="/" component={NavbarContainer} />
+      <main className="main-content-container">
+        <Loading />
         <Switch>
           {/* <Route path="/search" component={SearchIndex} /> */}
-          {/* <Route path="/library/playlists" component={PlaylistIndex} /> */}
-          {/* <Route path="/collection/artists" component={ArtistIndex} /> */}
-          {/* <Route path="/library/albums" component={AlbumIndex} /> */}
-          <Route exact path="/playlists/:id" component={PlaylistItemContainer} />
-          {/* <Route path="/artists/:id" component={ArtistShow} /> */}
-          {/* <Route path="/albums/:id" component={AlbumShow} /> */}
+          {/* <ProtectedRoute path="/library" component={LikedPlaylistsContainer} /> */}
+          <ProtectedRoute path="/library/playlists" component={LibraryContainer} />
+          <ProtectedRoute path="/library/artists" component={LibraryContainer} />
+          <ProtectedRoute path="/library/albums" component={LibraryContainer} />
+          <ProtectedRoute path="/library/songs" component={PlaylistItemContainer} />
+          <ProtectedRoute exact path="/playlists/:id" component={PlaylistItemContainer} />
+          {/* <ProtectedRoute path="/artists/:id" component={ArtistShow} /> */}
+          <ProtectedRoute path="/albums/:id" component={AlbumItemContainer} />
         </Switch>
-        {/* <Playbar /> */}
+      </main>
     </div>
+    <ProtectedRoute path="/" component={Playbar} />
+    </>
   )
 }
 

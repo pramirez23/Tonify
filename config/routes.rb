@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   root to: "static_pages#root"
   
   namespace :api, defaults: {format: :json} do 
-    resources :users, only: [:create, :show, :index]
+    resources :users, only: [:create, :show, :index] do
+        get :playlists, to: "likes#fetch_liked_playlists", as: "fetch_liked_playlists"
+        get :artists, to: "likes#fetch_liked_artists", as: "fetch_liked_artists"
+        get :albums, to: "likes#fetch_liked_albums", as: "fetch_liked_albums"
+        get :songs, to: "likes#fetch_liked_songs", as: "fetch_liked_songs"
+    end
+    
     resource :session, only: [:create, :destroy]
     resources :likes, only: [:create, :destroy]
     resources :songs, only: [:show, :index]
@@ -28,6 +34,9 @@ Rails.application.routes.draw do
 
     resources :playlists, only: [:create, :update, :destroy, :index, :show] do
       resources :songs, only: [:index]
+      post :album, to: "playlist_songs#add_album", as: "add_album"
+      post :album_song, to: "playlist_songs#add_album_song", as: "add_album_song"
+      post :artist_song, to: "playlist_songs#add_artist_song", as: "add_artist_song"
     end
 
     resources :playlist_songs, only: [:create, :destroy, :index]

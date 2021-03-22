@@ -11,51 +11,42 @@ class PlaylistItem extends React.Component {
     }
   }
   
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.fetchPlaylist(id).then(() => {
-      this.setState({
-        isLoading: false
-      })
-    });
-  }
+  // componentDidMount() {
+  //   const { id } = this.props.match.params;
+  //   this.props.fetchPlaylist(id).then(() => {
+  //     this.setState({
+  //       isLoading: false
+  //     })
+  //   });
+  // }
+  
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.match.params.id !== prevProps.match.params.id) {
+  //     const content = document.getElementsByClassName('main-content-container')[0];
+  //     const { id } = this.props.match.params;
 
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.id !== prevProps.match.params.id) {
-      const { id } = this.props.match.params;
-      this.props.fetchPlaylist(id).then(() => {
-        this.setState({
-          isLoading: false
-        })
-      });
-    }
-  }
+  //     content.scrollTo({ top: 0, behavior: "auto" });
+      
+  //     this.props.fetchPlaylist(id).then(() => {
+  //       this.setState({
+  //         isLoading: false
+  //       })
+  //     });
+  //   }
+  // }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-        <div className="spinner-container">
-          <i className="fas fa-spinner"></i>
-        </div>
-      )
-    }
-
-    if (!this.props.playlist) {
-      return null;
-    }
-
-    const { playlist, songs, currentUser, users } = this.props;
-    const playlistCreator = playlist.user_id; 
-    const username = users[playlistCreator].username;
+    // if (!this.props.playlist) {
+    //   return null;
+    // }
+    const { playlists, songs, users, currentUser } = this.props;
 
     return (
       <PlaylistContent 
-        playlist={playlist}
-        currentUser={currentUser}
-        playlistCreator={playlistCreator}
-        username={username}
+        playlists={playlists}
         songs={songs}
-        history={history}
+        users={users}
+        currentUser={currentUser}
       />
     )
   }

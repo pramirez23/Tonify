@@ -1,6 +1,6 @@
 .user-data-directory {
   width: 186px;
-  height: 90vh;
+  height: calc(100vh - 91px);
   padding: 0px 0px 10px 12px;
   background-color: black;
   display: flex;
@@ -146,7 +146,7 @@ ul.playlist-links {
   font-weight: 400;
   font-family: 'Rubik';
   letter-spacing: 0.2px;
-  height: 433px;
+  height: calc(100vh - 472px);
   overflow: hidden;
   overflow-y: scroll;
   z-index: 1000;

@@ -1,4 +1,18 @@
-export const addSongToPlaylist = (playlist_id, song_id, current_playlist_id) => {
+
+export const addSongToPlaylist = (playlist_id, song_id) => {
+  return $.ajax({
+    method: 'POST',
+    url: '/api/playlist_songs',
+    data: {
+      playlist_song: {
+        playlist_id,
+        song_id,
+      }
+    }
+  });
+};
+
+export const addPlaylistSongToPlaylist = (playlist_id, song_id, current_playlist_id) => {
   return $.ajax({
     method: 'POST',
     url: '/api/playlist_songs',

@@ -1,7 +1,7 @@
 class Playlist < ApplicationRecord
   validates :name, :user_id, presence: true
   validates :private, presence: true, allow_blank: true, inclusion: { in: [true, false] }
-  has_many :likes, as: :likable
+  has_many :likes, as: :likable, dependent: :destroy
 
   has_one_attached :photo
 

@@ -73,12 +73,30 @@ body {
   letter-spacing: -1px;
 }
 
-div::-webkit-scrollbar {
+.main-content {
+  /* width: 89.6%; */
+  /* height: 100%; */
+  background: #121212;
+  position: relative;
+  /* right: 0; */
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
+}
+
+.main-content-container {
+  min-height: 0;
+  height: calc(100vh - 91px);
+  overflow: auto;
+  display: block;
+  overflow-x: hidden;
+}
+
+main::-webkit-scrollbar {
   width: 12px;
   background-color: #000000;            
 }
 
-div::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb {
   border-radius: 12px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #414141; 
@@ -113,4 +131,106 @@ div#app {
 
 p > a { 
   color: white;
+}
+
+.spinner-container {
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  min-height: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  background: #121212;
+  height: calc(100vh - 91px);
+  width: 100%;
+}
+
+.fa-spinner {
+  font-size: 165px;
+  color: #9f9f9f;
+  -webkit-animation: spinnerrotate 2s linear infinite;
+  -moz-animation: spinnerrotate 2s linear infinite;
+  -ms-animation: spinnerrotate 2s linear infinite;
+  -o-animation: spinnerrotate 2s linear infinite;
+  animation: spinnerrotate 2s linear infinite;
+}
+
+.add-song-confirmation-container, .hide-alert {
+  width: auto;
+  display: flex;
+  height: 100vh;
+  position: fixed;
+}
+.add-song-confirmation-container {
+  width: 100vw;
+  justify-content: center;
+  pointer-events: none;
+  animation: showalert 4s forwards; 
+}
+
+.hide-alert {
+  display: none;
+}
+
+span.add-song-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  width: auto;
+  height: 40px;
+  padding: 0px 18px;
+  color: white;
+  letter-spacing: 0.25px;
+  background: rgb(72, 126, 241);
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 3px 21px 5px #000000;
+  box-shadow: 0px 3px 21px 5px #000000;
+  z-index: 10000;
+  margin-top: calc(100vh - 158px);
+  margin-left: calc(100vw - 87vw);
+}
+
+@keyframes spinnerrotate {
+  0% { 
+    opacity: 0;
+  }
+  10% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes showalert {
+  0% { 
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
