@@ -1,7 +1,8 @@
 nav.library-nav {
-  position: relative;
+  position: absolute;
   overflow: hidden;
   white-space: nowrap;
+  top: 8px;
 }
 
 button.library-nav-button {
@@ -219,6 +220,7 @@ h1.library-title {
   /* grid-template-rows: repeat(auto-fill, 267px); */
   grid-auto-rows: 275px;
   width: 100%;
+  padding-bottom: 50px;
 }
 
 .liked-songs-shortcut {
