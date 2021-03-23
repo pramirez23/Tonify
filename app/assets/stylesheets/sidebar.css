@@ -91,10 +91,6 @@ i.medium.material-icons {
   color: #FFFFFF;
 }
 
-#plus-square:not(:hover){
-  color: #9F9F9F;
-}
-
 #likedsongs:focus {
   color: #FFFFFF;
 }
