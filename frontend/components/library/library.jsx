@@ -101,7 +101,8 @@ class Library extends React.Component {
               <div
                 className="liked-songs-shortcut"
                 onMouseEnter={(e) => this.handleMouseEnter()}
-                onMouseLeave={() => this.handleMouseLeave()}>
+                onMouseLeave={() => this.handleMouseLeave()}
+                onClick={() => this.props.history.push('/library/songs')}>
                 <div className="liked-songs-container">
                   <SongsPreview songs={Object.values(songs)}/>
                 </div>
@@ -116,6 +117,7 @@ class Library extends React.Component {
               </div>
               {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
+                  id={playlist.id}
                   playlist={playlist}
                   key={idx}/>
               ))}
@@ -129,6 +131,7 @@ class Library extends React.Component {
             <div className="artist-index">
               {Object.entries(artists).map(((artist, idx) =>
                 <LibraryItemContainer
+                  id={artist.id}
                   artist={artist}
                   key={idx} />
               ))}
@@ -142,6 +145,7 @@ class Library extends React.Component {
             <div className="album-index">
               {Object.entries(albums).map(((album, idx) =>
                 <LibraryItemContainer
+                  id={album.id}
                   album={album}
                   key={idx} />
               ))}

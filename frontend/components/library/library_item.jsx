@@ -17,6 +17,7 @@ class LibraryItem extends React.Component {
     this.renderCreator = this.renderCreator.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // componentDidMount() {
@@ -147,12 +148,33 @@ class LibraryItem extends React.Component {
     })
   }
 
+  handleClick() {
+    const { id, location, history } = this.props;
+    const pathName = location.pathname.split('/');
+    const pageLocation = pathName[2];
+
+    switch (pageLocation) {
+      case "playlists":
+        history.push(`/playlists/${id}`);
+        break;
+      case "artists":
+        history.push(`/artists/${id}`);
+        break;
+      case "albums":
+        history.push(`/albums/${id}`);
+        break;
+      default:
+        break;
+    }
+  }
+
   render() { 
     return (
       <div
         className="library-item"
         onMouseEnter={(e) => this.handleMouseEnter()}
-        onMouseLeave={() => this.handleMouseLeave()}>
+        onMouseLeave={() => this.handleMouseLeave()}
+        onClick={() => this.handleClick()}>
         <div className="library-item-header">
           {this.renderPhoto()}
           <img

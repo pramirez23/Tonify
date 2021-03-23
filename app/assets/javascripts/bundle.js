@@ -1485,6 +1485,9 @@ var Library = /*#__PURE__*/function (_React$Component) {
             },
             onMouseLeave: function onMouseLeave() {
               return _this3.handleMouseLeave();
+            },
+            onClick: function onClick() {
+              return _this3.props.history.push('/library/songs');
             }
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "liked-songs-container"
@@ -1502,6 +1505,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
             alt: "Play Button"
           })), Object.values(playlists).slice(0).reverse().map(function (playlist, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
+              id: playlist.id,
               playlist: playlist,
               key: idx
             });
@@ -1514,6 +1518,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
             className: "artist-index"
           }, Object.entries(artists).map(function (artist, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
+              id: artist.id,
               artist: artist,
               key: idx
             });
@@ -1526,6 +1531,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
             className: "album-index"
           }, Object.entries(albums).map(function (album, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
+              id: album.id,
               album: album,
               key: idx
             });
@@ -1689,6 +1695,7 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
     _this.renderCreator = _this.renderCreator.bind(_assertThisInitialized(_this));
     _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
     _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   } // componentDidMount() {
   //   const { playlist, artist, album, songs } = this.props;
@@ -1829,6 +1836,33 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "handleClick",
+    value: function handleClick() {
+      var _this$props4 = this.props,
+          id = _this$props4.id,
+          location = _this$props4.location,
+          history = _this$props4.history;
+      var pathName = location.pathname.split('/');
+      var pageLocation = pathName[2];
+
+      switch (pageLocation) {
+        case "playlists":
+          history.push("/playlists/".concat(id));
+          break;
+
+        case "artists":
+          history.push("/artists/".concat(id));
+          break;
+
+        case "albums":
+          history.push("/albums/".concat(id));
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1840,6 +1874,9 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
         },
         onMouseLeave: function onMouseLeave() {
           return _this2.handleMouseLeave();
+        },
+        onClick: function onClick() {
+          return _this2.handleClick();
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item-header"
@@ -3731,7 +3768,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
 
       e.preventDefault();
       this.props.login(this.state).then(function () {
-        return _this3.props.history.push('/library');
+        return _this3.props.history.push('/');
       });
     }
   }, {
@@ -3745,7 +3782,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
         password: "demopassword123"
       };
       this.props.login(demo).then(function () {
-        return _this4.props.history.push('/library');
+        return _this4.props.history.push('/');
       });
     }
   }, {
