@@ -7,11 +7,14 @@ const mSTP = (state) => {
   const { id } = state.session;
   const { loading } = state.ui;
   const { playlists, artists, albums, songs, users } = state.entities;
+  const currentUserId = state.session.id;
   
   return {
     currentUser: id,
     playlists,
+    songs,
     users,
+    currentUserId,
     loading,
     lastPlaylist: Object.keys(playlists).slice(-1)[0]
   };

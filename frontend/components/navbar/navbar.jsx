@@ -58,6 +58,8 @@ class Navbar extends React.Component {
         this.props.fetchUser(this.props.currentUserId);
         if (pageId === "songs") {
           this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "playlists") {
+          this.props.fetchLikedSongsPreview(currentUserId).then(() => this.renderContent());
         }
       default:
         break;
@@ -105,6 +107,7 @@ class Navbar extends React.Component {
           if (pageId === "songs") {
             this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
           } else if (pageId === "playlists") {
+            this.props.fetchLikedSongsPreview(currentUserId);
             this.props.fetchLikedPlaylists(currentUserId).then(() => this.renderContent());
           } else if (pageId === "artists") {
             this.props.fetchLikedArtists(currentUserId).then(() => this.renderContent());
@@ -148,6 +151,8 @@ class Navbar extends React.Component {
       case "library":
         if (pageId === "songs") {
           this.setState({ content: "Liked Songs" })
+        } else {
+          this.setState({ content: null })
         }
         break;
       default:
@@ -180,7 +185,7 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-content">
-            <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hidden"}>
+            <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
               {this.state.content}
             </h1>
             <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>

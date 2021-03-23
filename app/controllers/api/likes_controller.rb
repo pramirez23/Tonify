@@ -62,6 +62,13 @@ class Api::LikesController < ApplicationController
     render 'api/songs/index'
   end
 
+  def fetch_liked_songs_preview
+    @user = User.find_by(id: current_user.id)
+    @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
+    @songs = Song.where(id: @likes.keys).limit(8)
+    render 'api/songs/index'
+  end
+
   private
 
   def like_params

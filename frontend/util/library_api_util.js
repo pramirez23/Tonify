@@ -26,6 +26,13 @@ export const fetchLikedSongs = (currentUserId) => {
   })
 }
 
+export const fetchLikedSongsPreview = (currentUserId) => {
+  return $.ajax({
+    type: "GET",
+    url: `/api/users/${currentUserId}/songs_preview`
+  })
+}
+
 export const like = (likable_id, likable_type) => {
   return $.ajax({
     type: "POST",

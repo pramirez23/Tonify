@@ -70,6 +70,13 @@ export const fetchLikedSongs = (currentUserId) => dispatch => {
     )
 }
 
+export const fetchLikedSongsPreview = (currentUserId) => dispatch => {
+  return LibraryAPIUtil.fetchLikedSongsPreview(currentUserId)
+    .then(
+      likedSongs=> dispatch(receiveLikedSongs(likedSongs))
+    )
+}
+
 export const like = (likableType, likableId) => dispatch => {
   return LibraryAPIUtil.like(likableType, likableId)
     .then(

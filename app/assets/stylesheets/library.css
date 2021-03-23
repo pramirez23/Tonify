@@ -179,29 +179,99 @@ button.liked-create-playlist:hover {
   transform: scale(1.05);
 }
 
+h1.library-title {
+  color: white;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  margin: 16px 0;
+}
+
 .library-container {
   display: flex;
+  flex-direction: column;
   padding: 54px 40px;
-  height: 100%;
 }
 
 .playlist-index {
   display: grid;
   grid-gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(180px, auto));
-  /* grid-template-rows: repeat(auto-fill, minmax(300px, auto)); */
-  grid-auto-rows: 250px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  /* grid-template-rows: repeat(auto-fill, 267px); */
+  grid-auto-rows: 275px;
   width: 100%;
 }
+
 .liked-songs-shortcut {
-  background: blue;
+  border-radius: 5px;
+  background: rgb(71,32,245);
+  background: linear-gradient(135deg, rgba(71,32,245,1) 0%, rgba(142,142,229,1) 100%);
   grid-column: span 2;
 }
 
 .library-item {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  background: #1A1A1A;
+  border-radius: 5px;
+  padding: 9%;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.library-item:hover {
+  background: #282828;
+}
+
+.library-item-creator {
+  color: #B3B3B3;
+}
+
+div.library-item-photo {
+  display: flex;
+  /* padding: 5%; */
+  /* height: 75%; */
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+  /* min-width: 170px; */
+  /* min-height: 170px; */
   width: 100%;
-  background: red;
+}
+
+img.library-playlist-photo {
+  position: relative;
+  object-fit: cover;
+  width: 80%;
+  height: 100%;
+  min-width: 170px;
+  min-height: 170px;
+  max-height: 200px;
+  max-width: 200px;
+  -webkit-box-shadow: 0px 0px 25px 1px #111111; 
+  box-shadow: 0px 0px 25px 1px #111111;
+}
+
+.library-item-details {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  letter-spacing: 0.5px;
+  /* height: 10%; */
+  font-size: 15px;
+  padding-top: 14px;
+}
+
+.library-item-details > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+span.library-item-name {
+  padding-bottom: 5px;
 }
 
 @media only screen and (max-width: 1210px) {

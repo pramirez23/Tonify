@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import LibraryItemContainer from './library_item_container';
+import SongsPreview from './songs_preview';
 
 class Library extends React.Component {
   constructor(props) {
@@ -73,17 +74,22 @@ class Library extends React.Component {
   }
 
   renderIndex(location) {
-    const { playlists, artists, albums } = this.props;
-
+    const { users, currentUserId, playlists, artists, albums, songs } = this.props;
+    const likedSongsCount = Object.values(users[currentUserId].likes.songs).length
+    // debugger
     switch (location) {
       case "playlists":
         return (
           <>
+            <h1 className="library-title">Playlists</h1>
             <div className="playlist-index">
               <div className="liked-songs-shortcut">
-                <span>liked-songs-shortcut</span>
+                <SongsPreview
+                  songs={Object.values(songs)}
+                  likedSongsCount={likedSongsCount}
+                />
               </div>
-              {Object.entries(playlists).map(((playlist, idx) =>
+              {Object.values(playlists).map(((playlist, idx) =>
                 <LibraryItemContainer
                   playlist={playlist}
                   key={idx}/>
@@ -93,23 +99,29 @@ class Library extends React.Component {
         )
       case "artists":
         return (
-          <div className="artist-index">
-            {Object.entries(artists).map(((artist, idx) =>
-              <LibraryItemContainer
-                artist={artist}
-                key={idx} />
-            ))}
-          </div>
+          <>
+            <h1 className="library-title">Artists</h1>
+            <div className="artist-index">
+              {Object.entries(artists).map(((artist, idx) =>
+                <LibraryItemContainer
+                  artist={artist}
+                  key={idx} />
+              ))}
+            </div>
+          </>
         )
       case "albums":
         return (
-          <div className="album-index">
-            {Object.entries(albums).map(((album, idx) =>
-              <LibraryItemContainer
-                album={album}
-                key={idx} />
-            ))}
-          </div>
+          <>
+            <h1 className="library-title">Artists</h1>
+            <div className="album-index">
+              {Object.entries(albums).map(((album, idx) =>
+                <LibraryItemContainer
+                  album={album}
+                  key={idx} />
+              ))}
+            </div>
+          </>
         )
       default:
         break;
@@ -117,7 +129,7 @@ class Library extends React.Component {
   }
 
   emptyOrFilled() {
-    const { playlists, artists, albums } = this.props; 
+    const { playlists, artists, albums, songs } = this.props; 
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
 
