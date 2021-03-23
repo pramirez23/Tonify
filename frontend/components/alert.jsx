@@ -33,6 +33,12 @@ class Alert extends React.Component {
       case "Playlist":
         this.setState({ message: "Added to playlist" })
         break
+      case "Library Add":
+        this.setState({ message: "Saved to Your Library" })
+        break
+      case "Library Remove":
+        this.setState({ message: "Removed from Your Library" })
+        break
       default:
         this.setState({ message: null })
         break;

@@ -97,7 +97,7 @@ class Library extends React.Component {
         return (
           <>
             <h1 className="library-title">Playlists</h1>
-            <div className="playlist-index">
+            <div className="library-index">
               <div
                 className="liked-songs-shortcut"
                 onMouseEnter={(e) => this.handleMouseEnter()}
@@ -128,8 +128,8 @@ class Library extends React.Component {
         return (
           <>
             <h1 className="library-title">Artists</h1>
-            <div className="artist-index">
-              {Object.entries(artists).map(((artist, idx) =>
+            <div className="library-index">
+              {Object.values(artists).map(((artist, idx) =>
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
@@ -141,9 +141,9 @@ class Library extends React.Component {
       case "albums":
         return (
           <>
-            <h1 className="library-title">Artists</h1>
-            <div className="album-index">
-              {Object.entries(albums).map(((album, idx) =>
+            <h1 className="library-title">Albums</h1>
+            <div className="library-index">
+              {Object.values(albums).map(((album, idx) =>
                 <LibraryItemContainer
                   id={album.id}
                   album={album}

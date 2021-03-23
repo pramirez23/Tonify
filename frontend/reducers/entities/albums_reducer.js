@@ -3,6 +3,8 @@ import {
   RECEIVE_ALBUM,
 } from "../../actions/album_actions";
 
+import { RECEIVE_LIKED_ALBUMS } from "../../actions/library_actions";
+
 const albumsReducer = (state = {}, action) => {
   Object.freeze(state);
 
@@ -11,6 +13,8 @@ const albumsReducer = (state = {}, action) => {
       return action.playlists;
     case RECEIVE_ALBUM:
       return Object.assign({}, state, { [action.payload.album.id]: action.payload.album })
+    case RECEIVE_LIKED_ALBUMS:
+      return action.likedAlbums;
     default:
       return state;
   }

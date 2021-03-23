@@ -16,21 +16,48 @@ class Api::LikesController < ApplicationController
   def destroy
     destroy_like_params = like_params
     destroy_like_params[:user_id] = current_user.id
-    
-    @like = Like.find_by(likable_id: destroy_like_params[:likable_id], likable_type: "Song")
-    @song = Song.find_by(id: destroy_like_params[:likable_id])
 
-    if @like
-      @like.destroy!
-      @user = User.find_by(id: current_user.id)
+    case destroy_like_params[:likable_type]
+    when "Playlist"
+      @like = Like.find_by(likable_id: destroy_like_params[:likable_id], likable_type: "Playlist")
+      @playlist = Playlist.find_by(id: destroy_like_params[:likable_id])
 
-      if destroy_like_params[:from_library]
-        render 'api/songs/show'
-      else
+      if @like
+        @like.destroy!
+        @user = User.find_by(id: current_user.id)
         render 'api/users/show'
       end
-    else
-      render json: @like.errors.full_messages, status: 422
+    when "Artist"
+      @like = Like.find_by(likable_id: destroy_like_params[:likable_id], likable_type: "Artist")
+      @artist = Artist.find_by(id: destroy_like_params[:likable_id])
+
+      if @like
+        @like.destroy!
+        @user = User.find_by(id: current_user.id)
+        render 'api/users/show'
+      end
+    when "Album"
+      @like = Like.find_by(likable_id: destroy_like_params[:likable_id], likable_type: "Album")
+      @album = Album.find_by(id: destroy_like_params[:likable_id])
+
+      if @like
+        @like.destroy!
+        @user = User.find_by(id: current_user.id)
+        render 'api/users/show'
+      end
+    when "Song"
+      @like = Like.find_by(likable_id: destroy_like_params[:likable_id], likable_type: "Song")
+      @song = Song.find_by(id: destroy_like_params[:likable_id])
+
+      if @like
+        @like.destroy!
+        @user = User.find_by(id: current_user.id)
+        if destroy_like_params[:from_library]
+          render 'api/songs/show'
+        else
+          render 'api/users/show'
+        end
+      end
     end
   end
 
@@ -51,7 +78,7 @@ class Api::LikesController < ApplicationController
   def fetch_liked_albums
     @user = User.find_by(id: current_user.id)
     @likes = @user.likes.where(likable_type: "Album").pluck(:likable_id)
-    @album = Album.where(id: @likes)
+    @albums = Album.where(id: @likes)
     render 'api/albums/index'
   end
 

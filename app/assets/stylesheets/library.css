@@ -212,7 +212,7 @@ h1.library-title {
   height: calc(100vh - 200px);
 }
 
-.playlist-index {
+.library-index {
   display: grid;
   grid-gap: 24px;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));

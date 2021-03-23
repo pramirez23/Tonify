@@ -60,6 +60,10 @@ class Navbar extends React.Component {
           this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
         } else if (pageId === "playlists") {
           this.props.fetchLikedSongsPreview(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "artists") {
+          this.props.fetchLikedArtists(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "albums") {
+          this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
         }
       default:
         break;

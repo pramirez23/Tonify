@@ -70,7 +70,7 @@ class LibraryItem extends React.Component {
             <img
               src={album.cover_art}
               alt= "Album Icon"
-              className="library-album-photo"/>
+              className="library-playlist-photo"/>
           </div>
         );
       default:

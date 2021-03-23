@@ -12,6 +12,8 @@ const mSTP = (state) => {
   return {
     currentUser: id,
     playlists,
+    artists,
+    albums,
     songs,
     users,
     currentUserId,
