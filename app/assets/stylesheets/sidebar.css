@@ -14,6 +14,8 @@
   padding: 22px 0px 0px 0px;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  height: 135px;
 }
 
 img#sidebar-logo {
@@ -26,28 +28,51 @@ img#sidebar-logo {
   z-index: 1000;
 }
 
-.sidebar-button .material-icons {
+.sidebar-button {
   font-size: 34px;
   color: #B3B3B3;
   margin-top: -8px;
   margin-right: 14px;
 }
 
-.sidebar-button {
+.selected-sidebar-button {
+  font-size: 34px;
+  color: #B3B3B3;
+  margin-top: -8px;
+  margin-right: 14px;
+}
+
+i.medium.material-icons {
+  margin-right: 10px;
+  margin-left: 6px;
+  font-size: 35px;
+}
+
+.sidebar-button, .selected-sidebar-button {
   display: flex;
-  background-color: black;
+  align-items: center;
   border: 0px solid;
   border-radius: 5px;
   height: 40px;
   margin-right: 9px;
   cursor: pointer;
-  width: 165px;
+  width: 176px;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.2px;
   font-family: 'Rubik';
+  color: #B3B3B3;
+  z-index: 1000;
 }
 
+.sidebar-button {
+  background-color: black;
+}
+
+.selected-sidebar-button {
+  background-color:#282828;
+  color: white;
+}
 
 .library-button p {
   font-size: 14px;
@@ -63,16 +88,7 @@ img#sidebar-logo {
 }
 
 .sidebar-button:hover, .library-button:hover {
-  -webkit-transition-delay: 0s;
-  -moz-transition-delay: 0s;
-  -ms-transition-delay: 0s;
-  -o-transition-delay: 0s;
-  transition-delay: 0s;
   color: #FFFFFF;
-}
-
-#plus-square:not(:hover){
-  color: #9F9F9F;
 }
 
 #likedsongs:focus {
@@ -87,16 +103,6 @@ span#sidebar-divider {
   margin-left: 15px;
   margin-bottom: 22px;
   cursor: default;
-}
-
-.sidebar-directory button:focus {
-  background-color:#282828
-}
-
-.sidebar-button {
-  padding: 11px 0px 0px 12px;
-  color: #B3B3B3;
-  z-index: 1000;
 }
 
 .sidebar-directory a:link, .sidebar-directory a:visited {
@@ -150,6 +156,7 @@ ul.playlist-links {
   overflow: hidden;
   overflow-y: scroll;
   z-index: 1000;
+  margin-bottom: 15px;
 }
 
 ul.playlist-links::-webkit-scrollbar-track {

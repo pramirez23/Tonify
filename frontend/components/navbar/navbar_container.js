@@ -8,7 +8,8 @@ import {
   fetchLikedPlaylists,
   fetchLikedArtists,
   fetchLikedAlbums, 
-  fetchLikedSongs
+  fetchLikedSongs,
+  fetchLikedSongsPreview
 } from "../../actions/library_actions";
 
 import { fetchUser } from "../../actions/user_actions";
@@ -37,6 +38,7 @@ const mDTP = dispatch => {
     fetchLikedArtists: (currentUserId) => dispatch(fetchLikedArtists(currentUserId)),
     fetchLikedAlbums: (currentUserId) => dispatch(fetchLikedAlbums(currentUserId)),
     fetchLikedSongs: (currentUserId) => dispatch(fetchLikedSongs(currentUserId)),
+    fetchLikedSongsPreview: (currentUserId) => dispatch(fetchLikedSongsPreview(currentUserId)),
     fetchUser: id => dispatch(fetchUser(id)),
     loading: () => dispatch(loading())
   }

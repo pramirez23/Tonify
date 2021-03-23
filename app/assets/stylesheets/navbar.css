@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   width: calc(100vw - 230px);
-  z-index: 9000;
+  z-index: 100000;
   left: 198px;
   justify-content: space-between;
   padding: 10px;

@@ -27,7 +27,7 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.login(this.state)
-      .then(() => this.props.history.push('/library'));
+      .then(() => this.props.history.push('/'));
   }
 
   handleDemo(e) {
@@ -37,7 +37,7 @@ class Login extends React.Component {
       password: "demopassword123"
     }
     this.props.login(demo)
-      .then(() => this.props.history.push('/library'));
+      .then(() => this.props.history.push('/'));
   }
 
   render() { 

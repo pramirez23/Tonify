@@ -1,13 +1,15 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import LibraryItemContainer from './library_item_container';
+import SongsPreview from './songs_preview';
 
 class Library extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      content: null
+      content: null,
+      isHovering: false
     }
 
     this.handleCreate = this.handleCreate.bind(this);
@@ -15,6 +17,8 @@ class Library extends React.Component {
     this.renderEmptyArtists = this.renderEmptyArtists.bind(this);
     this.renderEmptyAlbums = this.renderEmptyAlbums.bind(this);
     this.emptyOrFilled = this.emptyOrFilled.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -22,7 +26,7 @@ class Library extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    if (this.props !== prevProps) {
       this.emptyOrFilled();
     }
   }
@@ -39,12 +43,24 @@ class Library extends React.Component {
       .then(() => this.props.history.push(`/playlists/${this.props.lastPlaylist}`));
   };
 
+  handleMouseEnter() {
+    this.setState({
+      isHovering: true
+    })
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      isHovering: false
+    })
+  }
+
   renderEmptyPlaylists() {
     return (
-      <div className="empty-liked-playlists">
+      <div className="empty-library">
         <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
+        <p className="empty-library-title">Create your first playlist</p>
+        <p className="empty-library-text">It's easy, we'll help you.</p>
         <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
       </div>
     )
@@ -52,39 +68,56 @@ class Library extends React.Component {
 
   renderEmptyArtists() {
     return (
-      <div className="empty-liked-artists">
-        <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
-        <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
+      <div className="empty-library">
+        <span id="library-icon" class="material-icons">person_search</span>
+        <p className="empty-library-title">Follow your first artist</p>
+        <p className="empty-library-text">Follow artists you like by tapping the follow button.</p>
+        <button className="find-artists" onClick={() => this.props.history.push('/search')}>FIND ARTISTS</button>
       </div>
     )
   }
 
   renderEmptyAlbums() {
     return (
-      <div className="empty-liked-albums">
-        <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
-        <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
+      <div className="empty-library">
+        <span id="library-icon" className="material-icons">album</span>
+        <p className="empty-library-title">Follow your first album</p>
+        <p className="empty-library-text">Save albums by tapping the heart icon.</p>
+        <button className="find-albums" onClick={() => this.props.history.push('/search')}>FIND ALBUMS</button>
       </div>
     )
   }
 
   renderIndex(location) {
-    const { playlists, artists, albums } = this.props;
+    const { playlists, artists, albums, songs } = this.props;
+    const likedSongsCount = Object.values(songs).length;
 
     switch (location) {
       case "playlists":
         return (
           <>
-            <div className="playlist-index">
-              <div className="liked-songs-shortcut">
-                <span>liked-songs-shortcut</span>
+            <h1 className="library-title">Playlists</h1>
+            <div className="library-index">
+              <div
+                className="liked-songs-shortcut"
+                onMouseEnter={(e) => this.handleMouseEnter()}
+                onMouseLeave={() => this.handleMouseLeave()}
+                onClick={() => this.props.history.push('/library/songs')}>
+                <div className="liked-songs-container">
+                  <SongsPreview songs={Object.values(songs)}/>
+                </div>
+                <div className="song-preview-details">
+                  <h1 className="song-preview-title">Liked Songs</h1>
+                  <span className="song-preview-count">{likedSongsCount} {likedSongsCount === 1 ? "song" : "songs"}</span>
+                </div>
+                <img
+                  className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
+                  src={window.playButton}
+                  alt="Play Button" />
               </div>
-              {Object.entries(playlists).map(((playlist, idx) =>
+              {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
+                  id={playlist.id}
                   playlist={playlist}
                   key={idx}/>
               ))}
@@ -93,23 +126,31 @@ class Library extends React.Component {
         )
       case "artists":
         return (
-          <div className="artist-index">
-            {Object.entries(artists).map(((artist, idx) =>
-              <LibraryItemContainer
-                artist={artist}
-                key={idx} />
-            ))}
-          </div>
+          <>
+            <h1 className="library-title">Artists</h1>
+            <div className="library-index">
+              {Object.values(artists).map(((artist, idx) =>
+                <LibraryItemContainer
+                  id={artist.id}
+                  artist={artist}
+                  key={idx} />
+              ))}
+            </div>
+          </>
         )
       case "albums":
         return (
-          <div className="album-index">
-            {Object.entries(albums).map(((album, idx) =>
-              <LibraryItemContainer
-                album={album}
-                key={idx} />
-            ))}
-          </div>
+          <>
+            <h1 className="library-title">Albums</h1>
+            <div className="library-index">
+              {Object.values(albums).map(((album, idx) =>
+                <LibraryItemContainer
+                  id={album.id}
+                  album={album}
+                  key={idx} />
+              ))}
+            </div>
+          </>
         )
       default:
         break;
@@ -117,7 +158,7 @@ class Library extends React.Component {
   }
 
   emptyOrFilled() {
-    const { playlists, artists, albums } = this.props; 
+    const { playlists, artists, albums, songs } = this.props; 
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
 

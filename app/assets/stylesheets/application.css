@@ -89,6 +89,7 @@ body {
   overflow: auto;
   display: block;
   overflow-x: hidden;
+  width: calc(100vw - 200px);
 }
 
 main::-webkit-scrollbar {

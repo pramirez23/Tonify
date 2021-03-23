@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { renderTotalDuration } from '../../util/time_util';
 import { addAlbumToPlaylist } from '../../actions/album_actions';
 import { openAlert, closeAlert } from '../../actions/alert_actions';
+import { like, unlike } from "../../actions/library_actions";
 import SongListItem from '../songs/song_list_item'
 
 class Album extends React.Component {
@@ -63,12 +64,41 @@ class Album extends React.Component {
   }
 
   render() {
-    const { album, songs, currentUser, playlists } = this.props;
+    const { likedAlbums, album, songs, currentUser, playlists } = this.props;
     const albumSongs = Object.entries(songs);
     const renderAlbumDuration = renderTotalDuration(album.duration);
 
     let userPlaylists = Object.values(playlists).filter(playlist =>
       playlist.user_id === this.props.currentUser);
+
+    let renderHeart;
+
+    if (!likedAlbums || !likedAlbums[album.id]) {
+      renderHeart = (
+        <i
+          className="far fa-heart"
+          onClick={() =>
+            this.props.likeAlbum(album.id, "Album")
+              .then(() => {
+                this.props.openAlert("Library Add");
+                setTimeout(this.props.closeAlert, 4000);
+              })}>
+        </i>
+      )
+    } else {
+      renderHeart = (
+        <i
+          id="liked-song-heart"
+          className="fas fa-heart"
+          onClick={() => {
+            this.props.unlikeAlbum(album.id, "Album")
+              .then(() => {
+                this.props.openAlert("Library Remove");
+                setTimeout(this.props.closeAlert, 4000);
+              })}}>
+        </i>
+      )
+    }
 
     const albumDetails = () => {
       if (albumSongs.length > 1) {
@@ -101,7 +131,7 @@ class Album extends React.Component {
           <img id={albumSongs.length ? "show-page-play" : "hidden"} src={window.playButton} />
 
           <div>
-            <i className="far fa-heart"></i>
+            {renderHeart}
           </div>
 
           <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
@@ -180,10 +210,12 @@ class Album extends React.Component {
 const mSTP = state => {
   const currentUser = state.session.id;
   const { playlists } = state.entities;
-
+  const currentUserLikes = state.entities.users[currentUser].likes;
+  const likedAlbums = currentUserLikes.albums;
   return ({
     playlists,
     currentUser: currentUser,
+    likedAlbums
   });
 };
 
@@ -191,7 +223,9 @@ const mDTP = dispatch => {
   return {
     openAlert: (type) => dispatch(openAlert(type)),
     closeAlert: () => dispatch(closeAlert()),
-    addAlbumToPlaylist: (playlistId, albumId) => dispatch(addAlbumToPlaylist(playlistId, albumId))
+    addAlbumToPlaylist: (playlistId, albumId) => dispatch(addAlbumToPlaylist(playlistId, albumId)),
+    likeAlbum: (likableId, likableType) => dispatch(like(likableId, likableType)),
+    unlikeAlbum: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
   }
 };
 

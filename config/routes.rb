@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         get :artists, to: "likes#fetch_liked_artists", as: "fetch_liked_artists"
         get :albums, to: "likes#fetch_liked_albums", as: "fetch_liked_albums"
         get :songs, to: "likes#fetch_liked_songs", as: "fetch_liked_songs"
+        get :songs_preview, to: "likes#fetch_liked_songs_preview", as: "fetch_liked_songs_preview"
     end
     
     resource :session, only: [:create, :destroy]

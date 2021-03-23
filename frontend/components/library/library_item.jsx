@@ -9,69 +9,183 @@ class LibraryItem extends React.Component {
       playlist: null,
       artist: null,
       album: null,
+      isHovering: false
     }
+
+    this.renderPhoto = this.renderPhoto.bind(this);
+    this.renderTitle = this.renderTitle.bind(this);
+    this.renderCreator = this.renderCreator.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    const { playlist, artist, album, songs } = this.props;
-    const pathName = this.props.location.pathname.split('/');
-    const location = pathName[1];
+  // componentDidMount() {
+  //   const { playlist, artist, album, songs } = this.props;
+  //   const pathName = this.props.location.pathname.split('/');
+  //   const location = pathName[1];
 
-    switch (location) {
-      case "playlists":
-        this.setState({ playlist });
-        break;
-      case "artists":
-        this.setState({ artist });
-        break;
-      case "albums":
-        this.setState({ album });
-        break;
-      default:
-        break;
-    }
-  }
+  //   switch (location) {
+  //     case "playlists":
+  //       this.setState({ playlist });
+  //       break;
+  //     case "artists":
+  //       this.setState({ artist });
+  //       break;
+  //     case "albums":
+  //       this.setState({ album });
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   renderPhoto() {
     const { playlist, artist, album, songs } = this.props;
     const pathName = this.props.location.pathname.split('/');
-    const location = pathName[1];
+    const location = pathName[2];
 
     switch (location) {
       case "playlists":
         return (
-          <img src={playlist.photo_url} alt="Playlist Icon" />
+          <div className="library-item-photo">
+            <img
+              src={ playlist.photo_url ? playlist.photo_url : window.defaultPlaylistIcon }
+              alt="Playlist Icon"
+              className="library-playlist-photo" />
+          </div>
         );
-        break;
       case "artists":
         return (
-          <img src={artist.photo} alt= "Artist Icon" />
+          <div className="library-item-photo">
+            <img
+              src={artist.photo}
+              alt= "Artist Icon"
+              className="library-artist-photo" />
+          </div>
         );
-        break;
       case "albums":
         return (
-          <img src={album.cover_art} alt= "Album Icon" />
+          <div className="library-item-photo">
+            <img
+              src={album.cover_art}
+              alt= "Album Icon"
+              className="library-playlist-photo"/>
+          </div>
         );
+      default:
+        break;
+    }
+  }
+
+  renderTitle() {
+    const { playlist, artist, album, songs } = this.props;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[2];
+
+    switch (location) {
+      case "playlists":
+        return (
+          <span className="library-item-name">
+            {playlist.name}
+          </span>
+        );
+      case "artists":
+        return (
+          <span className="library-item-name">
+            {artist.name}
+          </span>
+        );
+      case "albums":
+        return (
+          <span className="library-item-name">
+            {album.title}
+          </span>
+        );
+      default:
+        break;
+    }
+  }
+
+  renderCreator() {
+    const { playlist, album, songs } = this.props;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[2];
+
+    switch (location) {
+      case "playlists":
+        return (
+          <span className="library-item-creator">
+            {playlist.creator}
+          </span>
+        );
+      case "artists":
+        return (
+          <span className="library-item-creator">
+            Artist
+          </span>
+        );
+      case "albums":
+        return (
+          <span className="library-item-creator">
+            {album.artist}
+          </span>
+        );
+      default:
+        break;
+    }
+  }
+  
+  handleMouseEnter() {
+    this.setState({
+      isHovering: true
+    })
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      isHovering: false
+    })
+  }
+
+  handleClick() {
+    const { id, location, history } = this.props;
+    const pathName = location.pathname.split('/');
+    const pageLocation = pathName[2];
+
+    switch (pageLocation) {
+      case "playlists":
+        history.push(`/playlists/${id}`);
+        break;
+      case "artists":
+        history.push(`/artists/${id}`);
+        break;
+      case "albums":
+        history.push(`/albums/${id}`);
         break;
       default:
         break;
     }
   }
 
-  // renderTitle() {
-
-  // }
-
-  // renderCreator() {
-
-  // }
-  
   render() { 
     return (
-      <div className="library-item">
-        <header>{this.renderPhoto()}</header>
-        <span>{this.renderTitle()}</span>
-        <span>{this.renderCreator()}</span>
+      <div
+        className="library-item"
+        onMouseEnter={(e) => this.handleMouseEnter()}
+        onMouseLeave={() => this.handleMouseLeave()}
+        onClick={() => this.handleClick()}>
+        <div className="library-item-header">
+          {this.renderPhoto()}
+          <img
+            className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
+            src={window.playButton}
+            alt="Play Button"/>
+        </div>
+        <div className="library-item-details">
+          {this.renderTitle()}
+          {this.renderCreator()}
+        </div>
       </div>
     )
   }
