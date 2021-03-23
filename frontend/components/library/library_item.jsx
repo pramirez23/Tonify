@@ -9,11 +9,14 @@ class LibraryItem extends React.Component {
       playlist: null,
       artist: null,
       album: null,
+      isHovering: false
     }
 
     this.renderPhoto = this.renderPhoto.bind(this);
     this.renderTitle = this.renderTitle.bind(this);
     this.renderCreator = this.renderCreator.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   // componentDidMount() {
@@ -123,7 +126,7 @@ class LibraryItem extends React.Component {
         );
       case "albums":
         return (
-          <span>
+          <span className="library-item-creator">
             {album.artist}
           </span>
         );
@@ -132,10 +135,31 @@ class LibraryItem extends React.Component {
     }
   }
   
+  handleMouseEnter() {
+    this.setState({
+      isHovering: true
+    })
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      isHovering: false
+    })
+  }
+
   render() { 
     return (
-      <div className="library-item">
-        {this.renderPhoto()}
+      <div
+        className="library-item"
+        onMouseEnter={(e) => this.handleMouseEnter()}
+        onMouseLeave={() => this.handleMouseLeave()}>
+        <div className="library-item-header">
+          {this.renderPhoto()}
+          <img
+            className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
+            src={window.playButton}
+            alt="Play Button"/>
+        </div>
         <div className="library-item-details">
           {this.renderTitle()}
           {this.renderCreator()}

@@ -1357,13 +1357,16 @@ var Library = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      content: null
+      content: null,
+      isHovering: false
     };
     _this.handleCreate = _this.handleCreate.bind(_assertThisInitialized(_this));
     _this.renderEmptyPlaylists = _this.renderEmptyPlaylists.bind(_assertThisInitialized(_this));
     _this.renderEmptyArtists = _this.renderEmptyArtists.bind(_assertThisInitialized(_this));
     _this.renderEmptyAlbums = _this.renderEmptyAlbums.bind(_assertThisInitialized(_this));
     _this.emptyOrFilled = _this.emptyOrFilled.bind(_assertThisInitialized(_this));
+    _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
+    _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1393,6 +1396,20 @@ var Library = /*#__PURE__*/function (_React$Component) {
       };
       this.props.createPlaylist(newPlaylist).then(function () {
         return _this2.props.history.push("/playlists/".concat(_this2.props.lastPlaylist));
+      });
+    }
+  }, {
+    key: "handleMouseEnter",
+    value: function handleMouseEnter() {
+      this.setState({
+        isHovering: true
+      });
+    }
+  }, {
+    key: "handleMouseLeave",
+    value: function handleMouseLeave() {
+      this.setState({
+        isHovering: false
       });
     }
   }, {
@@ -1446,6 +1463,8 @@ var Library = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderIndex",
     value: function renderIndex(location) {
+      var _this3 = this;
+
       var _this$props = this.props,
           users = _this$props.users,
           currentUserId = _this$props.currentUserId,
@@ -1462,7 +1481,13 @@ var Library = /*#__PURE__*/function (_React$Component) {
           }, "Playlists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "playlist-index"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-            className: "liked-songs-shortcut"
+            className: "liked-songs-shortcut",
+            onMouseEnter: function onMouseEnter(e) {
+              return _this3.handleMouseEnter();
+            },
+            onMouseLeave: function onMouseLeave() {
+              return _this3.handleMouseLeave();
+            }
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "liked-songs-container"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_preview__WEBPACK_IMPORTED_MODULE_2__.default, {
@@ -1473,7 +1498,11 @@ var Library = /*#__PURE__*/function (_React$Component) {
             className: "song-preview-title"
           }, "Liked Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
             className: "song-preview-count"
-          }, likedSongsCount, " ", likedSongsCount > 1 ? "songs" : "song"))), Object.values(playlists).slice(0).reverse().map(function (playlist, idx) {
+          }, likedSongsCount, " ", likedSongsCount > 1 ? "songs" : "song")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            className: this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play",
+            src: window.playButton,
+            alt: "Play Button"
+          })), Object.values(playlists).slice(0).reverse().map(function (playlist, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
               playlist: playlist,
               key: idx
@@ -1654,11 +1683,14 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       location: null,
       playlist: null,
       artist: null,
-      album: null
+      album: null,
+      isHovering: false
     };
     _this.renderPhoto = _this.renderPhoto.bind(_assertThisInitialized(_this));
     _this.renderTitle = _this.renderTitle.bind(_assertThisInitialized(_this));
     _this.renderCreator = _this.renderCreator.bind(_assertThisInitialized(_this));
+    _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
+    _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     return _this;
   } // componentDidMount() {
   //   const { playlist, artist, album, songs } = this.props;
@@ -1776,18 +1808,48 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
           }, "Artist");
 
         case "albums":
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, album.artist);
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-creator"
+          }, album.artist);
 
         default:
           break;
       }
     }
   }, {
+    key: "handleMouseEnter",
+    value: function handleMouseEnter() {
+      this.setState({
+        isHovering: true
+      });
+    }
+  }, {
+    key: "handleMouseLeave",
+    value: function handleMouseLeave() {
+      this.setState({
+        isHovering: false
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "library-item"
-      }, this.renderPhoto(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-item",
+        onMouseEnter: function onMouseEnter(e) {
+          return _this2.handleMouseEnter();
+        },
+        onMouseLeave: function onMouseLeave() {
+          return _this2.handleMouseLeave();
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-item-header"
+      }, this.renderPhoto(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: this.state.isHovering ? "show-library-play" : "hide-library-play",
+        src: window.playButton,
+        alt: "Play Button"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item-details"
       }, this.renderTitle(), this.renderCreator()));
     }

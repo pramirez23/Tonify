@@ -8,7 +8,8 @@ class Library extends React.Component {
     super(props);
 
     this.state = {
-      content: null
+      content: null,
+      isHovering: false
     }
 
     this.handleCreate = this.handleCreate.bind(this);
@@ -16,6 +17,8 @@ class Library extends React.Component {
     this.renderEmptyArtists = this.renderEmptyArtists.bind(this);
     this.renderEmptyAlbums = this.renderEmptyAlbums.bind(this);
     this.emptyOrFilled = this.emptyOrFilled.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +42,18 @@ class Library extends React.Component {
     this.props.createPlaylist(newPlaylist)
       .then(() => this.props.history.push(`/playlists/${this.props.lastPlaylist}`));
   };
+
+  handleMouseEnter() {
+    this.setState({
+      isHovering: true
+    })
+  }
+
+  handleMouseLeave() {
+    this.setState({
+      isHovering: false
+    })
+  }
 
   renderEmptyPlaylists() {
     return (
@@ -83,14 +98,21 @@ class Library extends React.Component {
           <>
             <h1 className="library-title">Playlists</h1>
             <div className="playlist-index">
-              <div className="liked-songs-shortcut">
+              <div
+                className="liked-songs-shortcut"
+                onMouseEnter={(e) => this.handleMouseEnter()}
+                onMouseLeave={() => this.handleMouseLeave()}>
                 <div className="liked-songs-container">
-                  <SongsPreview songs={Object.values(songs)} />
+                  <SongsPreview songs={Object.values(songs)}/>
                 </div>
                 <div className="song-preview-details">
                   <h1 className="song-preview-title">Liked Songs</h1>
                   <span className="song-preview-count">{likedSongsCount} {likedSongsCount > 1 ? "songs" : "song"}</span>
                 </div>
+                <img
+                  className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
+                  src={window.playButton}
+                  alt="Play Button" />
               </div>
               {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
