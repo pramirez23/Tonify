@@ -1463,10 +1463,17 @@ var Library = /*#__PURE__*/function (_React$Component) {
             className: "playlist-index"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "liked-songs-shortcut"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "liked-songs-container"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_preview__WEBPACK_IMPORTED_MODULE_2__.default, {
-            songs: Object.values(songs),
-            likedSongsCount: likedSongsCount
-          })), Object.values(playlists).map(function (playlist, idx) {
+            songs: Object.values(songs)
+          })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "song-preview-details"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
+            className: "song-preview-title"
+          }, "Liked Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "song-preview-count"
+          }, likedSongsCount, " ", likedSongsCount > 1 ? "songs" : "song"))), Object.values(playlists).slice(0).reverse().map(function (playlist, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
               playlist: playlist,
               key: idx
@@ -1843,7 +1850,7 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   var songsPreview = songs.map(function (song, idx) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       className: idx !== 0 ? "library-dot" : "hidden"
@@ -1851,7 +1858,7 @@ __webpack_require__.r(__webpack_exports__);
       className: "song-preview-title"
     }, song.title), "\xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       className: "song-preview-artist"
-    }, song.artist)));
+    }, song.artist));
   });
   return songsPreview;
 });

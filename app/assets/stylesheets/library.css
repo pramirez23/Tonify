@@ -207,6 +207,41 @@ h1.library-title {
   background: rgb(71,32,245);
   background: linear-gradient(135deg, rgba(71,32,245,1) 0%, rgba(142,142,229,1) 100%);
   grid-column: span 2;
+  color: white;
+  letter-spacing: 0.25px;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 23px;
+  padding: 53px 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.liked-songs-container {
+  display: -webkit-box;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  max-height: 135px;
+  white-space: normal;
+  text-overflow: ellipsis;
+  margin-top: 4px;
+}
+
+.song-preview-artist {
+  color: #CDC4F9;
+}
+
+.song-preview-details {
+  margin-top: 22px;
+}
+
+h1.song-preview-title {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 28px;
 }
 
 .library-item {

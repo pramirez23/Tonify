@@ -84,12 +84,15 @@ class Library extends React.Component {
             <h1 className="library-title">Playlists</h1>
             <div className="playlist-index">
               <div className="liked-songs-shortcut">
-                <SongsPreview
-                  songs={Object.values(songs)}
-                  likedSongsCount={likedSongsCount}
-                />
+                <div className="liked-songs-container">
+                  <SongsPreview songs={Object.values(songs)} />
+                </div>
+                <div className="song-preview-details">
+                  <h1 className="song-preview-title">Liked Songs</h1>
+                  <span className="song-preview-count">{likedSongsCount} {likedSongsCount > 1 ? "songs" : "song"}</span>
+                </div>
               </div>
-              {Object.values(playlists).map(((playlist, idx) =>
+              {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
                   playlist={playlist}
                   key={idx}/>
