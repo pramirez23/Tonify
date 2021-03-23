@@ -7,7 +7,7 @@ export default (props) => {
     return null
   }
   
-  const songsPreview = songs.map((song, idx) => {
+  const songsPreview = songs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((song, idx) => {
     return (
       <span key={idx}>
         <span className={idx !== 0 ? "library-dot" : "hidden"}>&nbsp;•&nbsp;</span>

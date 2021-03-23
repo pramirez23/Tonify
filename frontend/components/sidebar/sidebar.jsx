@@ -30,6 +30,10 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+
     let playlistIndex = this.props.playlists;
 
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
@@ -42,17 +46,17 @@ class Sidebar extends React.Component {
         </Link>
 
         <div className="sidebar-directory">
-          <button className="sidebar-button" onClick={() => this.props.history.push('/')}>
+          <button className={location === "" ? "selected-sidebar-button": "sidebar-button"} onClick={() => this.props.history.push('/')}>
               <i className="medium material-icons">home</i>
               <p>Home</p>
           </button>
 
-          <button className="sidebar-button" onClick={() => this.props.history.push('/search')}>
+          <button className={location === "search" ? "selected-sidebar-button": "sidebar-button"} onClick={() => this.props.history.push('/search')}>
               <i className="medium material-icons">search</i>
               <p>Search</p>
           </button>
 
-          <button className="sidebar-button" onClick={() => this.props.history.push('/library/playlists')}>
+          <button className={location === "library" && pageId !== "songs" ? "selected-sidebar-button": "sidebar-button"} onClick={() => this.props.history.push('/library/playlists')}>
               <i className="medium material-icons">library_music</i>
               <p>Your Library</p>
           </button>

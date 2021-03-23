@@ -26,7 +26,7 @@ class Library extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    if (this.props !== prevProps) {
       this.emptyOrFilled();
     }
   }
@@ -89,9 +89,9 @@ class Library extends React.Component {
   }
 
   renderIndex(location) {
-    const { users, currentUserId, playlists, artists, albums, songs } = this.props;
-    const likedSongsCount = Object.values(users[currentUserId].likes.songs).length
-    // debugger
+    const { playlists, artists, albums, songs } = this.props;
+    const likedSongsCount = Object.values(songs).length;
+
     switch (location) {
       case "playlists":
         return (
@@ -107,7 +107,7 @@ class Library extends React.Component {
                 </div>
                 <div className="song-preview-details">
                   <h1 className="song-preview-title">Liked Songs</h1>
-                  <span className="song-preview-count">{likedSongsCount} {likedSongsCount > 1 ? "songs" : "song"}</span>
+                  <span className="song-preview-count">{likedSongsCount} {likedSongsCount === 1 ? "song" : "songs"}</span>
                 </div>
                 <img
                   className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}

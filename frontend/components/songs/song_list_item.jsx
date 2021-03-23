@@ -178,7 +178,7 @@ class SongListItem extends React.Component {
           id="liked-song-heart"
           className="fas fa-heart"
           onClick={() => {
-            if (location === "playlists") {
+            if (location !== "library") {
               this.props.unlikeSong(song.id, "Song")
                 .then(() => {
                   this.props.openAlert("Unlike");

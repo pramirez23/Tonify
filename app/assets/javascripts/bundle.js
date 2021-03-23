@@ -1378,7 +1378,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (this.props.location !== prevProps.location) {
+      if (this.props !== prevProps) {
         this.emptyOrFilled();
       }
     }
@@ -1466,13 +1466,11 @@ var Library = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var _this$props = this.props,
-          users = _this$props.users,
-          currentUserId = _this$props.currentUserId,
           playlists = _this$props.playlists,
           artists = _this$props.artists,
           albums = _this$props.albums,
           songs = _this$props.songs;
-      var likedSongsCount = Object.values(users[currentUserId].likes.songs).length; // debugger
+      var likedSongsCount = Object.values(songs).length;
 
       switch (location) {
         case "playlists":
@@ -1498,7 +1496,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
             className: "song-preview-title"
           }, "Liked Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
             className: "song-preview-count"
-          }, likedSongsCount, " ", likedSongsCount > 1 ? "songs" : "song")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+          }, likedSongsCount, " ", likedSongsCount === 1 ? "song" : "songs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             className: this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play",
             src: window.playButton,
             alt: "Play Button"
@@ -1911,7 +1909,9 @@ __webpack_require__.r(__webpack_exports__);
     return null;
   }
 
-  var songsPreview = songs.map(function (song, idx) {
+  var songsPreview = songs.sort(function (a, b) {
+    return new Date(b.created_at) - new Date(a.created_at);
+  }).map(function (song, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
@@ -4284,6 +4284,9 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var pathName = this.props.location.pathname.split('/');
+      var location = pathName[1];
+      var pageId = pathName[2];
       var playlistIndex = this.props.playlists;
       var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
         return playlist.user_id === _this3.props.currentUser;
@@ -4299,21 +4302,21 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "sidebar-directory"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "sidebar-button",
+        className: location === "" ? "selected-sidebar-button" : "sidebar-button",
         onClick: function onClick() {
           return _this3.props.history.push('/');
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "medium material-icons"
       }, "home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Home")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "sidebar-button",
+        className: location === "search" ? "selected-sidebar-button" : "sidebar-button",
         onClick: function onClick() {
           return _this3.props.history.push('/search');
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "medium material-icons"
       }, "search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "sidebar-button",
+        className: location === "library" && pageId !== "songs" ? "selected-sidebar-button" : "sidebar-button",
         onClick: function onClick() {
           return _this3.props.history.push('/library/playlists');
         }
@@ -4666,7 +4669,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           id: "liked-song-heart",
           className: "fas fa-heart",
           onClick: function onClick() {
-            if (location === "playlists") {
+            if (location !== "library") {
               _this3.props.unlikeSong(song.id, "Song").then(function () {
                 _this3.props.openAlert("Unlike");
 
