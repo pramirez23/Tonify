@@ -57,10 +57,10 @@ class Library extends React.Component {
 
   renderEmptyPlaylists() {
     return (
-      <div className="empty-liked-playlists">
+      <div className="empty-library">
         <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
+        <p className="empty-library-title">Create your first playlist</p>
+        <p className="empty-library-text">It's easy, we'll help you.</p>
         <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
       </div>
     )
@@ -68,22 +68,22 @@ class Library extends React.Component {
 
   renderEmptyArtists() {
     return (
-      <div className="empty-liked-artists">
-        <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
-        <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
+      <div className="empty-library">
+        <span id="library-icon" class="material-icons">person_search</span>
+        <p className="empty-library-title">Follow your first artist</p>
+        <p className="empty-library-text">Follow artists you like by tapping the follow button.</p>
+        <button className="find-artists" onClick={() => this.props.history.push('/search')}>FIND ARTISTS</button>
       </div>
     )
   }
 
   renderEmptyAlbums() {
     return (
-      <div className="empty-liked-albums">
-        <i className="fas fa-music"></i>
-        <p className="empty-liked-playlist-title">Create your first playlist</p>
-        <p className="empty-liked-playlist-text">It's easy, we'll help you.</p>
-        <button className="liked-create-playlist" onClick={this.handleCreate}>CREATE PLAYLIST</button>
+      <div className="empty-library">
+        <span id="library-icon" className="material-icons">album</span>
+        <p className="empty-library-title">Follow your first album</p>
+        <p className="empty-library-text">Save albums by tapping the heart icon.</p>
+        <button className="find-albums" onClick={() => this.props.history.push('/search')}>FIND ALBUMS</button>
       </div>
     )
   }

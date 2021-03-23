@@ -75,6 +75,13 @@ img.liked-songs-photo {
   letter-spacing: 0.25px;
 }
 
+span#library-icon {
+  font-size: 80px;
+  background: transparent;
+  margin-bottom: 30px;
+  cursor: default;
+}
+
 button.find-songs {
   border: 0px;
   background-color: white;
@@ -132,7 +139,7 @@ h1.liked-songs-title {
   text-overflow: ellipsis;
 }
 
-.empty-liked-playlists {
+.empty-library {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,17 +156,17 @@ i.fas.fa-music {
   margin-bottom: 30px;
 }
 
-p.empty-liked-playlist-title {
+p.empty-library-title {
   font-size: 27px;
   font-weight: 500;
   margin-bottom: 15px;
 }
 
-p.empty-liked-playlist-text {
+p.empty-library-text {
   margin-bottom: 30px;
 }
 
-button.liked-create-playlist {
+button.liked-create-playlist, button.find-artists, button.find-albums {
   border: 0px;
   background-color: white;
   color: black;
@@ -175,7 +182,18 @@ button.liked-create-playlist {
   cursor: pointer;
 }
 
-button.liked-create-playlist:hover {
+button.liked-create-playlist {
+  width: 200px;
+}
+
+button.find-artists, button.find-albums {
+  width: 180px;
+}
+
+
+
+button.liked-create-playlist:hover, button.find-artists:hover,
+button.find-albums:hover {
   transform: scale(1.05);
 }
 
@@ -191,6 +209,7 @@ h1.library-title {
   display: flex;
   flex-direction: column;
   padding: 54px 40px;
+  height: calc(100vh - 200px);
 }
 
 .playlist-index {

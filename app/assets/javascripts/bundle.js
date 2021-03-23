@@ -1416,13 +1416,13 @@ var Library = /*#__PURE__*/function (_React$Component) {
     key: "renderEmptyPlaylists",
     value: function renderEmptyPlaylists() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "empty-liked-playlists"
+        className: "empty-library"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "fas fa-music"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-title"
+        className: "empty-library-title"
       }, "Create your first playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-text"
+        className: "empty-library-text"
       }, "It's easy, we'll help you."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "liked-create-playlist",
         onClick: this.handleCreate
@@ -1431,39 +1431,49 @@ var Library = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderEmptyArtists",
     value: function renderEmptyArtists() {
+      var _this3 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "empty-liked-artists"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        className: "fas fa-music"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-title"
-      }, "Create your first playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-text"
-      }, "It's easy, we'll help you."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "liked-create-playlist",
-        onClick: this.handleCreate
-      }, "CREATE PLAYLIST"));
+        className: "empty-library"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        id: "library-icon",
+        "class": "material-icons"
+      }, "person_search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "empty-library-title"
+      }, "Follow your first artist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "empty-library-text"
+      }, "Follow artists you like by tapping the follow button."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "find-artists",
+        onClick: function onClick() {
+          return _this3.props.history.push('/search');
+        }
+      }, "FIND ARTISTS"));
     }
   }, {
     key: "renderEmptyAlbums",
     value: function renderEmptyAlbums() {
+      var _this4 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "empty-liked-albums"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        className: "fas fa-music"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-title"
-      }, "Create your first playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        className: "empty-liked-playlist-text"
-      }, "It's easy, we'll help you."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: "liked-create-playlist",
-        onClick: this.handleCreate
-      }, "CREATE PLAYLIST"));
+        className: "empty-library"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        id: "library-icon",
+        className: "material-icons"
+      }, "album"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "empty-library-title"
+      }, "Follow your first album"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        className: "empty-library-text"
+      }, "Save albums by tapping the heart icon."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: "find-albums",
+        onClick: function onClick() {
+          return _this4.props.history.push('/search');
+        }
+      }, "FIND ALBUMS"));
     }
   }, {
     key: "renderIndex",
     value: function renderIndex(location) {
-      var _this3 = this;
+      var _this5 = this;
 
       var _this$props = this.props,
           playlists = _this$props.playlists,
@@ -1481,13 +1491,13 @@ var Library = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "liked-songs-shortcut",
             onMouseEnter: function onMouseEnter(e) {
-              return _this3.handleMouseEnter();
+              return _this5.handleMouseEnter();
             },
             onMouseLeave: function onMouseLeave() {
-              return _this3.handleMouseLeave();
+              return _this5.handleMouseLeave();
             },
             onClick: function onClick() {
-              return _this3.props.history.push('/library/songs');
+              return _this5.props.history.push('/library/songs');
             }
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "liked-songs-container"
