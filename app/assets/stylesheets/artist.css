@@ -1,0 +1,52 @@
+.artist-header {
+  position: relative;
+  height: 40vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.artist-details {
+  position: relative;
+  padding: 24px;
+}
+
+.artist-banner {
+  position: absolute;
+  width: 100%;
+  object-fit: cover;
+  top: -63px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+h1.artist-name {
+  position: relative;
+  z-index: 1;
+  color: white;
+  font-weight: 600;
+  font-size: 75px;
+  white-space: nowrap;
+}
+
+img.verified-check {
+  height: 28px;
+  position: relative;
+  margin-right: 4px;
+}
+
+.verified-artist {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding-bottom: 7px;
+}
+
+span.verified-text {
+  margin-top: 2px;
+  letter-spacing: 0.25px;
+  font-size: 15px;
+}

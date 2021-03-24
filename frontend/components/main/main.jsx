@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PlaylistItemContainer from '../playlist/playlist_item_container';
+import ArtistContainer from '../artist/artist_container';
 import AlbumItemContainer from '../album/album_item_container';
 import NavbarContainer from '../navbar/navbar_container';
 import LibraryContainer from '../library/library_container';
@@ -19,14 +20,13 @@ const Main = (props) => {
         <Loading />
         <Switch>
           {/* <Route path="/search" component={SearchIndex} /> */}
-          {/* <ProtectedRoute path="/library" component={LikedPlaylistsContainer} /> */}
           <ProtectedRoute path="/library/playlists" component={LibraryContainer} />
           <ProtectedRoute path="/library/artists" component={LibraryContainer} />
           <ProtectedRoute path="/library/albums" component={LibraryContainer} />
           <ProtectedRoute path="/library/songs" component={PlaylistItemContainer} />
           <ProtectedRoute exact path="/playlists/:id" component={PlaylistItemContainer} />
-          {/* <ProtectedRoute path="/artists/:id" component={ArtistShow} /> */}
-          <ProtectedRoute path="/albums/:id" component={AlbumItemContainer} />
+          <ProtectedRoute exact path="/artists/:id" component={ArtistContainer} />
+          <ProtectedRoute exact path="/albums/:id" component={AlbumItemContainer} />
         </Switch>
       </main>
     </div>
