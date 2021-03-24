@@ -8,7 +8,7 @@ const playlistsReducer = (state = {}, action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_PLAYLISTS:
-      return action.playlists;
+      return Object.assign({}, state, action.playlists);
     case RECEIVE_PLAYLIST:
       if (typeof action.payload === 'undefined' || !action.payload.playlist) return state;
       return Object.assign({}, state, { [action.payload.playlist.id]: action.payload.playlist })

@@ -1,5 +1,6 @@
 import { RECEIVE_SONGS } from "../../actions/song_actions";
 import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
+import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_ALBUM } from "../../actions/album_actions";
 import { RECEIVE_LIKED_SONGS, REMOVE_SONG } from "../../actions/library_actions";
 
@@ -7,7 +8,7 @@ const songsReducer = (state = {}, action) => {
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_SONGS:
-      return Object.assign({}, state, action.songs)
+      return Object.assign({}, state, action.songs);
     case RECEIVE_LIKED_SONGS:
       return action.likedSongs;
     case RECEIVE_PLAYLIST:
@@ -18,6 +19,8 @@ const songsReducer = (state = {}, action) => {
       } else {
         return action.payload.songs;
       }
+    case RECEIVE_ARTIST:
+      return action.payload.songs;
     case RECEIVE_ALBUM:
       return action.payload.songs;
     case REMOVE_SONG:

@@ -4,10 +4,8 @@ class Artist < ApplicationRecord
   has_many_attached :photos
 
   has_many :likes, as: :likable
+  has_many :albums
   has_many :songs, through: :albums
-
-  has_many :albums,
-    primary_key: :id,
-    foreign_key: :album_id,
-    class_name: :Album
+  has_many :playlist_songs, through: :songs
+  has_many :playlists, through: :playlist_songs
 end
