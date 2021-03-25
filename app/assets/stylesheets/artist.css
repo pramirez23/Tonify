@@ -9,7 +9,7 @@
 
 .artist-details {
   position: relative;
-  padding: 24px;
+  padding: 24px 40px;
 }
 
 .artist-banner {
@@ -55,7 +55,7 @@ span.verified-text {
 .artist-show-controls {
   display: flex;
   height: 67px;
-  padding: 24px 32px;
+  padding: 24px 40px;
   align-items: center;
 }
 
@@ -82,3 +82,28 @@ button.artist-following {
 button.artist-follow:hover{
   border-color: white;
 } 
+
+.artist-songs-container {
+  display: flex;
+  flex-direction: column;
+}
+
+h2.artist-songs-title {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  font-size: 25px;
+  margin-left: 40px;
+}
+
+.artist-discography {
+  padding: 0 40px;
+}
+
+h2.artist-title {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  font-size: 25px;
+  margin-bottom: 21px;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-
+import SongListItem from '../songs/song_list_item'
+import LibraryItemContainer from '../library/library_item_container';
 
 class Artist extends React.Component {
   constructor(props) {
@@ -28,12 +29,12 @@ class Artist extends React.Component {
   }
 
   render() { 
-    const { likedArtists, playlists, artist, albums, songs, loading } = this.props;
+    const { currentUser, likedArtists, playlists, artist, albums, songs, loading } = this.props;
 
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
     const artistPlaylistIds = artist.playlist_ids;
-
+    
     return (
       <div className="main-content">
         <div className="artist-header">
@@ -54,6 +55,34 @@ class Artist extends React.Component {
             onClick={() => this.handleClick()}>
               {likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW"}
           </button>
+        </div>
+
+        <div className="artist-songs-container">
+          <h2 className="artist-songs-title">Songs</h2>
+          <table className="song-columns">
+            <tbody>
+              {Object.values(songs).slice(0).map((song, idx) =>
+                <SongListItem
+                  song={song}
+                  key={idx}
+                  num={(idx + 1)}
+                  currentUser={currentUser}
+                />)}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="artist-discography">
+          <h2 className="artist-title">Discography</h2>
+          <div className="library-index">
+            {Object.values(albums).map(((album, idx) =>
+              <LibraryItemContainer
+                id={album.id}
+                album={album}
+                key={idx}
+                itemType="Album" />
+            ))}
+          </div>
         </div>
       </div>
     );

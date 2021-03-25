@@ -1396,6 +1396,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../songs/song_list_item */ "./frontend/components/songs/song_list_item.jsx");
+/* harmony import */ var _library_library_item_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../library/library_item_container */ "./frontend/components/library/library_item_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1417,6 +1419,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
 
 
 
@@ -1467,6 +1471,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var _this$props2 = this.props,
+          currentUser = _this$props2.currentUser,
           likedArtists = _this$props2.likedArtists,
           playlists = _this$props2.playlists,
           artist = _this$props2.artist,
@@ -1504,7 +1509,33 @@ var Artist = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this3.handleClick();
         }
-      }, likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW")));
+      }, likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "artist-songs-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-songs-title"
+      }, "Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+        className: "song-columns"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, Object.values(songs).slice(0).map(function (song, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
+          song: song,
+          key: idx,
+          num: idx + 1,
+          currentUser: currentUser
+        });
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "artist-discography"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-title"
+      }, "Discography"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-index"
+      }, Object.values(albums).map(function (album, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_library_item_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          id: album.id,
+          album: album,
+          key: idx,
+          itemType: "Album"
+        });
+      }))));
     }
   }]);
 
@@ -1980,6 +2011,9 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       album: null,
       isHovering: false
     };
+    _this.renderLibraryPhoto = _this.renderLibraryPhoto.bind(_assertThisInitialized(_this));
+    _this.renderLibraryTitle = _this.renderLibraryTitle.bind(_assertThisInitialized(_this));
+    _this.renderLibraryCreator = _this.renderLibraryCreator.bind(_assertThisInitialized(_this));
     _this.renderPhoto = _this.renderPhoto.bind(_assertThisInitialized(_this));
     _this.renderTitle = _this.renderTitle.bind(_assertThisInitialized(_this));
     _this.renderCreator = _this.renderCreator.bind(_assertThisInitialized(_this));
@@ -2008,8 +2042,8 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
 
 
   _createClass(LibraryItem, [{
-    key: "renderPhoto",
-    value: function renderPhoto() {
+    key: "renderLibraryPhoto",
+    value: function renderLibraryPhoto() {
       var _this$props = this.props,
           playlist = _this$props.playlist,
           artist = _this$props.artist,
@@ -2051,8 +2085,8 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
-    key: "renderTitle",
-    value: function renderTitle() {
+    key: "renderLibraryTitle",
+    value: function renderLibraryTitle() {
       var _this$props2 = this.props,
           playlist = _this$props2.playlist,
           artist = _this$props2.artist,
@@ -2082,8 +2116,8 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
-    key: "renderCreator",
-    value: function renderCreator() {
+    key: "renderLibraryCreator",
+    value: function renderLibraryCreator() {
       var _this$props3 = this.props,
           playlist = _this$props3.playlist,
           album = _this$props3.album,
@@ -2112,6 +2146,104 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "renderPhoto",
+    value: function renderPhoto(itemType) {
+      var _this$props4 = this.props,
+          playlist = _this$props4.playlist,
+          artist = _this$props4.artist,
+          album = _this$props4.album,
+          songs = _this$props4.songs;
+
+      switch (itemType) {
+        case "Playlist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "library-item-photo"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistIcon,
+            alt: "Playlist Icon",
+            className: "library-photo"
+          }));
+
+        case "Artist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "library-item-photo"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: artist.photos[0],
+            alt: "Artist Icon",
+            className: "library-artist-photo"
+          }));
+
+        case "Album":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "library-item-photo"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+            src: album.cover_art,
+            alt: "Album Icon",
+            className: "library-photo"
+          }));
+
+        default:
+          break;
+      }
+    }
+  }, {
+    key: "renderTitle",
+    value: function renderTitle(itemType) {
+      var _this$props5 = this.props,
+          playlist = _this$props5.playlist,
+          artist = _this$props5.artist,
+          album = _this$props5.album,
+          songs = _this$props5.songs;
+
+      switch (itemType) {
+        case "Playlist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-name"
+          }, playlist.name);
+
+        case "Artist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-name"
+          }, artist.name);
+
+        case "Album":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-name"
+          }, album.title);
+
+        default:
+          break;
+      }
+    }
+  }, {
+    key: "renderCreator",
+    value: function renderCreator(itemType) {
+      var _this$props6 = this.props,
+          playlist = _this$props6.playlist,
+          album = _this$props6.album,
+          songs = _this$props6.songs;
+
+      switch (itemType) {
+        case "Playlist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-creator"
+          }, playlist.creator);
+
+        case "Artist":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-creator"
+          }, "Artist");
+
+        case "Album":
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "library-item-creator"
+          }, album.year, " \u2022 Album");
+
+        default:
+          break;
+      }
+    }
+  }, {
     key: "handleMouseEnter",
     value: function handleMouseEnter() {
       this.setState({
@@ -2127,29 +2259,49 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick() {
-      var _this$props4 = this.props,
-          id = _this$props4.id,
-          location = _this$props4.location,
-          history = _this$props4.history;
+    value: function handleClick(itemType) {
+      var _this$props7 = this.props,
+          id = _this$props7.id,
+          location = _this$props7.location,
+          history = _this$props7.history;
       var pathName = location.pathname.split('/');
-      var pageLocation = pathName[2];
+      var pageLocation = pathName[1];
+      var pageId = pathName[2];
 
-      switch (pageLocation) {
-        case "playlists":
-          history.push("/playlists/".concat(id));
-          break;
+      if (pageLocation === "library") {
+        switch (pageId) {
+          case "playlists":
+            history.push("/playlists/".concat(id));
+            break;
 
-        case "artists":
-          history.push("/artists/".concat(id));
-          break;
+          case "artists":
+            history.push("/artists/".concat(id));
+            break;
 
-        case "albums":
-          history.push("/albums/".concat(id));
-          break;
+          case "albums":
+            history.push("/albums/".concat(id));
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
+      } else {
+        switch (itemType) {
+          case "Playlist":
+            history.push("/playlists/".concat(id));
+            break;
+
+          case "Artist":
+            history.push("/artists/".concat(id));
+            break;
+
+          case "Album":
+            history.push("/albums/".concat(id));
+            break;
+
+          default:
+            break;
+        }
       }
     }
   }, {
@@ -2157,6 +2309,9 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var itemType = this.props.itemType;
+      var pathName = this.props.location.pathname.split('/');
+      var location = pathName[1];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item",
         onMouseEnter: function onMouseEnter(e) {
@@ -2166,17 +2321,17 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
           return _this2.handleMouseLeave();
         },
         onClick: function onClick() {
-          return _this2.handleClick();
+          return _this2.handleClick(itemType);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item-header"
-      }, this.renderPhoto(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+      }, location === "library" ? this.renderLibraryPhoto() : this.renderPhoto(itemType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: this.state.isHovering ? "show-library-play" : "hide-library-play",
         src: window.playButton,
         alt: "Play Button"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item-details"
-      }, this.renderTitle(), this.renderCreator()));
+      }, location === "library" ? this.renderLibraryTitle() : this.renderTitle(itemType), location === "library" ? this.renderLibraryCreator() : this.renderCreator(itemType)));
     }
   }]);
 
@@ -4841,6 +4996,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
     _this.detectPageType = _this.detectPageType.bind(_assertThisInitialized(_this));
+    _this.setSongWidth = _this.setSongWidth.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -4941,6 +5097,10 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
 
           break;
 
+        case "artists":
+          className = "song-dropdown-other";
+          break;
+
         case "albums":
           className = "song-dropdown-other";
           break;
@@ -4967,6 +5127,26 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     // }
 
   }, {
+    key: "setSongWidth",
+    value: function setSongWidth(pageType) {
+      switch (pageType) {
+        case "playlists":
+          return "title-column";
+
+        case "artists":
+          return "artist-song-title-column";
+
+        case "albums":
+          return "album-song-title-column";
+
+        case "library":
+          return "title-column";
+
+        default:
+          break;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -4981,7 +5161,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
 
-      if (this.props.loading) {
+      if (this.props.loading || !song) {
         return null;
       }
 
@@ -5044,13 +5224,13 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "num-column"
       }, playOrNum), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
-        className: this.state.pageType === "playlists" || this.state.pageType === "library" ? "title-column" : "album-song-title-column"
+        className: this.setSongWidth(this.state.pageType)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "title-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "item-art-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        className: this.state.pageType === "playlists" || this.state.pageType === "library" ? "item-album-art" : "hidden",
+        className: this.state.pageType === "playlists" || this.state.pageType === "library" || this.state.pageType === "artists" ? "item-album-art" : "hidden",
         src: song.cover_art,
         alt: "Cover Art"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -5058,6 +5238,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "song-title"
       }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+        className: this.state.pageType === "artists" ? "hidden" : "",
         to: "/artists/".concat(song.artist_id)
       }, song.artist)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: this.state.pageType === "playlists" || this.state.pageType === "library" ? "album-column" : "hidden"

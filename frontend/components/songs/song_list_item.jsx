@@ -29,6 +29,7 @@ class SongListItem extends React.Component {
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
     this.handleDropDown = this.handleDropDown.bind(this);
     this.detectPageType = this.detectPageType.bind(this);
+    this.setSongWidth = this.setSongWidth.bind(this);
   }
 
   componentDidMount() {
@@ -111,6 +112,9 @@ class SongListItem extends React.Component {
           className = "song-dropdown-other"
         }
         break;
+      case "artists":
+        className = "song-dropdown-other"
+        break;
       case "albums":
         className = "song-dropdown-other"
         break;
@@ -136,14 +140,28 @@ class SongListItem extends React.Component {
   //     return null;
   //   }
   // }
+  setSongWidth(pageType) {
+    switch (pageType) {
+      case "playlists":
+        return "title-column";
+      case "artists":
+        return "artist-song-title-column";
+      case "albums":
+        return "album-song-title-column";
+      case "library":
+        return "title-column";
+      default:
+        break;
+    }
+  }
 
   render() {
     const { likedSongs, song, album, playlists, currentUser } = this.props;
     const isHovering = this.state.isHovering;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
-    
-    if (this.props.loading) {
+
+    if (this.props.loading || !song) {
       return null;
     }
 
@@ -203,14 +221,14 @@ class SongListItem extends React.Component {
         onMouseLeave={() => this.handleMouseLeave()}>
 
         <td className="num-column">{playOrNum}</td>
-        <td className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "title-column" : "album-song-title-column"}>
+        <td className={this.setSongWidth(this.state.pageType)}>
           <div className="title-details">
             <div className="item-art-container">
-              <img className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
+              <img className={this.state.pageType === "playlists" || this.state.pageType === "library" || this.state.pageType === "artists" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
-              <Link to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+              <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
             </div>
           </div>
         </td>

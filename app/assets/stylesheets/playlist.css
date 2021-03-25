@@ -209,6 +209,12 @@ td > a:hover, .title-artist-container > a:hover {
   height: 50px;
 }
 
+.artist-song-title-column {
+  width: 85vw;
+  line-height: 1.45;
+  height: 50px;
+}
+
 .title-artist-container {
   width: 100%;
   overflow: hidden;
