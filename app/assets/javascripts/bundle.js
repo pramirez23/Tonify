@@ -1432,18 +1432,47 @@ var Artist = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {};
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Artist, [{
+    key: "handleClick",
+    value: function handleClick() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          likedArtists = _this$props.likedArtists,
+          artist = _this$props.artist,
+          likeArtist = _this$props.likeArtist,
+          unlikeArtist = _this$props.unlikeArtist,
+          openAlert = _this$props.openAlert,
+          closeAlert = _this$props.closeAlert;
+
+      if (!likedArtists[artist.id]) {
+        likeArtist(artist.id, "Artist").then(function () {
+          openAlert("Library Add");
+          setTimeout(_this2.props.closeAlert, 4000);
+        });
+      } else {
+        unlikeArtist(artist.id, "Artist").then(function () {
+          openAlert("Library Remove");
+          setTimeout(_this2.props.closeAlert, 4000);
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          playlists = _this$props.playlists,
-          artist = _this$props.artist,
-          albums = _this$props.albums,
-          songs = _this$props.songs,
-          loading = _this$props.loading;
+      var _this3 = this;
+
+      var _this$props2 = this.props,
+          likedArtists = _this$props2.likedArtists,
+          playlists = _this$props2.playlists,
+          artist = _this$props2.artist,
+          albums = _this$props2.albums,
+          songs = _this$props2.songs,
+          loading = _this$props2.loading;
       if (loading || !playlists || !artist || !albums || !songs) return null;
       var artistPlaylistIds = artist.playlist_ids;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -1465,7 +1494,17 @@ var Artist = /*#__PURE__*/function (_React$Component) {
         className: "artist-banner",
         src: artist.photos[1],
         alt: "Artist Profile Photo"
-      })));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "artist-show-controls"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        id: "show-page-play",
+        src: window.playButton
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        className: likedArtists[artist.id] ? "artist-following" : "artist-follow",
+        onClick: function onClick() {
+          return _this3.handleClick();
+        }
+      }, likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW")));
     }
   }]);
 
@@ -1488,9 +1527,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
-/* harmony import */ var _artist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./artist */ "./frontend/components/artist/artist.jsx");
+/* harmony import */ var _actions_alert_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/alert_actions */ "./frontend/actions/alert_actions.js");
+/* harmony import */ var _artist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./artist */ "./frontend/components/artist/artist.jsx");
+
 
 
 
@@ -1506,8 +1547,11 @@ var mSTP = function mSTP(state, ownProps) {
       users = _state$entities.users;
   var artist = artists[ownProps.match.params.id];
   var loading = state.ui.loading;
+  var currentUserLikes = users[id].likes;
+  var likedArtists = currentUserLikes.artists;
   return {
     currentUser: id,
+    likedArtists: likedArtists,
     playlists: playlists,
     artist: artist,
     albums: albums,
@@ -1524,11 +1568,17 @@ var mDTP = function mDTP(dispatch) {
     },
     unlikeArtist: function unlikeArtist(likableId, likableType) {
       return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_1__.unlike)(likableId, likableType));
+    },
+    openAlert: function openAlert(alertType) {
+      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_2__.openAlert)(alertType));
+    },
+    closeAlert: function closeAlert() {
+      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_2__.closeAlert)());
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mSTP, mDTP)(_artist__WEBPACK_IMPORTED_MODULE_2__.default)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_0__.connect)(mSTP, mDTP)(_artist__WEBPACK_IMPORTED_MODULE_3__.default)));
 
 /***/ }),
 
@@ -1975,14 +2025,14 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             src: playlist.photo_url ? playlist.photo_url : window.defaultPlaylistIcon,
             alt: "Playlist Icon",
-            className: "library-playlist-photo"
+            className: "library-photo"
           }));
 
         case "artists":
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
             className: "library-item-photo"
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-            src: artist.photo,
+            src: artist.photos[0],
             alt: "Artist Icon",
             className: "library-artist-photo"
           }));
@@ -1993,7 +2043,7 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
           }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             src: album.cover_art,
             alt: "Album Icon",
-            className: "library-playlist-photo"
+            className: "library-photo"
           }));
 
         default:

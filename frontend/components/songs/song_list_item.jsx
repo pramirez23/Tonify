@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { openAlert, closeAlert } from '../../actions/alert_actions'
+import { openAlert, closeAlert } from '../../actions/alert_actions';
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';

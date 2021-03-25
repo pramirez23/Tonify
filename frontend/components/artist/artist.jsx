@@ -5,9 +5,30 @@ class Artist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {  }
+
+    this.handleClick = this.handleClick.bind(this);
   }
+
+  handleClick() {
+    const { likedArtists, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
+
+    if (!likedArtists[artist.id]) {
+      likeArtist(artist.id, "Artist")
+        .then(() => {
+          openAlert("Library Add");
+          setTimeout(this.props.closeAlert, 4000)
+        })
+    } else {
+      unlikeArtist(artist.id, "Artist")
+        .then(() => {
+          openAlert("Library Remove");
+          setTimeout(this.props.closeAlert, 4000)
+        })
+    }
+  }
+
   render() { 
-    const { playlists, artist, albums, songs, loading } = this.props;
+    const { likedArtists, playlists, artist, albums, songs, loading } = this.props;
 
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
@@ -24,6 +45,15 @@ class Artist extends React.Component {
             <h1 className="artist-name">{artist.name}</h1>
           </div>
           <img className="artist-banner" src={artist.photos[1]} alt="Artist Profile Photo"/>
+        </div>
+
+        <div className="artist-show-controls">
+          <img id="show-page-play" src={window.playButton} />
+          <button
+            className={likedArtists[artist.id] ? "artist-following" : "artist-follow"}
+            onClick={() => this.handleClick()}>
+              {likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW"}
+          </button>
         </div>
       </div>
     );

@@ -19,6 +19,7 @@
   top: -63px;
   z-index: 0;
   pointer-events: none;
+  min-height: 445px;
 }
 
 h1.artist-name {
@@ -50,3 +51,34 @@ span.verified-text {
   letter-spacing: 0.25px;
   font-size: 15px;
 }
+
+.artist-show-controls {
+  display: flex;
+  height: 67px;
+  padding: 24px 32px;
+  align-items: center;
+}
+
+button.artist-follow, button.artist-following {
+  background: none;
+  color: white;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 7px 15px;
+  letter-spacing: 1.5px;
+  font-size: 12px;
+  outline: inherit;
+  margin-left: 35px;
+}
+
+button.artist-follow {
+  border-color: hsla(0,0%,100%,.3);
+}
+
+button.artist-following {
+  border-color: #FFFFFF;
+}
+
+button.artist-follow:hover{
+  border-color: white;
+} 

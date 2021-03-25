@@ -300,7 +300,7 @@ div.library-item-photo {
   width: 100%;
 }
 
-img.library-playlist-photo {
+img.library-photo, img.library-artist-photo {
   position: relative;
   object-fit: cover;
   width: 80%;
@@ -311,6 +311,10 @@ img.library-playlist-photo {
   max-width: 200px;
   -webkit-box-shadow: 0px 0px 25px 1px #111111; 
   box-shadow: 0px 0px 25px 1px #111111;
+}
+
+img.library-artist-photo { 
+  border-radius: 90px;
 }
 
 img.hide-library-play, img.hide-song-preview-play {

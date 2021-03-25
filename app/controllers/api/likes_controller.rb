@@ -4,7 +4,7 @@ class Api::LikesController < ApplicationController
     create_like_params[:user_id] = current_user.id
 
     @like = Like.new(create_like_params)
-
+  
     if @like.save
       @user = User.find_by(id: current_user.id)
       render 'api/users/show'

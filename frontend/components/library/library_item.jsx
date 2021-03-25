@@ -44,7 +44,7 @@ class LibraryItem extends React.Component {
     const { playlist, artist, album, songs } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
-
+    
     switch (location) {
       case "playlists":
         return (
@@ -52,14 +52,14 @@ class LibraryItem extends React.Component {
             <img
               src={ playlist.photo_url ? playlist.photo_url : window.defaultPlaylistIcon }
               alt="Playlist Icon"
-              className="library-playlist-photo" />
+              className="library-photo" />
           </div>
         );
       case "artists":
         return (
           <div className="library-item-photo">
             <img
-              src={artist.photo}
+              src={artist.photos[0]}
               alt= "Artist Icon"
               className="library-artist-photo" />
           </div>
@@ -70,7 +70,7 @@ class LibraryItem extends React.Component {
             <img
               src={album.cover_art}
               alt= "Album Icon"
-              className="library-playlist-photo"/>
+              className="library-photo"/>
           </div>
         );
       default:
