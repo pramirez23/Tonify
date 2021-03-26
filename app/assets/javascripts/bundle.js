@@ -1446,14 +1446,14 @@ var Artist = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var _this$props = this.props,
-          likedArtists = _this$props.likedArtists,
+          likes = _this$props.likes,
           artist = _this$props.artist,
           likeArtist = _this$props.likeArtist,
           unlikeArtist = _this$props.unlikeArtist,
           openAlert = _this$props.openAlert,
           closeAlert = _this$props.closeAlert;
 
-      if (!likedArtists[artist.id]) {
+      if (!likes[artist.id]) {
         likeArtist(artist.id, "Artist").then(function () {
           openAlert("Library Add");
           setTimeout(_this2.props.closeAlert, 4000);
@@ -1472,7 +1472,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
 
       var _this$props2 = this.props,
           currentUser = _this$props2.currentUser,
-          likedArtists = _this$props2.likedArtists,
+          likes = _this$props2.likes,
           playlists = _this$props2.playlists,
           artist = _this$props2.artist,
           albums = _this$props2.albums,
@@ -1505,11 +1505,11 @@ var Artist = /*#__PURE__*/function (_React$Component) {
         id: "show-page-play",
         src: window.playButton
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: likedArtists[artist.id] ? "artist-following" : "artist-follow",
+        className: likes[artist.id] ? "artist-following" : "artist-follow",
         onClick: function onClick() {
           return _this3.handleClick();
         }
-      }, likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, likes[artist.id] ? "FOLLOWING" : "FOLLOW")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "artist-songs-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
         className: "artist-songs-title"
@@ -1563,7 +1563,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
         className: "artist-bio-image-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: "artist-bio-pic-preview",
-        src: artist.photos[0],
+        src: artist.photos[2],
         alt: "Artist Bio Preview"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "artist-bio-preview-container"
@@ -1617,7 +1617,7 @@ var ArtistBio = function ArtistBio(props) {
     className: "artist-bio-photo-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
     className: "artist-bio-photo",
-    src: artist.photos[1],
+    src: artist.photos[2],
     alt: "Artist Bio Photo"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "artist-bio"
@@ -1675,16 +1675,17 @@ var mSTP = function mSTP(state, ownProps) {
   var _state$entities = state.entities,
       playlists = _state$entities.playlists,
       artists = _state$entities.artists,
+      likes = _state$entities.likes,
       albums = _state$entities.albums,
       songs = _state$entities.songs,
       users = _state$entities.users;
   var artist = artists[ownProps.match.params.id];
-  var loading = state.ui.loading;
-  var currentUserLikes = users[id].likes;
-  var likedArtists = currentUserLikes.artists;
+  var loading = state.ui.loading; // const currentUserLikes = users[id].likes;
+  // const likedArtists = currentUserLikes.artists;
+
   return {
     currentUser: id,
-    likedArtists: likedArtists,
+    likes: likes,
     playlists: playlists,
     artist: artist,
     albums: albums,
@@ -1851,7 +1852,7 @@ var Library = /*#__PURE__*/function (_React$Component) {
         className: "empty-library"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         id: "library-icon",
-        "class": "material-icons"
+        className: "material-icons"
       }, "person_search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         className: "empty-library-title"
       }, "Follow your first artist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
@@ -1978,13 +1979,13 @@ var Library = /*#__PURE__*/function (_React$Component) {
 
       switch (location) {
         case "playlists":
-          return !playlists ? this.renderEmptyPlaylists() : this.renderIndex(location);
+          return Object.entries(playlists).length === 0 ? this.renderEmptyPlaylists() : this.renderIndex(location);
 
         case "artists":
-          return !artists ? this.renderEmptyArtists() : this.renderIndex(location);
+          return Object.entries(artists).length === 0 ? this.renderEmptyArtists() : this.renderIndex(location);
 
         case "albums":
-          return !albums ? this.renderEmptyAlbums() : this.renderIndex(location);
+          return Object.entries(albums).length === 0 ? this.renderEmptyAlbums() : this.renderIndex(location);
 
         default:
           break;
@@ -5267,19 +5268,20 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var _this$props2 = this.props,
-          likedSongs = _this$props2.likedSongs,
+          currentUserLikes = _this$props2.currentUserLikes,
+          likes = _this$props2.likes,
           song = _this$props2.song,
           album = _this$props2.album,
           playlists = _this$props2.playlists,
           currentUser = _this$props2.currentUser;
-      var isHovering = this.state.isHovering;
-      var pathName = this.props.location.pathname.split('/');
-      var location = pathName[1];
 
       if (this.props.loading || !song) {
         return null;
       }
 
+      var isHovering = this.state.isHovering;
+      var pathName = this.props.location.pathname.split('/');
+      var location = pathName[1];
       var playlistIndex = this.props.playlists;
       var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
         return playlist.user_id === _this3.props.currentUser;
@@ -5474,12 +5476,11 @@ var mSTP = function mSTP(state) {
       playlists = _state$entities.playlists,
       likes = _state$entities.likes;
   var currentUserLikes = state.entities.users[currentUser].likes;
-  var likedSongs = currentUserLikes.songs;
   var loading = state.ui.loading.loading;
   return {
     playlists: playlists,
     currentUser: currentUser,
-    likedSongs: likedSongs,
+    currentUserLikes: currentUserLikes,
     likes: likes,
     loading: loading
   };

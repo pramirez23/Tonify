@@ -19,7 +19,7 @@ const ArtistBio = (props) => {
 
       <div className="artist-bio-container">
         <div className="artist-bio-photo-container">
-          <img className="artist-bio-photo" src={artist.photos[1]} alt="Artist Bio Photo"/>
+          <img className="artist-bio-photo" src={artist.photos[2]} alt="Artist Bio Photo"/>
         </div>
 
         <div className="artist-bio">

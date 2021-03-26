@@ -156,15 +156,16 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { likedSongs, song, album, playlists, currentUser } = this.props;
-    const isHovering = this.state.isHovering;
-    const pathName = this.props.location.pathname.split('/');
-    const location = pathName[1];
-
+    const { currentUserLikes, likes, song, album, playlists, currentUser } = this.props;
+    
     if (this.props.loading || !song) {
       return null;
     }
 
+    const isHovering = this.state.isHovering;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    
     let playlistIndex = this.props.playlists;
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
       playlist.user_id === this.props.currentUser);
@@ -337,13 +338,12 @@ const mSTP = state => {
   const currentUser = state.session.id;
   const { playlists, likes } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
-  const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
 
   return ({
     playlists,
     currentUser: currentUser,
-    likedSongs,
+    currentUserLikes,
     likes,
     loading
   });

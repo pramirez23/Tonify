@@ -11,9 +11,9 @@ class Artist extends React.Component {
   }
 
   handleClick() {
-    const { likedArtists, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
+    const { likes, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
 
-    if (!likedArtists[artist.id]) {
+    if (!likes[artist.id]) {
       likeArtist(artist.id, "Artist")
         .then(() => {
           openAlert("Library Add");
@@ -29,7 +29,7 @@ class Artist extends React.Component {
   }
 
   render() { 
-    const { currentUser, likedArtists, playlists, artist, albums, songs, loading } = this.props;
+    const { currentUser, likes, playlists, artist, albums, songs, loading } = this.props;
 
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
@@ -51,9 +51,9 @@ class Artist extends React.Component {
         <div className="artist-show-controls">
           <img id="show-page-play" src={window.playButton} />
           <button
-            className={likedArtists[artist.id] ? "artist-following" : "artist-follow"}
+            className={likes[artist.id] ? "artist-following" : "artist-follow"}
             onClick={() => this.handleClick()}>
-              {likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW"}
+              {likes[artist.id] ? "FOLLOWING" : "FOLLOW"}
           </button>
         </div>
 
@@ -102,7 +102,7 @@ class Artist extends React.Component {
           <h2 className="artist-title">About</h2>
           <button className="artist-bio-button" onClick={() => this.props.openBio(artist.id)}>
             <div className="artist-bio-image-container">
-              <img className="artist-bio-pic-preview"src={artist.photos[0]} alt="Artist Bio Preview"/>
+              <img className="artist-bio-pic-preview"src={artist.photos[2]} alt="Artist Bio Preview"/>
             </div>
             <div className="artist-bio-preview-container">
               <span className="artist-bio-text">{artist.bio}</span>
