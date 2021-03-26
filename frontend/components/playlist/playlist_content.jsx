@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { openModal } from '../../actions/modal_actions'
+import { openModal } from '../../actions/modal_actions';
 import { renderDateAdded, renderTotalDuration } from '../../util/time_util';
 import SongListItem from '../songs/song_list_item'
 
@@ -243,7 +243,6 @@ class Playlist extends React.Component {
           <div className={`${currentUser === playlistCreator || location === "library" ? "hidden" : ""}`}>
             <i className="far fa-heart"></i>
           </div>
-
 
           <div className={location === "playlists" ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>

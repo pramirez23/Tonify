@@ -1,10 +1,9 @@
-playlists = @artist.playlists.shuffle.uniq
+playlists = @artist.playlists.uniq
 
 json.artist do
   images = []
   
   json.partial! 'api/artists/artist', artist: @artist
-  json.playlist_ids playlists.slice(0, 5).pluck(:id)
 
   @artist.photos.each do |photo|
     images << url_for(photo)
@@ -39,16 +38,9 @@ json.albums do
 end
 
 json.playlists do
-  i = 0
-
-  shuffle_length = 5
-  shuffle_length = playlists.length if playlists.length < 5
-
-  while i < shuffle_length
-    json.set! playlists[i].id do
-      json.partial! playlists[i]
+  playlists.slice(0, 5).each do |playlist|
+    json.set! playlist.id do
+      json.partial! playlist
     end
-
-    i += 1
   end
 end

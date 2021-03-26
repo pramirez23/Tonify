@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom"
 import { like, unlike } from "../../actions/library_actions";
 import { openAlert, closeAlert } from '../../actions/alert_actions';
+import { openModal } from '../../actions/modal_actions';
+
 import Artist from "./artist"
 
 const mSTP = (state, ownProps) => {
@@ -29,7 +31,8 @@ const mDTP = dispatch => {
     likeArtist: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeArtist: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
     openAlert: (alertType) => dispatch(openAlert(alertType)),
-    closeAlert: () => dispatch(closeAlert())
+    closeAlert: () => dispatch(closeAlert()),
+    openBio: id => dispatch(openModal(id, 'artistBio'))
   }
 };
 

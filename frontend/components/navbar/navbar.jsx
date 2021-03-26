@@ -44,6 +44,7 @@ class Navbar extends React.Component {
     }
     
     this.props.loading();
+    
     switch (location) {
       case "playlists":
         this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -97,6 +98,7 @@ class Navbar extends React.Component {
       }
       
       this.props.loading();
+
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());

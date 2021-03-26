@@ -107,3 +107,58 @@ h2.artist-title {
   font-size: 25px;
   margin-bottom: 21px;
 }
+
+.artist-playlists {
+  padding: 0 40px;
+}
+
+.artist-bio-button-container {
+  padding: 0px 40px;
+}
+
+.artist-bio-preview-container {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  top: -100px;
+  font-size: 17px;
+  letter-spacing: 0.25px;
+  font-family: 'Rubik';
+  text-align: left;
+  width: 80%;
+  padding: 0px 33px;
+  min-width: 500px;
+}
+
+button.artist-bio-button {
+  background: none;
+  outline: none;
+  border: none;
+  height: 500px;
+  color: white;
+  position: relative;
+  width: 50%;
+  transition: 0.3s ease-in-out;
+  padding: 0;
+}
+
+.artist-bio-image-container {
+  position: relative;
+  height: 500px;
+  width: 100%;
+}
+
+img.artist-bio-pic-preview {
+  width: 100%;
+  /* position: absolute; */
+  object-fit: cover;
+  height: 100%;
+  border-radius: 15px;
+  min-width: 700px;
+}
+
+button.artist-bio-button:hover {
+  transform: scale(1.02);
+}

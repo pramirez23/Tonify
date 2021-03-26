@@ -34,7 +34,7 @@ class Artist extends React.Component {
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
     const artistPlaylistIds = artist.playlist_ids;
-    
+
     return (
       <div className="main-content">
         <div className="artist-header">
@@ -83,6 +83,31 @@ class Artist extends React.Component {
                 itemType="Album" />
             ))}
           </div>
+        </div>
+
+        <div className={artistPlaylistIds.length > 0 ? "artist-playlists" : "hidden"}>
+          <h2 className="artist-title">Playlists featuring {artist.name}</h2>
+          <div className="library-index">
+            {Object.values(playlists).filter(playlist => artistPlaylistIds.includes(playlist.id)).map(((playlist, idx) =>
+              <LibraryItemContainer
+                id={playlist.id}
+                playlist={playlist}
+                key={idx}
+                itemType="Playlist" />
+            ))}
+          </div>
+        </div>
+
+        <div className="artist-bio-button-container">
+          <h2 className="artist-title">About</h2>
+          <button className="artist-bio-button" onClick={() => this.props.openBio(artist.id)}>
+            <div className="artist-bio-image-container">
+              <img className="artist-bio-pic-preview"src={artist.photos[0]} alt="Artist Bio Preview"/>
+            </div>
+            <div className="artist-bio-preview-container">
+              <span className="artist-bio-text">{artist.bio}</span>
+            </div>
+          </button>
         </div>
       </div>
     );
