@@ -9,20 +9,24 @@ const ArtistBio = (props) => {
   const { artist } = props;
 
   return (
-    <div className="artist-bio-container">
-      <button
-        type="button"
-        className="close-modal-button"
-        onClick={() => this.props.closeModal()}>&#10005;</button>
-
-      <div className="artist-bio-photo">
-        <img src={artist.photos[1]} alt="Artist Bio Photo"/>
+    <>
+      <div className="artist-modal-close-container">
+        <button
+          type="button"
+          className="artist-close-modal-button"
+          onClick={() => props.closeModal()}>&#10005;</button>
       </div>
 
-      <div className="artist-bio">
-        <p className="artist-bio-text">{artist.bio}</p>
+      <div className="artist-bio-container">
+        <div className="artist-bio-photo-container">
+          <img className="artist-bio-photo" src={artist.photos[1]} alt="Artist Bio Photo"/>
+        </div>
+
+        <div className="artist-bio">
+          <p className="artist-bio-text">{artist.bio}</p>
+        </div>
       </div>
-    </div>
+    </>
   )
 };
 
