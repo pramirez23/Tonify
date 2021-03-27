@@ -276,7 +276,7 @@ class SongListItem extends React.Component {
               onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
 
             <div
-              className={location === "playlists" ? "song-dropdown-option" : "hidden"}
+              className={(location === "playlists" && currentUser === playlists[this.props.match.params.id].user_id) ? "song-dropdown-option" : "hidden"}
               onMouseEnter={(e) => this.handleMouseEnter(e)}
               onClick={ () => {
                 this.props.removeSongFromPlaylist(this.props.playlistSongId);

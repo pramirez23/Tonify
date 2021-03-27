@@ -188,9 +188,8 @@ class Playlist extends React.Component {
       playlistSongs = Object.entries(songs);
 
       if (!playlist) { return null }
-
       playlistCreator = playlist.user_id;
-      username = users[playlistCreator].username;
+      username = playlist.creator;
     } else {
       likedSongs = Object.entries(songs);
       username = users[currentUser].username;
@@ -244,7 +243,7 @@ class Playlist extends React.Component {
             <i className="far fa-heart"></i>
           </div>
 
-          <div className={location === "playlists" ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
+          <div className={location === "playlists" && currentUser === playlistCreator ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
             {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
               <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>

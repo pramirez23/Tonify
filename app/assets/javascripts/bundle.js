@@ -3966,7 +3966,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         }
 
         playlistCreator = playlist.user_id;
-        username = users[playlistCreator].username;
+        username = playlist.creator;
       } else {
         likedSongs = Object.entries(songs);
         username = users[currentUser].username;
@@ -4037,7 +4037,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "far fa-heart"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: location === "playlists" ? "dropdown" : "invisible",
+        className: location === "playlists" && currentUser === playlistCreator ? "dropdown" : "invisible",
         onClick: function onClick() {
           return _this4.handleDropDown();
         },
@@ -4874,7 +4874,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(Sidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchPlaylists();
+      this.props.fetchLikedPlaylists(this.props.currentUserId);
     }
   }, {
     key: "handleCreate",
@@ -4906,9 +4906,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       var location = pathName[1];
       var pageId = pathName[2];
       var playlistIndex = this.props.playlists;
-      var userPlaylists = Object.values(playlistIndex).filter(function (playlist) {
-        return playlist.user_id === _this3.props.currentUser;
-      });
+      var userPlaylists = Object.values(playlistIndex);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-data-directory"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -4998,6 +4996,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar */ "./frontend/components/sidebar/sidebar.jsx");
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
+/* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
+
 
 
 
@@ -5014,8 +5014,8 @@ var mSTP = function mSTP(state, ownProps) {
 
 var mDTP = function mDTP(dispatch) {
   return {
-    fetchPlaylists: function fetchPlaylists() {
-      return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.fetchPlaylists)());
+    fetchLikedPlaylists: function fetchLikedPlaylists(currentUserId) {
+      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_3__.fetchLikedPlaylists)(currentUserId));
     },
     fetchPlaylist: function fetchPlaylist(id) {
       return dispatch((0,_actions_playlist_actions__WEBPACK_IMPORTED_MODULE_2__.fetchPlaylist)(id));
@@ -5407,7 +5407,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           return _this3.props.history.push("/albums/".concat(song.album_id));
         }
       }, "Go to album"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: location === "playlists" ? "song-dropdown-option" : "hidden",
+        className: location === "playlists" && currentUser === playlists[this.props.match.params.id].user_id ? "song-dropdown-option" : "hidden",
         onMouseEnter: function onMouseEnter(e) {
           return _this3.handleMouseEnter(e);
         },
@@ -5859,7 +5859,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
+/* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -5871,6 +5873,9 @@ var playlistsReducer = function playlistsReducer() {
   switch (action.type) {
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLISTS:
       return Object.assign({}, state, action.playlists);
+
+    case _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_LIKED_PLAYLISTS:
+      return Object.assign({}, state, action.likedPlaylists);
 
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST:
       if (typeof action.payload === 'undefined' || !action.payload.playlist) return state;

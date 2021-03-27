@@ -10,7 +10,7 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchPlaylists();
+    this.props.fetchLikedPlaylists(this.props.currentUserId);
   }
 
   handleCreate(e) {
@@ -35,9 +35,7 @@ class Sidebar extends React.Component {
     const pageId = pathName[2];
 
     let playlistIndex = this.props.playlists;
-
-    let userPlaylists = Object.values(playlistIndex).filter(playlist =>
-      playlist.user_id === this.props.currentUser);
+    let userPlaylists = Object.values(playlistIndex)
 
     return (
       <div className="user-data-directory">

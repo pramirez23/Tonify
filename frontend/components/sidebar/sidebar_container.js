@@ -1,10 +1,12 @@
 import { connect } from "react-redux";
-import Sidebar from "./sidebar"
-import { createPlaylist, fetchPlaylists, fetchPlaylist } from "../../actions/playlist_actions"
+import Sidebar from "./sidebar";
+import { createPlaylist, fetchPlaylist } from "../../actions/playlist_actions";
+import { fetchLikedPlaylists } from "../../actions/library_actions";
 
 const mSTP = (state, ownProps) => {
   const currentUser = state.session.id;
   const { playlists } = state.entities;
+  
   return ({
     playlists,
     currentUser: currentUser,
@@ -14,7 +16,7 @@ const mSTP = (state, ownProps) => {
 
 const mDTP = dispatch => {
   return {
-    fetchPlaylists: () => dispatch(fetchPlaylists()),
+    fetchLikedPlaylists: currentUserId => dispatch(fetchLikedPlaylists(currentUserId)),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
     createPlaylist: playlist => dispatch(createPlaylist(playlist)),
   }

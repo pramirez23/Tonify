@@ -14,6 +14,7 @@ Album.destroy_all
 Artist.destroy_all
 Playlist.destroy_all
 PlaylistSong.destroy_all
+Like.destroy_all
 
 # LOOK UP HOW TO DELETE EXISTING MODELS IN DATABASE BEFORE RESEEDING ************************************
 # Artist Seed
@@ -325,3 +326,16 @@ playlistSong24 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song30
 playlistSong24 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song39.id)
 playlistSong24 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song21.id)
 
+# Demo User Likes
+Like.create!(user_id: user1.id, likable_id: playlist1.id, likable_type: "Playlist")
+Like.create!(user_id: user1.id, likable_id: playlist2.id, likable_type: "Playlist")
+Like.create!(user_id: user1.id, likable_id: playlist3.id, likable_type: "Playlist")
+
+Like.create!(user_id: user1.id, likable_id: artist1.id, likable_type: "Artist")
+Like.create!(user_id: user1.id, likable_id: artist2.id, likable_type: "Artist")
+Like.create!(user_id: user1.id, likable_id: artist3.id, likable_type: "Artist")
+Like.create!(user_id: user1.id, likable_id: artist4.id, likable_type: "Artist")
+Like.create!(user_id: user1.id, likable_id: artist5.id, likable_type: "Artist")
+
+Like.create!(user_id: user1.id, likable_id: album6.id, likable_type: "Album")
+Like.create!(user_id: user1.id, likable_id: album7.id, likable_type: "Album")
