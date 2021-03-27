@@ -967,7 +967,13 @@ var Album = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
         className: "artist-link",
         to: "/artists/".concat(album.artist_id)
-      }, album.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "artist-album-icon-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        className: "artist-album-icon",
+        src: album.artist_photo,
+        alt: "Artist Icon"
+      })), album.artist), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "album-year-duration"
       }, albumDetails())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: albumSongs.length ? "show-page-controls" : "empty-playlist-controls"
@@ -2432,7 +2438,11 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       }, location === "library" ? this.renderLibraryPhoto() : this.renderPhoto(itemType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: this.state.isHovering ? "show-library-play" : "hide-library-play",
         src: window.playButton,
-        alt: "Play Button"
+        alt: "Play Button",
+        onClick: function onClick(e) {
+          e.stopPropagation();
+          console.log("clicked");
+        }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "library-item-details"
       }, location === "library" ? this.renderLibraryTitle() : this.renderTitle(itemType), location === "library" ? this.renderLibraryCreator() : this.renderCreator(itemType)));
@@ -4928,7 +4938,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
   _createClass(Sidebar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchLikedPlaylists(this.props.currentUserId);
+      this.props.fetchLikedPlaylists(this.props.currentUser);
     }
   }, {
     key: "handleCreate",
@@ -4958,12 +4968,13 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
 
       var _this$props = this.props,
           playlists = _this$props.playlists,
-          likedPlaylists = _this$props.likedPlaylists;
+          likedPlaylists = _this$props.likedPlaylists,
+          currentUser = _this$props.currentUser;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var pageId = pathName[2];
       var userPlaylists = Object.values(playlists).filter(function (playlist) {
-        return likedPlaylists.includes(playlist.id.toString());
+        return playlist.user_id = currentUser || likedPlaylists.includes(playlist.id.toString());
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-data-directory"

@@ -39,12 +39,28 @@ img.album-photo {
   letter-spacing: 0.5px;
   font-size: 14px;
   white-space: nowrap;
+  align-items: center;
+}
+
+.artist-album-icon-container {
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+}
+
+img.artist-album-icon {
+  border-radius: 100px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 a.artist-link {
   text-decoration: none;
   margin-right: 4px;
+  display: flex;
   color: white;
+  align-items: center;
 }
 
 a.artist-link:hover {
@@ -86,6 +102,10 @@ a.artist-link:hover {
 
 img#show-page-play {
   width: 67px;
+}
+
+img#show-page-play:hover {
+  transform: scale(1.05);
 }
 
 h1.album-name {

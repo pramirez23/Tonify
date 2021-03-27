@@ -294,7 +294,11 @@ class LibraryItem extends React.Component {
           <img
             className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
             src={window.playButton}
-            alt="Play Button"/>
+            alt="Play Button"
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("clicked")
+            }}/>
         </div>
         <div className="library-item-details">
           {location === "library" ? this.renderLibraryTitle() : this.renderTitle(itemType)}

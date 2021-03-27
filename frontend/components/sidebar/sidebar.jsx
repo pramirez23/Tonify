@@ -10,7 +10,7 @@ class Sidebar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchLikedPlaylists(this.props.currentUserId);
+    this.props.fetchLikedPlaylists(this.props.currentUser);
   }
 
   handleCreate(e) {
@@ -30,13 +30,13 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { playlists, likedPlaylists } = this.props;
+    const { playlists, likedPlaylists, currentUser } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     const pageId = pathName[2];
 
     let userPlaylists = Object.values(playlists).filter(playlist =>
-      likedPlaylists.includes(playlist.id.toString())
+      playlist.user_id = currentUser || likedPlaylists.includes(playlist.id.toString())
     );
 
     return (

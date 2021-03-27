@@ -11,7 +11,7 @@ const mSTP = (state, ownProps) => {
 
   return ({
     playlists,
-    currentUser: currentUser,
+    currentUser,
     likedPlaylists,
     lastPlaylist: Object.keys(playlists).slice(-1)[0]
   });

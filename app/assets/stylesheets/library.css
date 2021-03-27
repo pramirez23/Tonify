@@ -345,6 +345,10 @@ img.show-library-play, img.show-song-preview-play {
   transition: opacity 0.2s ease-in-out;
 }
 
+img.show-library-play:hover, img.show-song-preview-play:hover {
+  transform: scale(1.02);
+}
+
 img.hide-song-preview-play, img.show-song-preview-play {
   width: 50px;
   top: 77%;
