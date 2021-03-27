@@ -11,12 +11,12 @@ const mSTP = (state, ownProps) => {
   const { playlists, artists, likes, albums, songs, users } = state.entities;
   const artist = artists[ownProps.match.params.id];
   const { loading } = state.ui;
-  // const currentUserLikes = users[id].likes;
-  // const likedArtists = currentUserLikes.artists;
+  const currentUserLikes = users[id].likes;
+  const likedArtists = currentUserLikes.artists;
 
   return {
     currentUser: id,
-    likes,
+    likedArtists,
     playlists,
     artist,
     albums,

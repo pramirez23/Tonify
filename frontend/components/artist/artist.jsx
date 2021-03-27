@@ -11,25 +11,25 @@ class Artist extends React.Component {
   }
 
   handleClick() {
-    const { likes, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
+    const { likedArtists, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
 
-    if (!likes[artist.id]) {
+    if (!likedArtists[artist.id]) {
       likeArtist(artist.id, "Artist")
         .then(() => {
           openAlert("Library Add");
-          setTimeout(this.props.closeAlert, 4000)
+          setTimeout(closeAlert, 4000)
         })
     } else {
       unlikeArtist(artist.id, "Artist")
         .then(() => {
           openAlert("Library Remove");
-          setTimeout(this.props.closeAlert, 4000)
+          setTimeout(closeAlert, 4000)
         })
     }
   }
 
   render() { 
-    const { currentUser, likes, playlists, artist, albums, songs, loading } = this.props;
+    const { currentUser, likedArtists, playlists, artist, albums, songs, loading } = this.props;
 
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
@@ -51,9 +51,9 @@ class Artist extends React.Component {
         <div className="artist-show-controls">
           <img id="show-page-play" src={window.playButton} />
           <button
-            className={likes[artist.id] ? "artist-following" : "artist-follow"}
+            className={likedArtists[artist.id] ? "artist-following" : "artist-follow"}
             onClick={() => this.handleClick()}>
-              {likes[artist.id] ? "FOLLOWING" : "FOLLOW"}
+              {likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW"}
           </button>
         </div>
 

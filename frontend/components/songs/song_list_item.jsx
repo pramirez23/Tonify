@@ -156,7 +156,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { currentUserLikes, likes, song, album, playlists, currentUser } = this.props;
+    const { likedSongs, song, album, playlists, currentUser } = this.props;
     
     if (this.props.loading || !song) {
       return null;
@@ -336,15 +336,15 @@ class SongListItem extends React.Component {
 
 const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists, likes } = state.entities;
+  const { playlists } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
+  const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
 
   return ({
     playlists,
     currentUser: currentUser,
-    currentUserLikes,
-    likes,
+    likedSongs,
     loading
   });
 };

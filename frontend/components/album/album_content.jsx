@@ -212,6 +212,7 @@ const mSTP = state => {
   const { playlists } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedAlbums = currentUserLikes.albums;
+  
   return ({
     playlists,
     currentUser: currentUser,

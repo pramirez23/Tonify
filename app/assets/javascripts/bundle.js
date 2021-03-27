@@ -1443,36 +1443,34 @@ var Artist = /*#__PURE__*/function (_React$Component) {
   _createClass(Artist, [{
     key: "handleClick",
     value: function handleClick() {
-      var _this2 = this;
-
       var _this$props = this.props,
-          likes = _this$props.likes,
+          likedArtists = _this$props.likedArtists,
           artist = _this$props.artist,
           likeArtist = _this$props.likeArtist,
           unlikeArtist = _this$props.unlikeArtist,
           openAlert = _this$props.openAlert,
           closeAlert = _this$props.closeAlert;
 
-      if (!likes[artist.id]) {
+      if (!likedArtists[artist.id]) {
         likeArtist(artist.id, "Artist").then(function () {
           openAlert("Library Add");
-          setTimeout(_this2.props.closeAlert, 4000);
+          setTimeout(closeAlert, 4000);
         });
       } else {
         unlikeArtist(artist.id, "Artist").then(function () {
           openAlert("Library Remove");
-          setTimeout(_this2.props.closeAlert, 4000);
+          setTimeout(closeAlert, 4000);
         });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _this$props2 = this.props,
           currentUser = _this$props2.currentUser,
-          likes = _this$props2.likes,
+          likedArtists = _this$props2.likedArtists,
           playlists = _this$props2.playlists,
           artist = _this$props2.artist,
           albums = _this$props2.albums,
@@ -1505,11 +1503,11 @@ var Artist = /*#__PURE__*/function (_React$Component) {
         id: "show-page-play",
         src: window.playButton
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-        className: likes[artist.id] ? "artist-following" : "artist-follow",
+        className: likedArtists[artist.id] ? "artist-following" : "artist-follow",
         onClick: function onClick() {
-          return _this3.handleClick();
+          return _this2.handleClick();
         }
-      }, likes[artist.id] ? "FOLLOWING" : "FOLLOW")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, likedArtists[artist.id] ? "FOLLOWING" : "FOLLOW")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "artist-songs-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
         className: "artist-songs-title"
@@ -1557,7 +1555,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
       }, "About"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         className: "artist-bio-button",
         onClick: function onClick() {
-          return _this3.props.openBio(artist.id);
+          return _this2.props.openBio(artist.id);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "artist-bio-image-container"
@@ -1680,12 +1678,12 @@ var mSTP = function mSTP(state, ownProps) {
       songs = _state$entities.songs,
       users = _state$entities.users;
   var artist = artists[ownProps.match.params.id];
-  var loading = state.ui.loading; // const currentUserLikes = users[id].likes;
-  // const likedArtists = currentUserLikes.artists;
-
+  var loading = state.ui.loading;
+  var currentUserLikes = users[id].likes;
+  var likedArtists = currentUserLikes.artists;
   return {
     currentUser: id,
-    likes: likes,
+    likedArtists: likedArtists,
     playlists: playlists,
     artist: artist,
     albums: albums,
@@ -3708,11 +3706,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
-/* harmony import */ var _util_time_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/time_util */ "./frontend/util/time_util.js");
-/* harmony import */ var _songs_song_list_item__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../songs/song_list_item */ "./frontend/components/songs/song_list_item.jsx");
+/* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
+/* harmony import */ var _util_time_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/time_util */ "./frontend/util/time_util.js");
+/* harmony import */ var _actions_alert_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/alert_actions */ "./frontend/actions/alert_actions.js");
+/* harmony import */ var _songs_song_list_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../songs/song_list_item */ "./frontend/components/songs/song_list_item.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3736,6 +3736,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -3833,10 +3835,22 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleEdit",
     value: function handleEdit(id) {
-      this.setState({
-        hideDropDown: true
-      });
-      this.props.editPlaylist(id);
+      var _this$props = this.props,
+          currentUser = _this$props.currentUser,
+          playlists = _this$props.playlists;
+      var pathName = this.props.location.pathname.split('/');
+      var location = pathName[1];
+      var playlist = playlists[this.props.match.params.id];
+      var playlistCreator = playlist.user_id;
+
+      if (currentUser === playlistCreator && location === "playlists") {
+        this.setState({
+          hideDropDown: true
+        });
+        this.props.editPlaylist(id);
+      } else {
+        return;
+      }
     }
   }, {
     key: "handleDelete",
@@ -3849,11 +3863,11 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "emptyOrFilled",
     value: function emptyOrFilled() {
-      var _this$props = this.props,
-          playlist = _this$props.playlist,
-          currentUser = _this$props.currentUser,
-          songs = _this$props.songs,
-          history = _this$props.history;
+      var _this$props2 = this.props,
+          playlist = _this$props2.playlist,
+          currentUser = _this$props2.currentUser,
+          songs = _this$props2.songs,
+          history = _this$props2.history;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var playlistSongs, likedSongs, content;
@@ -3866,9 +3880,9 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
 
       if (playlistSongs && playlistSongs.length > 0) {
         content = playlistSongs.slice(0).map(function (song, idx) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_4__.default, {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_6__.default, {
             song: song[1],
-            dateAdded: (0,_util_time_util__WEBPACK_IMPORTED_MODULE_3__.renderDateAdded)(song[1].created_at),
+            dateAdded: (0,_util_time_util__WEBPACK_IMPORTED_MODULE_4__.renderDateAdded)(song[1].created_at),
             playlistSongId: song[0],
             key: idx,
             num: idx + 1,
@@ -3881,9 +3895,9 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         content = likedSongs.sort(function (a, b) {
           return new Date(b.created_at) - new Date(a.created_at);
         }).map(function (song, idx) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_4__.default, {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_6__.default, {
             song: song,
-            dateAdded: (0,_util_time_util__WEBPACK_IMPORTED_MODULE_3__.renderDateAdded)(song.created_at),
+            dateAdded: (0,_util_time_util__WEBPACK_IMPORTED_MODULE_4__.renderDateAdded)(song.created_at),
             playlistSongId: song[0],
             key: idx,
             num: idx + 1
@@ -3918,7 +3932,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           className: "empty-playlist"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "fas fa-compact-disc"
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "It looks like you don't have anything in this playlist yet."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "It looks like you don't have anything in this playlist yet."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
           to: "/search"
         }, "Search"), " for some songs to add!"));
       } else if (likedSongs && likedSongs.length === 0) {
@@ -3943,11 +3957,12 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var _this$props2 = this.props,
-          songs = _this$props2.songs,
-          users = _this$props2.users,
-          currentUser = _this$props2.currentUser,
-          playlists = _this$props2.playlists;
+      var _this$props3 = this.props,
+          likedPlaylists = _this$props3.likedPlaylists,
+          songs = _this$props3.songs,
+          users = _this$props3.users,
+          currentUser = _this$props3.currentUser,
+          playlists = _this$props3.playlists;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
 
@@ -3955,7 +3970,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         return null;
       }
 
-      var playlist, playlistSongs, playlistCreator, username, likedSongs;
+      var playlist, playlistSongs, playlistCreator, username, likedSongs, renderHeart;
 
       if (location === "playlists") {
         playlist = playlists[this.props.match.params.id];
@@ -3972,12 +3987,37 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         username = users[currentUser].username;
       }
 
+      if (location === "playlists" && !likedPlaylists[playlist.id]) {
+        renderHeart = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          className: "far fa-heart",
+          onClick: function onClick() {
+            return _this4.props.likePlaylist(playlist.id, "Playlist").then(function () {
+              _this4.props.openAlert("Library Add");
+
+              setTimeout(_this4.props.closeAlert, 4000);
+            });
+          }
+        });
+      } else {
+        renderHeart = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          id: "liked-song-heart",
+          className: "fas fa-heart",
+          onClick: function onClick() {
+            _this4.props.unlikePlaylist(playlist.id, "Playlist").then(function () {
+              _this4.props.openAlert("Library Remove");
+
+              setTimeout(_this4.props.closeAlert, 4000);
+            });
+          }
+        });
+      }
+
       var playlistDuration = Object.values(songs).map(function (song) {
         return song.duration;
       }).reduce(function (a, b) {
         return a + b;
       }, 0);
-      var renderPlaylistDuration = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_3__.renderTotalDuration)(playlistDuration);
+      var renderPlaylistDuration = (0,_util_time_util__WEBPACK_IMPORTED_MODULE_4__.renderTotalDuration)(playlistDuration);
 
       var playlistDetails = function playlistDetails() {
         if (playlistSongs.length > 1) {
@@ -4016,9 +4056,9 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: location === "playlists" ? "playlist-details" : "liked-songs-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: location === "playlists" ? "playlist-name" : "liked-songs-title",
-        onClick: playlist ? function () {
+        onClick: function onClick() {
           return _this4.handleEdit(playlist.id);
-        } : function () {}
+        }
       }, playlist ? playlist.name : "Liked Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "description-name-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
@@ -4034,9 +4074,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         src: window.playButton
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "".concat(currentUser === playlistCreator || location === "library" ? "hidden" : "")
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        className: "far fa-heart"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, location === "playlists" ? renderHeart : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: location === "playlists" && currentUser === playlistCreator ? "dropdown" : "invisible",
         onClick: function onClick() {
           return _this4.handleDropDown();
@@ -4069,14 +4107,18 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 var mSTP = function mSTP(state) {
+  var currentUser = state.session.id;
   var _state$entities = state.entities,
       songs = _state$entities.songs,
       likes = _state$entities.likes;
-  var likedSongsDetails = likes.songs;
   var loading = state.ui.loading.loading;
+  var likedSongsDetails = likes.songs;
+  var currentUserLikes = state.entities.users[currentUser].likes;
+  var likedPlaylists = currentUserLikes.playlists;
   return {
     songs: songs,
     likedSongsDetails: likedSongsDetails,
+    likedPlaylists: likedPlaylists,
     loading: loading,
     likes: likes
   };
@@ -4084,16 +4126,28 @@ var mSTP = function mSTP(state) {
 
 var mDTP = function mDTP(dispatch) {
   return {
+    openAlert: function openAlert(type) {
+      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_5__.openAlert)(type));
+    },
+    closeAlert: function closeAlert() {
+      return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_5__.closeAlert)());
+    },
     editPlaylist: function editPlaylist(id) {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__.openModal)(id, 'editPlaylist'));
     },
     deletePlaylist: function deletePlaylist(id) {
       return dispatch((0,_actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__.openModal)(id, 'deletePlaylist'));
+    },
+    likePlaylist: function likePlaylist(likableId, likableType) {
+      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_3__.like)(likableId, likableType));
+    },
+    unlikePlaylist: function unlikePlaylist(likableId, likableType) {
+      return dispatch((0,_actions_library_actions__WEBPACK_IMPORTED_MODULE_3__.unlike)(likableId, likableType));
     }
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(Playlist)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(Playlist)));
 
 /***/ }),
 
@@ -4902,11 +4956,15 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var _this$props = this.props,
+          playlists = _this$props.playlists,
+          likedPlaylists = _this$props.likedPlaylists;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var pageId = pathName[2];
-      var playlistIndex = this.props.playlists;
-      var userPlaylists = Object.values(playlistIndex);
+      var userPlaylists = Object.values(playlists).filter(function (playlist) {
+        return likedPlaylists.includes(playlist.id.toString());
+      });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-data-directory"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
@@ -5005,9 +5063,12 @@ __webpack_require__.r(__webpack_exports__);
 var mSTP = function mSTP(state, ownProps) {
   var currentUser = state.session.id;
   var playlists = state.entities.playlists;
+  var currentUserLikes = state.entities.users[currentUser].likes;
+  var likedPlaylists = Object.keys(currentUserLikes.playlists);
   return {
     playlists: playlists,
     currentUser: currentUser,
+    likedPlaylists: likedPlaylists,
     lastPlaylist: Object.keys(playlists).slice(-1)[0]
   };
 };
@@ -5268,8 +5329,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var _this$props2 = this.props,
-          currentUserLikes = _this$props2.currentUserLikes,
-          likes = _this$props2.likes,
+          likedSongs = _this$props2.likedSongs,
           song = _this$props2.song,
           album = _this$props2.album,
           playlists = _this$props2.playlists,
@@ -5472,16 +5532,14 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
 
 var mSTP = function mSTP(state) {
   var currentUser = state.session.id;
-  var _state$entities = state.entities,
-      playlists = _state$entities.playlists,
-      likes = _state$entities.likes;
+  var playlists = state.entities.playlists;
   var currentUserLikes = state.entities.users[currentUser].likes;
+  var likedSongs = currentUserLikes.songs;
   var loading = state.ui.loading.loading;
   return {
     playlists: playlists,
     currentUser: currentUser,
-    currentUserLikes: currentUserLikes,
-    likes: likes,
+    likedSongs: likedSongs,
     loading: loading
   };
 };
@@ -5875,7 +5933,7 @@ var playlistsReducer = function playlistsReducer() {
       return Object.assign({}, state, action.playlists);
 
     case _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_LIKED_PLAYLISTS:
-      return Object.assign({}, state, action.likedPlaylists);
+      return action.likedPlaylists;
 
     case _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST:
       if (typeof action.payload === 'undefined' || !action.payload.playlist) return state;

@@ -30,12 +30,14 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const { playlists, likedPlaylists } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     const pageId = pathName[2];
 
-    let playlistIndex = this.props.playlists;
-    let userPlaylists = Object.values(playlistIndex)
+    let userPlaylists = Object.values(playlists).filter(playlist =>
+      likedPlaylists.includes(playlist.id.toString())
+    );
 
     return (
       <div className="user-data-directory">
