@@ -4065,7 +4065,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: location === "playlists" ? "playlist-details" : "liked-songs-details"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
-        className: location === "playlists" ? "playlist-name" : "liked-songs-title",
+        className: location === "playlists" && playlistCreator === currentUser ? "playlist-name" : "liked-songs-title",
         onClick: function onClick() {
           return _this4.handleEdit(playlist.id);
         }
@@ -4083,9 +4083,9 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         id: playlist && playlistSongs.length || likedSongs && likedSongs.length ? "show-page-play" : "hidden",
         src: window.playButton
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "".concat(currentUser === playlistCreator || location === "library" ? "hidden" : "")
-      }, location === "playlists" ? renderHeart : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: location === "playlists" && currentUser === playlistCreator ? "dropdown" : "invisible",
+        className: location === "library" ? "hidden" : ""
+      }, location === "playlists" && playlistCreator !== currentUser ? renderHeart : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: location === "playlists" && currentUser === playlistCreator ? "playlist-dropdown" : "invisible",
         onClick: function onClick() {
           return _this4.handleDropDown();
         },
@@ -4126,6 +4126,7 @@ var mSTP = function mSTP(state) {
   var currentUserLikes = state.entities.users[currentUser].likes;
   var likedPlaylists = currentUserLikes.playlists;
   return {
+    currentUser: currentUser,
     songs: songs,
     likedSongsDetails: likedSongsDetails,
     likedPlaylists: likedPlaylists,
@@ -4974,7 +4975,7 @@ var Sidebar = /*#__PURE__*/function (_React$Component) {
       var location = pathName[1];
       var pageId = pathName[2];
       var userPlaylists = Object.values(playlists).filter(function (playlist) {
-        return playlist.user_id = currentUser || likedPlaylists.includes(playlist.id.toString());
+        return playlist.user_id === currentUser || likedPlaylists.includes(playlist.id.toString());
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-data-directory"

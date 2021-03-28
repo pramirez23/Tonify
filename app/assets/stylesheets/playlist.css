@@ -323,6 +323,10 @@ tbody:first-child {
   animation: rotate 5s linear infinite;
 }
 
+.playlist-dropdown {
+  margin-right: 57px;
+}
+
 .playlist-dropdown-options {
   display: flex;
   flex-direction: column;
@@ -353,6 +357,9 @@ tbody:first-child {
   background: #4f4f4f;
 }
 
+.show-heart-container {
+  position: absolute;
+}
 @keyframes rotate {
   from {
     transform: rotate(0deg);

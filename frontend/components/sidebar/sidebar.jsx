@@ -36,7 +36,7 @@ class Sidebar extends React.Component {
     const pageId = pathName[2];
 
     let userPlaylists = Object.values(playlists).filter(playlist =>
-      playlist.user_id = currentUser || likedPlaylists.includes(playlist.id.toString())
+      playlist.user_id === currentUser || likedPlaylists.includes(playlist.id.toString())
     );
 
     return (

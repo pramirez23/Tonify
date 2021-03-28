@@ -201,6 +201,7 @@ class Playlist extends React.Component {
       playlistSongs = Object.entries(songs);
 
       if (!playlist) { return null }
+      
       playlistCreator = playlist.user_id;
       username = playlist.creator;
     } else {
@@ -271,7 +272,7 @@ class Playlist extends React.Component {
           <div className={location === "playlists" ? "playlist-details" : "liked-songs-details"}>
             <span>PLAYLIST</span>
             <h1
-              className={location === "playlists" ? "playlist-name" : "liked-songs-title"}
+              className={location === "playlists" && playlistCreator === currentUser ? "playlist-name" : "liked-songs-title"}
               onClick={() => this.handleEdit(playlist.id)}>
                 {playlist ? playlist.name : "Liked Songs"}
             </h1>
@@ -289,11 +290,11 @@ class Playlist extends React.Component {
         <div className={ (playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-controls" : "empty-playlist-controls" }>
           <img id={(playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-play" : "hidden"} src={window.playButton} />
 
-          <div className={`${currentUser === playlistCreator || location === "library" ? "hidden" : ""}`}>
-            {location === "playlists" ? renderHeart : ""}
+          <div className={ location === "library" ? "hidden" : "" }>
+            {location === "playlists" && playlistCreator !== currentUser ? renderHeart : ""}
           </div>
 
-          <div className={location === "playlists" && currentUser === playlistCreator ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
+          <div className={location === "playlists" && currentUser === playlistCreator ? "playlist-dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
             {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
               <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>
@@ -317,6 +318,7 @@ const mSTP = state => {
   const likedPlaylists = currentUserLikes.playlists;
 
   return {
+    currentUser,
     songs,
     likedSongsDetails,
     likedPlaylists,
