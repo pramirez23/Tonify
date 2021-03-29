@@ -69,6 +69,16 @@ class Navbar extends React.Component {
         }
       case "search":
         this.props.receiveSearchPage();
+      case "genres":
+        if (pageId === "hiphop") {
+          this.props.fetchHipHop(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "pop") {
+          this.props.fetchPop(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "rock") {
+          this.props.fetchRock(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "rnb") {
+          this.props.fetchRnb(currentUserId).then(() => this.renderContent());
+        }
       default:
         break;
     }
@@ -125,6 +135,16 @@ class Navbar extends React.Component {
           }
         case "search":
           this.props.receiveSearchPage();
+        case "genres":
+          if (pageId === "hiphop") {
+            this.props.fetchHipHop().then(() => this.renderContent());
+          } else if (pageId === "pop") {
+            this.props.fetchPop().then(() => this.renderContent());
+          } else if (pageId === "rock") {
+            this.props.fetchRock().then(() => this.renderContent());
+          } else if (pageId === "rnb") {
+            this.props.fetchRnb().then(() => this.renderContent());
+          }
         default:
           break;
       }
@@ -151,19 +171,29 @@ class Navbar extends React.Component {
 
     switch (location) {
       case "playlists":
-        this.setState({ content: playlists[pageId].name })
+        this.setState({ content: playlists[pageId].name });
         break;
       case "albums":
-        this.setState({ content: albums[pageId].title }) 
+        this.setState({ content: albums[pageId].title });
         break;
       case "artists":
-        this.setState({ content: artists[pageId].name })
+        this.setState({ content: artists[pageId].name });
         break;
       case "library":
         if (pageId === "songs") {
-          this.setState({ content: "Liked Songs" })
+          this.setState({ content: "Liked Songs" });
         } else {
-          this.setState({ content: null })
+          this.setState({ content: null });
+        }
+      case "genres":
+        if (pageId === "hiphop") {
+          this.setState({ content: "Hip hop" });
+        } else if (pageId === "pop") {
+          this.setState({ content: "Pop" });
+        } else if (pageId === "rock") {
+          this.setState({ content: "Rock" });
+        } else if (pageId === "rnb") {
+          this.setState({ content: "R&B" });
         }
         break;
       default:
@@ -198,7 +228,7 @@ class Navbar extends React.Component {
       searchQuery
     })
     // () => this.props.fetchSearchResults(this.state.searchQuery)
-    }
+  }
 
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}

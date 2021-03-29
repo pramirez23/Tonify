@@ -24,7 +24,7 @@ class Search extends React.Component {
             onClick={() => history.push('/genres/rock')}
             className="genre-button">Rock</div>
           <div
-            id="randb"
+            id="rnb"
             onClick={() => history.push('/genres/rnb')}
             className="genre-button">R&B</div>
         </div>

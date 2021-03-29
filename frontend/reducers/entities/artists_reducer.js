@@ -1,5 +1,6 @@
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_LIKED_ARTISTS } from "../../actions/library_actions";
+import { RECEIVE_GENRE } from "../../actions/genre_actions";
 
 const artistsReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -9,6 +10,8 @@ const artistsReducer = (state = {}, action) => {
       return Object.assign({}, state, { [action.payload.artist.id]: action.payload.artist })
     case RECEIVE_LIKED_ARTISTS:
       return action.likedArtists;
+    case RECEIVE_GENRE:
+      return action.payload.artists;
     default:
       return state;
   }

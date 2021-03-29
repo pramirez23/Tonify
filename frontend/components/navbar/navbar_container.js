@@ -7,6 +7,13 @@ import { fetchArtist } from "../../actions/artist_actions";
 import { fetchAlbum } from "../../actions/album_actions";
 
 import {
+  fetchHipHop,
+  fetchPop,
+  fetchRock,
+  fetchRnb
+} from "../../actions/genre_actions";
+
+import {
   fetchLikedPlaylists,
   fetchLikedArtists,
   fetchLikedAlbums, 
@@ -35,6 +42,10 @@ const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
     receiveSearchPage: () => dispatch(receiveSearchPage()),
+    fetchHipHop: () => dispatch(fetchHipHop()),
+    fetchPop: () => dispatch(fetchPop()),
+    fetchRock: () => dispatch(fetchRock()),
+    fetchRnb: () => dispatch(fetchRnb()),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
     fetchArtist: id => dispatch(fetchArtist(id)),
     fetchAlbum: id => dispatch(fetchAlbum(id)),

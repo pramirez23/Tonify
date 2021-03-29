@@ -4,6 +4,7 @@ import {
 } from "../../actions/album_actions";
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_LIKED_ALBUMS } from "../../actions/library_actions";
+import { RECEIVE_GENRE } from "../../actions/genre_actions";
 
 const albumsReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -17,6 +18,8 @@ const albumsReducer = (state = {}, action) => {
       return Object.assign({}, state, { [action.payload.album.id]: action.payload.album })
     case RECEIVE_LIKED_ALBUMS:
       return action.likedAlbums;
+    case RECEIVE_GENRE:
+      return action.payload.albums;
     default:
       return state;
   }
