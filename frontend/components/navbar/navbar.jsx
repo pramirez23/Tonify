@@ -67,6 +67,8 @@ class Navbar extends React.Component {
         } else if (pageId === "albums") {
           this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
         }
+      case "search":
+        this.props.receiveSearchPage();
       default:
         break;
     }
@@ -99,7 +101,7 @@ class Navbar extends React.Component {
       }
       
       this.props.loading();
-
+      
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -121,6 +123,8 @@ class Navbar extends React.Component {
           } else if (pageId === "albums") {
             this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
           }
+        case "search":
+          this.props.receiveSearchPage();
         default:
           break;
       }

@@ -6,8 +6,9 @@ import { fetchLikedPlaylists } from "../../actions/library_actions";
 const mSTP = state => {
   const currentUser = state.session.id;
   const { playlists, artists, albums, songs } = state.entities;
-
+  const searchResults = state.ui.searchResults
   return ({
+    searchResults,
     playlists,
     artists,
     albums,
@@ -19,7 +20,6 @@ const mDTP = dispatch => {
   return {
     fetchLikedPlaylists: currentUserId => dispatch(fetchLikedPlaylists(currentUserId)),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
-    createPlaylist: playlist => dispatch(createPlaylist(playlist)),
   }
 };
 

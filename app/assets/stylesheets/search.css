@@ -1,0 +1,60 @@
+.browse-genres-container {
+  display: flex;
+  flex-direction: column;
+  padding: 54px 40px;
+  height: calc(100vh - 200px);
+}
+
+.search-title {
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.2px;
+  color: white;
+  margin-top: 23px;
+}
+
+.search-index {
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  /* grid-template-rows: repeat(auto-fill, 267px); */
+  grid-auto-rows: 255px;
+  width: 100%;
+  padding-bottom: 50px;
+  margin-top: 21px;
+}
+
+div#hiphop {
+  background: rgb(147,93,20);
+  background: linear-gradient(180deg, rgba(147,93,20,1) 0%, rgba(244,154,35,1) 100%);
+}
+
+div#pop {
+  background: rgb(118,145,121);
+  background: linear-gradient(180deg, rgba(118,145,121,1) 0%, rgba(194,239,199,1) 100%);
+}
+
+div#rock {
+  background: rgb(141,18,30);
+  background: linear-gradient(180deg, rgba(141,18,30,1) 0%, rgba(234,35,50,1) 100%);
+}
+
+div#randb {
+background: rgb(145,33,99);
+background: linear-gradient(180deg, rgba(145,33,99,1) 0%, rgba(239,55,165,1) 100%);
+}
+
+div.genre-button {
+  border-radius: 8px;
+  padding: 35px;
+  color: white;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+div.genre-button:hover {
+  transform: scale(1.02);
+}

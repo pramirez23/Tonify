@@ -15,6 +15,7 @@ import {
 } from "../../actions/library_actions";
 
 import { loading } from '../../actions/loading_actions';
+import { receiveSearchPage } from "../../actions/search_actions";
 
 const mSTP = state => {
   const currentUserId = state.session.id;
@@ -33,6 +34,7 @@ const mSTP = state => {
 const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
+    receiveSearchPage: () => dispatch(receiveSearchPage()),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
     fetchArtist: id => dispatch(fetchArtist(id)),
     fetchAlbum: id => dispatch(fetchAlbum(id)),

@@ -9,7 +9,7 @@ import {
 } from "../../actions/album_actions";
 
 import { RECEIVE_LIKED_SONGS } from "../../actions/library_actions";
-
+import { RECEIVE_SEARCH_PAGE } from "../../actions/search_actions";
 import { LOADING } from "../../actions/loading_actions";
 
 export default (state = null, action) => {
@@ -25,6 +25,8 @@ export default (state = null, action) => {
     case RECEIVE_ALBUMS:
       return false;
     case RECEIVE_LIKED_SONGS:
+      return false;
+    case RECEIVE_SEARCH_PAGE:
       return false;
     case LOADING:
       return true;
