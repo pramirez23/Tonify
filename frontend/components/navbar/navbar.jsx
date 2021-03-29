@@ -11,7 +11,8 @@ class Navbar extends React.Component {
       scrollTop: null,
       scrollHeight: null,
       opacity: 0,
-      content: null
+      content: null,
+      searchQuery: ""
     }
     
     this.dropDown = React.createRef();
@@ -169,10 +170,30 @@ class Navbar extends React.Component {
 
   convertOpacity() {
     const { scrollTop, scrollHeight } = this.state;
-    const oldRange = (scrollHeight - 140);
-    const newRange = (10 - 1);
-    let converted = (((scrollTop - 140) * newRange) / oldRange);
+    const path = this.props.location.pathname;
+    const pathName = path.split('/');
+    const location = pathName[1];
+
+    let oldRange, newRange, converted;
+
+    if (location === "library" || location === "search") {
+      oldRange = (scrollHeight - 20);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 20) * newRange) / oldRange);
+    } else {      
+      oldRange = (scrollHeight - 140);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 140) * newRange) / oldRange);
+    }
+
     this.setState({ opacity: converted })
+  }
+
+  updateSearch(searchQuery) {
+    this.setState({
+      searchQuery
+    })
+    // () => this.props.fetchSearchResults(this.state.searchQuery)
   }
 
   render() {
@@ -207,6 +228,15 @@ class Navbar extends React.Component {
                   onClick={() => this.props.history.push('/library/albums')}>Albums</button>
               </ul>
             </nav>
+
+            <div className={ location === "search" ? "search-input-container" : "hidden" }>
+              <i className="medium material-icons">search</i>
+              <input
+                className="search-input"
+                type="text"
+                placeholder="Playlists, artists, albums, or songs"
+                onChange={(e) => this.updateSearch(e.target.value)} />
+            </div>
           </div>
         </div>
 

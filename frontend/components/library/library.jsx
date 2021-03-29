@@ -113,7 +113,11 @@ class Library extends React.Component {
                 <img
                   className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
                   src={window.playButton}
-                  alt="Play Button" />
+                  alt="Play Button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("clicked")
+                  }} />
               </div>
               {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer

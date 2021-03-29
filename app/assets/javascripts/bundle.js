@@ -1931,7 +1931,11 @@ var Library = /*#__PURE__*/function (_React$Component) {
           }, likedSongsCount, " ", likedSongsCount === 1 ? "song" : "songs")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
             className: this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play",
             src: window.playButton,
-            alt: "Play Button"
+            alt: "Play Button",
+            onClick: function onClick(e) {
+              e.stopPropagation();
+              console.log("clicked");
+            }
           })), Object.values(playlists).slice(0).reverse().map(function (playlist, idx) {
             return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_item_container__WEBPACK_IMPORTED_MODULE_1__.default, {
               id: playlist.id,
@@ -2775,7 +2779,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       scrollTop: null,
       scrollHeight: null,
       opacity: 0,
-      content: null
+      content: null,
+      searchQuery: ""
     };
     _this.dropDown = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
@@ -3019,12 +3024,31 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       var _this$state = this.state,
           scrollTop = _this$state.scrollTop,
           scrollHeight = _this$state.scrollHeight;
-      var oldRange = scrollHeight - 140;
-      var newRange = 10 - 1;
-      var converted = (scrollTop - 140) * newRange / oldRange;
+      var path = this.props.location.pathname;
+      var pathName = path.split('/');
+      var location = pathName[1];
+      var oldRange, newRange, converted;
+
+      if (location === "library" || location === "search") {
+        oldRange = scrollHeight - 20;
+        newRange = 10 - 1;
+        converted = (scrollTop - 20) * newRange / oldRange;
+      } else {
+        oldRange = scrollHeight - 140;
+        newRange = 10 - 1;
+        converted = (scrollTop - 140) * newRange / oldRange;
+      }
+
       this.setState({
         opacity: converted
       });
+    }
+  }, {
+    key: "updateSearch",
+    value: function updateSearch(searchQuery) {
+      this.setState({
+        searchQuery: searchQuery
+      }); // () => this.props.fetchSearchResults(this.state.searchQuery)
     }
   }, {
     key: "render",
@@ -3078,7 +3102,18 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this4.props.history.push('/library/albums');
         }
-      }, "Albums"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, "Albums"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: location === "search" ? "search-input-container" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: "medium material-icons"
+      }, "search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        className: "search-input",
+        type: "text",
+        placeholder: "Playlists, artists, albums, or songs",
+        onChange: function onChange(e) {
+          return _this4.updateSearch(e.target.value);
+        }
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-dropdown",
         onClick: function onClick() {
           return _this4.handleDropDown();
