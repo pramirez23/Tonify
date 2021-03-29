@@ -1,0 +1,245 @@
+.artist-header {
+  position: relative;
+  height: 40vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.artist-details {
+  position: relative;
+  padding: 24px 40px;
+}
+
+.artist-banner {
+  position: absolute;
+  width: 100%;
+  object-fit: cover;
+  top: -63px;
+  z-index: 0;
+  pointer-events: none;
+  min-height: 445px;
+}
+
+h1.artist-name {
+  position: relative;
+  z-index: 1;
+  color: white;
+  font-weight: 600;
+  font-size: 75px;
+  white-space: nowrap;
+}
+
+img.verified-check {
+  height: 28px;
+  position: relative;
+  margin-right: 4px;
+}
+
+.verified-artist {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding-bottom: 7px;
+}
+
+span.verified-text {
+  margin-top: 2px;
+  letter-spacing: 0.25px;
+  font-size: 15px;
+}
+
+.artist-show-controls {
+  display: flex;
+  height: 67px;
+  padding: 24px 40px;
+  align-items: center;
+}
+
+button.artist-follow, button.artist-following {
+  background: none;
+  color: white;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 7px 15px;
+  letter-spacing: 1.5px;
+  font-size: 12px;
+  outline: inherit;
+  margin-left: 35px;
+}
+
+button.artist-follow {
+  border-color: hsla(0,0%,100%,.3);
+}
+
+button.artist-following {
+  border-color: #FFFFFF;
+}
+
+button.artist-follow:hover{
+  border-color: white;
+} 
+
+.artist-songs-container {
+  display: flex;
+  flex-direction: column;
+}
+
+h2.artist-songs-title {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  font-size: 25px;
+  margin-left: 40px;
+}
+
+.artist-discography {
+  padding: 0 40px;
+}
+
+h2.artist-title {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  font-size: 25px;
+  margin-bottom: 21px;
+}
+
+.artist-playlists {
+  padding: 0 40px;
+}
+
+.artist-bio-button-container {
+  padding: 0px 40px;
+  padding-bottom: 60px;
+}
+
+.artist-bio-preview-container {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  top: -100px;
+  font-size: 17px;
+  letter-spacing: 0.25px;
+  font-family: 'Rubik';
+  text-align: left;
+  width: 80%;
+  padding: 0px 33px;
+  min-width: 500px;
+  line-height: 25px;
+}
+
+button.artist-bio-button {
+  background: none;
+  outline: none;
+  border: none;
+  height: 500px;
+  color: white;
+  position: relative;
+  width: 50%;
+  transition: 0.3s ease-in-out;
+  padding: 0;
+}
+
+.artist-bio-image-container {
+  position: relative;
+  height: 500px;
+  width: 100%;
+}
+
+img.artist-bio-pic-preview {
+  width: 100%;
+  /* position: absolute; */
+  object-fit: cover;
+  height: 100%;
+  border-radius: 15px;
+  min-width: 700px;
+}
+
+button.artist-bio-button:hover {
+  transform: scale(1.02);
+}
+
+.artist-bio-modal-child {
+  width: 768px;
+  min-width: 500px;
+  max-height: 70vh;
+  height: 100%;
+  background: #121212;
+  z-index: 100001;
+  overflow: scroll;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.artist-bio-photo-container {
+  height: 100%;
+  padding: 0 45px;
+  background: black;
+}
+
+img.artist-bio-photo {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.artist-modal-close-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;/
+}
+
+button.artist-close-modal-button {
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,.7);
+  color: hsla(0,0%,100%,.7);
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  transition: 0.2s ease-in-out;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+button.artist-close-modal-button:hover {
+  background-color: #121212;
+  color: white;
+}
+
+.artist-bio-modal-child::-webkit-scrollbar {
+  width: 9px;
+  background-color: #000000;
+}
+
+.artist-bio-modal-child::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
+  background-color: #414141;
+}
+
+.artist-bio-modal-child::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px rgb(0 0 0 / 80%);
+  border-radius: 10px;
+  background-color: #000000;
+}
+
+p.artist-bio-text {
+  color: #B3B3B3;
+  white-space: pre-wrap;
+}
+
+.artist-bio {
+  padding: 30px 46px;
+  line-height: 1.65;
+  letter-spacing: 0.25px;
+  font-size: 15px;
+}

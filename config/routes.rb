@@ -41,5 +41,6 @@ Rails.application.routes.draw do
     end
 
     resources :playlist_songs, only: [:create, :destroy, :index]
+    resources :genres, only: [:show]
   end
 end

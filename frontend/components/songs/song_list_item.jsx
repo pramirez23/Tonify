@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { openAlert, closeAlert } from '../../actions/alert_actions'
+import { openAlert, closeAlert } from '../../actions/alert_actions';
 import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
@@ -29,6 +29,7 @@ class SongListItem extends React.Component {
     this.handleMouseLeave =  this.handleMouseLeave.bind(this);
     this.handleDropDown = this.handleDropDown.bind(this);
     this.detectPageType = this.detectPageType.bind(this);
+    this.setSongWidth = this.setSongWidth.bind(this);
   }
 
   componentDidMount() {
@@ -111,6 +112,9 @@ class SongListItem extends React.Component {
           className = "song-dropdown-other"
         }
         break;
+      case "artists":
+        className = "song-dropdown-other"
+        break;
       case "albums":
         className = "song-dropdown-other"
         break;
@@ -136,17 +140,32 @@ class SongListItem extends React.Component {
   //     return null;
   //   }
   // }
+  setSongWidth(pageType) {
+    switch (pageType) {
+      case "playlists":
+        return "title-column";
+      case "artists":
+        return "artist-song-title-column";
+      case "albums":
+        return "album-song-title-column";
+      case "library":
+        return "title-column";
+      default:
+        break;
+    }
+  }
 
   render() {
     const { likedSongs, song, album, playlists, currentUser } = this.props;
+    
+    if (this.props.loading || !song) {
+      return null;
+    }
+
     const isHovering = this.state.isHovering;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     
-    if (this.props.loading) {
-      return null;
-    }
-
     let playlistIndex = this.props.playlists;
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
       playlist.user_id === this.props.currentUser);
@@ -203,14 +222,14 @@ class SongListItem extends React.Component {
         onMouseLeave={() => this.handleMouseLeave()}>
 
         <td className="num-column">{playOrNum}</td>
-        <td className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "title-column" : "album-song-title-column"}>
+        <td className={this.setSongWidth(this.state.pageType)}>
           <div className="title-details">
             <div className="item-art-container">
-              <img className={this.state.pageType === "playlists" || this.state.pageType === "library" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
+              <img className={this.state.pageType === "playlists" || this.state.pageType === "library" || this.state.pageType === "artists" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
-              <Link to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+              <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
             </div>
           </div>
         </td>
@@ -257,7 +276,7 @@ class SongListItem extends React.Component {
               onClick={() => this.props.history.push(`/albums/${song.album_id}`)}>Go to album</div>
 
             <div
-              className={location === "playlists" ? "song-dropdown-option" : "hidden"}
+              className={(location === "playlists" && currentUser === playlists[this.props.match.params.id].user_id) ? "song-dropdown-option" : "hidden"}
               onMouseEnter={(e) => this.handleMouseEnter(e)}
               onClick={ () => {
                 this.props.removeSongFromPlaylist(this.props.playlistSongId);
@@ -317,7 +336,7 @@ class SongListItem extends React.Component {
 
 const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists, likes } = state.entities;
+  const { playlists } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
@@ -326,7 +345,6 @@ const mSTP = state => {
     playlists,
     currentUser: currentUser,
     likedSongs,
-    likes,
     loading
   });
 };

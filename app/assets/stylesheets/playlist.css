@@ -209,6 +209,12 @@ td > a:hover, .title-artist-container > a:hover {
   height: 50px;
 }
 
+.artist-song-title-column {
+  width: 85vw;
+  line-height: 1.45;
+  height: 50px;
+}
+
 .title-artist-container {
   width: 100%;
   overflow: hidden;
@@ -317,6 +323,10 @@ tbody:first-child {
   animation: rotate 5s linear infinite;
 }
 
+.playlist-dropdown {
+  margin-right: 57px;
+}
+
 .playlist-dropdown-options {
   display: flex;
   flex-direction: column;
@@ -347,6 +357,9 @@ tbody:first-child {
   background: #4f4f4f;
 }
 
+.show-heart-container {
+  position: absolute;
+}
 @keyframes rotate {
   from {
     transform: rotate(0deg);

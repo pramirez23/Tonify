@@ -1,8 +1,17 @@
 import { connect } from "react-redux";
 import Navbar from "./navbar"
 import { logout } from '../../actions/session_actions';
+import { fetchUser } from "../../actions/user_actions";
 import { fetchPlaylist } from "../../actions/playlist_actions";
+import { fetchArtist } from "../../actions/artist_actions";
 import { fetchAlbum } from "../../actions/album_actions";
+
+import {
+  fetchHipHop,
+  fetchPop,
+  fetchRock,
+  fetchRnb
+} from "../../actions/genre_actions";
 
 import {
   fetchLikedPlaylists,
@@ -12,8 +21,8 @@ import {
   fetchLikedSongsPreview
 } from "../../actions/library_actions";
 
-import { fetchUser } from "../../actions/user_actions";
 import { loading } from '../../actions/loading_actions';
+import { receiveSearchPage } from "../../actions/search_actions";
 
 const mSTP = state => {
   const currentUserId = state.session.id;
@@ -32,7 +41,13 @@ const mSTP = state => {
 const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
+    receiveSearchPage: () => dispatch(receiveSearchPage()),
+    fetchHipHop: () => dispatch(fetchHipHop()),
+    fetchPop: () => dispatch(fetchPop()),
+    fetchRock: () => dispatch(fetchRock()),
+    fetchRnb: () => dispatch(fetchRnb()),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
+    fetchArtist: id => dispatch(fetchArtist(id)),
     fetchAlbum: id => dispatch(fetchAlbum(id)),
     fetchLikedPlaylists: (currentUserId) => dispatch(fetchLikedPlaylists(currentUserId)),
     fetchLikedArtists: (currentUserId) => dispatch(fetchLikedArtists(currentUserId)),

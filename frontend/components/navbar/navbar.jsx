@@ -11,7 +11,8 @@ class Navbar extends React.Component {
       scrollTop: null,
       scrollHeight: null,
       opacity: 0,
-      content: null
+      content: null,
+      searchQuery: ""
     }
     
     this.dropDown = React.createRef();
@@ -44,6 +45,7 @@ class Navbar extends React.Component {
     }
     
     this.props.loading();
+    
     switch (location) {
       case "playlists":
         this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -64,6 +66,18 @@ class Navbar extends React.Component {
           this.props.fetchLikedArtists(currentUserId).then(() => this.renderContent());
         } else if (pageId === "albums") {
           this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
+        }
+      case "search":
+        this.props.receiveSearchPage();
+      case "genres":
+        if (pageId === "hiphop") {
+          this.props.fetchHipHop(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "pop") {
+          this.props.fetchPop(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "rock") {
+          this.props.fetchRock(currentUserId).then(() => this.renderContent());
+        } else if (pageId === "rnb") {
+          this.props.fetchRnb(currentUserId).then(() => this.renderContent());
         }
       default:
         break;
@@ -97,6 +111,7 @@ class Navbar extends React.Component {
       }
       
       this.props.loading();
+      
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -117,6 +132,18 @@ class Navbar extends React.Component {
             this.props.fetchLikedArtists(currentUserId).then(() => this.renderContent());
           } else if (pageId === "albums") {
             this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
+          }
+        case "search":
+          this.props.receiveSearchPage();
+        case "genres":
+          if (pageId === "hiphop") {
+            this.props.fetchHipHop().then(() => this.renderContent());
+          } else if (pageId === "pop") {
+            this.props.fetchPop().then(() => this.renderContent());
+          } else if (pageId === "rock") {
+            this.props.fetchRock().then(() => this.renderContent());
+          } else if (pageId === "rnb") {
+            this.props.fetchRnb().then(() => this.renderContent());
           }
         default:
           break;
@@ -144,19 +171,29 @@ class Navbar extends React.Component {
 
     switch (location) {
       case "playlists":
-        this.setState({ content: playlists[pageId].name })
+        this.setState({ content: playlists[pageId].name });
         break;
       case "albums":
-        this.setState({ content: albums[pageId].title }) 
+        this.setState({ content: albums[pageId].title });
         break;
       case "artists":
-        this.setState({ content: artists[pageId].name })
+        this.setState({ content: artists[pageId].name });
         break;
       case "library":
         if (pageId === "songs") {
-          this.setState({ content: "Liked Songs" })
+          this.setState({ content: "Liked Songs" });
         } else {
-          this.setState({ content: null })
+          this.setState({ content: null });
+        }
+      case "genres":
+        if (pageId === "hiphop") {
+          this.setState({ content: "Hip hop" });
+        } else if (pageId === "pop") {
+          this.setState({ content: "Pop" });
+        } else if (pageId === "rock") {
+          this.setState({ content: "Rock" });
+        } else if (pageId === "rnb") {
+          this.setState({ content: "R&B" });
         }
         break;
       default:
@@ -167,10 +204,30 @@ class Navbar extends React.Component {
 
   convertOpacity() {
     const { scrollTop, scrollHeight } = this.state;
-    const oldRange = (scrollHeight - 140);
-    const newRange = (10 - 1);
-    let converted = (((scrollTop - 140) * newRange) / oldRange);
+    const path = this.props.location.pathname;
+    const pathName = path.split('/');
+    const location = pathName[1];
+
+    let oldRange, newRange, converted;
+
+    if (location === "library" || location === "search") {
+      oldRange = (scrollHeight - 20);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 20) * newRange) / oldRange);
+    } else {      
+      oldRange = (scrollHeight - 140);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 140) * newRange) / oldRange);
+    }
+
     this.setState({ opacity: converted })
+  }
+
+  updateSearch(searchQuery) {
+    this.setState({
+      searchQuery
+    })
+    // () => this.props.fetchSearchResults(this.state.searchQuery)
   }
 
   render() {
@@ -205,6 +262,19 @@ class Navbar extends React.Component {
                   onClick={() => this.props.history.push('/library/albums')}>Albums</button>
               </ul>
             </nav>
+
+            <div className={ location === "search" ? "search-input-container" : "hidden" }>
+              <i id="search-icon" className="medium material-icons">search</i>
+              <input
+                className="search-input"
+                type="text"
+                placeholder="Playlists, artists, albums, or songs"
+                onChange={(e) => this.updateSearch(e.target.value)}
+                value={this.state.searchQuery} />
+              <span
+                className={this.state.searchQuery ? "clear-search" : "hidden"}
+                onClick={() => this.setState({searchQuery: ""})}>&#10005;</span>
+            </div>
           </div>
         </div>
 
@@ -235,7 +305,7 @@ class Navbar extends React.Component {
                 <i className="fas fa-user-circle"></i>
             </div>
 
-            <div id="logout-dropdown" onClick={this.props.logout} >Log out</div>
+            <div id="logout-dropdown" onClick={this.props.logout}>Log out</div>
           </div>}
         </div>
       </nav>

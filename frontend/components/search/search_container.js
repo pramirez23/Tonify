@@ -1,19 +1,18 @@
 import { connect } from "react-redux";
-import Sidebar from "./sidebar";
+import Search from "./search";
 import { createPlaylist, fetchPlaylist } from "../../actions/playlist_actions";
 import { fetchLikedPlaylists } from "../../actions/library_actions";
 
-const mSTP = (state, ownProps) => {
+const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists } = state.entities;
-  const currentUserLikes = state.entities.users[currentUser].likes;
-  const likedPlaylists = Object.keys(currentUserLikes.playlists);
-
+  const { playlists, artists, albums, songs } = state.entities;
+  const searchResults = state.ui.searchResults
   return ({
+    searchResults,
     playlists,
-    currentUser,
-    likedPlaylists,
-    lastPlaylist: Object.keys(playlists).slice(-1)[0]
+    artists,
+    albums,
+    songs
   });
 };
 
@@ -21,8 +20,7 @@ const mDTP = dispatch => {
   return {
     fetchLikedPlaylists: currentUserId => dispatch(fetchLikedPlaylists(currentUserId)),
     fetchPlaylist: id => dispatch(fetchPlaylist(id)),
-    createPlaylist: playlist => dispatch(createPlaylist(playlist)),
   }
 };
 
-export default connect(mSTP, mDTP)(Sidebar);
+export default connect(mSTP, mDTP)(Search);

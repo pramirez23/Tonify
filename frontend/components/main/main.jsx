@@ -1,8 +1,11 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Genre from '../genre/genre';
 import PlaylistItemContainer from '../playlist/playlist_item_container';
+import ArtistContainer from '../artist/artist_container';
 import AlbumItemContainer from '../album/album_item_container';
 import NavbarContainer from '../navbar/navbar_container';
+import SearchContainer from '../search/search_container';
 import LibraryContainer from '../library/library_container';
 import Loading from '../loading/loading';
 import Playbar from '../playbar/playbar';
@@ -18,15 +21,15 @@ const Main = (props) => {
       <main className="main-content-container">
         <Loading />
         <Switch>
-          {/* <Route path="/search" component={SearchIndex} /> */}
-          {/* <ProtectedRoute path="/library" component={LikedPlaylistsContainer} /> */}
+          <ProtectedRoute path="/search" component={SearchContainer} />
+          <ProtectedRoute path="/genres" component={Genre} />
           <ProtectedRoute path="/library/playlists" component={LibraryContainer} />
           <ProtectedRoute path="/library/artists" component={LibraryContainer} />
           <ProtectedRoute path="/library/albums" component={LibraryContainer} />
           <ProtectedRoute path="/library/songs" component={PlaylistItemContainer} />
           <ProtectedRoute exact path="/playlists/:id" component={PlaylistItemContainer} />
-          {/* <ProtectedRoute path="/artists/:id" component={ArtistShow} /> */}
-          <ProtectedRoute path="/albums/:id" component={AlbumItemContainer} />
+          <ProtectedRoute exact path="/artists/:id" component={ArtistContainer} />
+          <ProtectedRoute exact path="/albums/:id" component={AlbumItemContainer} />
         </Switch>
       </main>
     </div>

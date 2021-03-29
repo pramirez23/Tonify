@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { openModal } from '../../actions/modal_actions'
+import { openModal } from '../../actions/modal_actions';
+import { like, unlike } from '../../actions/library_actions';
 import { renderDateAdded, renderTotalDuration } from '../../util/time_util';
+import { openAlert, closeAlert } from '../../actions/alert_actions';
 import SongListItem from '../songs/song_list_item'
 
 class Playlist extends React.Component {
@@ -76,10 +78,21 @@ class Playlist extends React.Component {
   }
 
   handleEdit(id) {
-    this.setState({
-      hideDropDown: true
-    })
-    this.props.editPlaylist(id)
+    const { currentUser, playlists } = this.props;
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+
+    let playlist = playlists[this.props.match.params.id];
+    let playlistCreator = playlist.user_id;
+
+    if (currentUser === playlistCreator && location === "playlists") {
+      this.setState({
+        hideDropDown: true
+      })
+      this.props.editPlaylist(id)
+    } else {
+      return;
+    }
   }
 
   handleDelete(id) {
@@ -173,7 +186,7 @@ class Playlist extends React.Component {
   }
 
   render() { 
-    const { songs, users, currentUser, playlists } = this.props
+    const { likedPlaylists, songs, users, currentUser, playlists } = this.props
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
 
@@ -181,19 +194,47 @@ class Playlist extends React.Component {
       return null;
     }
 
-    let playlist, playlistSongs, playlistCreator, username, likedSongs;
-
+    let playlist, playlistSongs, playlistCreator, username, likedSongs, renderHeart;
+    
     if (location === "playlists") {
       playlist = playlists[this.props.match.params.id];
       playlistSongs = Object.entries(songs);
 
       if (!playlist) { return null }
-
+      
       playlistCreator = playlist.user_id;
-      username = users[playlistCreator].username;
+      username = playlist.creator;
     } else {
       likedSongs = Object.entries(songs);
       username = users[currentUser].username;
+    }
+
+    if (location === "playlists" && !likedPlaylists[playlist.id]) {
+      renderHeart = (
+        <i
+          className="far fa-heart"
+          onClick={() =>
+            this.props.likePlaylist(playlist.id, "Playlist")
+              .then(() => {
+                this.props.openAlert("Library Add");
+                setTimeout(this.props.closeAlert, 4000);
+              })}>
+        </i>
+      )
+    } else {
+      renderHeart = (
+        <i
+          id="liked-song-heart"
+          className="fas fa-heart"
+          onClick={() => {
+            this.props.unlikePlaylist(playlist.id, "Playlist")
+              .then(() => {
+                this.props.openAlert("Library Remove");
+                setTimeout(this.props.closeAlert, 4000);
+              })
+          }}>
+        </i>
+      )
     }
 
     const playlistDuration = Object.values(songs).map(song => song.duration).reduce((a, b) => a + b, 0);
@@ -222,11 +263,20 @@ class Playlist extends React.Component {
     return (
       <div className="main-content">
         <div className={location === "playlists" ? "playlist-header" : "liked-songs-header"}>
-          <img className={location === "playlists" ? "playlist-photo" : "hidden"} onClick={() => this.handleEdit(playlist.id)} src={(playlist && playlist.photo_url) ? playlist.photo_url : window.defaultPlaylistPicture} />
+          <img
+            className={location === "playlists" ? "playlist-photo" : "hidden"}
+            onClick={() => this.handleEdit(playlist.id)}
+            src={(playlist && playlist.photo_url) ? playlist.photo_url : window.defaultPlaylistPicture} />
           <img className={location === "library" ? "liked-songs-photo" : "hidden"} src={window.likedSongs} />
+
           <div className={location === "playlists" ? "playlist-details" : "liked-songs-details"}>
             <span>PLAYLIST</span>
-            <h1 className={location === "playlists" ? "playlist-name" : "liked-songs-title"} onClick={playlist ? () => this.handleEdit(playlist.id) : () => {}}>{playlist ? playlist.name : "Liked Songs"}</h1>
+            <h1
+              className={location === "playlists" && playlistCreator === currentUser ? "playlist-name" : "liked-songs-title"}
+              onClick={() => this.handleEdit(playlist.id)}>
+                {playlist ? playlist.name : "Liked Songs"}
+            </h1>
+            
             <div className="description-name-container">
               <p className={playlist && playlist.description ? "playlist-description" : "hide-description"}>{playlist ? playlist.description : ""}</p>
               <div className="playlist-info">
@@ -240,12 +290,11 @@ class Playlist extends React.Component {
         <div className={ (playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-controls" : "empty-playlist-controls" }>
           <img id={(playlist && playlistSongs.length || likedSongs && likedSongs.length) ? "show-page-play" : "hidden"} src={window.playButton} />
 
-          <div className={`${currentUser === playlistCreator || location === "library" ? "hidden" : ""}`}>
-            <i className="far fa-heart"></i>
+          <div className={ location === "library" ? "hidden" : "" }>
+            {location === "playlists" && playlistCreator !== currentUser ? renderHeart : ""}
           </div>
 
-
-          <div className={location === "playlists" ? "dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
+          <div className={location === "playlists" && currentUser === playlistCreator ? "playlist-dropdown" : "invisible"} onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
             {!this.state.hideDropDown && <div className="playlist-dropdown-options" onClick={e => e.stopPropagation()}>
               <div onClick={() => this.handleEdit(playlist.id)} className="edit-playlist">Edit details</div>
@@ -261,13 +310,18 @@ class Playlist extends React.Component {
 }  
 
 const mSTP = state => {
+  const currentUser = state.session.id;
   const { songs, likes } = state.entities;
-  const likedSongsDetails = likes.songs;
   const { loading } = state.ui.loading;
+  const likedSongsDetails = likes.songs;
+  const currentUserLikes = state.entities.users[currentUser].likes;
+  const likedPlaylists = currentUserLikes.playlists;
 
   return {
+    currentUser,
     songs,
     likedSongsDetails,
+    likedPlaylists,
     loading,
     likes
   };
@@ -275,8 +329,12 @@ const mSTP = state => {
 
 const mDTP = dispatch => {
   return {
+    openAlert: (type) => dispatch(openAlert(type)),
+    closeAlert: () => dispatch(closeAlert()),
     editPlaylist: id => dispatch(openModal(id, 'editPlaylist')),
     deletePlaylist: id => dispatch(openModal(id, 'deletePlaylist')),
+    likePlaylist: (likableId, likableType) => dispatch(like(likableId, likableType)),
+    unlikePlaylist: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
   }
 };
 

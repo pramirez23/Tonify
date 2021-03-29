@@ -121,7 +121,12 @@ class Album extends React.Component {
             <h1 className="album-name">{album.title}</h1>
 
             <div className="album-details">
-              <Link className="artist-link" to={`/artists/${album.artist_id}`}>{album.artist}</Link>
+              <Link className="artist-link" to={`/artists/${album.artist_id}`}>
+                <div className="artist-album-icon-container">
+                  <img className="artist-album-icon" src={album.artist_photo} alt="Artist Icon"/>
+                </div>
+                {album.artist}
+              </Link>
               <div className="album-year-duration">{albumDetails()}</div>
             </div>
           </div>
@@ -212,6 +217,7 @@ const mSTP = state => {
   const { playlists } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedAlbums = currentUserLikes.albums;
+
   return ({
     playlists,
     currentUser: currentUser,

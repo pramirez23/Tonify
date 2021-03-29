@@ -1,7 +1,8 @@
 nav.library-nav {
-  position: relative;
+  position: absolute;
   overflow: hidden;
   white-space: nowrap;
+  top: 8px;
 }
 
 button.library-nav-button {
@@ -219,6 +220,7 @@ h1.library-title {
   /* grid-template-rows: repeat(auto-fill, 267px); */
   grid-auto-rows: 275px;
   width: 100%;
+  padding-bottom: 50px;
 }
 
 .liked-songs-shortcut {
@@ -298,17 +300,21 @@ div.library-item-photo {
   width: 100%;
 }
 
-img.library-playlist-photo {
+img.library-photo, img.library-artist-photo {
   position: relative;
   object-fit: cover;
   width: 80%;
   height: 100%;
   min-width: 170px;
   min-height: 170px;
-  max-height: 200px;
-  max-width: 200px;
+  max-height: 170px;
+  max-width: 170px;
   -webkit-box-shadow: 0px 0px 25px 1px #111111; 
   box-shadow: 0px 0px 25px 1px #111111;
+}
+
+img.library-artist-photo { 
+  border-radius: 90px;
 }
 
 img.hide-library-play, img.hide-song-preview-play {
@@ -337,6 +343,10 @@ img.show-library-play, img.show-song-preview-play {
   -ms-transition: opacity 0.2s ease-in-out;
   -o-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
+}
+
+img.show-library-play:hover, img.show-song-preview-play:hover {
+  transform: scale(1.02);
 }
 
 img.hide-song-preview-play, img.show-song-preview-play {

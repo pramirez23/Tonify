@@ -69,7 +69,7 @@ class Library extends React.Component {
   renderEmptyArtists() {
     return (
       <div className="empty-library">
-        <span id="library-icon" class="material-icons">person_search</span>
+        <span id="library-icon" className="material-icons">person_search</span>
         <p className="empty-library-title">Follow your first artist</p>
         <p className="empty-library-text">Follow artists you like by tapping the follow button.</p>
         <button className="find-artists" onClick={() => this.props.history.push('/search')}>FIND ARTISTS</button>
@@ -113,7 +113,11 @@ class Library extends React.Component {
                 <img
                   className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
                   src={window.playButton}
-                  alt="Play Button" />
+                  alt="Play Button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("clicked")
+                  }} />
               </div>
               {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
@@ -164,11 +168,11 @@ class Library extends React.Component {
 
     switch (location) {
       case "playlists":
-        return !playlists ? this.renderEmptyPlaylists() : this.renderIndex(location)
+        return Object.entries(playlists).length === 0 ? this.renderEmptyPlaylists() : this.renderIndex(location)
       case "artists":
-        return !artists ? this.renderEmptyArtists() : this.renderIndex(location)
+        return Object.entries(artists).length === 0 ? this.renderEmptyArtists() : this.renderIndex(location)
       case "albums":
-        return !albums ? this.renderEmptyAlbums() : this.renderIndex(location)
+        return Object.entries(albums).length === 0 ? this.renderEmptyAlbums() : this.renderIndex(location)
       default:
         break;
     }
