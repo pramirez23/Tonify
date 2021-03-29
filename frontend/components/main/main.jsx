@@ -4,6 +4,7 @@ import PlaylistItemContainer from '../playlist/playlist_item_container';
 import ArtistContainer from '../artist/artist_container';
 import AlbumItemContainer from '../album/album_item_container';
 import NavbarContainer from '../navbar/navbar_container';
+import SearchContainer from '../search/search_container';
 import LibraryContainer from '../library/library_container';
 import Loading from '../loading/loading';
 import Playbar from '../playbar/playbar';
@@ -19,7 +20,7 @@ const Main = (props) => {
       <main className="main-content-container">
         <Loading />
         <Switch>
-          {/* <Route path="/search" component={SearchIndex} /> */}
+          <ProtectedRoute path="/search" component={SearchContainer} />
           <ProtectedRoute path="/library/playlists" component={LibraryContainer} />
           <ProtectedRoute path="/library/artists" component={LibraryContainer} />
           <ProtectedRoute path="/library/albums" component={LibraryContainer} />

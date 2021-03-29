@@ -194,7 +194,7 @@ class Navbar extends React.Component {
       searchQuery
     })
     // () => this.props.fetchSearchResults(this.state.searchQuery)
-  }
+    }
 
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
@@ -230,12 +230,16 @@ class Navbar extends React.Component {
             </nav>
 
             <div className={ location === "search" ? "search-input-container" : "hidden" }>
-              <i className="medium material-icons">search</i>
+              <i id="search-icon" className="medium material-icons">search</i>
               <input
                 className="search-input"
                 type="text"
                 placeholder="Playlists, artists, albums, or songs"
-                onChange={(e) => this.updateSearch(e.target.value)} />
+                onChange={(e) => this.updateSearch(e.target.value)}
+                value={this.state.searchQuery} />
+              <span
+                className={this.state.searchQuery ? "clear-search" : "hidden"}
+                onClick={() => this.setState({searchQuery: ""})}>&#10005;</span>
             </div>
           </div>
         </div>
@@ -267,7 +271,7 @@ class Navbar extends React.Component {
                 <i className="fas fa-user-circle"></i>
             </div>
 
-            <div id="logout-dropdown" onClick={this.props.logout} >Log out</div>
+            <div id="logout-dropdown" onClick={this.props.logout}>Log out</div>
           </div>}
         </div>
       </nav>
