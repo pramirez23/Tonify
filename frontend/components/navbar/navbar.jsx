@@ -242,7 +242,8 @@ class Navbar extends React.Component {
   }
 
   search() {
-    this.props.fetchSearchResults(this.state.searchQuery)
+    const { fetchSearchResults, receiveSearchPage } = this.props;
+    (this.state.searchQuery === "") ? receiveSearchPage() : fetchSearchResults(this.state.searchQuery)
   }
 
   render() {
@@ -288,7 +289,9 @@ class Navbar extends React.Component {
                 value={this.state.searchQuery} />
               <span
                 className={this.state.searchQuery ? "clear-search" : "hidden"}
-                onClick={() => this.setState({searchQuery: ""})}>&#10005;</span>
+                onClick={() => {
+                  this.setState({searchQuery: ""});
+                  this.props.receiveSearchPage();}}>&#10005;</span>
             </div>
           </div>
         </div>

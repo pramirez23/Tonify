@@ -3570,7 +3570,10 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "search",
     value: function search() {
-      this.props.fetchSearchResults(this.state.searchQuery);
+      var _this$props2 = this.props,
+          fetchSearchResults = _this$props2.fetchSearchResults,
+          receiveSearchPage = _this$props2.receiveSearchPage;
+      this.state.searchQuery === "" ? receiveSearchPage() : fetchSearchResults(this.state.searchQuery);
     }
   }, {
     key: "render",
@@ -3638,9 +3641,11 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: this.state.searchQuery ? "clear-search" : "hidden",
         onClick: function onClick() {
-          return _this4.setState({
+          _this4.setState({
             searchQuery: ""
           });
+
+          _this4.props.receiveSearchPage();
         }
       }, "\u2715")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "user-dropdown",
