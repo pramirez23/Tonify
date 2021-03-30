@@ -630,12 +630,31 @@ var removeSongFromPlaylist = function removeSongFromPlaylist(playlistSongId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RECEIVE_SEARCH_PAGE": () => /* binding */ RECEIVE_SEARCH_PAGE,
-/* harmony export */   "receiveSearchPage": () => /* binding */ receiveSearchPage
+/* harmony export */   "RECEIVE_SEARCH_RESULTS": () => /* binding */ RECEIVE_SEARCH_RESULTS,
+/* harmony export */   "receiveSearchPage": () => /* binding */ receiveSearchPage,
+/* harmony export */   "receiveSearchResults": () => /* binding */ receiveSearchResults,
+/* harmony export */   "fetchSearchResults": () => /* binding */ fetchSearchResults
 /* harmony export */ });
+/* harmony import */ var _util_search_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/search_api_util */ "./frontend/util/search_api_util.js");
+
 var RECEIVE_SEARCH_PAGE = "RECEIVE_SEARCH_PAGE";
+var RECEIVE_SEARCH_RESULTS = "RECEIVE_SEARCH_RESULTS";
 var receiveSearchPage = function receiveSearchPage() {
   return {
     type: RECEIVE_SEARCH_PAGE
+  };
+};
+var receiveSearchResults = function receiveSearchResults(payload) {
+  return {
+    type: RECEIVE_SEARCH_RESULTS,
+    payload: payload
+  };
+};
+var fetchSearchResults = function fetchSearchResults(query) {
+  return function (dispatch) {
+    return _util_search_api_util__WEBPACK_IMPORTED_MODULE_0__.fetchSearchResults(query).then(function (payload) {
+      return dispatch(receiveSearchResults(payload));
+    });
   };
 };
 
@@ -3203,6 +3222,8 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
     _this.convertOpacity = _this.convertOpacity.bind(_assertThisInitialized(_this));
     _this.renderContent = _this.renderContent.bind(_assertThisInitialized(_this));
+    _this.updateSearch = _this.updateSearch.bind(_assertThisInitialized(_this));
+    _this.search = _this.search.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3284,7 +3305,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           }
 
         case "search":
-          if (location === "search") {
+          if (location === "search" && this.state.searchQuery === "") {
             this.props.receiveSearchPage();
           }
 
@@ -3397,7 +3418,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
             }
 
           case "search":
-            if (location === "search") {
+            if (location === "search" && this.state.searchQuery === "") {
               this.props.receiveSearchPage();
             }
 
@@ -3541,10 +3562,15 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "updateSearch",
-    value: function updateSearch(searchQuery) {
+    value: function updateSearch(e) {
       this.setState({
-        searchQuery: searchQuery
-      }); // () => this.props.fetchSearchResults(this.state.searchQuery)
+        searchQuery: e.target.value
+      }, this.search);
+    }
+  }, {
+    key: "search",
+    value: function search() {
+      this.props.fetchSearchResults(this.state.searchQuery);
     }
   }, {
     key: "render",
@@ -3607,9 +3633,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         className: "search-input",
         type: "text",
         placeholder: "Playlists, artists, albums, or songs",
-        onChange: function onChange(e) {
-          return _this4.updateSearch(e.target.value);
-        },
+        onChange: this.updateSearch,
         value: this.state.searchQuery
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: this.state.searchQuery ? "clear-search" : "hidden",
@@ -3739,6 +3763,9 @@ var mDTP = function mDTP(dispatch) {
     },
     receiveSearchPage: function receiveSearchPage() {
       return dispatch((0,_actions_search_actions__WEBPACK_IMPORTED_MODULE_11__.receiveSearchPage)());
+    },
+    fetchSearchResults: function fetchSearchResults(query) {
+      return dispatch((0,_actions_search_actions__WEBPACK_IMPORTED_MODULE_11__.fetchSearchResults)(query));
     },
     fetchHome: function fetchHome() {
       return dispatch((0,_actions_home_actions__WEBPACK_IMPORTED_MODULE_3__.fetchHome)());
@@ -7114,16 +7141,7 @@ __webpack_require__.r(__webpack_exports__);
     case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SEARCH_PAGE:
       return false;
 
-    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PLAYLIST_RESULTS:
-      return true;
-
-    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_ARTIST_RESULTS:
-      return true;
-
-    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_ALBUM_RESULTS:
-      return true;
-
-    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONG_RESULTS:
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SEARCH_RESULTS:
       return true;
 
     default:
@@ -7695,6 +7713,31 @@ var mSTP = function mSTP(state) {
 };
 var AuthRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP)(Auth));
 var ProtectedRoute = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP)(Protected));
+
+/***/ }),
+
+/***/ "./frontend/util/search_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/search_api_util.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fetchSearchResults": () => /* binding */ fetchSearchResults
+/* harmony export */ });
+var fetchSearchResults = function fetchSearchResults(query) {
+  return $.ajax({
+    method: "GET",
+    url: "/api/search",
+    data: {
+      search: {
+        query: query
+      }
+    }
+  });
+};
 
 /***/ }),
 

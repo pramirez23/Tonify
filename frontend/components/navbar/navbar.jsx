@@ -19,6 +19,8 @@ class Navbar extends React.Component {
     this.handleDropDown = this.handleDropDown.bind(this);
     this.convertOpacity = this.convertOpacity.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +70,7 @@ class Navbar extends React.Component {
           this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
         }
       case "search":
-        if (location === "search") {
+        if (location === "search" && this.state.searchQuery === "") {
           this.props.receiveSearchPage();
         }
       case "genres":
@@ -139,7 +141,7 @@ class Navbar extends React.Component {
             this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
           }
         case "search":
-          if (location === "search") {
+          if (location === "search" && this.state.searchQuery === "") {
             this.props.receiveSearchPage();
           }
         case "genres":
@@ -233,11 +235,14 @@ class Navbar extends React.Component {
     this.setState({ opacity: converted })
   }
 
-  updateSearch(searchQuery) {
+  updateSearch(e) {
     this.setState({
-      searchQuery
-    })
-    // () => this.props.fetchSearchResults(this.state.searchQuery)
+      searchQuery: e.target.value
+    }, this.search)
+  }
+
+  search() {
+    this.props.fetchSearchResults(this.state.searchQuery)
   }
 
   render() {
@@ -279,7 +284,7 @@ class Navbar extends React.Component {
                 className="search-input"
                 type="text"
                 placeholder="Playlists, artists, albums, or songs"
-                onChange={(e) => this.updateSearch(e.target.value)}
+                onChange={this.updateSearch}
                 value={this.state.searchQuery} />
               <span
                 className={this.state.searchQuery ? "clear-search" : "hidden"}

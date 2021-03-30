@@ -1,4 +1,4 @@
-export const fetchHipHop= () => {
+export const fetchHipHop = () => {
   return $.ajax({
     method: 'GET',
     url: 'api/genres/-1',

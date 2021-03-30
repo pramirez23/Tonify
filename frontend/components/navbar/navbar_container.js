@@ -23,7 +23,7 @@ import {
 } from "../../actions/library_actions";
 
 import { loading } from '../../actions/loading_actions';
-import { receiveSearchPage } from "../../actions/search_actions";
+import { fetchSearchResults, receiveSearchPage } from "../../actions/search_actions";
 
 const mSTP = state => {
   const currentUserId = state.session.id;
@@ -43,6 +43,7 @@ const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
     receiveSearchPage: () => dispatch(receiveSearchPage()),
+    fetchSearchResults: query => dispatch(fetchSearchResults(query)),
     fetchHome: () => dispatch(fetchHome()),
     fetchHipHop: () => dispatch(fetchHipHop()),
     fetchPop: () => dispatch(fetchPop()),
