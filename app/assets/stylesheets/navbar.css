@@ -170,7 +170,7 @@ span.material-icons {
   font-weight: 400;
   font-size: 13px;
   height: 27px;
-  width: 126px;
+  width: 100%;
   margin: 3px auto;
   cursor: pointer;
   display: flex;
@@ -182,6 +182,11 @@ span.material-icons {
 
 .user-dropdown > button:hover, .user-dropdown > button:focus {
   background-color: #1b1b1b;
+}
+
+span.user-dropdown-text {
+  white-space: nowrap;
+  padding: 0px 5px;
 }
 
 .search-input-container {

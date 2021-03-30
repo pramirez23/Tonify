@@ -64,7 +64,7 @@ class Signup extends React.Component {
     e.preventDefault();
 
     this.props.signup(this.organizedState())
-      .then(() => this.props.history.push('/library/playlists'));
+      .then(() => this.props.history.push('/'));
   }
 
   handleDemo(e) {
@@ -74,7 +74,7 @@ class Signup extends React.Component {
       password: "demopassword123"
     }
     this.props.login(demo)
-      .then(() => this.props.history.push('/library'));
+      .then(() => this.props.history.push('/'));
   }
 
 

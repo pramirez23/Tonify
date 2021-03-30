@@ -27,7 +27,7 @@ class Navbar extends React.Component {
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     const pageId = pathName[2];
-    
+
     content.scrollTo({ top: 0, behavior: "auto" });
     
     content.onscroll = () => {
@@ -68,7 +68,9 @@ class Navbar extends React.Component {
           this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
         }
       case "search":
-        this.props.receiveSearchPage();
+        if (location === "search") {
+          this.props.receiveSearchPage();
+        }
       case "genres":
         if (pageId === "hiphop") {
           this.props.fetchHipHop(currentUserId).then(() => this.renderContent());
@@ -80,6 +82,9 @@ class Navbar extends React.Component {
           this.props.fetchRnb(currentUserId).then(() => this.renderContent());
         }
       default:
+        if (location === "") {
+          this.props.fetchHome().then(() => this.renderContent());
+        }
         break;
     }
         
@@ -134,7 +139,9 @@ class Navbar extends React.Component {
             this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
           }
         case "search":
-          this.props.receiveSearchPage();
+          if (location === "search") {
+            this.props.receiveSearchPage();
+          }
         case "genres":
           if (pageId === "hiphop") {
             this.props.fetchHipHop().then(() => this.renderContent());
@@ -146,6 +153,9 @@ class Navbar extends React.Component {
             this.props.fetchRnb().then(() => this.renderContent());
           }
         default:
+          if (location === "") {
+            this.props.fetchHome().then(() => this.renderContent());
+          }
           break;
       }
 
@@ -280,7 +290,7 @@ class Navbar extends React.Component {
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
           <button>
-            <span>{this.props.currentUsername}</span>
+            <span className="user-dropdown-text">{this.props.currentUsername}</span>
             {this.state.hideDropDown ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
           </button>
 

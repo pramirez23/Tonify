@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Navbar from "./navbar"
 import { logout } from '../../actions/session_actions';
+import { fetchHome } from '../../actions/home_actions';
 import { fetchUser } from "../../actions/user_actions";
 import { fetchPlaylist } from "../../actions/playlist_actions";
 import { fetchArtist } from "../../actions/artist_actions";
@@ -42,6 +43,7 @@ const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
     receiveSearchPage: () => dispatch(receiveSearchPage()),
+    fetchHome: () => dispatch(fetchHome()),
     fetchHipHop: () => dispatch(fetchHipHop()),
     fetchPop: () => dispatch(fetchPop()),
     fetchRock: () => dispatch(fetchRock()),
