@@ -48,6 +48,10 @@ class Navbar extends React.Component {
     }
     
     this.props.loading();
+
+    this.setState({
+      searchQuery: ""
+    });
     
     switch (location) {
       case "playlists":
@@ -119,7 +123,11 @@ class Navbar extends React.Component {
       }
       
       this.props.loading();
-      
+
+      this.setState({
+        searchQuery: ""
+      });
+
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());

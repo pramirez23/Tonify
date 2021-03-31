@@ -3266,6 +3266,9 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
       };
 
       this.props.loading();
+      this.setState({
+        searchQuery: ""
+      });
 
       switch (location) {
         case "playlists":
@@ -3380,6 +3383,9 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         };
 
         this.props.loading();
+        this.setState({
+          searchQuery: ""
+        });
 
         switch (location) {
           case "playlists":
@@ -4949,6 +4955,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../songs/song_list_item */ "./frontend/components/songs/song_list_item.jsx");
+/* harmony import */ var _library_library_item_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../library/library_item_container */ "./frontend/components/library/library_item_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4973,6 +4981,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var Search = /*#__PURE__*/function (_React$Component) {
   _inherits(Search, _React$Component);
 
@@ -4992,9 +5002,15 @@ var Search = /*#__PURE__*/function (_React$Component) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
+          currentUser = _this$props.currentUser,
           searchResults = _this$props.searchResults,
-          history = _this$props.history;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+          searchPlaylistIds = _this$props.searchPlaylistIds,
+          history = _this$props.history,
+          playlists = _this$props.playlists,
+          artists = _this$props.artists,
+          albums = _this$props.albums,
+          songs = _this$props.songs;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: !searchResults ? "browse-genres-container" : "hidden"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: "search-title"
@@ -5024,7 +5040,63 @@ var Search = /*#__PURE__*/function (_React$Component) {
           return history.push('/genres/rnb');
         },
         className: "genre-button"
-      }, "R&B")));
+      }, "R&B"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: searchResults ? "search-results-container" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: Object.entries(songs).length > 0 ? "search-songs-container" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-songs-title"
+      }, "Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
+        className: "song-columns"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, Object.values(songs).slice(0).map(function (song, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_songs_song_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
+          song: song,
+          key: idx,
+          num: idx + 1,
+          currentUser: currentUser
+        });
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: Object.entries(artists).length > 0 ? "artist-discography" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-title"
+      }, "Artists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-index"
+      }, Object.values(artists).map(function (artist, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_library_item_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          id: artist.id,
+          artist: artist,
+          key: idx,
+          itemType: "Artist"
+        });
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: Object.entries(albums).length > 0 ? "artist-discography" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-title"
+      }, "Albums"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-index"
+      }, Object.values(albums).map(function (album, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_library_item_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          id: album.id,
+          album: album,
+          key: idx,
+          itemType: "Album"
+        });
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: searchPlaylistIds.length > 0 ? "artist-playlists" : "hidden"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "artist-title"
+      }, "Playlists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "library-index"
+      }, Object.values(playlists).filter(function (playlist) {
+        return searchPlaylistIds.includes(playlist.id);
+      }).map(function (playlist, idx) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_library_library_item_container__WEBPACK_IMPORTED_MODULE_2__.default, {
+          id: playlist.id,
+          playlist: playlist,
+          key: idx,
+          itemType: "Playlist"
+        });
+      })))));
     }
   }]);
 
@@ -5062,8 +5134,12 @@ var mSTP = function mSTP(state) {
       artists = _state$entities.artists,
       albums = _state$entities.albums,
       songs = _state$entities.songs;
-  var searchResults = state.ui.searchResults;
+  var _state$ui = state.ui,
+      searchResults = _state$ui.searchResults,
+      pagePlaylists = _state$ui.pagePlaylists;
   return {
+    currentUser: currentUser,
+    searchPlaylistIds: pagePlaylists,
     searchResults: searchResults,
     playlists: playlists,
     artists: artists,
@@ -5940,6 +6016,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     _this.handleDropDown = _this.handleDropDown.bind(_assertThisInitialized(_this));
     _this.detectPageType = _this.detectPageType.bind(_assertThisInitialized(_this));
     _this.setSongWidth = _this.setSongWidth.bind(_assertThisInitialized(_this));
+    _this.setPlaylistSelectorPosition = _this.setPlaylistSelectorPosition.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -6052,6 +6129,10 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           className = "song-dropdown-other";
           break;
 
+        case "search":
+          className = "song-dropdown-other";
+          break;
+
         default:
           return;
       }
@@ -6090,6 +6171,19 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "setPlaylistSelectorPosition",
+    value: function setPlaylistSelectorPosition() {
+      if (this.state.revealPlaylists) {
+        if (this.detectPageType() === "song-dropdown-options") {
+          return "playlist-selector-container";
+        } else {
+          return "playlist-selector-container-other";
+        }
+      } else {
+        return "hidden";
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -6100,6 +6194,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           album = _this$props2.album,
           playlists = _this$props2.playlists,
           currentUser = _this$props2.currentUser;
+      var validArtLocation = ["playlists", "library", "artists", "search"];
 
       if (this.props.loading || !song) {
         return null;
@@ -6173,7 +6268,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "item-art-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        className: this.state.pageType === "playlists" || this.state.pageType === "library" || this.state.pageType === "artists" ? "item-album-art" : "hidden",
+        className: validArtLocation.includes(this.state.pageType) ? "item-album-art" : "hidden",
         src: song.cover_art,
         alt: "Cover Art"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -6255,7 +6350,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Add to playlist"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "fas fa-caret-right"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "playlist-selector-container"
+        className: this.setPlaylistSelectorPosition()
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
         className: this.state.revealPlaylists ? "playlist-selector" : "hidden"
       }, userPlaylists.slice(0).reverse().map(function (playlist) {
@@ -6532,7 +6627,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
 /* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/genre_actions */ "./frontend/actions/genre_actions.js");
 /* harmony import */ var _actions_home_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/home_actions */ "./frontend/actions/home_actions.js");
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6546,6 +6643,9 @@ var albumsReducer = function albumsReducer() {
   Object.freeze(state);
 
   switch (action.type) {
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_5__.RECEIVE_SEARCH_RESULTS:
+      return action.payload.albums;
+
     case _actions_home_actions__WEBPACK_IMPORTED_MODULE_4__.RECEIVE_HOME:
       return action.payload.albums;
 
@@ -6588,7 +6688,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
 /* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/genre_actions */ "./frontend/actions/genre_actions.js");
 /* harmony import */ var _actions_home_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/home_actions */ "./frontend/actions/home_actions.js");
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6602,6 +6704,9 @@ var artistsReducer = function artistsReducer() {
 
   switch (action.type) {
     case _actions_home_actions__WEBPACK_IMPORTED_MODULE_3__.RECEIVE_HOME:
+      return action.payload.artists;
+
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_4__.RECEIVE_SEARCH_RESULTS:
       return action.payload.artists;
 
     case _actions_artist_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_ARTIST:
@@ -6705,7 +6810,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_playlist_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/playlist_actions */ "./frontend/actions/playlist_actions.js");
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
 /* harmony import */ var _actions_home_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/home_actions */ "./frontend/actions/home_actions.js");
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6717,6 +6824,9 @@ var playlistsReducer = function playlistsReducer() {
   Object.freeze(state);
 
   switch (action.type) {
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_3__.RECEIVE_SEARCH_RESULTS:
+      return Object.assign({}, state, action.payload.playlists);
+
     case _actions_home_actions__WEBPACK_IMPORTED_MODULE_2__.RECEIVE_HOME:
       return Object.assign({}, state, action.payload.playlists);
 
@@ -6760,6 +6870,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_artist_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/artist_actions */ "./frontend/actions/artist_actions.js");
 /* harmony import */ var _actions_album_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/album_actions */ "./frontend/actions/album_actions.js");
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
+
 
 
 
@@ -6772,6 +6884,9 @@ var songsReducer = function songsReducer() {
   Object.freeze(state);
 
   switch (action.type) {
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_5__.RECEIVE_SEARCH_RESULTS:
+      return action.payload.songs;
+
     case _actions_song_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SONGS:
       return Object.assign({}, state, action.songs);
 
@@ -7110,6 +7225,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _actions_home_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/home_actions */ "./frontend/actions/home_actions.js");
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
+
 
 
 var pagePlaylistsReducer = function pagePlaylistsReducer() {
@@ -7119,6 +7236,9 @@ var pagePlaylistsReducer = function pagePlaylistsReducer() {
 
   switch (action.type) {
     case _actions_home_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_HOME:
+      return action.payload.playlistIds;
+
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_1__.RECEIVE_SEARCH_RESULTS:
       return action.payload.playlistIds;
 
     default:

@@ -6,10 +6,13 @@ import {
 
 import { RECEIVE_LIKED_PLAYLISTS } from "../../actions/library_actions";
 import { RECEIVE_HOME } from "../../actions/home_actions";
+import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
 
 const playlistsReducer = (state = {}, action) => {
   Object.freeze(state);
   switch (action.type) {
+    case RECEIVE_SEARCH_RESULTS:
+      return Object.assign({}, state, action.payload.playlists);
     case RECEIVE_HOME:
       return Object.assign({}, state, action.payload.playlists);
     case RECEIVE_PLAYLISTS:

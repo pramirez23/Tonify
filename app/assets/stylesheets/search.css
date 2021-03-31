@@ -38,3 +38,13 @@ div.genre-button {
 div.genre-button:hover {
   transform: scale(1.02);
 }
+
+.search-results-container {
+  position: relative;
+  top: 91px;
+}
+
+.search-songs-container {
+  display: flex;
+  flex-direction: column;
+}
