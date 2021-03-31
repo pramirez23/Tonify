@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import { debounce } from "lodash";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -12,13 +13,15 @@ class Navbar extends React.Component {
       scrollHeight: null,
       opacity: 0,
       content: null,
-      searchQuery: ""
+      searchQuery: "",
     }
     
     this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
     this.convertOpacity = this.convertOpacity.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.updateSearch = this.updateSearch.bind(this);
+    this.search = debounce(this.search.bind(this), 400);
   }
 
   componentDidMount() {
@@ -27,7 +30,7 @@ class Navbar extends React.Component {
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     const pageId = pathName[2];
-    
+
     content.scrollTo({ top: 0, behavior: "auto" });
     
     content.onscroll = () => {
@@ -45,6 +48,10 @@ class Navbar extends React.Component {
     }
     
     this.props.loading();
+
+    this.setState({
+      searchQuery: ""
+    });
     
     switch (location) {
       case "playlists":
@@ -68,7 +75,9 @@ class Navbar extends React.Component {
           this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
         }
       case "search":
-        this.props.receiveSearchPage();
+        if (location === "search" && this.state.searchQuery === "") {
+          this.props.receiveSearchPage();
+        }
       case "genres":
         if (pageId === "hiphop") {
           this.props.fetchHipHop(currentUserId).then(() => this.renderContent());
@@ -80,6 +89,9 @@ class Navbar extends React.Component {
           this.props.fetchRnb(currentUserId).then(() => this.renderContent());
         }
       default:
+        if (location === "") {
+          this.props.fetchHome().then(() => this.renderContent());
+        }
         break;
     }
         
@@ -111,7 +123,11 @@ class Navbar extends React.Component {
       }
       
       this.props.loading();
-      
+
+      this.setState({
+        searchQuery: ""
+      });
+
       switch (location) {
         case "playlists":
           this.props.fetchPlaylist(pageId).then(() => this.renderContent());
@@ -134,7 +150,9 @@ class Navbar extends React.Component {
             this.props.fetchLikedAlbums(currentUserId).then(() => this.renderContent());
           }
         case "search":
-          this.props.receiveSearchPage();
+          if (location === "search" && this.state.searchQuery === "") {
+            this.props.receiveSearchPage();
+          }
         case "genres":
           if (pageId === "hiphop") {
             this.props.fetchHipHop().then(() => this.renderContent());
@@ -146,6 +164,9 @@ class Navbar extends React.Component {
             this.props.fetchRnb().then(() => this.renderContent());
           }
         default:
+          if (location === "") {
+            this.props.fetchHome().then(() => this.renderContent());
+          }
           break;
       }
 
@@ -187,7 +208,7 @@ class Navbar extends React.Component {
         }
       case "genres":
         if (pageId === "hiphop") {
-          this.setState({ content: "Hip hop" });
+          this.setState({content: "Hip hop" });
         } else if (pageId === "pop") {
           this.setState({ content: "Pop" });
         } else if (pageId === "rock") {
@@ -223,11 +244,20 @@ class Navbar extends React.Component {
     this.setState({ opacity: converted })
   }
 
-  updateSearch(searchQuery) {
+  updateSearch(e) {
+    const searchQuery = e.target.value;
+
     this.setState({
       searchQuery
     })
-    // () => this.props.fetchSearchResults(this.state.searchQuery)
+
+    this.search();
+  }
+
+  search() {
+    const { fetchSearchResults, receiveSearchPage } = this.props;
+    const searchQuery = this.state.searchQuery;
+    searchQuery === "" ? receiveSearchPage() : fetchSearchResults(searchQuery);
   }
 
   render() {
@@ -269,18 +299,21 @@ class Navbar extends React.Component {
                 className="search-input"
                 type="text"
                 placeholder="Playlists, artists, albums, or songs"
-                onChange={(e) => this.updateSearch(e.target.value)}
+                onChange={this.updateSearch}
                 value={this.state.searchQuery} />
               <span
                 className={this.state.searchQuery ? "clear-search" : "hidden"}
-                onClick={() => this.setState({searchQuery: ""})}>&#10005;</span>
+                onClick={() => {
+                  this.setState({searchQuery: ""});
+                  this.props.receiveSearchPage();
+                }}>&#10005;</span>
             </div>
           </div>
         </div>
 
         <div className="user-dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
           <button>
-            <span>{this.props.currentUsername}</span>
+            <span className="user-dropdown-text">{this.props.currentUsername}</span>
             {this.state.hideDropDown ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
           </button>
 

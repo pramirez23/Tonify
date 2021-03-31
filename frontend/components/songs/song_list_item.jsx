@@ -30,6 +30,7 @@ class SongListItem extends React.Component {
     this.handleDropDown = this.handleDropDown.bind(this);
     this.detectPageType = this.detectPageType.bind(this);
     this.setSongWidth = this.setSongWidth.bind(this);
+    this.setPlaylistSelectorPosition = this.setPlaylistSelectorPosition.bind(this);
   }
 
   componentDidMount() {
@@ -121,6 +122,9 @@ class SongListItem extends React.Component {
       case "library":
         className = "song-dropdown-other"
         break;
+      case "search":
+        className = "song-dropdown-other"
+        break;
       default:
         return;
     }
@@ -155,9 +159,21 @@ class SongListItem extends React.Component {
     }
   }
 
+  setPlaylistSelectorPosition() {
+    if (this.state.revealPlaylists) {
+      if (this.detectPageType() === "song-dropdown-options") {
+        return "playlist-selector-container"
+      } else {
+        return "playlist-selector-container-other"
+      }
+    } else {
+      return "hidden"
+    }
+  }
+
   render() {
     const { likedSongs, song, album, playlists, currentUser } = this.props;
-    
+    const validArtLocation = ["playlists", "library", "artists", "search"];
     if (this.props.loading || !song) {
       return null;
     }
@@ -225,7 +241,7 @@ class SongListItem extends React.Component {
         <td className={this.setSongWidth(this.state.pageType)}>
           <div className="title-details">
             <div className="item-art-container">
-              <img className={this.state.pageType === "playlists" || this.state.pageType === "library" || this.state.pageType === "artists" ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
+              <img className={validArtLocation.includes(this.state.pageType) ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-artist-container">
               <p className="song-title">{song.title}</p>
@@ -295,7 +311,7 @@ class SongListItem extends React.Component {
               <i className="fas fa-caret-right"></i> 
             </div>
 
-            <div className="playlist-selector-container">
+            <div className={this.setPlaylistSelectorPosition()}>
               <ul className={this.state.revealPlaylists ? "playlist-selector" : "hidden"}>
                 {userPlaylists.slice(0).reverse().map(playlist =>
                   <li

@@ -5,11 +5,17 @@ import {
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_LIKED_ALBUMS } from "../../actions/library_actions";
 import { RECEIVE_GENRE } from "../../actions/genre_actions";
+import { RECEIVE_HOME } from "../../actions/home_actions";
+import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
 
 const albumsReducer = (state = {}, action) => {
   Object.freeze(state);
 
   switch (action.type) {
+    case RECEIVE_SEARCH_RESULTS:
+      return action.payload.albums;
+    case RECEIVE_HOME:
+      return action.payload.albums;
     case RECEIVE_ARTIST:
       return action.payload.albums;
     case RECEIVE_ALBUMS:

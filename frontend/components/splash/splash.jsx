@@ -15,7 +15,7 @@ const Splash = ({ currentUser, login, history }) => {
         password: "demopassword123"
       }
       login(demo)
-        .then(() => history.push('/library/playlists'));
+        .then(() => history.push('/'));
     }
 
     return (

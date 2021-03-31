@@ -330,6 +330,7 @@ playlistSong24 = PlaylistSong.create!(playlist_id: playlist3.id, song_id: song21
 Like.create!(user_id: user1.id, likable_id: playlist1.id, likable_type: "Playlist")
 Like.create!(user_id: user1.id, likable_id: playlist2.id, likable_type: "Playlist")
 Like.create!(user_id: user1.id, likable_id: playlist3.id, likable_type: "Playlist")
+Like.create!(user_id: user2.id, likable_id: playlist3.id, likable_type: "Playlist")
 
 Like.create!(user_id: user1.id, likable_id: artist1.id, likable_type: "Artist")
 Like.create!(user_id: user1.id, likable_id: artist2.id, likable_type: "Artist")

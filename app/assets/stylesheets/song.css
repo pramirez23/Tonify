@@ -83,10 +83,9 @@ div.other-before-playlist-add {
   justify-content: space-between;
 }
 
-div.playlist-selector-container {
+div.playlist-selector-container, div.playlist-selector-container-other {
   position: absolute;
   right: 218px;
-  top: -206px;
   /* background: red; */
   height: 373px;
   display: flex;
@@ -95,7 +94,15 @@ div.playlist-selector-container {
   z-index: 9999;
 }
 
-div.playlist-selector-container:hover {
+div.playlist-selector-container {
+  top: -206px;
+}
+
+div.playlist-selector-container-other {
+  top: -239px;
+}
+
+div.playlist-selector-container:hover, div.playlist-selector-container-other:hover {
   background: transparent;
 }
 

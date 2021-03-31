@@ -1,0 +1,8 @@
+#home-header {
+  background: rgb(113,113,113);
+  background: linear-gradient(180deg, rgba(113,113,113,1) 0%, rgba(18,18,18,1) 100%);
+}
+
+.home-section-container {
+  padding: 0px 50px;
+}
