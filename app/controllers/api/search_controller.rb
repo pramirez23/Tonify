@@ -6,6 +6,8 @@ class Api::SearchController < ApplicationController
     @albums = {};
     @songs = {};
 
+    @search_query = search_params[:query]
+    
     if search_params[:query].length > 0
       @playlists = Playlist.select("playlists.*")
                           .where("LOWER(playlists.name) LIKE ? ", "%#{search_params[:query].downcase}%")

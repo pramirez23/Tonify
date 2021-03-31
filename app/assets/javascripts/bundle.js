@@ -4995,21 +4995,42 @@ var Search = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {};
+    _this.handleNoResults = _this.handleNoResults.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Search, [{
-    key: "render",
-    value: function render() {
+    key: "handleNoResults",
+    value: function handleNoResults() {
       var _this$props = this.props,
-          currentUser = _this$props.currentUser,
-          searchResults = _this$props.searchResults,
           searchPlaylistIds = _this$props.searchPlaylistIds,
-          history = _this$props.history,
-          playlists = _this$props.playlists,
           artists = _this$props.artists,
           albums = _this$props.albums,
           songs = _this$props.songs;
+      var playlistsLength = searchPlaylistIds.length;
+      var artistsLength = Object.entries(artists).length;
+      var albumsLength = Object.entries(albums).length;
+      var songsLength = Object.entries(songs).length;
+
+      if (playlistsLength === 0 && artistsLength === 0 && albumsLength === 0 && songsLength == 0) {
+        return "no-results-found-container";
+      } else {
+        return "hidden";
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props2 = this.props,
+          currentUser = _this$props2.currentUser,
+          searchResults = _this$props2.searchResults,
+          searchQuery = _this$props2.searchQuery,
+          searchPlaylistIds = _this$props2.searchPlaylistIds,
+          history = _this$props2.history,
+          playlists = _this$props2.playlists,
+          artists = _this$props2.artists,
+          albums = _this$props2.albums,
+          songs = _this$props2.songs;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: !searchResults ? "browse-genres-container" : "hidden"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
@@ -5096,7 +5117,15 @@ var Search = /*#__PURE__*/function (_React$Component) {
           key: idx,
           itemType: "Playlist"
         });
-      })))));
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: this.handleNoResults()
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "no-results-text-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+        className: "no-results-title"
+      }, "No results found for \"", searchQuery, "\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "no-results-text"
+      }, "Please make sure your words are spelled correctly or use less or different keywords."))));
     }
   }]);
 
@@ -5136,11 +5165,13 @@ var mSTP = function mSTP(state) {
       songs = _state$entities.songs;
   var _state$ui = state.ui,
       searchResults = _state$ui.searchResults,
+      searchQuery = _state$ui.searchQuery,
       pagePlaylists = _state$ui.pagePlaylists;
   return {
     currentUser: currentUser,
     searchPlaylistIds: pagePlaylists,
     searchResults: searchResults,
+    searchQuery: searchQuery,
     playlists: playlists,
     artists: artists,
     albums: albums,
@@ -7250,6 +7281,38 @@ var pagePlaylistsReducer = function pagePlaylistsReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/ui/search_queries_reducer.js":
+/*!********************************************************!*\
+  !*** ./frontend/reducers/ui/search_queries_reducer.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/search_actions */ "./frontend/actions/search_actions.js");
+
+
+var searchQueriesReducer = function searchQueriesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_search_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_SEARCH_RESULTS:
+      return action.payload.searchQuery;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (searchQueriesReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/ui/search_results_reducer.js":
 /*!********************************************************!*\
   !*** ./frontend/reducers/ui/search_results_reducer.js ***!
@@ -7293,24 +7356,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _modal_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal_reducer */ "./frontend/reducers/ui/modal_reducer.js");
 /* harmony import */ var _alert_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert_reducer */ "./frontend/reducers/ui/alert_reducer.js");
 /* harmony import */ var _loading_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading_reducer */ "./frontend/reducers/ui/loading_reducer.js");
 /* harmony import */ var _search_results_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./search_results_reducer */ "./frontend/reducers/ui/search_results_reducer.js");
-/* harmony import */ var _page_playlists_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page_playlists_reducer */ "./frontend/reducers/ui/page_playlists_reducer.js");
+/* harmony import */ var _search_queries_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./search_queries_reducer */ "./frontend/reducers/ui/search_queries_reducer.js");
+/* harmony import */ var _page_playlists_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page_playlists_reducer */ "./frontend/reducers/ui/page_playlists_reducer.js");
 
 
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_5__.combineReducers)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,redux__WEBPACK_IMPORTED_MODULE_6__.combineReducers)({
   modal: _modal_reducer__WEBPACK_IMPORTED_MODULE_0__.default,
   alert: _alert_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
   loading: _loading_reducer__WEBPACK_IMPORTED_MODULE_2__.default,
   searchResults: _search_results_reducer__WEBPACK_IMPORTED_MODULE_3__.default,
-  pagePlaylists: _page_playlists_reducer__WEBPACK_IMPORTED_MODULE_4__.default
+  searchQuery: _search_queries_reducer__WEBPACK_IMPORTED_MODULE_4__.default,
+  pagePlaylists: _page_playlists_reducer__WEBPACK_IMPORTED_MODULE_5__.default
 }));
 
 /***/ }),

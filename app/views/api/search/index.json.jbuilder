@@ -4,6 +4,7 @@ json.artists({})
 json.albums({})
 json.songs({})
 
+json.searchQuery @search_query
 json.playlistIds @playlists.pluck(:id)
 
 json.playlists do

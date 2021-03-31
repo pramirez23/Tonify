@@ -6,12 +6,13 @@ import { fetchLikedPlaylists } from "../../actions/library_actions";
 const mSTP = state => {
   const currentUser = state.session.id;
   const { playlists, artists, albums, songs } = state.entities;
-  const { searchResults, pagePlaylists } = state.ui;
+  const { searchResults, searchQuery, pagePlaylists } = state.ui;
 
   return ({
     currentUser,
     searchPlaylistIds: pagePlaylists,
     searchResults,
+    searchQuery,
     playlists,
     artists,
     albums,

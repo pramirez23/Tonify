@@ -6,10 +6,43 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
+
+    this.handleNoResults = this.handleNoResults.bind(this);
+  }
+
+  handleNoResults() {
+    const {
+      searchPlaylistIds,
+      artists,
+      albums,
+      songs
+    } = this.props;
+
+    const playlistsLength = searchPlaylistIds.length;
+    const artistsLength = Object.entries(artists).length;
+    const albumsLength = Object.entries(albums).length;
+    const songsLength = Object.entries(songs).length;
+
+    if (playlistsLength === 0 && artistsLength === 0 && albumsLength === 0 && songsLength == 0) {
+      return "no-results-found-container";
+    } else {
+      return "hidden";
+    }
   }
 
   render() {
-    const { currentUser, searchResults, searchPlaylistIds, history, playlists, artists, albums, songs } = this.props;
+    const {
+      currentUser,
+      searchResults,
+      searchQuery,
+      searchPlaylistIds,
+      history,
+      playlists,
+      artists,
+      albums,
+      songs
+    } = this.props;
+
     return (
       <>
         <div className={!searchResults ? "browse-genres-container" : "hidden"}>
@@ -88,6 +121,13 @@ class Search extends React.Component {
                   itemType="Playlist" />
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className={this.handleNoResults()}>
+          <div className="no-results-text-container">
+            <h2 className="no-results-title">No results found for "{searchQuery}"</h2>
+            <span className="no-results-text">Please make sure your words are spelled correctly or use less or different keywords.</span>
           </div>
         </div>
       </>
