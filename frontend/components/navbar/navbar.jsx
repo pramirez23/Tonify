@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import { debounce } from "lodash";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Navbar extends React.Component {
       scrollHeight: null,
       opacity: 0,
       content: null,
-      searchQuery: ""
+      searchQuery: "",
     }
     
     this.dropDown = React.createRef();
@@ -20,7 +21,7 @@ class Navbar extends React.Component {
     this.convertOpacity = this.convertOpacity.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
-    this.search = this.search.bind(this);
+    this.search = debounce(this.search.bind(this), 400);
   }
 
   componentDidMount() {
@@ -199,7 +200,7 @@ class Navbar extends React.Component {
         }
       case "genres":
         if (pageId === "hiphop") {
-          this.setState({ content: "Hip hop" });
+          this.setState({content: "Hip hop" });
         } else if (pageId === "pop") {
           this.setState({ content: "Pop" });
         } else if (pageId === "rock") {
@@ -236,14 +237,19 @@ class Navbar extends React.Component {
   }
 
   updateSearch(e) {
+    const searchQuery = e.target.value;
+
     this.setState({
-      searchQuery: e.target.value
-    }, this.search)
+      searchQuery
+    })
+
+    this.search();
   }
 
   search() {
     const { fetchSearchResults, receiveSearchPage } = this.props;
-    (this.state.searchQuery === "") ? receiveSearchPage() : fetchSearchResults(this.state.searchQuery)
+    const searchQuery = this.state.searchQuery;
+    searchQuery === "" ? receiveSearchPage() : fetchSearchResults(searchQuery);
   }
 
   render() {
@@ -291,7 +297,8 @@ class Navbar extends React.Component {
                 className={this.state.searchQuery ? "clear-search" : "hidden"}
                 onClick={() => {
                   this.setState({searchQuery: ""});
-                  this.props.receiveSearchPage();}}>&#10005;</span>
+                  this.props.receiveSearchPage();
+                }}>&#10005;</span>
             </div>
           </div>
         </div>
