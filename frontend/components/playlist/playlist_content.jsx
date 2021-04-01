@@ -124,6 +124,7 @@ class Playlist extends React.Component {
             playlistSongId={song[0]}
             key={idx}
             num={(idx + 1)}
+            pageIdx={idx}
             history={history}
             currentUser={currentUser}
             playlist={playlist}
@@ -139,6 +140,7 @@ class Playlist extends React.Component {
             playlistSongId={song[0]}
             key={idx}
             num={(idx + 1)}
+            pageIdx={idx}
           />
         )
       )

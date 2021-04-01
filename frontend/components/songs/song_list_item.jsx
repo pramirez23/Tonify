@@ -163,8 +163,8 @@ class SongListItem extends React.Component {
   }
   
   handlePlay() {
-    if (!isPlaying) return;
-    this.state.playing ? this.audio.pause() : this.audio.play();
+    const { song, pageIdx, playSong, pauseSong, pageQueue } = this.props;
+    this.state.isPlaying ? pauseSong() : playSong(song, pageIdx, pageQueue);
     this.setState({
       isPlaying: !this.state.isPlaying
     });
@@ -356,10 +356,12 @@ const mSTP = state => {
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
-
+  const pageQueue = state.ui.playbar.pageQueue;
+  
   return ({
     playlists,
     currentUser: currentUser,
+    pageQueue,
     songs,
     likedSongs,
     loading
@@ -368,7 +370,8 @@ const mSTP = state => {
 
 const mDTP = dispatch => {
   return {
-    playSong: (song, pageQueue) => dispatch(playSong(song, pageQueue)),
+    playSong: (song, pageIndex, pageQueue) => dispatch(playSong(song, pageIndex, pageQueue)),
+    pauseSong: () => dispatch(pauseSong()),
     likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
     unlikeSongFromLibrary: (likableId, likableType) => dispatch(unlikeSongFromLibrary(likableId, likableType)),

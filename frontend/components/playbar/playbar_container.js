@@ -6,9 +6,16 @@ import { fetchNextSong, fetchQueueSong } from "../../actions/playbar_actions";
 const mSTP = (state) => {
   const currentUser = state.session.id;
   const { playlists } = state.entities;
+  const { isPlaying, currentSong, currentQueue, currentSongIndex, userQueue } = state.ui.playbar;
+
   return ({
     currentUser: currentUser,
+    isPlaying,
     playlists,
+    currentSong,
+    currentSongIndex,
+    currentQueue,
+    userQueue
   });
 };
 

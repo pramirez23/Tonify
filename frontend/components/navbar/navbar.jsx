@@ -20,6 +20,7 @@ class Navbar extends React.Component {
     this.handleDropDown = this.handleDropDown.bind(this);
     this.convertOpacity = this.convertOpacity.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.renderPlayButton = this.renderPlayButton.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.search = debounce(this.search.bind(this), 400);
   }
@@ -223,15 +224,45 @@ class Navbar extends React.Component {
     }
   }
 
+  renderPlayButton() {
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+
+    switch (location) {
+      case "":
+        return "hidden"
+      case "playlists":
+        return "nav-play-button"
+      case "albums":
+        return "nav-play-button"
+      case "artists":
+        return "nav-play-button"
+      case "library":
+        if (pageId === "songs") {
+          return "nav-play-button"
+        } else {
+          return "hidden"
+        }
+      case "search":
+        return "hidden"
+      case "genres":
+        return "hidden"
+      default:
+        break;
+    }
+  }
+
   convertOpacity() {
     const { scrollTop, scrollHeight } = this.state;
     const path = this.props.location.pathname;
     const pathName = path.split('/');
     const location = pathName[1];
+    const pageId = pathName[2];
 
     let oldRange, newRange, converted;
 
-    if (location === "library" || location === "search") {
+    if ((location === "library" && pageId !== "songs") || location === "search") {
       oldRange = (scrollHeight - 20);
       newRange = (10 - 1);
       converted = (((scrollTop - 20) * newRange) / oldRange);
@@ -276,7 +307,9 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-content">
+            
             <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
+              <img className={this.renderPlayButton()} src={window.playButton} />
               {this.state.content}
             </h1>
             <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>

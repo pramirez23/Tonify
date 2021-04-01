@@ -78,6 +78,7 @@ class Search extends React.Component {
                   <SongListItem
                     song={song}
                     key={idx}
+                    pageIdx={idx}
                     num={(idx + 1)}
                     currentUser={currentUser}
                   />)}

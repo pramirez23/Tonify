@@ -7,12 +7,10 @@ class Playbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPlaying: false,
       duration: 0,
       currentTime: 0,
       volume: 1,
       loop: false,
-      queueIndex: 0
     }
 
     this.handleMetadata = this.handleMetadata.bind(this);
@@ -35,8 +33,9 @@ class Playbar extends React.Component {
   }
 
   handleMetadata() {
+    const audio = document.getElementById("audio")
     this.setState({
-      duration: this.audio.duration
+      duration: audio.duration
     });
   }
 
@@ -64,37 +63,49 @@ class Playbar extends React.Component {
   }
 
   handlePlay() {
-    if (!this.audio) return;
-    this.state.playing ? this.audio.pause() : this.audio.play();
-    this.setState({ 
-      isPlaying: !this.state.isPlaying
-    });
+    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
+    const audio = document.getElementById("audio");
+    if (isPlaying) {
+      audio.pause();
+      pauseSong();
+    } else {
+      audio.play();
+      playSong(currentSong, currentSongIndex, currentQueue);
+    }
+
+    // this.setState({ 
+    //   isPlaying: !this.state.isPlaying
+    // });
   }
 
   handleVolume(e) {
-    this.audio.volume = e.target.value;
+    const audio = document.getElementById("audio")
+    audio.volume = e.target.value;
     this.setState({
       volume: e.target.value
     })
   }
 
   handleTimeUpdate() {
+    const audio = document.getElementById("audio");
+    const progressBar = document.getElementById("progress-bar")
     this.setState({
-      currentTime: this.audio.currentTime
+      currentTime: audio.currentTime
     });
-    this.progressBar.value = this.state.currentTime;
+    progressBar.value = this.state.currentTime;
   }
 
   handleProgressChange(e) {
+    document.getElementById("audio")
     this.setState({
       currentTime: e.target.value
     });
-    this.audio.currentTime = e.target.value;
+    audio.currentTime = e.target.value;
   }
 
   render() { 
     let renderHeart;
-    const { currentTrack } = this.props;
+    const { currentSong, currentSongIndex, currentQueue } = this.props;
     // if (!likedSongs || !likedSongs[song.id]) {
     //   renderHeart = (
     //     <i
@@ -130,18 +141,22 @@ class Playbar extends React.Component {
     //     </i>
     //   )
     // }
-
+    
     return (
       <div className="playbar-container">
 
         <div className="playbar-song-info-container">
-          <div className="playbar-cover-container">
-            <div className="playbar-cover">Cover</div>
+          <div className={currentSong ? "playbar-cover-art-container" : "hidden"}>
+            <img 
+              className="playbar-cover-art"
+              draggable="false"
+              src={currentSong? currentSong.cover_art : ""}
+              alt="Playbar Art"/>
           </div>
 
           <div className="playbar-song-details-container">
-            <span className="playbar-song-title">Song Title</span>
-            <span className="playbar-artist-title">Artist Title</span>
+            <span className={currentSong ? "playbar-song-title" : "hidden"}>{currentSong ? currentSong.title : ""}</span>
+            <span className={currentSong ? "playbar-artist-title" : "hidden"}>{currentSong ? currentSong.artist : ""}</span>
           </div>
 
           <i className="far fa-heart"></i>
@@ -170,9 +185,9 @@ class Playbar extends React.Component {
           </div>
 
           <div className="song-progress-bar-container">
-            <span className="song-progress-time">{renderSongDuration(this.state.currentTime)}</span>
+            <span id="song-progress-current" className="song-progress-time">{renderSongDuration(this.state.currentTime)}</span>
             <audio
-              src=""
+              src={currentSong ? currentSong.audio_file : ""}
               id="audio"
               autoPlay
               onTimeUpdate={this.handleTimeUpdate}
@@ -193,6 +208,7 @@ class Playbar extends React.Component {
           <i className="fas fa-volume-up"></i>
           <input
             id="volume-bar"
+            onChange={this.handleVolume}
             className="volume-bar"
             type="range"
             min="0"

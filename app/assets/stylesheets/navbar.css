@@ -45,6 +45,8 @@ h1.navbar-title, h1.hide-navbar-title {
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
   cursor: default;
+  display: flex;
+  align-items: center;
 }
 
 h1.hide-navbar-title {
@@ -257,4 +259,9 @@ h2.no-results-title {
   font-weight: 500;
   font-size: 26px;
   margin-bottom: 15px;
+}
+
+.nav-play-button {
+  width: 37px;
+  margin-right: 20px;
 }

@@ -66,6 +66,7 @@ class Artist extends React.Component {
                   song={song}
                   key={idx}
                   num={(idx + 1)}
+                  pageIdx={idx}
                   currentUser={currentUser}
                 />)}
             </tbody>
