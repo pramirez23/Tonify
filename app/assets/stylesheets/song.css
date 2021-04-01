@@ -136,6 +136,14 @@ div.playlist-selector-container:hover,  div.playlist-selector-container-other:ho
   background-color: #414141;
 }
 
+#is-playing {
+  color: #29AE51;
+}
+
+#white {
+  color: white;
+}
+
 @keyframes likesong {
   0% {
     transform: scale(1.0);

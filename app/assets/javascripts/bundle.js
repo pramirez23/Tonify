@@ -4038,6 +4038,16 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handlePrev",
     value: function handlePrev() {
+      var _this$props = this.props,
+          isPlaying = _this$props.isPlaying,
+          pauseSong = _this$props.pauseSong,
+          playSong = _this$props.playSong,
+          currentSong = _this$props.currentSong,
+          currentSongIndex = _this$props.currentSongIndex,
+          currentQueue = _this$props.currentQueue;
+      var audio = document.getElementById("audio");
+      if (!currentSong) return;
+
       if (this.state.queueIndex >= 1 && this.state.queueIndex) {
         this.props.fetchNextTrack(this.props.playbar.queue[this.state.queueIndex - 1]);
         this.setState({
@@ -4050,6 +4060,16 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleNext",
     value: function handleNext() {
+      var _this$props2 = this.props,
+          isPlaying = _this$props2.isPlaying,
+          pauseSong = _this$props2.pauseSong,
+          playSong = _this$props2.playSong,
+          currentSong = _this$props2.currentSong,
+          currentSongIndex = _this$props2.currentSongIndex,
+          currentQueue = _this$props2.currentQueue;
+      var audio = document.getElementById("audio");
+      if (!currentSong) return;
+
       if (this.state.queueIndex <= this.props.playbar.queue.length - 1) {
         if (this.state.queueIndex === 0) {
           this.setState({
@@ -4069,14 +4089,15 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handlePlay",
     value: function handlePlay() {
-      var _this$props = this.props,
-          isPlaying = _this$props.isPlaying,
-          pauseSong = _this$props.pauseSong,
-          playSong = _this$props.playSong,
-          currentSong = _this$props.currentSong,
-          currentSongIndex = _this$props.currentSongIndex,
-          currentQueue = _this$props.currentQueue;
+      var _this$props3 = this.props,
+          isPlaying = _this$props3.isPlaying,
+          pauseSong = _this$props3.pauseSong,
+          playSong = _this$props3.playSong,
+          currentSong = _this$props3.currentSong,
+          currentSongIndex = _this$props3.currentSongIndex,
+          currentQueue = _this$props3.currentQueue;
       var audio = document.getElementById("audio");
+      if (!currentSong) return;
 
       if (isPlaying) {
         audio.pause();
@@ -4122,19 +4143,21 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var _this$props2 = this.props,
-          currentSong = _this$props2.currentSong,
-          currentSongIndex = _this$props2.currentSongIndex,
-          currentQueue = _this$props2.currentQueue,
-          likedSongs = _this$props2.likedSongs,
-          likeSong = _this$props2.likeSong,
-          unlikeSong = _this$props2.unlikeSong,
-          unlikeSongFromLibrary = _this$props2.unlikeSongFromLibrary,
-          openAlert = _this$props2.openAlert,
-          closeAlert = _this$props2.closeAlert;
+      var _this$props4 = this.props,
+          currentSong = _this$props4.currentSong,
+          currentSongIndex = _this$props4.currentSongIndex,
+          currentQueue = _this$props4.currentQueue,
+          likedSongs = _this$props4.likedSongs,
+          likeSong = _this$props4.likeSong,
+          isPlaying = _this$props4.isPlaying,
+          unlikeSong = _this$props4.unlikeSong,
+          unlikeSongFromLibrary = _this$props4.unlikeSongFromLibrary,
+          openAlert = _this$props4.openAlert,
+          closeAlert = _this$props4.closeAlert;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var renderHeart;
+      var pauseOrPlay;
 
       if (currentSong) {
         if (!likedSongs || !likedSongs[currentSong.id]) {
@@ -4167,6 +4190,20 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             }
           });
         }
+      }
+
+      if (!isPlaying) {
+        pauseOrPlay = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          id: "play",
+          className: "fas fa-play-circle",
+          onClick: this.handlePlay
+        });
+      } else {
+        pauseOrPlay = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+          id: "pause",
+          className: "fas fa-pause-circle",
+          onClick: this.handlePlay
+        });
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -4203,11 +4240,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         id: "back",
         className: "fas fa-step-backward",
         onClick: this.handlePrev
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        id: "play",
-        className: "fas fa-play-circle",
-        onClick: this.handlePlay
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+      }), pauseOrPlay, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         id: "forward",
         className: "fas fa-step-forward",
         onClick: this.handleNext
@@ -6645,15 +6678,18 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     key: "handlePlay",
     value: function handlePlay() {
       var _this$props2 = this.props,
-          song = _this$props2.song,
-          pageIdx = _this$props2.pageIdx,
-          playSong = _this$props2.playSong,
+          isPlaying = _this$props2.isPlaying,
           pauseSong = _this$props2.pauseSong,
-          pageQueue = _this$props2.pageQueue;
-      this.state.isPlaying ? pauseSong() : playSong(song, pageIdx, pageQueue);
-      this.setState({
-        isPlaying: !this.state.isPlaying
-      });
+          playSong = _this$props2.playSong,
+          song = _this$props2.song,
+          currentSongIndex = _this$props2.currentSongIndex,
+          currentQueue = _this$props2.currentQueue;
+
+      if (isPlaying) {
+        pauseSong();
+      } else {
+        playSong(song, currentSongIndex, currentQueue);
+      }
     }
   }, {
     key: "render",
@@ -6665,7 +6701,12 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           song = _this$props3.song,
           album = _this$props3.album,
           playlists = _this$props3.playlists,
-          currentUser = _this$props3.currentUser;
+          currentUser = _this$props3.currentUser,
+          isPlaying = _this$props3.isPlaying,
+          currentSong = _this$props3.currentSong,
+          currentSongIndex = _this$props3.currentSongIndex,
+          pageIdx = _this$props3.pageIdx,
+          pageQueue = _this$props3.pageQueue;
       var validArtLocation = ["playlists", "library", "artists", "search"];
 
       if (this.props.loading || !song) {
@@ -6683,11 +6724,41 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var renderHeart;
 
       if (isHovering) {
-        playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-          className: "fas fa-play"
-        });
+        if (isPlaying) {
+          if (pageIdx === currentSongIndex) {
+            playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+              onClick: function onClick() {
+                return _this3.props.pauseSong();
+              },
+              className: "fas fa-pause"
+            });
+          } else {
+            playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+              onClick: function onClick() {
+                return _this3.props.playSong(song, pageIdx, pageQueue);
+              },
+              className: "fas fa-play"
+            });
+          }
+        } else {
+          playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+            onClick: function onClick() {
+              return _this3.props.playSong(song, pageIdx, pageQueue);
+            },
+            className: "fas fa-play"
+          });
+        }
       } else {
-        playOrNum = this.props.num;
+        if (isPlaying && pageIdx === currentSongIndex) {
+          playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+            id: "is-playing",
+            className: "fas fa-volume-up"
+          });
+        } else {
+          playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            id: currentSong === song ? "is-playing" : ""
+          }, this.props.num);
+        }
       }
 
       if (!likedSongs || !likedSongs[song.id]) {
@@ -6732,7 +6803,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           return _this3.handleMouseLeave();
         },
         onDoubleClick: function onDoubleClick() {
-          return _this3.handlePlay();
+          return _this3.props.playSong(song, pageIdx, pageQueue);
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: "num-column"
@@ -6751,11 +6822,12 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "title-artist-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+        id: currentSong === song ? "is-playing" : "",
         className: "song-title"
       }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "artist-link-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
-        id: "artist-link",
+        id: this.state.isHovering ? "artist-link-hovering" : "artist-link",
         className: this.state.pageType === "artists" ? "hidden" : "",
         to: "/artists/".concat(song.artist_id)
       }, song.artist)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
@@ -6879,10 +6951,21 @@ var mSTP = function mSTP(state) {
   var currentUserLikes = state.entities.users[currentUser].likes;
   var likedSongs = currentUserLikes.songs;
   var loading = state.ui.loading.loading;
-  var pageQueue = state.ui.playbar.pageQueue;
+  var _state$ui$playbar = state.ui.playbar,
+      isPlaying = _state$ui$playbar.isPlaying,
+      currentSong = _state$ui$playbar.currentSong,
+      currentQueue = _state$ui$playbar.currentQueue,
+      currentSongIndex = _state$ui$playbar.currentSongIndex,
+      pageQueue = _state$ui$playbar.pageQueue,
+      userQueue = _state$ui$playbar.userQueue;
   return {
     playlists: playlists,
     currentUser: currentUser,
+    currentSongIndex: currentSongIndex,
+    currentQueue: currentQueue,
+    userQueue: userQueue,
+    currentSong: currentSong,
+    isPlaying: isPlaying,
     pageQueue: pageQueue,
     songs: songs,
     likedSongs: likedSongs,

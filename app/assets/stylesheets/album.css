@@ -63,6 +63,14 @@ a.artist-link {
   align-items: center;
 }
 
+a#artist-link-hovering {
+  text-decoration: none;
+  margin-right: 4px;
+  display: flex;
+  color: white;
+  align-items: center;
+}
+
 a.artist-link:hover {
   text-decoration: underline;
 }

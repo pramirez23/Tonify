@@ -31,13 +31,12 @@
   color: #B3B3B3;
 }
 
-#play {
+#play, #pause {
   color: white;
   font-size: 35px;
-  transition: all 0.1s ease-out;
 }
 
-#play:hover {
+#play:hover, #pause:hover {
   transform: scale(1.07);
 }
 

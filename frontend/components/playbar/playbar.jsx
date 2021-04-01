@@ -40,6 +40,11 @@ class Playbar extends React.Component {
   }
 
   handlePrev() {
+    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
+    const audio = document.getElementById("audio");
+
+    if (!currentSong) return;
+
     if (this.state.queueIndex >= 1 && this.state.queueIndex) {
       this.props.fetchNextTrack(this.props.playbar.queue[this.state.queueIndex - 1])
       this.setState({ i: this.state.queueIndex - 1 })
@@ -49,6 +54,11 @@ class Playbar extends React.Component {
   }
 
   handleNext() {
+    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
+    const audio = document.getElementById("audio");
+
+    if (!currentSong) return;
+
     if (this.state.queueIndex <= this.props.playbar.queue.length - 1) {
       if (this.state.queueIndex === 0) {
         this.setState({ i: 1 })
@@ -65,6 +75,9 @@ class Playbar extends React.Component {
   handlePlay() {
     const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
     const audio = document.getElementById("audio");
+
+    if (!currentSong) return; 
+
     if (isPlaying) {
       audio.pause();
       pauseSong();
@@ -110,6 +123,7 @@ class Playbar extends React.Component {
       currentQueue,
       likedSongs,
       likeSong,
+      isPlaying,
       unlikeSong,
       unlikeSongFromLibrary,
       openAlert,
@@ -120,6 +134,7 @@ class Playbar extends React.Component {
     const location = pathName[1];
 
     let renderHeart;
+    let pauseOrPlay;
 
     if (currentSong) {
       if (!likedSongs || !likedSongs[currentSong.id]) {
@@ -159,6 +174,12 @@ class Playbar extends React.Component {
         )
       }
     }
+
+    if (!isPlaying) {
+      pauseOrPlay = <i id="play" className="fas fa-play-circle" onClick={this.handlePlay}></i>
+    } else {
+      pauseOrPlay = <i id="pause" className="fas fa-pause-circle" onClick={this.handlePlay}></i>
+    }
     
     return (
       <div className="playbar-container">
@@ -193,10 +214,9 @@ class Playbar extends React.Component {
               id="back"
               className="fas fa-step-backward"
               onClick={this.handlePrev}></i>
-            <i
-              id="play"
-              className="fas fa-play-circle"
-              onClick={this.handlePlay}></i>
+
+            {pauseOrPlay}
+
             <i
               id="forward"
               className="fas fa-step-forward"

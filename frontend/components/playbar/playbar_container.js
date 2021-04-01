@@ -10,7 +10,7 @@ const mSTP = (state) => {
   const { playlists } = state.entities;
   const { isPlaying, currentSong, currentQueue, currentSongIndex, userQueue } = state.ui.playbar;
   const currentUserLikes = state.entities.users[currentUser].likes;
-  const likedSongs = currentUserLikes.songs;
+  const likedSongs = currentUserLikes.songs
 
   return ({
     currentUser: currentUser,
