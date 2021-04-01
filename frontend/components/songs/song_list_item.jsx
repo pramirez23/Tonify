@@ -7,6 +7,7 @@ import { renderSongDuration, renderDateAdded } from '../../util/time_util';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 import { addAlbumSongToPlaylist } from '../../actions/album_actions';
+import { playSong, pauseSong } from '../../actions/playbar_actions';
 
 class SongListItem extends React.Component {
   _isMounted = false;
@@ -15,6 +16,7 @@ class SongListItem extends React.Component {
     super(props);
 
     this.state = {
+      isPlaying: false,
       isLiked: false,
       isHovering: false,
       revealPlaylists: false,
@@ -31,6 +33,7 @@ class SongListItem extends React.Component {
     this.detectPageType = this.detectPageType.bind(this);
     this.setSongWidth = this.setSongWidth.bind(this);
     this.setPlaylistSelectorPosition = this.setPlaylistSelectorPosition.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -132,18 +135,6 @@ class SongListItem extends React.Component {
     return className;
   }
 
-  // dateRender(location) { 
-  //   const { likedSongs, song } = this.props;
-  //   if (!song) return null;
-
-  //   if (location === "playlists") {
-  //     return this.props.dateAdded;
-  //   } else if (location === "library") {
-  //     return renderDateAdded(likedSongs[song.id].created_at);
-  //   } else {
-  //     return null;
-  //   }
-  // }
   setSongWidth(pageType) {
     switch (pageType) {
       case "playlists":
@@ -169,6 +160,14 @@ class SongListItem extends React.Component {
     } else {
       return "hidden"
     }
+  }
+  
+  handlePlay() {
+    if (!isPlaying) return;
+    this.state.playing ? this.audio.pause() : this.audio.play();
+    this.setState({
+      isPlaying: !this.state.isPlaying
+    });
   }
 
   render() {
@@ -235,7 +234,8 @@ class SongListItem extends React.Component {
       <tr
         className="song"
         onMouseEnter={(e) => this.handleMouseEnter(e)}
-        onMouseLeave={() => this.handleMouseLeave()}>
+        onMouseLeave={() => this.handleMouseLeave()}
+        onDoubleClick={() => this.handlePlay()}>
 
         <td className="num-column">{playOrNum}</td>
         <td className={this.setSongWidth(this.state.pageType)}>
@@ -352,7 +352,7 @@ class SongListItem extends React.Component {
 
 const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists } = state.entities;
+  const { playlists, songs } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
@@ -360,6 +360,7 @@ const mSTP = state => {
   return ({
     playlists,
     currentUser: currentUser,
+    songs,
     likedSongs,
     loading
   });
@@ -367,6 +368,7 @@ const mSTP = state => {
 
 const mDTP = dispatch => {
   return {
+    playSong: (song, pageQueue) => dispatch(playSong(song, pageQueue)),
     likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
     unlikeSongFromLibrary: (likableId, likableType) => dispatch(unlikeSongFromLibrary(likableId, likableType)),

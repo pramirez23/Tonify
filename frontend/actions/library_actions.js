@@ -28,10 +28,10 @@ export const receiveLikedAlbums = likedAlbums => {
   }
 };
 
-export const receiveLikedSongs = likedSongs => {
+export const receiveLikedSongs = payload => {
   return {
     type: RECEIVE_LIKED_SONGS,
-    likedSongs
+    payload
   }
 };
 

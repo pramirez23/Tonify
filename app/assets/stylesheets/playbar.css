@@ -5,6 +5,7 @@
   position: fixed;
   bottom: 0%;
   width: 100%;
+  min-width: 700px;
   z-index: 1001;
   display: flex;
   justify-content: center;
@@ -21,14 +22,13 @@
 }
 
 #random, #back, #forward, #repeat {
-  transition: all 0.3s ease-out;
   color: #B3B3B3;
 }
 
 #play {
   color: white;
-  font-size: 28px;
-  transition: all 0.2s ease-out;
+  font-size: 35px;
+  transition: all 0.1s ease-out;
 }
 
 #play:hover {
@@ -39,3 +39,46 @@
   color: white;
 }
 
+.playbar-song-info-container {
+  display: flex;
+  color: white;
+  align-items: center;
+  width: 30%;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+.playbar-song-details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.song-progress-controls-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+}
+
+.song-progress-bar-container {
+  width: 100%;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+}
+
+input.progress-bar {
+  width: 100%;
+}
+
+.volume-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 30%;
+  padding-right: 20px;
+  color: white;
+  align-items: center;
+}

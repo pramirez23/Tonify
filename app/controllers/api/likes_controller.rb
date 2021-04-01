@@ -84,8 +84,9 @@ class Api::LikesController < ApplicationController
 
   def fetch_liked_songs
     @user = User.find_by(id: current_user.id)
-    @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
+    @likes = @user.likes.where(likable_type: "Song").order(:created_at).pluck(:likable_id, :created_at).to_h
     @songs = Song.where(id: @likes.keys)
+    @pageQueue = @likes.keys.reverse
     render 'api/songs/index'
   end
 

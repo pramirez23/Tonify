@@ -1,22 +1,24 @@
-// import { connect } from "react-redux";
-// import Sidebar from "./sidebar"
-// import { createPlaylist, fetchPlaylists } from "../../actions/playlist_actions"
+import { connect } from "react-redux";
+import Playbar from "./playbar"
+import { like, unlike } from "../../actions/library_actions";
+import { fetchNextSong, fetchQueueSong } from "../../actions/playbar_actions";
 
-// const mSTP = (state, ownProps) => {
-//   const currentUser = state.session.id;
-//   const { playlists } = state.entities;
-//   return ({
-//     playlists,
-//     currentUser: currentUser,
-//     lastPlaylist: Object.keys(playlists).slice(-1)[0]
-//   });
-// };
+const mSTP = (state) => {
+  const currentUser = state.session.id;
+  const { playlists } = state.entities;
+  return ({
+    currentUser: currentUser,
+    playlists,
+  });
+};
 
-// const mDTP = dispatch => {
-//   return {
-//     fetchPlaylists: () => dispatch(fetchPlaylists()),
-//     createPlaylist: (playlist) => dispatch(createPlaylist(playlist))
-//   }
-// };
+const mDTP = dispatch => {
+  return {
+    likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
+    unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
+    fetchNextSong: songId => dispatch(fetchNextSong(songId)),
+    fetchQueueSong: songId => dispatch(fetchQueueSong(songId))
+  };
+};
 
-// export default connect(mSTP, mDTP)(Sidebar); 
+export default connect(mSTP, mDTP)(Playbar);   

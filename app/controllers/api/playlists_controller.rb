@@ -20,6 +20,7 @@ class Api::PlaylistsController < ApplicationController
 
   def show
     @playlist = Playlist.find(params[:id])
+    @songs = PlaylistSong.where(playlist_id: params[:id]).order(:created_at)
     render :show
   end
 
