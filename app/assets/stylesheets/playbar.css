@@ -10,6 +10,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #playbar-controls {
@@ -41,7 +47,6 @@
 
 .playbar-song-info-container {
   display: flex;
-  color: white;
   align-items: center;
   width: 30%;
   justify-content: flex-start;
@@ -53,6 +58,10 @@
 .playbar-song-details-container {
   display: flex;
   flex-direction: column;
+  margin-right: 15px;
+  height: 40px;
+  justify-content: space-evenly;
+  letter-spacing: 0.12px;
 }
 
 .song-progress-controls-container {
@@ -88,7 +97,8 @@ input.progress-bar {
 
 img.playbar-cover-art {
   object-fit: cover;
-  width: 100%;
+  /* width: 100%; */
+  width: 56px;
 }
 
 .playbar-cover-art-container {
@@ -206,4 +216,35 @@ span.song-progress-time {
   display: flex;
   width: 20px;
   justify-content: center;
+  color: #B3B3B3;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+span.playbar-song-title {
+  font-size: 16px;
+  color: white;
+}
+
+span.playbar-artist-title {
+  font-size: 13px;
+  color: #B3B3B3;
+}
+
+span.playbar-song-title:hover, span.playbar-artist-title:hover {
+  text-decoration: underline;
+  color: white;
+  cursor: pointer;
+}
+
+#playbar-like-button {
+  color: #B3B3B3;
+}
+
+#playbar-liked-button {
+  color: #B3B3B3;
+}
+
+#playbar-like-button:hover {
+  color: white;
 }

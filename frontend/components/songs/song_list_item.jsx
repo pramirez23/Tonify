@@ -243,9 +243,13 @@ class SongListItem extends React.Component {
             <div className="item-art-container">
               <img className={validArtLocation.includes(this.state.pageType) ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
-            <div className="title-artist-container">
-              <p className="song-title">{song.title}</p>
-              <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+            <div className="title-details-text-container">
+              <div className="title-artist-container">
+                <p className="song-title">{song.title}</p>
+                <div className="artist-link-container">
+                  <Link id="artist-link" className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+                </div>
+              </div>
             </div>
           </div>
         </td>

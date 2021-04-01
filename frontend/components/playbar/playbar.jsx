@@ -104,43 +104,61 @@ class Playbar extends React.Component {
   }
 
   render() { 
+    const {
+      currentSong,
+      currentSongIndex,
+      currentQueue,
+      likedSongs,
+      likeSong,
+      unlikeSong,
+      unlikeSongFromLibrary,
+      openAlert,
+      closeAlert
+    } = this.props;
+
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+
     let renderHeart;
-    const { currentSong, currentSongIndex, currentQueue } = this.props;
-    // if (!likedSongs || !likedSongs[song.id]) {
-    //   renderHeart = (
-    //     <i
-    //       className="far fa-heart"
-    //       onClick={() =>
-    //         this.props.likeSong(song.id, "Song")
-    //           .then(() => {
-    //             this.props.openAlert("Like");
-    //             setTimeout(this.props.closeAlert, 4000)
-    //           })}>
-    //     </i>
-    //   )
-    // } else {
-    //   renderHeart = (
-    //     <i
-    //       id="liked-song-heart"
-    //       className="fas fa-heart"
-    //       onClick={() => {
-    //         if (location !== "library") {
-    //           this.props.unlikeSong(song.id, "Song")
-    //             .then(() => {
-    //               this.props.openAlert("Unlike");
-    //               setTimeout(this.props.closeAlert, 4000)
-    //             })
-    //         } else {
-    //           this.props.unlikeSongFromLibrary(song.id, "Song")
-    //             .then(() => {
-    //               this.props.openAlert("Unlike");
-    //               setTimeout(this.props.closeAlert, 4000)
-    //             })
-    //         }
-    //       }}>
-    //     </i>
-    //   )
-    // }
+
+    if (currentSong) {
+      if (!likedSongs || !likedSongs[currentSong.id]) {
+        renderHeart = (
+          <i
+            id="playbar-like-button"
+            className="far fa-heart"
+            onClick={() =>
+              likeSong(currentSong.id, "Song")
+                .then(() => {
+                  openAlert("Like");
+                  setTimeout(closeAlert, 4000)
+                })}>
+          </i>
+        )
+      } else {
+        renderHeart = (
+          <i
+            id="liked-song-heart"
+            className="fas fa-heart"
+            onClick={() => {
+              if (location !== "library") {
+                unlikeSong(currentSong.id, "Song")
+                  .then(() => {
+                    openAlert("Unlike");
+                    setTimeout(closeAlert, 4000)
+                  })
+              } else {
+                unlikeSongFromLibrary(currentSong.id, "Song")
+                  .then(() => {
+                    openAlert("Unlike");
+                    setTimeout(closeAlert, 4000)
+                  })
+              }
+            }}>
+          </i>
+        )
+      }
+    }
     
     return (
       <div className="playbar-container">
@@ -155,11 +173,15 @@ class Playbar extends React.Component {
           </div>
 
           <div className="playbar-song-details-container">
-            <span className={currentSong ? "playbar-song-title" : "hidden"}>{currentSong ? currentSong.title : ""}</span>
-            <span className={currentSong ? "playbar-artist-title" : "hidden"}>{currentSong ? currentSong.artist : ""}</span>
+            <span
+              className={currentSong ? "playbar-song-title" : "hidden"}
+              onClick={() => this.props.history.push(`/albums/${currentSong.album_id}`)}>{currentSong ? currentSong.title : ""}</span>
+            <span 
+              className={currentSong ? "playbar-artist-title" : "hidden"}
+              onClick={() => this.props.history.push(`/artists/${currentSong.artist_id}`)}>{currentSong ? currentSong.artist : ""}</span>
           </div>
 
-          <i className="far fa-heart"></i>
+          {renderHeart}
         </div>
 
         <div className="song-progress-controls-container">

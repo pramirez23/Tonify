@@ -201,7 +201,7 @@ class Album extends React.Component {
                 song={song[1]}
                 key={idx}
                 num={(idx + 1)}
-                padeIdx={idx}
+                pageIdx={idx}
                 currentUser={currentUser}
                 album={album}
               />

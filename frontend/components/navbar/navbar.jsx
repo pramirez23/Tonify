@@ -65,7 +65,7 @@ class Navbar extends React.Component {
         this.props.fetchArtist(pageId).then(() => this.renderContent());
         break;
       case "library":
-        this.props.fetchUser(this.props.currentUserId);
+        // this.props.fetchUser(this.props.currentUserId);
         if (pageId === "songs") {
           this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
         } else if (pageId === "playlists") {

@@ -7,7 +7,7 @@ class Api::LikesController < ApplicationController
   
     if @like.save
       @user = User.find_by(id: current_user.id)
-      render 'api/users/show'
+        render 'api/users/show'
     else
       render json: @like.errors.full_messages, status: 422
     end

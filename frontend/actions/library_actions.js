@@ -35,10 +35,10 @@ export const receiveLikedSongs = payload => {
   }
 };
 
-export const removeSong = song => {
+export const removeSong = payload => {
   return {
     type: REMOVE_SONG,
-    song
+    payload
   }
 };
 
@@ -94,7 +94,7 @@ export const unlike = (likableType, likableId) => dispatch => {
 export const unlikeSongFromLibrary = (likableType, likableId) => dispatch => {
   return LibraryAPIUtil.unlikeSongFromLibrary(likableType, likableId)
     .then(
-        song => dispatch(removeSong(song))
+        payload => dispatch(removeSong(payload))
       )
 }
 

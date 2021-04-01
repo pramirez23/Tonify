@@ -83,6 +83,12 @@ a.artist-link:hover {
   height: 67px;
   width: 215px;
   padding: 0px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .empty-playlist-controls {
@@ -129,6 +135,12 @@ table.song-columns {
   border-spacing: 0 5px;
   bottom: 33px;
   letter-spacing: 0.3px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .song-column-header {
