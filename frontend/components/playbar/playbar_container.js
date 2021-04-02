@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Playbar from "./playbar"
-import { fetchNextSong, fetchQueueSong } from "../../actions/playbar_actions";
+import { fetchNextSong, fetchPrevSong, fetchQueueSong } from "../../actions/playbar_actions";
 import { openAlert, closeAlert } from '../../actions/alert_actions';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { playSong, pauseSong } from '../../actions/playbar_actions';
@@ -8,7 +8,16 @@ import { playSong, pauseSong } from '../../actions/playbar_actions';
 const mSTP = (state) => {
   const currentUser = state.session.id;
   const { playlists } = state.entities;
-  const { isPlaying, currentSong, currentQueue, currentSongIndex, userQueue } = state.ui.playbar;
+  
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentSongIndex,
+    currentQueueLocation,
+    userQueue
+  } = state.ui.playbar;
+
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs
 
@@ -20,6 +29,7 @@ const mSTP = (state) => {
     currentSong,
     currentSongIndex,
     currentQueue,
+    currentQueueLocation,
     userQueue
   });
 };
@@ -34,6 +44,7 @@ const mDTP = dispatch => {
     openAlert: (alertType) => dispatch(openAlert(alertType)),
     closeAlert: () => dispatch(closeAlert()),
     fetchNextSong: songId => dispatch(fetchNextSong(songId)),
+    fetchPrevSong: songId => dispatch(fetchPrevSong(songId)),
     fetchQueueSong: songId => dispatch(fetchQueueSong(songId))
   };
 };

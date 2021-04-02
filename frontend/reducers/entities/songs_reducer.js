@@ -27,9 +27,6 @@ const songsReducer = (state = {}, action) => {
       return action.payload.songs;
     case RECEIVE_ALBUM:
       return action.payload.songs;
-    case RECEIVE_USER:
-      if (typeof action.payload.song === 'undefined' || !action.payload.song) return state;
-      return Object.assign({}, state, { [action.payload.song.id]: action.payload.song })
     case REMOVE_SONG:
       let newState = Object.assign({}, state);
       delete newState[action.payload.song.id];

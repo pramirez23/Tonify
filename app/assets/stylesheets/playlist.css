@@ -242,12 +242,18 @@ td > a:hover, .title-artist-container > a:hover {
   align-items: center;
 }
 
+.title-details-text-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 a#artist-link {
   text-decoration: none;
   color: #B3B3B3;
 }
 
-a#artist-link:hover {
+a#artist-link-hovering:hover {
   text-decoration: underline;
   color: white;
 }
@@ -312,6 +318,15 @@ tbody:first-child {
   display: flex;
   justify-content: space-around;
   position: inherit;
+}
+
+.song-item-artist-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: absolute;
+  height: 40px;
+  color: red;
 }
 
 .empty-playlist {

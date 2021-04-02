@@ -2,6 +2,8 @@ import {
   PLAY_SONG,
   PAUSE_SONG,
   PLAY_PAGE,
+  RECEIVE_NEXT_SONG,
+  RECEIVE_PREVIOUS_SONG,
   QUEUE_SONG,
   PLAY_QUEUE_SONG
 } from "../../actions/playbar_actions";
@@ -16,18 +18,23 @@ const defaultState = {
   isPlaying: false,
   currentSongIndex: 0,
   pageQueue: [],
-  currentQueue: [], 
+  currentQueue: [],
+  currentQueueLocation: null,
   userQueue: []
 }
 
 const playbarReducer = (state = defaultState, action) => {
-
   let newState = Object.assign({}, state)
   switch (action.type) {
     case PLAY_SONG:
       newState.currentSong = action.song;
       newState.currentQueue = action.pageQueue;
       newState.currentSongIndex = action.pageIndex;
+      if (action.location) {
+        newState.currentQueueLocation = action.location;
+      } else {
+        newState.currentQueueLocation = newState.currentQueueLocation;
+      }
       newState.isPlaying = true;
       return newState;
     case PAUSE_SONG:
@@ -36,6 +43,16 @@ const playbarReducer = (state = defaultState, action) => {
     case PLAY_PAGE:
       newState.currentSong = action.song;
       newState.currentQueue = action.pageQueue;
+      newState.isPlaying = true;
+      return newState;
+    case RECEIVE_NEXT_SONG:
+      newState.currentSong = action.song;
+      newState.currentSongIndex += 1
+      newState.isPlaying = true;
+      return newState;
+    case RECEIVE_PREVIOUS_SONG:
+      newState.currentSong = action.song;
+      newState.currentSongIndex -= 1
       newState.isPlaying = true;
       return newState;
     case RECEIVE_LIKED_SONGS:

@@ -70,8 +70,8 @@ class Api::PlaylistSongsController < ApplicationController
       song_id: song_id
     })
       
-    @album = Album.find_by(id: playlist_song_params[:album_id])
-
+    @album = Album.includes(:songs).find_by(id: playlist_song_params[:album_id])
+    @songs = Song.where(album_id: playlist_song_params[:album_id])
     if @playlist_song.save
       render 'api/albums/show'
     else

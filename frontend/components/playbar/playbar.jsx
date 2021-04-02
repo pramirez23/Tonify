@@ -40,41 +40,65 @@ class Playbar extends React.Component {
   }
 
   handlePrev() {
-    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
-    const audio = document.getElementById("audio");
+    const {
+      fetchPrevSong,
+      currentSong,
+      currentSongIndex,
+      currentQueue,
+      endQueue
+    } = this.props;
 
     if (!currentSong) return;
 
-    if (this.state.queueIndex >= 1 && this.state.queueIndex) {
-      this.props.fetchNextTrack(this.props.playbar.queue[this.state.queueIndex - 1])
-      this.setState({ i: this.state.queueIndex - 1 })
-    } else {
-      alert('this is the first song in the queue')
+    if (currentSongIndex === 0) {
+      const audio = document.getElementById("audio");
+      this.setState({ currentTime: 0 });
+      audio.currentTime = 0;
+    } else if (0 < currentSongIndex < (currentQueue.length - 1)) {
+      const audio = document.getElementById("audio");
+      fetchPrevSong(currentQueue[currentSongIndex - 1])
+      this.setState({ currentTime: 0 });
+      audio.currentTime = 0;
     }
   }
 
   handleNext() {
-    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
-    const audio = document.getElementById("audio");
+    const {
+      fetchNextSong,
+      currentSong,
+      currentSongIndex,
+      currentQueue,
+      endQueue
+    } = this.props;
 
     if (!currentSong) return;
 
-    if (this.state.queueIndex <= this.props.playbar.queue.length - 1) {
-      if (this.state.queueIndex === 0) {
-        this.setState({ i: 1 })
-        this.props.fetchNextTrack(this.props.playbar.queue[this.state.queueIndex])
-      } else {
-        this.props.fetchNextTrack(this.props.playbar.queue[this.state.queueIndex])
-        this.setState({ i: this.state.queueIndex + 1 })
-      }
-    } else {
-      alert('no more songs in queue')
+    if (currentSongIndex === currentQueue.length - 1) {
+      const audio = document.getElementById("audio");
+      this.setState({ currentTime: 0 });
+      audio.currentTime = 0;
+      endQueue();
+    } else if (currentSongIndex < (currentQueue.length - 1)) {
+      fetchNextSong(currentQueue[currentSongIndex + 1])
+      const audio = document.getElementById("audio");
+      this.setState({ currentTime: 0 });
+      audio.currentTime = 0;
     }
   }
 
   handlePlay() {
-    const { isPlaying, pauseSong, playSong, currentSong, currentSongIndex, currentQueue } = this.props;
+    const {
+      isPlaying,
+      pauseSong,
+      playSong,
+      currentSong,
+      currentSongIndex,
+      currentQueue,
+      currentQueueLocation
+    } = this.props;
+
     const audio = document.getElementById("audio");
+    // const location = this.props.location.pathname;
 
     if (!currentSong) return; 
 
@@ -83,12 +107,9 @@ class Playbar extends React.Component {
       pauseSong();
     } else {
       audio.play();
-      playSong(currentSong, currentSongIndex, currentQueue);
+      playSong(currentSong, currentSongIndex, currentQueue, currentQueueLocation);
     }
 
-    // this.setState({ 
-    //   isPlaying: !this.state.isPlaying
-    // });
   }
 
   handleVolume(e) {
