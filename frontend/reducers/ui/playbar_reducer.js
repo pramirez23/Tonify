@@ -5,7 +5,10 @@ import {
   RECEIVE_NEXT_SONG,
   RECEIVE_PREVIOUS_SONG,
   QUEUE_SONG,
-  PLAY_QUEUE_SONG
+  QUEUE_SONGS,
+  END_LOOP_QUEUE,
+  END_QUEUE,
+  BEGIN_LOOP_FROM_END
 } from "../../actions/playbar_actions";
 
 import { RECEIVE_LIKED_SONGS } from "../../actions/library_actions";
@@ -67,8 +70,16 @@ const playbarReducer = (state = defaultState, action) => {
     case RECEIVE_ALBUM:
       newState.pageQueue = action.payload.pageQueue;
       return newState; 
+    case END_LOOP_QUEUE:
+      newState.currentSongIndex = -1;
+      return newState;
     case QUEUE_SONG:
       newState.userQueue.push(action.payload.songId);
+      return newState;
+    case END_QUEUE:
+      return defaultState;
+    case BEGIN_LOOP_FROM_END:
+      newState.currentSongIndex = action.currentQueue.length;
       return newState;
     default:
       return state;

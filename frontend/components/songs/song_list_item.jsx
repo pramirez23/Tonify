@@ -250,7 +250,7 @@ class SongListItem extends React.Component {
       if ((isPlaying && pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) {
         playOrNum = <i id="is-playing" className="fas fa-volume-up"></i>
       } else {
-        playOrNum = <div id={currentSong === song ? "is-playing" : ""}>{this.props.num}</div>;
+        playOrNum = <div id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}>{this.props.num}</div>;
       }
     }
 
@@ -309,8 +309,7 @@ class SongListItem extends React.Component {
                 onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>{song.artist}</div> */}
               <div className="title-artist-container">
                 <p
-                  id={(
-                    (pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}
+                  id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}
                   className="song-title">{song.title}</p>
                 <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
               </div>

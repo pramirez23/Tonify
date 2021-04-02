@@ -501,9 +501,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "QUEUE_SONG": () => /* binding */ QUEUE_SONG,
 /* harmony export */   "RECEIVE_NEXT_SONG": () => /* binding */ RECEIVE_NEXT_SONG,
 /* harmony export */   "RECEIVE_PREVIOUS_SONG": () => /* binding */ RECEIVE_PREVIOUS_SONG,
+/* harmony export */   "END_LOOP_QUEUE": () => /* binding */ END_LOOP_QUEUE,
+/* harmony export */   "END_QUEUE": () => /* binding */ END_QUEUE,
+/* harmony export */   "BEGIN_LOOP_FROM_END": () => /* binding */ BEGIN_LOOP_FROM_END,
 /* harmony export */   "playSong": () => /* binding */ playSong,
 /* harmony export */   "receiveNextSong": () => /* binding */ receiveNextSong,
 /* harmony export */   "receivePrevSong": () => /* binding */ receivePrevSong,
+/* harmony export */   "beginLoopFromEnd": () => /* binding */ beginLoopFromEnd,
+/* harmony export */   "endLoopQueue": () => /* binding */ endLoopQueue,
+/* harmony export */   "endQueue": () => /* binding */ endQueue,
 /* harmony export */   "fetchNextSong": () => /* binding */ fetchNextSong,
 /* harmony export */   "fetchPrevSong": () => /* binding */ fetchPrevSong,
 /* harmony export */   "pauseSong": () => /* binding */ pauseSong,
@@ -521,6 +527,9 @@ var PLAY_QUEUE_SONG = "PLAY_QUEUE_SONG";
 var QUEUE_SONG = "QUEUE_SONG";
 var RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 var RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
+var END_LOOP_QUEUE = "LOOP_QUEUE";
+var END_QUEUE = "END_QUEUE";
+var BEGIN_LOOP_FROM_END = "BEGIN_LOOP_FROM_END";
 var playSong = function playSong(song, pageIndex, pageQueue, location) {
   return {
     type: PLAY_SONG,
@@ -540,6 +549,22 @@ var receivePrevSong = function receivePrevSong(song) {
   return {
     type: RECEIVE_PREVIOUS_SONG,
     song: song
+  };
+};
+var beginLoopFromEnd = function beginLoopFromEnd(currentQueue) {
+  return {
+    type: BEGIN_LOOP_FROM_END,
+    currentQueue: currentQueue
+  };
+};
+var endLoopQueue = function endLoopQueue() {
+  return {
+    type: END_LOOP_QUEUE
+  };
+};
+var endQueue = function endQueue() {
+  return {
+    type: END_QUEUE
   };
 };
 var fetchNextSong = function fetchNextSong(songId) {
@@ -3704,6 +3729,10 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
         oldRange = scrollHeight - 20;
         newRange = 10 - 1;
         converted = (scrollTop - 20) * newRange / oldRange;
+      } else if (location === "artists") {
+        oldRange = scrollHeight - 20;
+        newRange = 10 - 1;
+        converted = (scrollTop - 20) * newRange / oldRange;
       } else {
         oldRange = scrollHeight - 140;
         newRange = 10 - 1;
@@ -4039,7 +4068,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
       duration: 0,
       currentTime: 0,
       volume: 1,
-      loop: false
+      loop: 0
     };
     _this.handleMetadata = _this.handleMetadata.bind(_assertThisInitialized(_this));
     _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
@@ -4048,6 +4077,9 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
     _this.handleVolume = _this.handleVolume.bind(_assertThisInitialized(_this));
     _this.handleTimeUpdate = _this.handleTimeUpdate.bind(_assertThisInitialized(_this));
     _this.handleProgressChange = _this.handleProgressChange.bind(_assertThisInitialized(_this));
+    _this.handleShuffle = _this.handleShuffle.bind(_assertThisInitialized(_this));
+    _this.handleLoop = _this.handleLoop.bind(_assertThisInitialized(_this));
+    _this.renderLoop = _this.renderLoop.bind(_assertThisInitialized(_this));
     _this.audio = document.getElementById("audio");
     _this.progressBar = document.getElementById("progress-bar");
     return _this;
@@ -4074,11 +4106,11 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
     key: "handlePrev",
     value: function handlePrev() {
       var _this$props = this.props,
+          beginLoopFromEnd = _this$props.beginLoopFromEnd,
           fetchPrevSong = _this$props.fetchPrevSong,
           currentSong = _this$props.currentSong,
           currentSongIndex = _this$props.currentSongIndex,
-          currentQueue = _this$props.currentQueue,
-          endQueue = _this$props.endQueue;
+          currentQueue = _this$props.currentQueue;
       if (!currentSong) return;
 
       if (currentSongIndex === 0) {
@@ -4088,14 +4120,64 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           currentTime: 0
         });
         _audio.currentTime = 0;
-      } else if (0 < currentSongIndex < currentQueue.length - 1) {
-        var _audio2 = document.getElementById("audio");
+      } else if (0 < currentSongIndex < currentQueue.length - 1) {}
 
-        fetchPrevSong(currentQueue[currentSongIndex - 1]);
-        this.setState({
-          currentTime: 0
-        });
-        _audio2.currentTime = 0;
+      switch (this.state.loop) {
+        // No loop
+        case 0:
+          if (currentSongIndex === 0) {
+            var _audio3 = document.getElementById("audio");
+
+            this.setState({
+              currentTime: 0
+            });
+            _audio3.currentTime = 0;
+          } else if (currentSongIndex < currentQueue.length - 1) {
+            var _audio4 = document.getElementById("audio");
+
+            fetchPrevSong(currentQueue[currentSongIndex - 1]);
+            this.setState({
+              currentTime: 0
+            });
+            _audio4.currentTime = 0;
+          }
+
+          break;
+        // Repeat all in queue
+
+        case 1:
+          if (currentSongIndex === 0) {
+            beginLoopFromEnd(currentQueue);
+            fetchPrevSong(currentQueue[currentQueue.length - 1]);
+
+            var _audio5 = document.getElementById("audio");
+
+            this.setState({
+              currentTime: 0
+            });
+            _audio5.currentTime = 0;
+          } else if (currentSongIndex <= currentQueue.length - 1) {
+            var _audio6 = document.getElementById("audio");
+
+            fetchPrevSong(currentQueue[currentSongIndex - 1]);
+            this.setState({
+              currentTime: 0
+            });
+            _audio6.currentTime = 0;
+          }
+
+        // Repeat current song
+
+        case 2:
+          var _audio2 = document.getElementById("audio");
+
+          this.setState({
+            currentTime: 0
+          });
+          _audio2.currentTime = 0;
+
+        default:
+          break;
       }
     }
   }, {
@@ -4106,26 +4188,69 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           currentSong = _this$props2.currentSong,
           currentSongIndex = _this$props2.currentSongIndex,
           currentQueue = _this$props2.currentQueue,
+          endLoopQueue = _this$props2.endLoopQueue,
           endQueue = _this$props2.endQueue;
       if (!currentSong) return;
 
-      if (currentSongIndex === currentQueue.length - 1) {
-        var _audio3 = document.getElementById("audio");
+      switch (this.state.loop) {
+        // No loop
+        case 0:
+          if (currentSongIndex === currentQueue.length - 1) {
+            var _audio8 = document.getElementById("audio");
 
-        this.setState({
-          currentTime: 0
-        });
-        _audio3.currentTime = 0;
-        endQueue();
-      } else if (currentSongIndex < currentQueue.length - 1) {
-        fetchNextSong(currentQueue[currentSongIndex + 1]);
+            this.setState({
+              currentTime: 0
+            });
+            _audio8.currentTime = 0;
+            endQueue();
+          } else if (currentSongIndex < currentQueue.length - 1) {
+            fetchNextSong(currentQueue[currentSongIndex + 1]);
 
-        var _audio4 = document.getElementById("audio");
+            var _audio9 = document.getElementById("audio");
 
-        this.setState({
-          currentTime: 0
-        });
-        _audio4.currentTime = 0;
+            this.setState({
+              currentTime: 0
+            });
+            _audio9.currentTime = 0;
+          }
+
+          break;
+        // Repeat all in queue
+
+        case 1:
+          if (currentSongIndex === currentQueue.length - 1) {
+            endLoopQueue();
+            fetchNextSong(currentQueue[0]);
+
+            var _audio10 = document.getElementById("audio");
+
+            this.setState({
+              currentTime: 0
+            });
+            _audio10.currentTime = 0;
+          } else if (currentSongIndex < currentQueue.length - 1) {
+            fetchNextSong(currentQueue[currentSongIndex + 1]);
+
+            var _audio11 = document.getElementById("audio");
+
+            this.setState({
+              currentTime: 0
+            });
+            _audio11.currentTime = 0;
+          }
+
+        // Repeat current song
+
+        case 2:
+          var _audio7 = document.getElementById("audio");
+
+          this.setState({
+            currentTime: 0
+          });
+          _audio7.currentTime = 0;
+
+        default:
+          break;
       }
     }
   }, {
@@ -4139,8 +4264,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           currentSongIndex = _this$props3.currentSongIndex,
           currentQueue = _this$props3.currentQueue,
           currentQueueLocation = _this$props3.currentQueueLocation;
-      var audio = document.getElementById("audio"); // const location = this.props.location.pathname;
-
+      var audio = document.getElementById("audio");
       if (!currentSong) return;
 
       if (isPlaying) {
@@ -4178,6 +4302,53 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         currentTime: e.target.value
       });
       audio.currentTime = e.target.value;
+    }
+  }, {
+    key: "handleShuffle",
+    value: function handleShuffle() {}
+  }, {
+    key: "handleLoop",
+    value: function handleLoop() {
+      var loop = this.state.loop;
+      var newLoopValue = loop + 1;
+
+      if (this.state.loop === 2) {
+        this.setState({
+          loop: 0
+        });
+      } else {
+        this.setState({
+          loop: newLoopValue
+        });
+      }
+
+      console.log(this.state.loop);
+    }
+  }, {
+    key: "renderLoop",
+    value: function renderLoop() {
+      switch (this.state.loop) {
+        case 0:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            id: "repeat",
+            className: "material-icons"
+          }, "repeat");
+
+        case 1:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            id: "repeat-all",
+            className: "material-icons"
+          }, "repeat");
+
+        case 2:
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            id: "repeat-one",
+            className: "material-icons"
+          }, "repeat_one");
+
+        default:
+          break;
+      }
     }
   }, {
     key: "render",
@@ -4274,21 +4445,28 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         className: "song-progress-controls-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "playbar-controls"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "playbar-control-button-container",
+        onClick: this.handleShuffle
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         id: "random",
         className: "fas fa-random"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        id: "back",
-        className: "fas fa-step-backward",
-        onClick: this.handlePrev
-      }), pauseOrPlay, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        id: "forward",
-        className: "fas fa-step-forward",
-        onClick: this.handleNext
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
-        id: "repeat",
-        className: "fas fa-redo"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "playbar-control-button-container",
+        onClick: this.handlePrev
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        id: "back",
+        className: "fas fa-step-backward"
+      })), pauseOrPlay, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "playbar-control-button-container",
+        onClick: this.handleNext
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        id: "forward",
+        className: "fas fa-step-forward"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "playbar-control-button-container",
+        onClick: this.handleLoop
+      }, this.renderLoop())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-progress-bar-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         id: "song-progress-current",
@@ -4411,6 +4589,15 @@ var mDTP = function mDTP(dispatch) {
     },
     fetchQueueSong: function fetchQueueSong(songId) {
       return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.fetchQueueSong)(songId));
+    },
+    endLoopQueue: function endLoopQueue() {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.endLoopQueue)());
+    },
+    endQueue: function endQueue() {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.endQueue)());
+    },
+    beginLoopFromEnd: function beginLoopFromEnd(currentQueue) {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.beginLoopFromEnd)(currentQueue));
     }
   };
 };
@@ -6819,7 +7006,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           });
         } else {
           playOrNum = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-            id: currentSong === song ? "is-playing" : ""
+            id: pageIdx === currentSongIndex && this.props.location.pathname === currentQueueLocation ? "is-playing" : ""
           }, this.props.num);
         }
       }
@@ -7984,8 +8171,19 @@ var playbarReducer = function playbarReducer() {
       newState.pageQueue = action.payload.pageQueue;
       return newState;
 
+    case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.END_LOOP_QUEUE:
+      newState.currentSongIndex = -1;
+      return newState;
+
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.QUEUE_SONG:
       newState.userQueue.push(action.payload.songId);
+      return newState;
+
+    case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.END_QUEUE:
+      return defaultState;
+
+    case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.BEGIN_LOOP_FROM_END:
+      newState.currentSongIndex = action.currentQueue.length;
       return newState;
 
     default:

@@ -7,6 +7,9 @@ export const PLAY_QUEUE_SONG = "PLAY_QUEUE_SONG";
 export const QUEUE_SONG = "QUEUE_SONG";
 export const RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 export const RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
+export const END_LOOP_QUEUE = "LOOP_QUEUE";
+export const END_QUEUE = "END_QUEUE";
+export const BEGIN_LOOP_FROM_END = "BEGIN_LOOP_FROM_END";
 
 export const playSong = (song, pageIndex, pageQueue, location) => {
   return {
@@ -29,6 +32,25 @@ export const receivePrevSong = song => {
   return {
     type: RECEIVE_PREVIOUS_SONG,
     song
+  }
+}
+
+export const beginLoopFromEnd = currentQueue => {
+  return {
+    type: BEGIN_LOOP_FROM_END,
+    currentQueue
+  }
+}
+
+export const endLoopQueue = () => {
+  return {
+    type: END_LOOP_QUEUE
+  }
+}
+
+export const endQueue = () => {
+  return {
+    type: END_QUEUE
   }
 }
 

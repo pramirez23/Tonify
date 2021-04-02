@@ -10,7 +10,7 @@ class Playbar extends React.Component {
       duration: 0,
       currentTime: 0,
       volume: 1,
-      loop: false,
+      loop: 0
     }
 
     this.handleMetadata = this.handleMetadata.bind(this);
@@ -20,6 +20,9 @@ class Playbar extends React.Component {
     this.handleVolume = this.handleVolume.bind(this);
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
     this.handleProgressChange = this.handleProgressChange.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleLoop = this.handleLoop.bind(this);
+    this.renderLoop = this.renderLoop.bind(this);
 
     this.audio = document.getElementById("audio");
     this.progressBar = document.getElementById("progress-bar");
@@ -41,11 +44,11 @@ class Playbar extends React.Component {
 
   handlePrev() {
     const {
+      beginLoopFromEnd,
       fetchPrevSong,
       currentSong,
       currentSongIndex,
       currentQueue,
-      endQueue
     } = this.props;
 
     if (!currentSong) return;
@@ -55,10 +58,44 @@ class Playbar extends React.Component {
       this.setState({ currentTime: 0 });
       audio.currentTime = 0;
     } else if (0 < currentSongIndex < (currentQueue.length - 1)) {
-      const audio = document.getElementById("audio");
-      fetchPrevSong(currentQueue[currentSongIndex - 1])
-      this.setState({ currentTime: 0 });
-      audio.currentTime = 0;
+
+    }
+
+    switch (this.state.loop) {
+      // No loop
+      case 0:
+        if (currentSongIndex === 0) {
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        } else if (currentSongIndex < (currentQueue.length - 1)) {
+          const audio = document.getElementById("audio");
+          fetchPrevSong(currentQueue[currentSongIndex - 1])
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        }
+        break;
+      // Repeat all in queue
+      case 1:
+        if (currentSongIndex === 0) {
+          beginLoopFromEnd(currentQueue);
+          fetchPrevSong(currentQueue[currentQueue.length - 1]);
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        } else if (currentSongIndex <= (currentQueue.length - 1)) {
+          const audio = document.getElementById("audio");
+          fetchPrevSong(currentQueue[currentSongIndex - 1])
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        }
+      // Repeat current song
+      case 2:
+        const audio = document.getElementById("audio");
+        this.setState({ currentTime: 0 });
+        audio.currentTime = 0;
+      default:
+        break;
     }
   }
 
@@ -68,21 +105,48 @@ class Playbar extends React.Component {
       currentSong,
       currentSongIndex,
       currentQueue,
+      endLoopQueue,
       endQueue
     } = this.props;
 
     if (!currentSong) return;
 
-    if (currentSongIndex === currentQueue.length - 1) {
-      const audio = document.getElementById("audio");
-      this.setState({ currentTime: 0 });
-      audio.currentTime = 0;
-      endQueue();
-    } else if (currentSongIndex < (currentQueue.length - 1)) {
-      fetchNextSong(currentQueue[currentSongIndex + 1])
-      const audio = document.getElementById("audio");
-      this.setState({ currentTime: 0 });
-      audio.currentTime = 0;
+    switch (this.state.loop) {
+      // No loop
+      case 0:
+        if (currentSongIndex === currentQueue.length - 1) {
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+          endQueue();
+        } else if (currentSongIndex < (currentQueue.length - 1)) {
+          fetchNextSong(currentQueue[currentSongIndex + 1])
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        }
+        break;
+      // Repeat all in queue
+      case 1:
+        if (currentSongIndex === currentQueue.length - 1) {
+          endLoopQueue();
+          fetchNextSong(currentQueue[0]);
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        } else if (currentSongIndex < (currentQueue.length - 1)) {
+          fetchNextSong(currentQueue[currentSongIndex + 1])
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
+        }
+      // Repeat current song
+      case 2:
+        const audio = document.getElementById("audio");
+        this.setState({ currentTime: 0 });
+        audio.currentTime = 0;
+      default:
+        break;
     }
   }
 
@@ -98,7 +162,6 @@ class Playbar extends React.Component {
     } = this.props;
 
     const audio = document.getElementById("audio");
-    // const location = this.props.location.pathname;
 
     if (!currentSong) return; 
 
@@ -109,7 +172,6 @@ class Playbar extends React.Component {
       audio.play();
       playSong(currentSong, currentSongIndex, currentQueue, currentQueueLocation);
     }
-
   }
 
   handleVolume(e) {
@@ -135,6 +197,44 @@ class Playbar extends React.Component {
       currentTime: e.target.value
     });
     audio.currentTime = e.target.value;
+  }
+
+  handleShuffle() {
+
+  }
+
+  handleLoop() {
+    const { loop } = this.state;
+    const newLoopValue = loop + 1
+
+    if (this.state.loop === 2) {
+      this.setState({ loop: 0 });
+    } else {
+      this.setState({
+        loop: newLoopValue
+      })
+    }
+
+    console.log(this.state.loop)
+  }
+
+  renderLoop() {
+    switch (this.state.loop) {
+      case 0:
+        return (
+          <span id="repeat" className="material-icons">repeat</span>
+        )
+      case 1:
+        return (
+          <span id="repeat-all" className="material-icons">repeat</span>
+        )
+      case 2:
+        return (
+          <span id="repeat-one" className="material-icons">repeat_one</span>
+        )
+      default:
+        break;
+    }
   }
 
   render() { 
@@ -228,23 +328,23 @@ class Playbar extends React.Component {
 
         <div className="song-progress-controls-container">
           <div id="playbar-controls">
-            <i
-              id="random"
-              className="fas fa-random"></i>
-            <i
-              id="back"
-              className="fas fa-step-backward"
-              onClick={this.handlePrev}></i>
+            <div className="playbar-control-button-container" onClick={this.handleShuffle}>
+              <i id="random" className="fas fa-random"></i>
+            </div>
+
+            <div className="playbar-control-button-container" onClick={this.handlePrev}>
+              <i id="back" className="fas fa-step-backward"></i>
+            </div>
 
             {pauseOrPlay}
 
-            <i
-              id="forward"
-              className="fas fa-step-forward"
-              onClick={this.handleNext}></i>
-            <i
-              id="repeat"
-              className="fas fa-redo"></i>
+            <div className="playbar-control-button-container" onClick={this.handleNext}>
+              <i id="forward" className="fas fa-step-forward"></i>
+            </div>
+
+            <div className="playbar-control-button-container" onClick={this.handleLoop}>
+              {this.renderLoop()}
+            </div>
           </div>
 
           <div className="song-progress-bar-container">

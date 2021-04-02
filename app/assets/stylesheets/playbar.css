@@ -25,10 +25,15 @@
   width: 200px;
   height: 54px;
   align-items: center;
+  color: #B3B3B3;
 }
 
-#random, #back, #forward, #repeat {
-  color: #B3B3B3;
+.playbar-control-button-container {
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #play, #pause {
@@ -36,11 +41,29 @@
   font-size: 35px;
 }
 
+span#repeat {
+  color: #B3B3B3;
+  background: none;
+  font-size: 17px;
+}
+
+span#repeat-all, span#repeat-one {
+  color: #229442;
+  background: none;
+  font-size: 17px;
+}
+
+span#repeat-all:hover, span#repeat-one:hover {
+  color: #2dbe56;
+  background: none;
+  font-size: 17px;
+}
+
 #play:hover, #pause:hover {
   transform: scale(1.07);
 }
 
-#random:hover, #back:hover, #forward:hover, #repeat:hover {
+.playbar-control-button-container:hover {
   color: white;
 }
 

@@ -266,6 +266,10 @@ class Navbar extends React.Component {
       oldRange = (scrollHeight - 20);
       newRange = (10 - 1);
       converted = (((scrollTop - 20) * newRange) / oldRange);
+    } else if (location === "artists") {
+      oldRange = (scrollHeight - 20);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 20) * newRange) / oldRange);
     } else {      
       oldRange = (scrollHeight - 140);
       newRange = (10 - 1);

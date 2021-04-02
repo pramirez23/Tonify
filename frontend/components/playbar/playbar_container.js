@@ -1,6 +1,15 @@
 import { connect } from "react-redux";
 import Playbar from "./playbar"
-import { fetchNextSong, fetchPrevSong, fetchQueueSong } from "../../actions/playbar_actions";
+
+import {
+  fetchNextSong,
+  fetchPrevSong,
+  fetchQueueSong,
+  endLoopQueue,
+  endQueue,
+  beginLoopFromEnd
+} from "../../actions/playbar_actions";
+
 import { openAlert, closeAlert } from '../../actions/alert_actions';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { playSong, pauseSong } from '../../actions/playbar_actions';
@@ -45,7 +54,10 @@ const mDTP = dispatch => {
     closeAlert: () => dispatch(closeAlert()),
     fetchNextSong: songId => dispatch(fetchNextSong(songId)),
     fetchPrevSong: songId => dispatch(fetchPrevSong(songId)),
-    fetchQueueSong: songId => dispatch(fetchQueueSong(songId))
+    fetchQueueSong: songId => dispatch(fetchQueueSong(songId)),
+    endLoopQueue: () => dispatch(endLoopQueue()),
+    endQueue: () => dispatch(endQueue()),
+    beginLoopFromEnd: currentQueue => dispatch(beginLoopFromEnd(currentQueue))
   };
 };
 
