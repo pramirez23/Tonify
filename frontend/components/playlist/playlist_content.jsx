@@ -169,8 +169,8 @@ class Playlist extends React.Component {
       renderPlaylist = (
         <div className="empty-playlist">
           <i className="fas fa-compact-disc"></i>
-          <p>It looks like you don't have anything in this playlist yet.</p>
-          <p> <Link to="/search">Search</Link> for some songs to add!</p>
+          <p id="empty-playlist-title">It looks like you don't have anything in this playlist yet.</p>
+          <p id="empty-playlist-text"> <Link to="/search">Search</Link> for some songs to add!</p>
         </div>
       )
     } else if (likedSongs && likedSongs.length === 0) {

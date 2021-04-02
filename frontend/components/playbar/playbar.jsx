@@ -333,13 +333,13 @@ class Playbar extends React.Component {
             </div>
 
             <div className="playbar-control-button-container" onClick={this.handlePrev}>
-              <i id="back" className="fas fa-step-backward"></i>
+              <span id="back" className="material-icons">skip_previous</span>
             </div>
 
             {pauseOrPlay}
 
             <div className="playbar-control-button-container" onClick={this.handleNext}>
-              <i id="forward" className="fas fa-step-forward"></i>
+              <span id="forward" className="material-icons">skip_next</span>
             </div>
 
             <div className="playbar-control-button-container" onClick={this.handleLoop}>

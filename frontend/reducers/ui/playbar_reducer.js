@@ -15,6 +15,7 @@ import { RECEIVE_LIKED_SONGS } from "../../actions/library_actions";
 import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_ALBUM } from "../../actions/album_actions";
+import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
 
 const defaultState = {
   currentSong: null,
@@ -58,6 +59,8 @@ const playbarReducer = (state = defaultState, action) => {
       newState.currentSongIndex -= 1
       newState.isPlaying = true;
       return newState;
+    case RECEIVE_SEARCH_RESULTS:
+      newState.pageQueue = action.payload.pageQueue;
     case RECEIVE_LIKED_SONGS:
       newState.pageQueue = action.payload.pageQueue; 
       return newState;
@@ -80,6 +83,7 @@ const playbarReducer = (state = defaultState, action) => {
       return defaultState;
     case BEGIN_LOOP_FROM_END:
       newState.currentSongIndex = action.currentQueue.length;
+      return newState;
       return newState;
     default:
       return state;

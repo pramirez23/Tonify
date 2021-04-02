@@ -6,6 +6,7 @@ import { fetchUser } from "../../actions/user_actions";
 import { fetchPlaylist } from "../../actions/playlist_actions";
 import { fetchArtist } from "../../actions/artist_actions";
 import { fetchAlbum } from "../../actions/album_actions";
+import { playSong, pauseSong } from '../../actions/playbar_actions';
 
 import {
   fetchHipHop,
@@ -30,18 +31,37 @@ const mSTP = state => {
   const { playlists, albums, artists, users } = state.entities;
   const currentUsername = users[currentUserId].username;
 
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
+  } = state.ui.playbar;
+
   return ({
     currentUserId,
     currentUsername,
     playlists,
     albums,
-    artists
+    artists,
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
   });
 };
 
 const mDTP = dispatch => {
   return {
     logout: () => dispatch(logout()),
+    playSong: (song, pageIndex, pageQueue, location) => dispatch(playSong(song, pageIndex, pageQueue, location)),
+    pauseSong: () => dispatch(pauseSong()),
     receiveSearchPage: () => dispatch(receiveSearchPage()),
     fetchSearchResults: query => dispatch(fetchSearchResults(query)),
     fetchHome: () => dispatch(fetchHome()),

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { openAlert, closeAlert } from '../../actions/alert_actions';
-import { renderSongDuration, renderDateAdded } from '../../util/time_util';
+import { renderSongDuration } from '../../util/time_util';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 import { addAlbumSongToPlaylist } from '../../actions/album_actions';
@@ -423,7 +423,16 @@ const mSTP = state => {
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
-  const { isPlaying, currentSong, currentQueue, currentQueueLocation, currentSongIndex, pageQueue, userQueue } = state.ui.playbar;
+
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
+  } = state.ui.playbar;
 
   return ({
     playlists,

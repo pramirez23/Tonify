@@ -4,7 +4,11 @@ end
 
 pageQueue = []
 
-json.pageQueue @songs.pluck(:song_id)
+if @songs
+  json.pageQueue @songs.pluck(:song_id)
+else
+  json.pageQueue([])
+end
 
 @playlist.songs.each do |song|
   json.songs do

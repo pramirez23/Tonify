@@ -34,6 +34,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #B3B3B3;
+}
+
+.playbar-control-button-container:hover {
+  color: white;
 }
 
 #play, #pause {
@@ -41,16 +46,22 @@
   font-size: 35px;
 }
 
+span#forward, span#back {
+  background: none;
+  font-size: 25px;
+}
+
 span#repeat {
-  color: #B3B3B3;
   background: none;
   font-size: 17px;
+  pointer-events: none;
 }
 
 span#repeat-all, span#repeat-one {
   color: #229442;
   background: none;
   font-size: 17px;
+  pointer-events: none;
 }
 
 span#repeat-all:hover, span#repeat-one:hover {
@@ -61,10 +72,6 @@ span#repeat-all:hover, span#repeat-one:hover {
 
 #play:hover, #pause:hover {
   transform: scale(1.07);
-}
-
-.playbar-control-button-container:hover {
-  color: white;
 }
 
 .playbar-song-info-container {
@@ -151,7 +158,7 @@ input[type=range]::-webkit-slider-runnable-track {
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 0px 0px 0px #000000;
-  background: #B3B3B3;
+  background: #6d6d6d;
   border-radius: 50px;
   border: 0px solid #000000;
 }

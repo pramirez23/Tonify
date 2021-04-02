@@ -18,6 +18,18 @@ img.playlist-photo {
   cursor: pointer;
 }
 
+p#empty-playlist-title {
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: 0.25px;
+}
+
+p#empty-playlist-text {
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 0.25px;
+}
+
 .playlist-header {
   color: white;
   display: flex;
