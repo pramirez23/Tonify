@@ -56,7 +56,7 @@ const mDTP = dispatch => {
     fetchPrevSong: songId => dispatch(fetchPrevSong(songId)),
     fetchQueueSong: songId => dispatch(fetchQueueSong(songId)),
     endLoopQueue: () => dispatch(endLoopQueue()),
-    endQueue: () => dispatch(endQueue()),
+    endQueue: pageQueue => dispatch(endQueue(pageQueue)),
     beginLoopFromEnd: currentQueue => dispatch(beginLoopFromEnd(currentQueue))
   };
 };

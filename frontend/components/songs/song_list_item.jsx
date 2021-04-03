@@ -176,14 +176,6 @@ class SongListItem extends React.Component {
     } = this.props;
   
     const audio = document.getElementById("audio");
-
-    // if ((isPlaying && song === currentSong) || (song === currentSong && location.pathName !== currentQueueLocation)) {
-    //   playSong(song, pageIdx, pageQueue, location.pathname)
-    //   audio.currentTime = 0;
-    //   audio.play();
-    // } else {
-    //   playSong(song, pageIdx, pageQueue, location.pathname)
-    // }
     playSong(song, pageIdx, pageQueue, location.pathname)
     audio.currentTime = 0;
   }
@@ -226,14 +218,14 @@ class SongListItem extends React.Component {
           playOrNum = <i onClick={() => {
             this.props.pauseSong();
             const audio = document.getElementById("audio");
-            audio.pause()
+            audio.pause();
           }} className="fas fa-pause"></i>;
         } else {
           playOrNum = 
           <i onClick={() => {
             this.props.playSong(song, pageIdx, pageQueue, this.props.location.pathname);
             const audio = document.getElementById("audio");
-            audio.play()
+            audio.play();
           }}
           className="fas fa-play"></i>;
         }
@@ -242,7 +234,7 @@ class SongListItem extends React.Component {
         <i onClick={() => {
           this.props.playSong(song, pageIdx, pageQueue, this.props.location.pathname);
           const audio = document.getElementById("audio");
-          audio.play()
+          audio.play();
         }}
         className="fas fa-play"></i>;
       }

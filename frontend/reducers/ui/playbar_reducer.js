@@ -1,7 +1,7 @@
 import {
   PLAY_SONG,
   PAUSE_SONG,
-  PLAY_PAGE,
+  RECEIVE_PAGE,
   RECEIVE_NEXT_SONG,
   RECEIVE_PREVIOUS_SONG,
   QUEUE_SONG,
@@ -44,9 +44,10 @@ const playbarReducer = (state = defaultState, action) => {
     case PAUSE_SONG:
       newState.isPlaying = false;
       return newState;
-    case PLAY_PAGE:
+    case RECEIVE_PAGE:
       newState.currentSong = action.song;
       newState.currentQueue = action.pageQueue;
+      newState.currentQueueLocation = action.location;
       newState.isPlaying = true;
       return newState;
     case RECEIVE_NEXT_SONG:
@@ -80,10 +81,13 @@ const playbarReducer = (state = defaultState, action) => {
       newState.userQueue.push(action.payload.songId);
       return newState;
     case END_QUEUE:
-      return defaultState;
+      newState.currentSong = null,
+      newState.isPlaying = false,
+      newState.currentSongIndex = 0,
+      newState.currentQueue = action.pageQueue;
+      return newState;
     case BEGIN_LOOP_FROM_END:
       newState.currentSongIndex = action.currentQueue.length;
-      return newState;
       return newState;
     default:
       return state;

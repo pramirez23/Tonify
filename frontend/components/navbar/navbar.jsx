@@ -23,6 +23,8 @@ class Navbar extends React.Component {
     this.renderPlayButton = this.renderPlayButton.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.search = debounce(this.search.bind(this), 400);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -295,6 +297,65 @@ class Navbar extends React.Component {
     searchQuery === "" ? receiveSearchPage() : fetchSearchResults(searchQuery);
   }
 
+  handlePlay() {
+    const {
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      location,
+      pageQueue,
+      fetchPage,
+      playSong,
+      pauseSong,
+    } = this.props;
+  
+    if (!isPlaying) {
+      if (currentSong === null) {
+        fetchPage(pageQueue, location.pathname);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+  
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      location,
+    } = this.props;
+
+    const playButton = (
+      <img
+        className={this.renderPlayButton()}
+        src={window.playButton}
+        onClick={this.handlePlay}/>
+    )
+
+    const pauseButton = (
+      <img
+        className={this.renderPlayButton()}
+        src={window.pauseButton}
+        onClick={this.handlePlay} />
+    )
+
+    if (currentQueueLocation === location.pathname) {
+      if (isPlaying) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
+    }
+  }
+
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
     const path = this.props.location.pathname;
@@ -313,7 +374,7 @@ class Navbar extends React.Component {
           <div className="navbar-content">
             
             <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
-              <img className={this.renderPlayButton()} src={window.playButton} />
+              {this.renderPlayPause()}
               {this.state.content}
             </h1>
             <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>

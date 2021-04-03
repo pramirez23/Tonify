@@ -28,17 +28,25 @@
   color: #B3B3B3;
 }
 
-.playbar-control-button-container {
+.playbar-control-button-container, .loop-button-container {
   height: 30px;
   width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: default;
+}
+
+.playbar-control-button-container {
   color: #B3B3B3;
 }
 
 .playbar-control-button-container:hover {
   color: white;
+}
+
+.loop-button-container:hover {
+  color: #2dbe56;
 }
 
 #play, #pause {
@@ -49,26 +57,29 @@
 span#forward, span#back {
   background: none;
   font-size: 25px;
+  cursor: default;
 }
 
 span#repeat {
   background: none;
   font-size: 17px;
-  pointer-events: none;
+  cursor: default;
 }
 
 span#repeat-all, span#repeat-one {
   color: #229442;
   background: none;
   font-size: 17px;
-  pointer-events: none;
+  cursor: default;
 }
 
 span#repeat-all:hover, span#repeat-one:hover {
-  color: #2dbe56;
+  color: #36df66;
   background: none;
   font-size: 17px;
 }
+
+
 
 #play:hover, #pause:hover {
   transform: scale(1.07);

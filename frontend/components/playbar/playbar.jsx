@@ -118,7 +118,7 @@ class Playbar extends React.Component {
           const audio = document.getElementById("audio");
           this.setState({ currentTime: 0 });
           audio.currentTime = 0;
-          endQueue();
+          endQueue(currentQueue);
         } else if (currentSongIndex < (currentQueue.length - 1)) {
           fetchNextSong(currentQueue[currentSongIndex + 1])
           const audio = document.getElementById("audio");
@@ -214,8 +214,6 @@ class Playbar extends React.Component {
         loop: newLoopValue
       })
     }
-
-    console.log(this.state.loop)
   }
 
   renderLoop() {
@@ -342,9 +340,9 @@ class Playbar extends React.Component {
               <span id="forward" className="material-icons">skip_next</span>
             </div>
 
-            <div className="playbar-control-button-container" onClick={this.handleLoop}>
-              {this.renderLoop()}
-            </div>
+            <div
+              className={this.state.loop > 0 ? "loop-button-container" : "playbar-control-button-container"}
+              onClick={this.handleLoop}>{this.renderLoop()}</div>
           </div>
 
           <div className="song-progress-bar-container">

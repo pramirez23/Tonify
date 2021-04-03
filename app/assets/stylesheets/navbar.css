@@ -58,6 +58,7 @@ h1.hide-navbar-title {
   -o-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
   cursor: default;
+  pointer-events: none;
 }
 
 @keyframes fadein {

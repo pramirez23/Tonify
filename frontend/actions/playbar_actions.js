@@ -5,6 +5,7 @@ export const PLAY_PAGE = "PLAY_PAGE";
 export const PAUSE_SONG = "PAUSE_SONG";
 export const PLAY_QUEUE_SONG = "PLAY_QUEUE_SONG";
 export const QUEUE_SONG = "QUEUE_SONG";
+export const RECEIVE_PAGE = "PLAY_PAGE";
 export const RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 export const RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
 export const END_LOOP_QUEUE = "LOOP_QUEUE";
@@ -16,6 +17,16 @@ export const playSong = (song, pageIndex, pageQueue, location) => {
     type: PLAY_SONG,
     song,
     pageIndex,
+    pageQueue,
+    location
+  }
+}
+
+
+export const receivePage = (song, pageQueue, location) => {
+  return {
+    type: RECEIVE_PAGE,
+    song,
     pageQueue,
     location
   }
@@ -48,20 +59,26 @@ export const endLoopQueue = () => {
   }
 }
 
-export const endQueue = () => {
+export const endQueue = pageQueue => {
   return {
-    type: END_QUEUE
+    type: END_QUEUE,
+    pageQueue
   }
+}
+
+export const fetchPage = (pageQueue, location) => dispatch => {
+  SongAPIUtil.fetchSong(pageQueue[0])
+    .then(song => dispatch(receivePage(song, pageQueue, location)));
 }
 
 export const fetchNextSong = songId => dispatch => {
   SongAPIUtil.fetchSong(songId)
-    .then(song => dispatch(receiveNextSong(song)));
+  .then(song => dispatch(receiveNextSong(song)));
 }
 
 export const fetchPrevSong = songId => dispatch => {
   SongAPIUtil.fetchSong(songId)
-    .then(song => dispatch(receivePrevSong(song)));
+  .then(song => dispatch(receivePrevSong(song)));
 }
 
 export const pauseSong = () => {

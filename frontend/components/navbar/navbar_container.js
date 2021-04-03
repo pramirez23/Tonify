@@ -6,7 +6,12 @@ import { fetchUser } from "../../actions/user_actions";
 import { fetchPlaylist } from "../../actions/playlist_actions";
 import { fetchArtist } from "../../actions/artist_actions";
 import { fetchAlbum } from "../../actions/album_actions";
-import { playSong, pauseSong } from '../../actions/playbar_actions';
+
+import {
+  playSong,
+  pauseSong,
+  fetchPage
+} from '../../actions/playbar_actions';
 
 import {
   fetchHipHop,
@@ -65,6 +70,7 @@ const mDTP = dispatch => {
     receiveSearchPage: () => dispatch(receiveSearchPage()),
     fetchSearchResults: query => dispatch(fetchSearchResults(query)),
     fetchHome: () => dispatch(fetchHome()),
+    fetchPage: (pageQueue, location) => dispatch(fetchPage(pageQueue, location)),
     fetchHipHop: () => dispatch(fetchHipHop()),
     fetchPop: () => dispatch(fetchPop()),
     fetchRock: () => dispatch(fetchRock()),
