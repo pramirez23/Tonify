@@ -34,6 +34,8 @@ class SongListItem extends React.Component {
     this.setSongWidth = this.setSongWidth.bind(this);
     this.setPlaylistSelectorPosition = this.setPlaylistSelectorPosition.bind(this);
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.renderPlayOrNum = this.renderPlayOrNum.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -99,10 +101,6 @@ class SongListItem extends React.Component {
     })
     e.stopPropagation();
   }
-
-  // renderLikeButton() {
-
-  // }
 
   detectPageType() {
     const { song, playlists, album, currentUser } = this.props;
@@ -180,6 +178,99 @@ class SongListItem extends React.Component {
     audio.currentTime = 0;
   }
 
+  renderPlayOrNum() {
+    const isHovering = this.state.isHovering;
+
+    const {
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      isPlaying,
+      pageIdx,
+      num
+    } = this.props;
+
+    const playButton = (
+      <i onClick={(e) => {
+        e.stopPropagation();
+        this.handlePlay()
+      }} className="fas fa-play"></i>
+    );
+
+    const pauseButton = (
+      <i onClick={(e) => {
+        e.stopPropagation();
+        this.handlePlay()
+      }} className="fas fa-pause"></i>
+    );
+
+    const songNum = (
+      <div id={((pageIdx === currentSongIndex) && (location.pathname === currentQueueLocation)) ? "is-playing" : ""}>
+        {num}
+      </div>
+    )
+
+    const nowPlaying = (
+      <i id="is-playing" className="fas fa-volume-up"></i>
+    )
+
+    if (isHovering) {
+      if (isPlaying) {
+        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+          // render pause button for current song and location only
+          return pauseButton;
+        } else {
+          // render play button if hovering and song is not currently playing 
+          return playButton;
+        }
+      } else {
+        return playButton;
+      }
+    } else {
+      if (isPlaying) {
+        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+          return nowPlaying;
+        } else {
+          return songNum;
+        }
+      } else {
+        return songNum;
+      }
+    }
+  }
+
+  handlePlay() {
+    const {
+      isPlaying,
+      song,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      pageQueue,
+      playSong,
+      pauseSong,
+      pageIdx
+    } = this.props;
+
+    if (!isPlaying) {
+      if (!currentSong) {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+      } else {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+        audio.play();
+      }
+    } else {
+      if (currentSongIndex === pageIdx && location.pathname === currentQueueLocation) {
+        pauseSong();
+        const audio = document.getElementById("audio");
+        audio.pause();
+      } else {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+      }
+    } 
+  }
+
   render() {
     const {
       likedSongs,
@@ -210,41 +301,6 @@ class SongListItem extends React.Component {
 
     let playOrNum;
     let renderHeart;
-
-
-    if (isHovering) {
-      if ((isPlaying && pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) {
-        if (pageIdx === currentSongIndex) {
-          playOrNum = <i onClick={() => {
-            this.props.pauseSong();
-            const audio = document.getElementById("audio");
-            audio.pause();
-          }} className="fas fa-pause"></i>;
-        } else {
-          playOrNum = 
-          <i onClick={() => {
-            this.props.playSong(song, pageIdx, pageQueue, this.props.location.pathname);
-            const audio = document.getElementById("audio");
-            audio.play();
-          }}
-          className="fas fa-play"></i>;
-        }
-      } else {
-        playOrNum = 
-        <i onClick={() => {
-          this.props.playSong(song, pageIdx, pageQueue, this.props.location.pathname);
-          const audio = document.getElementById("audio");
-          audio.play();
-        }}
-        className="fas fa-play"></i>;
-      }
-    } else {
-      if ((isPlaying && pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) {
-        playOrNum = <i id="is-playing" className="fas fa-volume-up"></i>
-      } else {
-        playOrNum = <div id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}>{this.props.num}</div>;
-      }
-    }
 
     if (!likedSongs || !likedSongs[song.id]) {
       renderHeart = (
@@ -289,7 +345,7 @@ class SongListItem extends React.Component {
         onMouseLeave={() => this.handleMouseLeave()}
         onDoubleClick={this.handleDoubleClick}>
 
-        <td className="num-column">{playOrNum}</td>
+        <td className="num-column">{this.renderPlayOrNum()}</td>
         <td className={this.setSongWidth(this.state.pageType)}>
           <div className="title-details">
             <div className="item-art-container">

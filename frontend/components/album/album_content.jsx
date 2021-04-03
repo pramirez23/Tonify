@@ -8,6 +8,12 @@ import { openAlert, closeAlert } from '../../actions/alert_actions';
 import { like, unlike } from "../../actions/library_actions";
 import SongListItem from '../songs/song_list_item'
 
+import {
+  playSong,
+  pauseSong,
+  fetchPage
+} from '../../actions/playbar_actions';
+
 class Album extends React.Component {
   _isMounted = false;
 
@@ -23,6 +29,8 @@ class Album extends React.Component {
     this.dropDown = React.createRef();
     this.handleDropDown = this.handleDropDown.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +68,68 @@ class Album extends React.Component {
       this.setState({
         revealPlaylists: false
       })
+    }
+  }
+
+  handlePlay() {
+    const {
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      pageQueue,
+      fetchPage,
+      playSong,
+      pauseSong,
+    } = this.props;
+
+    if (!isPlaying) {
+      if (currentSong === null || currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else if (currentQueueLocation !== location.pathname) {
+      fetchPage(pageQueue, location.pathname);
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      location,
+    } = this.props;
+
+    const playButton = (
+      <img
+        id="show-page-play"
+        src={window.playButton}
+        onClick={this.handlePlay} />
+    )
+
+    const pauseButton = (
+      <img
+        id="show-page-play"
+        src={window.pauseButton}
+        onClick={this.handlePlay} />
+    )
+
+    if (currentQueueLocation === location.pathname) {
+      if (isPlaying) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
     }
   }
 
@@ -133,11 +203,9 @@ class Album extends React.Component {
         </div>
 
         <div className={albumSongs.length ? "show-page-controls" : "empty-playlist-controls"}>
-          <img id={albumSongs.length ? "show-page-play" : "hidden"} src={window.playButton} />
-
-          <div>
-            {renderHeart}
-          </div>
+          
+          {this.renderPlayPause()}
+          <div>{renderHeart}</div>
 
           <div className="dropdown" onClick={() => this.handleDropDown()} ref={div => this.dropDown = div}>
             <i className="fas fa-ellipsis-h"></i>
@@ -219,15 +287,35 @@ const mSTP = state => {
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedAlbums = currentUserLikes.albums;
 
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
+  } = state.ui.playbar;
+
   return ({
     playlists,
     currentUser: currentUser,
-    likedAlbums
+    likedAlbums,
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
   });
 };
 
 const mDTP = dispatch => {
   return {
+    fetchPage: (pageQueue, location) => dispatch(fetchPage(pageQueue, location)),
+    playSong: (song, pageIndex, pageQueue, location) => dispatch(playSong(song, pageIndex, pageQueue, location)),
+    pauseSong: () => dispatch(pauseSong()),
     openAlert: (type) => dispatch(openAlert(type)),
     closeAlert: () => dispatch(closeAlert()),
     addAlbumToPlaylist: (playlistId, albumId) => dispatch(addAlbumToPlaylist(playlistId, albumId)),
