@@ -495,7 +495,6 @@ var closeModal = function closeModal() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "PLAY_SONG": () => /* binding */ PLAY_SONG,
-/* harmony export */   "PLAY_PAGE": () => /* binding */ PLAY_PAGE,
 /* harmony export */   "PAUSE_SONG": () => /* binding */ PAUSE_SONG,
 /* harmony export */   "PLAY_QUEUE_SONG": () => /* binding */ PLAY_QUEUE_SONG,
 /* harmony export */   "QUEUE_SONG": () => /* binding */ QUEUE_SONG,
@@ -524,11 +523,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_song_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/song_api_util */ "./frontend/util/song_api_util.js");
 
 var PLAY_SONG = "PLAY_SONG";
-var PLAY_PAGE = "PLAY_PAGE";
 var PAUSE_SONG = "PAUSE_SONG";
 var PLAY_QUEUE_SONG = "PLAY_QUEUE_SONG";
 var QUEUE_SONG = "QUEUE_SONG";
-var RECEIVE_PAGE = "PLAY_PAGE";
+var RECEIVE_PAGE = "RECEIVE_PAGE";
 var RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 var RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
 var END_LOOP_QUEUE = "LOOP_QUEUE";
@@ -1193,7 +1191,7 @@ var Album = /*#__PURE__*/function (_React$Component) {
           pauseSong = _this$props.pauseSong;
 
       if (!isPlaying) {
-        if (currentSong === null || currentQueueLocation !== location.pathname) {
+        if (currentQueueLocation !== location.pathname) {
           fetchPage(pageQueue, location.pathname);
         } else {
           playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
@@ -1849,7 +1847,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
           pauseSong = _this$props2.pauseSong;
 
       if (!isPlaying) {
-        if (currentSong === null || currentQueueLocation !== location.pathname) {
+        if (currentQueueLocation !== location.pathname) {
           fetchPage(pageQueue, location.pathname);
         } else {
           playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
@@ -5285,13 +5283,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _actions_modal_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/modal_actions */ "./frontend/actions/modal_actions.js");
 /* harmony import */ var _actions_library_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/library_actions */ "./frontend/actions/library_actions.js");
 /* harmony import */ var _util_time_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/time_util */ "./frontend/util/time_util.js");
 /* harmony import */ var _actions_alert_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/alert_actions */ "./frontend/actions/alert_actions.js");
 /* harmony import */ var _songs_song_list_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../songs/song_list_item */ "./frontend/components/songs/song_list_item.jsx");
+/* harmony import */ var _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../actions/playbar_actions */ "./frontend/actions/playbar_actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5315,6 +5314,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -5350,6 +5350,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
     _this.handleEdit = _this.handleEdit.bind(_assertThisInitialized(_this));
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.emptyOrFilled = _this.emptyOrFilled.bind(_assertThisInitialized(_this));
+    _this.renderPlayPause = _this.renderPlayPause.bind(_assertThisInitialized(_this));
+    _this.handlePlay = _this.handlePlay.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -5517,7 +5519,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           id: "empty-playlist-title"
         }, "It looks like you don't have anything in this playlist yet."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           id: "empty-playlist-text"
-        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+        }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
           to: "/search"
         }, "Search"), " for some songs to add!"));
       } else if (likedSongs && likedSongs.length === 0) {
@@ -5538,16 +5540,93 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       return renderPlaylist;
     }
   }, {
+    key: "handlePlay",
+    value: function handlePlay() {
+      var _this$props3 = this.props,
+          isPlaying = _this$props3.isPlaying,
+          currentSong = _this$props3.currentSong,
+          currentSongIndex = _this$props3.currentSongIndex,
+          currentQueueLocation = _this$props3.currentQueueLocation,
+          location = _this$props3.location,
+          pageQueue = _this$props3.pageQueue,
+          fetchPage = _this$props3.fetchPage,
+          playSong = _this$props3.playSong,
+          pauseSong = _this$props3.pauseSong;
+
+      if (!isPlaying) {
+        if (currentQueueLocation !== location.pathname) {
+          fetchPage(pageQueue, location.pathname);
+        } else {
+          playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
+          var audio = document.getElementById("audio");
+          audio.play();
+        }
+      } else if (currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
+      } else {
+        pauseSong();
+
+        var _audio = document.getElementById("audio");
+
+        _audio.pause();
+      }
+    }
+  }, {
+    key: "renderPlayPause",
+    value: function renderPlayPause() {
+      var _this$props4 = this.props,
+          isPlaying = _this$props4.isPlaying,
+          currentQueueLocation = _this$props4.currentQueueLocation,
+          location = _this$props4.location,
+          playlists = _this$props4.playlists,
+          songs = _this$props4.songs;
+      var pathName = location.pathname.split('/');
+      var pageId = pathName[1];
+      var playlist, playlistSongs, likedSongs;
+
+      if (pageId === "playlists") {
+        playlist = playlists[this.props.match.params.id];
+        playlistSongs = Object.entries(songs);
+
+        if (!playlist) {
+          return null;
+        }
+      } else {
+        likedSongs = Object.entries(songs);
+      }
+
+      var playButton = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        id: playlist && playlistSongs.length || likedSongs && likedSongs.length ? "show-page-play" : "hidden",
+        src: window.playButton,
+        onClick: this.handlePlay
+      });
+      var pauseButton = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+        id: playlist && playlistSongs.length || likedSongs && likedSongs.length ? "show-page-play" : "hidden",
+        src: window.pauseButton,
+        onClick: this.handlePlay
+      });
+
+      if (currentQueueLocation === location.pathname) {
+        if (isPlaying) {
+          return pauseButton;
+        } else {
+          return playButton;
+        }
+      } else {
+        return playButton;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
 
-      var _this$props3 = this.props,
-          likedPlaylists = _this$props3.likedPlaylists,
-          songs = _this$props3.songs,
-          users = _this$props3.users,
-          currentUser = _this$props3.currentUser,
-          playlists = _this$props3.playlists;
+      var _this$props5 = this.props,
+          likedPlaylists = _this$props5.likedPlaylists,
+          songs = _this$props5.songs,
+          users = _this$props5.users,
+          currentUser = _this$props5.currentUser,
+          playlists = _this$props5.playlists;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
 
@@ -5654,10 +5733,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         className: "username"
       }, username), location === "playlists" ? playlistDetails() : likedSongsDetails())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: playlist && playlistSongs.length || likedSongs && likedSongs.length ? "show-page-controls" : "empty-playlist-controls"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-        id: playlist && playlistSongs.length || likedSongs && likedSongs.length ? "show-page-play" : "hidden",
-        src: window.playButton
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, this.renderPlayPause(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: location === "library" ? "hidden" : ""
       }, location === "playlists" && playlistCreator !== currentUser ? renderHeart : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: location === "playlists" && currentUser === playlistCreator ? "playlist-dropdown" : "invisible",
@@ -5700,18 +5776,42 @@ var mSTP = function mSTP(state) {
   var likedSongsDetails = likes.songs;
   var currentUserLikes = state.entities.users[currentUser].likes;
   var likedPlaylists = currentUserLikes.playlists;
+  var _state$ui$playbar = state.ui.playbar,
+      isPlaying = _state$ui$playbar.isPlaying,
+      currentSong = _state$ui$playbar.currentSong,
+      currentQueue = _state$ui$playbar.currentQueue,
+      currentQueueLocation = _state$ui$playbar.currentQueueLocation,
+      currentSongIndex = _state$ui$playbar.currentSongIndex,
+      pageQueue = _state$ui$playbar.pageQueue,
+      userQueue = _state$ui$playbar.userQueue;
   return {
     currentUser: currentUser,
     songs: songs,
     likedSongsDetails: likedSongsDetails,
     likedPlaylists: likedPlaylists,
     loading: loading,
-    likes: likes
+    likes: likes,
+    isPlaying: isPlaying,
+    currentSong: currentSong,
+    currentQueue: currentQueue,
+    currentQueueLocation: currentQueueLocation,
+    currentSongIndex: currentSongIndex,
+    pageQueue: pageQueue,
+    userQueue: userQueue
   };
 };
 
 var mDTP = function mDTP(dispatch) {
   return {
+    fetchPage: function fetchPage(pageQueue, location) {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_7__.fetchPage)(pageQueue, location));
+    },
+    playSong: function playSong(song, pageIndex, pageQueue, location) {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_7__.playSong)(song, pageIndex, pageQueue, location));
+    },
+    pauseSong: function pauseSong() {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_7__.pauseSong)());
+    },
     openAlert: function openAlert(type) {
       return dispatch((0,_actions_alert_actions__WEBPACK_IMPORTED_MODULE_5__.openAlert)(type));
     },
@@ -5733,7 +5833,7 @@ var mDTP = function mDTP(dispatch) {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(Playlist)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.withRouter)((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mSTP, mDTP)(Playlist)));
 
 /***/ }),
 
@@ -8427,7 +8527,7 @@ __webpack_require__.r(__webpack_exports__);
 var defaultState = {
   currentSong: null,
   isPlaying: false,
-  currentSongIndex: 0,
+  currentSongIndex: null,
   pageQueue: [],
   currentQueue: [],
   currentQueueLocation: null,
@@ -8462,6 +8562,7 @@ var playbarReducer = function playbarReducer() {
       newState.currentSong = action.song;
       newState.currentQueue = action.pageQueue;
       newState.currentQueueLocation = action.location;
+      newState.currentSongIndex = 0;
       newState.isPlaying = true;
       return newState;
 
@@ -8505,7 +8606,7 @@ var playbarReducer = function playbarReducer() {
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.END_QUEUE:
-      newState.currentSong = null, newState.isPlaying = false, newState.currentSongIndex = 0, newState.currentQueue = action.pageQueue;
+      newState.currentSong = null, newState.isPlaying = false, newState.currentSongIndex = null, newState.currentQueue = action.pageQueue;
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.BEGIN_LOOP_FROM_END:

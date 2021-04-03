@@ -85,7 +85,7 @@ class Album extends React.Component {
     } = this.props;
 
     if (!isPlaying) {
-      if (currentSong === null || currentQueueLocation !== location.pathname) {
+      if (currentQueueLocation !== location.pathname) {
         fetchPage(pageQueue, location.pathname);
       } else {
         playSong(currentSong, currentSongIndex, pageQueue, location.pathname);

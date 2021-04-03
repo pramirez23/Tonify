@@ -1,11 +1,10 @@
 import * as SongAPIUtil from '../util/song_api_util'
 
 export const PLAY_SONG = "PLAY_SONG";
-export const PLAY_PAGE = "PLAY_PAGE";
 export const PAUSE_SONG = "PAUSE_SONG";
 export const PLAY_QUEUE_SONG = "PLAY_QUEUE_SONG";
 export const QUEUE_SONG = "QUEUE_SONG";
-export const RECEIVE_PAGE = "PLAY_PAGE";
+export const RECEIVE_PAGE = "RECEIVE_PAGE";
 export const RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 export const RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
 export const END_LOOP_QUEUE = "LOOP_QUEUE";

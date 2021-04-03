@@ -20,7 +20,7 @@ import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
 const defaultState = {
   currentSong: null,
   isPlaying: false,
-  currentSongIndex: 0,
+  currentSongIndex: null,
   pageQueue: [],
   currentQueue: [],
   currentQueueLocation: null,
@@ -48,6 +48,7 @@ const playbarReducer = (state = defaultState, action) => {
       newState.currentSong = action.song;
       newState.currentQueue = action.pageQueue;
       newState.currentQueueLocation = action.location;
+      newState.currentSongIndex = 0;
       newState.isPlaying = true;
       return newState;
     case RECEIVE_NEXT_SONG:
@@ -83,7 +84,7 @@ const playbarReducer = (state = defaultState, action) => {
     case END_QUEUE:
       newState.currentSong = null,
       newState.isPlaying = false,
-      newState.currentSongIndex = 0,
+      newState.currentSongIndex = null,
       newState.currentQueue = action.pageQueue;
       return newState;
     case BEGIN_LOOP_FROM_END:
