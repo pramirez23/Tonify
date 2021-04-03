@@ -296,14 +296,16 @@ class SongListItem extends React.Component {
               <img className={validArtLocation.includes(this.state.pageType) ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
             <div className="title-details-text-container">
-              {/* <div
-                className={this.state.pageType === "artists" ? "hidden" : "song-item-artist-link"}
-                onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>{song.artist}</div> */}
               <div className="title-artist-container">
                 <p
                   id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}
                   className="song-title">{song.title}</p>
-                <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+                <div className="song-artist-link-container">
+                  <Link
+                    id={this.state.isHovering ? "white" : "gray"}
+                    className={this.state.pageType === "artists" ? "hidden" : "song-artist-link"}
+                    to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+                </div>
               </div>
             </div>
           </div>

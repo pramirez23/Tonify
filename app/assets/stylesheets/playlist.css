@@ -213,7 +213,6 @@ td {
 td > a, .title-artist-container > a, td > a:visited,
 .title-artist-container > a:visited {
   text-decoration: none;
-  color: inherit;
 }
 
 td > a:hover, .title-artist-container > a:hover {
@@ -258,16 +257,6 @@ td > a:hover, .title-artist-container > a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-a#artist-link {
-  text-decoration: none;
-  color: #B3B3B3;
-}
-
-a#artist-link-hovering:hover {
-  text-decoration: underline;
-  color: white;
 }
 
 .song-title {

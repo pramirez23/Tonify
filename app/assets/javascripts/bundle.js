@@ -1756,6 +1756,7 @@ var Artist = /*#__PURE__*/function (_React$Component) {
           isPlaying = _this$props2.isPlaying,
           currentSong = _this$props2.currentSong,
           currentSongIndex = _this$props2.currentSongIndex,
+          currentQueueLocation = _this$props2.currentQueueLocation,
           location = _this$props2.location,
           pageQueue = _this$props2.pageQueue,
           fetchPage = _this$props2.fetchPage,
@@ -1763,13 +1764,15 @@ var Artist = /*#__PURE__*/function (_React$Component) {
           pauseSong = _this$props2.pauseSong;
 
       if (!isPlaying) {
-        if (currentSong === null) {
+        if (currentSong === null || currentQueueLocation !== location.pathname) {
           fetchPage(pageQueue, location.pathname);
         } else {
           playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
           var audio = document.getElementById("audio");
           audio.play();
         }
+      } else if (currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
       } else {
         pauseSong();
 
@@ -3870,6 +3873,7 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           isPlaying = _this$props3.isPlaying,
           currentSong = _this$props3.currentSong,
           currentSongIndex = _this$props3.currentSongIndex,
+          currentQueueLocation = _this$props3.currentQueueLocation,
           location = _this$props3.location,
           pageQueue = _this$props3.pageQueue,
           fetchPage = _this$props3.fetchPage,
@@ -3877,13 +3881,15 @@ var Navbar = /*#__PURE__*/function (_React$Component) {
           pauseSong = _this$props3.pauseSong;
 
       if (!isPlaying) {
-        if (currentSong === null) {
+        if (currentSong === null || currentQueueLocation !== location.pathname) {
           fetchPage(pageQueue, location.pathname);
         } else {
           playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
           var audio = document.getElementById("audio");
           audio.play();
         }
+      } else if (currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
       } else {
         pauseSong();
 
@@ -7249,10 +7255,13 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
         id: pageIdx === currentSongIndex && this.props.location.pathname === currentQueueLocation ? "is-playing" : "",
         className: "song-title"
-      }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
-        className: this.state.pageType === "artists" ? "hidden" : "",
+      }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "song-artist-link-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+        id: this.state.isHovering ? "white" : "gray",
+        className: this.state.pageType === "artists" ? "hidden" : "song-artist-link",
         to: "/artists/".concat(song.artist_id)
-      }, song.artist))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      }, song.artist)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
         className: this.state.pageType === "playlists" || this.state.pageType === "library" ? "album-column" : "hidden"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
         to: "/albums/".concat(song.album_id)

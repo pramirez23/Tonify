@@ -302,6 +302,7 @@ class Navbar extends React.Component {
       isPlaying,
       currentSong,
       currentSongIndex,
+      currentQueueLocation,
       location,
       pageQueue,
       fetchPage,
@@ -310,13 +311,15 @@ class Navbar extends React.Component {
     } = this.props;
   
     if (!isPlaying) {
-      if (currentSong === null) {
+      if (currentSong === null || currentQueueLocation !== location.pathname) {
         fetchPage(pageQueue, location.pathname);
       } else {
         playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
         const audio = document.getElementById("audio");
         audio.play();
       }
+    } else if (currentQueueLocation !== location.pathname) {
+      fetchPage(pageQueue, location.pathname);
     } else {
       pauseSong();
       const audio = document.getElementById("audio");

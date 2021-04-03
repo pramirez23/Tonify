@@ -144,6 +144,25 @@ div.playlist-selector-container:hover,  div.playlist-selector-container-other:ho
   color: white;
 }
 
+#gray {
+  color: #B3B3B3;
+}
+
+.song-artist-link-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+a.song-artist-link {
+  text-decoration: none;
+}
+
+a.song-artist-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
 @keyframes likesong {
   0% {
     transform: scale(1.0);
