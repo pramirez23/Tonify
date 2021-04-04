@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import LibraryItemContainer from './library_item_container';
 import SongsPreview from './songs_preview';
 
@@ -9,7 +8,8 @@ class Library extends React.Component {
 
     this.state = {
       content: null,
-      isHovering: false
+      isHovering: false,
+      playHovering: false
     }
 
     this.handleCreate = this.handleCreate.bind(this);
@@ -19,6 +19,9 @@ class Library extends React.Component {
     this.emptyOrFilled = this.emptyOrFilled.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handlePlayHover = this.handlePlayHover.bind(this);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +55,12 @@ class Library extends React.Component {
   handleMouseLeave() {
     this.setState({
       isHovering: false
+    })
+  }
+
+  handlePlayHover() {
+    this.setState({
+      playHovering: !this.state.playHovering
     })
   }
 
@@ -100,7 +109,7 @@ class Library extends React.Component {
             <div className="library-index">
               <div
                 className="liked-songs-shortcut"
-                onMouseEnter={(e) => this.handleMouseEnter()}
+                onMouseEnter={() => this.handleMouseEnter()}
                 onMouseLeave={() => this.handleMouseLeave()}
                 onClick={() => this.props.history.push('/library/songs')}>
                 <div className="liked-songs-container">
@@ -110,19 +119,14 @@ class Library extends React.Component {
                   <h1 className="song-preview-title">Liked Songs</h1>
                   <span className="song-preview-count">{likedSongsCount} {likedSongsCount === 1 ? "song" : "songs"}</span>
                 </div>
-                <img
-                  className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
-                  src={window.playButton}
-                  alt="Play Button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    console.log("clicked")
-                  }} />
+                {this.renderPlayPause()}
               </div>
               {Object.values(playlists).slice(0).reverse().map(((playlist, idx) =>
                 <LibraryItemContainer
                   id={playlist.id}
                   playlist={playlist}
+                  itemLocation={playlist.itemLocation}
+                  itemType="Playlist"
                   key={idx}/>
               ))}
             </div>
@@ -137,6 +141,8 @@ class Library extends React.Component {
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
+                  itemLocation={artist.itemLocation}
+                  itemType="Artist"
                   key={idx} />
               ))}
             </div>
@@ -151,6 +157,8 @@ class Library extends React.Component {
                 <LibraryItemContainer
                   id={album.id}
                   album={album}
+                  itemLocation={album.itemLocation}
+                  itemType="Album"
                   key={idx} />
               ))}
             </div>
@@ -175,6 +183,85 @@ class Library extends React.Component {
         return Object.entries(albums).length === 0 ? this.renderEmptyAlbums() : this.renderIndex(location)
       default:
         break;
+    }
+  }
+
+  handlePlay() {
+    const {
+      id,
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      pageQueue,
+      fetchLibraryItem,
+      playSong,
+      pauseSong,
+    } = this.props;
+
+    const itemLocation = "/library/songs"
+    const itemType = "Liked Songs"
+
+    if (!isPlaying) {
+      if (currentQueueLocation !== itemLocation) {
+        fetchLibraryItem(id, itemType, itemLocation);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, itemLocation);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else if (currentQueueLocation !== itemLocation) {
+      fetchLibraryItem(id, itemType, itemLocation);
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      itemLocation,
+    } = this.props;
+
+    const playButton = (
+      <img
+        id={this.state.playHovering ? "liked-songs-hover" : ""}
+        className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
+        src={window.playButton}
+        alt="Play Button"
+        onMouseEnter={this.handlePlayHover}
+        onMouseLeave={this.handlePlayHover}
+        onClick={(e) => {
+          e.stopPropagation();
+          this.handlePlay();
+        }} />
+    )
+
+    const pauseButton = (
+      <img
+        id={this.state.playHovering ? "liked-songs-hover" : ""}
+        className={this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play"}
+        src={window.pauseButton}
+        alt="Play Button"
+        onMouseEnter={this.handlePlayHover}
+        onMouseLeave={this.handlePlayHover}
+        onClick={(e) => {
+          e.stopPropagation();
+          this.handlePlay();
+        }} />
+    )
+
+    if (isPlaying) {
+      if (currentQueueLocation === itemLocation) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
     }
   }
 

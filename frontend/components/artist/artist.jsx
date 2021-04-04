@@ -158,6 +158,7 @@ class Artist extends React.Component {
               <LibraryItemContainer
                 id={album.id}
                 album={album}
+                itemLocation={album.itemLocation}
                 key={idx}
                 itemType="Album" />
             ))}
@@ -171,6 +172,7 @@ class Artist extends React.Component {
               <LibraryItemContainer
                 id={playlist.id}
                 playlist={playlist}
+                itemLocation={playlist.itemLocation}
                 key={idx}
                 itemType="Playlist" />
             ))}

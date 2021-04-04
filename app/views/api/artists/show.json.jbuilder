@@ -1,5 +1,4 @@
 playlists = @artist.playlists.uniq
-pageQueue = []
 
 json.artist do
   images = []
@@ -13,22 +12,11 @@ json.artist do
   json.photos images
 end
 
-
-json.songs do
-  i = 0
-  
-  shuffle_length = 5
-  artist_songs = @artist.songs.shuffle
-  shuffle_length = artist_songs.length if artist_songs.length < 5
-  
-  while i < shuffle_length
-    pageQueue.push(artist_songs[i].id)
-    
-    json.set! artist_songs[i].id do
-      json.partial! artist_songs[i]
+@artist.songs.slice(0, 5).each do |song|
+  json.songs do
+    json.set! song.id do
+      json.partial! song
     end
-    
-    i += 1
   end
 end
 
@@ -48,5 +36,4 @@ json.playlists do
   end
 end
 
-pageQueue = pageQueue.sort
-json.pageQueue pageQueue
+json.pageQueue @artist.songs.slice(0, 5).pluck(:id)

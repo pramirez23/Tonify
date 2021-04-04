@@ -14,7 +14,11 @@ const songsReducer = (state = {}, action) => {
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.songs);
     case RECEIVE_LIKED_SONGS:
-      return action.payload.likedSongs;
+      if (action.payload.likedSongs) {
+        return action.payload.likedSongs;
+      } else {
+        return state;
+      }
     case RECEIVE_PLAYLIST:
       if (!action.payload) {
         return state;
@@ -29,7 +33,7 @@ const songsReducer = (state = {}, action) => {
       return action.payload.songs;
     case REMOVE_SONG:
       let newState = Object.assign({}, state);
-      delete newState[action.payload.song.id];
+      delete newState[action.song.id];
       return newState;
     default:
       return state;

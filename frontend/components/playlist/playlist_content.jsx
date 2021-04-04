@@ -33,7 +33,6 @@ class Playlist extends React.Component {
     this.emptyOrFilled = this.emptyOrFilled.bind(this);
     this.renderPlayPause = this.renderPlayPause.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
-
   }
 
   componentDidMount() {

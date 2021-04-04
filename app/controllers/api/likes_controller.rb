@@ -53,6 +53,7 @@ class Api::LikesController < ApplicationController
         @like.destroy!
         @user = User.find_by(id: current_user.id)
         if destroy_like_params[:from_library]
+          debugger
           render 'api/songs/show'
         else
           render 'api/users/show'
@@ -94,6 +95,7 @@ class Api::LikesController < ApplicationController
     @user = User.find_by(id: current_user.id)
     @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
     @songs = Song.where(id: @likes.keys).limit(8)
+    @pageQueue = @likes.keys.reverse
     render 'api/songs/index'
   end
 

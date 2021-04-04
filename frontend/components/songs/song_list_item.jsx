@@ -278,20 +278,16 @@ class SongListItem extends React.Component {
       album,
       playlists,
       currentUser,
-      isPlaying,
-      currentSong,
       currentSongIndex,
       currentQueueLocation,
       pageIdx,
-      pageQueue
     } = this.props;
 
     const validArtLocation = ["playlists", "library", "artists", "search"];
     if (this.props.loading || !song) {
       return null;
     }
-
-    const isHovering = this.state.isHovering;
+    
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     
@@ -299,7 +295,6 @@ class SongListItem extends React.Component {
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
       playlist.user_id === this.props.currentUser);
 
-    let playOrNum;
     let renderHeart;
 
     if (!likedSongs || !likedSongs[song.id]) {

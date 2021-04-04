@@ -2,12 +2,43 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import LibraryItem from "./library_item";
 
+import {
+  playSong,
+  pauseSong,
+  fetchLibraryItem
+} from '../../actions/playbar_actions';
+
 const mSTP = state => {
   const { songs } = state.entities;
 
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
+  } = state.ui.playbar;
+
   return {
-    songs
+    songs,
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
   }
 }
 
-export default withRouter(connect(mSTP)(LibraryItem));
+const mDTP = dispatch => {
+  return {
+    fetchLibraryItem: (itemId, itemType, itemLocation) => dispatch(fetchLibraryItem(itemId, itemType, itemLocation)),
+    playSong: (song, pageIndex, pageQueue, location) => dispatch(playSong(song, pageIndex, pageQueue, location)),
+    pauseSong: () => dispatch(pauseSong()),
+  }
+};
+
+export default withRouter(connect(mSTP, mDTP)(LibraryItem));

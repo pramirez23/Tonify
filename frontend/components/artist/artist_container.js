@@ -14,6 +14,7 @@ import Artist from "./artist"
 
 const mSTP = (state, ownProps) => {
   const { id } = state.session;
+  
   const {
     playlists,
     artists,
@@ -21,6 +22,7 @@ const mSTP = (state, ownProps) => {
     songs,
     users
   } = state.entities;
+
   const artist = artists[ownProps.match.params.id];
   const { loading } = state.ui;
   const currentUserLikes = users[id].likes;

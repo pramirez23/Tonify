@@ -51,6 +51,7 @@ class Genre extends React.Component {
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
+                  itemLocation={artist.itemLocation}
                   key={idx}
                   itemType={"Artist"} />
               ))}
@@ -66,6 +67,7 @@ class Genre extends React.Component {
                 <LibraryItemContainer
                   id={album.id}
                   album={album}
+                  itemLocation={album.itemLocation}
                   key={idx}
                   itemType={"Album"} />
               ))}

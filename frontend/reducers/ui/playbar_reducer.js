@@ -4,6 +4,7 @@ import {
   RECEIVE_PAGE,
   RECEIVE_NEXT_SONG,
   RECEIVE_PREVIOUS_SONG,
+  RECEIVE_LIBRARY_ITEM,
   QUEUE_SONG,
   QUEUE_SONGS,
   END_LOOP_QUEUE,
@@ -51,6 +52,18 @@ const playbarReducer = (state = defaultState, action) => {
       newState.currentSongIndex = 0;
       newState.isPlaying = true;
       return newState;
+    case RECEIVE_LIBRARY_ITEM:
+      if (action.payload.song) {
+        newState.currentSong = action.payload.song
+      } else {
+        return newState;
+      }
+
+      newState.currentQueue = action.payload.pageQueue;
+      newState.currentQueueLocation = action.payload.itemLocation;
+      newState.currentSongIndex = 0;
+      newState.isPlaying = true;
+      return newState;
     case RECEIVE_NEXT_SONG:
       newState.currentSong = action.song;
       newState.currentSongIndex += 1
@@ -86,6 +99,7 @@ const playbarReducer = (state = defaultState, action) => {
       newState.isPlaying = false,
       newState.currentSongIndex = null,
       newState.currentQueue = action.pageQueue;
+      newState.currentQueueLocation = null;
       return newState;
     case BEGIN_LOOP_FROM_END:
       newState.currentSongIndex = action.currentQueue.length;

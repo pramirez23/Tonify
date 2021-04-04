@@ -1,4 +1,5 @@
 import * as SongAPIUtil from '../util/song_api_util'
+import * as PlaybarAPIUtil from '../util/playbar_api_util';
 
 export const PLAY_SONG = "PLAY_SONG";
 export const PAUSE_SONG = "PAUSE_SONG";
@@ -7,6 +8,7 @@ export const QUEUE_SONG = "QUEUE_SONG";
 export const RECEIVE_PAGE = "RECEIVE_PAGE";
 export const RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 export const RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
+export const RECEIVE_LIBRARY_ITEM = "RECEIVE_LIBRARY_ITEM";
 export const END_LOOP_QUEUE = "LOOP_QUEUE";
 export const END_QUEUE = "END_QUEUE";
 export const BEGIN_LOOP_FROM_END = "BEGIN_LOOP_FROM_END";
@@ -21,13 +23,19 @@ export const playSong = (song, pageIndex, pageQueue, location) => {
   }
 }
 
-
 export const receivePage = (song, pageQueue, location) => {
   return {
     type: RECEIVE_PAGE,
     song,
     pageQueue,
     location
+  }
+}
+
+export const receiveLibraryItem = payload => {
+  return {
+    type: RECEIVE_LIBRARY_ITEM,
+    payload
   }
 }
 
@@ -63,6 +71,11 @@ export const endQueue = pageQueue => {
     type: END_QUEUE,
     pageQueue
   }
+}
+
+export const fetchLibraryItem = (itemId, itemType, itemLocation) => dispatch => {
+  PlaybarAPIUtil.fetchLibraryItem(itemId, itemType, itemLocation)
+    .then(payload => dispatch(receiveLibraryItem(payload)));
 }
 
 export const fetchPage = (pageQueue, location) => dispatch => {

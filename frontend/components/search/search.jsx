@@ -93,6 +93,7 @@ class Search extends React.Component {
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
+                  itemLocation={artist.itemLocation}
                   key={idx}
                   itemType="Artist" />
               ))}
@@ -106,6 +107,7 @@ class Search extends React.Component {
                 <LibraryItemContainer
                   id={album.id}
                   album={album}
+                  itemLocation={album.itemLocation}
                   key={idx}
                   itemType="Album" />
               ))}
@@ -122,6 +124,7 @@ class Search extends React.Component {
                   <LibraryItemContainer
                     id={playlist.id}
                     playlist={playlist}
+                    itemLocation={playlist.itemLocation}
                     key={idx}
                     itemType="Playlist" />
               ))}
