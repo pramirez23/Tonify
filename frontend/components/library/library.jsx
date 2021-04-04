@@ -223,8 +223,9 @@ class Library extends React.Component {
     const {
       isPlaying,
       currentQueueLocation,
-      itemLocation,
     } = this.props;
+
+    const itemLocation = "/library/songs"
 
     const playButton = (
       <img

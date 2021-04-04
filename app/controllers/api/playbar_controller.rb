@@ -20,9 +20,10 @@ class Api::PlaybarController < ApplicationController
       render '/api/playbar/album'
     when "Liked Songs"
       @user = User.find_by(id: current_user.id)
-      @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
-      @songs = Song.where(id: @likes.keys)
+      @likes = @user.likes.where(likable_type: "Song").order(:created_at).pluck(:likable_id, :created_at).to_h
       @pageQueue = @likes.keys.reverse
+      @song = Song.where(id: @pageQueue.first)
+      @item_location = playbar_params[:itemLocation]
       render 'api/playbar/liked_songs'
     end
   end

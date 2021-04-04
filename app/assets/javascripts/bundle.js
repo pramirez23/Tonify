@@ -2822,8 +2822,8 @@ var Library = /*#__PURE__*/function (_React$Component) {
 
       var _this$props4 = this.props,
           isPlaying = _this$props4.isPlaying,
-          currentQueueLocation = _this$props4.currentQueueLocation,
-          itemLocation = _this$props4.itemLocation;
+          currentQueueLocation = _this$props4.currentQueueLocation;
+      var itemLocation = "/library/songs";
       var playButton = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         id: this.state.playHovering ? "liked-songs-hover" : "",
         className: this.state.isHovering ? "show-song-preview-play" : "hide-song-preview-play",
