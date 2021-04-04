@@ -20,8 +20,11 @@ class Navbar extends React.Component {
     this.handleDropDown = this.handleDropDown.bind(this);
     this.convertOpacity = this.convertOpacity.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.renderPlayButton = this.renderPlayButton.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
     this.search = debounce(this.search.bind(this), 400);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +67,7 @@ class Navbar extends React.Component {
         this.props.fetchArtist(pageId).then(() => this.renderContent());
         break;
       case "library":
-        this.props.fetchUser(this.props.currentUserId);
+        // this.props.fetchUser(this.props.currentUserId);
         if (pageId === "songs") {
           this.props.fetchLikedSongs(currentUserId).then(() => this.renderContent());
         } else if (pageId === "playlists") {
@@ -223,15 +226,49 @@ class Navbar extends React.Component {
     }
   }
 
+  renderPlayButton() {
+    const pathName = this.props.location.pathname.split('/');
+    const location = pathName[1];
+    const pageId = pathName[2];
+
+    switch (location) {
+      case "":
+        return "hidden"
+      case "playlists":
+        return "nav-play-button"
+      case "albums":
+        return "nav-play-button"
+      case "artists":
+        return "nav-play-button"
+      case "library":
+        if (pageId === "songs") {
+          return "nav-play-button"
+        } else {
+          return "hidden"
+        }
+      case "search":
+        return "hidden"
+      case "genres":
+        return "hidden"
+      default:
+        break;
+    }
+  }
+
   convertOpacity() {
     const { scrollTop, scrollHeight } = this.state;
     const path = this.props.location.pathname;
     const pathName = path.split('/');
     const location = pathName[1];
+    const pageId = pathName[2];
 
     let oldRange, newRange, converted;
 
-    if (location === "library" || location === "search") {
+    if ((location === "library" && pageId !== "songs") || location === "search") {
+      oldRange = (scrollHeight - 20);
+      newRange = (10 - 1);
+      converted = (((scrollTop - 20) * newRange) / oldRange);
+    } else if (location === "artists") {
       oldRange = (scrollHeight - 20);
       newRange = (10 - 1);
       converted = (((scrollTop - 20) * newRange) / oldRange);
@@ -260,6 +297,68 @@ class Navbar extends React.Component {
     searchQuery === "" ? receiveSearchPage() : fetchSearchResults(searchQuery);
   }
 
+  handlePlay() {
+    const {
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      pageQueue,
+      fetchPage,
+      playSong,
+      pauseSong,
+    } = this.props;
+  
+    if (!isPlaying) {
+      if (currentSong === null || currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else if (currentQueueLocation !== location.pathname) {
+      fetchPage(pageQueue, location.pathname);
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+  
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      location,
+    } = this.props;
+
+    const playButton = (
+      <img
+        className={this.renderPlayButton()}
+        src={window.playButton}
+        onClick={this.handlePlay}/>
+    )
+
+    const pauseButton = (
+      <img
+        className={this.renderPlayButton()}
+        src={window.pauseButton}
+        onClick={this.handlePlay} />
+    )
+
+    if (currentQueueLocation === location.pathname) {
+      if (isPlaying) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
+    }
+  }
+
   render() {
     const backgroundColor = { backgroundColor: `hsla(0, 0%, 13%, ${this.state.opacity})`}
     const path = this.props.location.pathname;
@@ -276,7 +375,9 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-content">
+            
             <h1 className={this.state.scrollTop > 254 ? "navbar-title" : "hide-navbar-title"}>
+              {this.renderPlayPause()}
               {this.state.content}
             </h1>
             <nav className={(location === "library" && pageId !== "songs") ? "library-nav" : "hidden"}>

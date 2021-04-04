@@ -22,6 +22,7 @@ class Api::SearchController < ApplicationController
                           .limit(8)
 
       @songs = Song.select("songs.*")
+                          .order(:title)
                           .where("LOWER(songs.title) LIKE ? ", "%#{search_params[:query].downcase}%")
                           .limit(5)
     end

@@ -5,13 +5,21 @@ import LibraryItemContainer from '../library/library_item_container';
 class Artist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {  }
 
     this.handleClick = this.handleClick.bind(this);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   handleClick() {
-    const { likedArtists, artist, likeArtist, unlikeArtist, openAlert, closeAlert } = this.props;
+    const {
+      likedArtists,
+      artist,
+      likeArtist,
+      unlikeArtist,
+      openAlert,
+      closeAlert
+    } = this.props;
 
     if (!likedArtists[artist.id]) {
       likeArtist(artist.id, "Artist")
@@ -28,8 +36,78 @@ class Artist extends React.Component {
     }
   }
 
+  handlePlay() {
+    const {
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      pageQueue,
+      fetchPage,
+      playSong,
+      pauseSong,
+    } = this.props;
+
+    if (!isPlaying) {
+      if (currentQueueLocation !== location.pathname) {
+        fetchPage(pageQueue, location.pathname);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, location.pathname);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else if (currentQueueLocation !== location.pathname) {
+      fetchPage(pageQueue, location.pathname);
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      location,
+    } = this.props;
+
+    const playButton = (
+      <img
+        id="show-page-play"
+        src={window.playButton}
+        onClick={this.handlePlay} />
+    )
+
+    const pauseButton = (
+      <img
+        id="show-page-play"
+        src={window.pauseButton}
+        onClick={this.handlePlay} />
+    )
+
+    if (currentQueueLocation === location.pathname) {
+      if (isPlaying) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
+    }
+  }
+
   render() { 
-    const { currentUser, likedArtists, playlists, artist, albums, songs, loading } = this.props;
+    const {
+      currentUser,
+      likedArtists,
+      playlists,
+      artist,
+      albums,
+      songs,
+      loading
+    } = this.props;
 
     if (loading || !playlists || !artist || !albums || !songs) return null;
 
@@ -49,7 +127,7 @@ class Artist extends React.Component {
         </div>
 
         <div className="artist-show-controls">
-          <img id="show-page-play" src={window.playButton} />
+          {this.renderPlayPause()}
           <button
             className={likedArtists[artist.id] ? "artist-following" : "artist-follow"}
             onClick={() => this.handleClick()}>
@@ -66,6 +144,7 @@ class Artist extends React.Component {
                   song={song}
                   key={idx}
                   num={(idx + 1)}
+                  pageIdx={idx}
                   currentUser={currentUser}
                 />)}
             </tbody>
@@ -79,6 +158,7 @@ class Artist extends React.Component {
               <LibraryItemContainer
                 id={album.id}
                 album={album}
+                itemLocation={album.itemLocation}
                 key={idx}
                 itemType="Album" />
             ))}
@@ -92,6 +172,7 @@ class Artist extends React.Component {
               <LibraryItemContainer
                 id={playlist.id}
                 playlist={playlist}
+                itemLocation={playlist.itemLocation}
                 key={idx}
                 itemType="Playlist" />
             ))}

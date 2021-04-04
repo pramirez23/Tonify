@@ -1,3 +1,12 @@
+tr.song {
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
 img.playlist-photo {
   width: 232px;
   height: 232px;
@@ -7,6 +16,18 @@ img.playlist-photo {
   top: 75px;
   object-fit: cover;
   cursor: pointer;
+}
+
+p#empty-playlist-title {
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: 0.25px;
+}
+
+p#empty-playlist-text {
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 0.25px;
 }
 
 .playlist-header {
@@ -192,7 +213,6 @@ td {
 td > a, .title-artist-container > a, td > a:visited,
 .title-artist-container > a:visited {
   text-decoration: none;
-  color: inherit;
 }
 
 td > a:hover, .title-artist-container > a:hover {
@@ -233,10 +253,17 @@ td > a:hover, .title-artist-container > a:hover {
   align-items: center;
 }
 
+.title-details-text-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .song-title {
   color: white;
   position: inherit;
   font-weight: 100;
+  pointer-events: none;
 }
 
 .album-column {
@@ -292,6 +319,15 @@ tbody:first-child {
   display: flex;
   justify-content: space-around;
   position: inherit;
+}
+
+.song-item-artist-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: absolute;
+  height: 40px;
+  color: red;
 }
 
 .empty-playlist {

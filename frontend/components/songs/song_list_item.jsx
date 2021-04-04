@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { openAlert, closeAlert } from '../../actions/alert_actions';
-import { renderSongDuration, renderDateAdded } from '../../util/time_util';
+import { renderSongDuration } from '../../util/time_util';
 import { like, unlike, unlikeSongFromLibrary } from "../../actions/library_actions";
 import { addSongToPlaylist, addPlaylistSongToPlaylist, removeSongFromPlaylist } from '../../actions/playlist_actions';
 import { addAlbumSongToPlaylist } from '../../actions/album_actions';
+import { playSong, pauseSong } from '../../actions/playbar_actions';
 
 class SongListItem extends React.Component {
   _isMounted = false;
@@ -15,6 +16,7 @@ class SongListItem extends React.Component {
     super(props);
 
     this.state = {
+      isPlaying: false,
       isLiked: false,
       isHovering: false,
       revealPlaylists: false,
@@ -31,6 +33,9 @@ class SongListItem extends React.Component {
     this.detectPageType = this.detectPageType.bind(this);
     this.setSongWidth = this.setSongWidth.bind(this);
     this.setPlaylistSelectorPosition = this.setPlaylistSelectorPosition.bind(this);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.renderPlayOrNum = this.renderPlayOrNum.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
   componentDidMount() {
@@ -97,10 +102,6 @@ class SongListItem extends React.Component {
     e.stopPropagation();
   }
 
-  // renderLikeButton() {
-
-  // }
-
   detectPageType() {
     const { song, playlists, album, currentUser } = this.props;
     let className;
@@ -132,18 +133,6 @@ class SongListItem extends React.Component {
     return className;
   }
 
-  // dateRender(location) { 
-  //   const { likedSongs, song } = this.props;
-  //   if (!song) return null;
-
-  //   if (location === "playlists") {
-  //     return this.props.dateAdded;
-  //   } else if (location === "library") {
-  //     return renderDateAdded(likedSongs[song.id].created_at);
-  //   } else {
-  //     return null;
-  //   }
-  // }
   setSongWidth(pageType) {
     switch (pageType) {
       case "playlists":
@@ -170,15 +159,135 @@ class SongListItem extends React.Component {
       return "hidden"
     }
   }
+  
+  handleDoubleClick() {
+    const {
+      isPlaying,
+      pauseSong,
+      playSong,
+      song,
+      currentSong,
+      currentQueueLocation,
+      pageIdx,
+      pageQueue,
+      location
+    } = this.props;
+  
+    const audio = document.getElementById("audio");
+    playSong(song, pageIdx, pageQueue, location.pathname)
+    audio.currentTime = 0;
+  }
+
+  renderPlayOrNum() {
+    const isHovering = this.state.isHovering;
+
+    const {
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      isPlaying,
+      pageIdx,
+      num
+    } = this.props;
+
+    const playButton = (
+      <i onClick={(e) => {
+        e.stopPropagation();
+        this.handlePlay()
+      }} className="fas fa-play"></i>
+    );
+
+    const pauseButton = (
+      <i onClick={(e) => {
+        e.stopPropagation();
+        this.handlePlay()
+      }} className="fas fa-pause"></i>
+    );
+
+    const songNum = (
+      <div id={((pageIdx === currentSongIndex) && (location.pathname === currentQueueLocation)) ? "is-playing" : ""}>
+        {num}
+      </div>
+    )
+
+    const nowPlaying = (
+      <i id="is-playing" className="fas fa-volume-up"></i>
+    )
+
+    if (isHovering) {
+      if (isPlaying) {
+        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+          // render pause button for current song and location only
+          return pauseButton;
+        } else {
+          // render play button if hovering and song is not currently playing 
+          return playButton;
+        }
+      } else {
+        return playButton;
+      }
+    } else {
+      if (isPlaying) {
+        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+          return nowPlaying;
+        } else {
+          return songNum;
+        }
+      } else {
+        return songNum;
+      }
+    }
+  }
+
+  handlePlay() {
+    const {
+      isPlaying,
+      song,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      location,
+      pageQueue,
+      playSong,
+      pauseSong,
+      pageIdx
+    } = this.props;
+
+    if (!isPlaying) {
+      if (!currentSong) {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+      } else {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+        audio.play();
+      }
+    } else {
+      if (currentSongIndex === pageIdx && location.pathname === currentQueueLocation) {
+        pauseSong();
+        const audio = document.getElementById("audio");
+        audio.pause();
+      } else {
+        playSong(song, pageIdx, pageQueue, location.pathname);
+      }
+    } 
+  }
 
   render() {
-    const { likedSongs, song, album, playlists, currentUser } = this.props;
+    const {
+      likedSongs,
+      song,
+      album,
+      playlists,
+      currentUser,
+      currentSongIndex,
+      currentQueueLocation,
+      pageIdx,
+    } = this.props;
+
     const validArtLocation = ["playlists", "library", "artists", "search"];
     if (this.props.loading || !song) {
       return null;
     }
-
-    const isHovering = this.state.isHovering;
+    
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[1];
     
@@ -186,14 +295,7 @@ class SongListItem extends React.Component {
     let userPlaylists = Object.values(playlistIndex).filter(playlist =>
       playlist.user_id === this.props.currentUser);
 
-    let playOrNum;
     let renderHeart;
-
-    if (isHovering) {
-      playOrNum = <i className="fas fa-play"></i>;
-    } else {
-      playOrNum = this.props.num;
-    }
 
     if (!likedSongs || !likedSongs[song.id]) {
       renderHeart = (
@@ -235,17 +337,27 @@ class SongListItem extends React.Component {
       <tr
         className="song"
         onMouseEnter={(e) => this.handleMouseEnter(e)}
-        onMouseLeave={() => this.handleMouseLeave()}>
+        onMouseLeave={() => this.handleMouseLeave()}
+        onDoubleClick={this.handleDoubleClick}>
 
-        <td className="num-column">{playOrNum}</td>
+        <td className="num-column">{this.renderPlayOrNum()}</td>
         <td className={this.setSongWidth(this.state.pageType)}>
           <div className="title-details">
             <div className="item-art-container">
               <img className={validArtLocation.includes(this.state.pageType) ? "item-album-art" : "hidden"} src={song.cover_art} alt="Cover Art" />
             </div>
-            <div className="title-artist-container">
-              <p className="song-title">{song.title}</p>
-              <Link className={this.state.pageType === "artists" ? "hidden" : ""} to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+            <div className="title-details-text-container">
+              <div className="title-artist-container">
+                <p
+                  id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}
+                  className="song-title">{song.title}</p>
+                <div className="song-artist-link-container">
+                  <Link
+                    id={this.state.isHovering ? "white" : "gray"}
+                    className={this.state.pageType === "artists" ? "hidden" : "song-artist-link"}
+                    to={`/artists/${song.artist_id}`}>{song.artist}</Link>
+                </div>
+              </div>
             </div>
           </div>
         </td>
@@ -352,14 +464,32 @@ class SongListItem extends React.Component {
 
 const mSTP = state => {
   const currentUser = state.session.id;
-  const { playlists } = state.entities;
+  const { playlists, songs } = state.entities;
   const currentUserLikes = state.entities.users[currentUser].likes;
   const likedSongs = currentUserLikes.songs;
   const { loading } = state.ui.loading;
 
+  const {
+    isPlaying,
+    currentSong,
+    currentQueue,
+    currentQueueLocation,
+    currentSongIndex,
+    pageQueue,
+    userQueue
+  } = state.ui.playbar;
+
   return ({
     playlists,
     currentUser: currentUser,
+    currentSongIndex,
+    currentQueue,
+    currentQueueLocation,
+    userQueue,
+    currentSong,
+    isPlaying,
+    pageQueue,
+    songs,
     likedSongs,
     loading
   });
@@ -367,6 +497,8 @@ const mSTP = state => {
 
 const mDTP = dispatch => {
   return {
+    playSong: (song, pageIndex, pageQueue, location) => dispatch(playSong(song, pageIndex, pageQueue, location)),
+    pauseSong: () => dispatch(pauseSong()),
     likeSong: (likableId, likableType) => dispatch(like(likableId, likableType)),
     unlikeSong: (likableId, likableType) => dispatch(unlike(likableId, likableType)),
     unlikeSongFromLibrary: (likableId, likableType) => dispatch(unlikeSongFromLibrary(likableId, likableType)),

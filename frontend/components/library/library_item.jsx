@@ -4,12 +4,12 @@ class LibraryItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPlaying: false,
       location: null,
       playlist: null,
       artist: null,
       album: null,
-      isHovering: false
+      isHovering: false,
+      playHovering: false
     }
 
     this.renderLibraryPhoto = this.renderLibraryPhoto.bind(this);
@@ -20,31 +20,14 @@ class LibraryItem extends React.Component {
     this.renderCreator = this.renderCreator.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handlePlayHover = this.handlePlayHover.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.renderPlayPause = this.renderPlayPause.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
   }
 
-  // componentDidMount() {
-  //   const { playlist, artist, album, songs } = this.props;
-  //   const pathName = this.props.location.pathname.split('/');
-  //   const location = pathName[1];
-
-  //   switch (location) {
-  //     case "playlists":
-  //       this.setState({ playlist });
-  //       break;
-  //     case "artists":
-  //       this.setState({ artist });
-  //       break;
-  //     case "albums":
-  //       this.setState({ album });
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
   renderLibraryPhoto() {
-    const { playlist, artist, album, songs } = this.props;
+    const { playlist, artist, album } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
     
@@ -82,7 +65,7 @@ class LibraryItem extends React.Component {
   }
 
   renderLibraryTitle() {
-    const { playlist, artist, album, songs } = this.props;
+    const { playlist, artist, album } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
     
@@ -111,7 +94,7 @@ class LibraryItem extends React.Component {
   }
 
   renderLibraryCreator() {
-    const { playlist, album, songs } = this.props;
+    const { playlist, album } = this.props;
     const pathName = this.props.location.pathname.split('/');
     const location = pathName[2];
 
@@ -140,7 +123,7 @@ class LibraryItem extends React.Component {
   }
 
   renderPhoto(itemType) {
-    const { playlist, artist, album, songs } = this.props;
+    const { playlist, artist, album } = this.props;
     
     switch (itemType) {
       case "Playlist":
@@ -176,7 +159,7 @@ class LibraryItem extends React.Component {
   }
 
   renderTitle(itemType) {
-    const { playlist, artist, album, songs } = this.props;
+    const { playlist, artist, album } = this.props;
     
     switch (itemType) {
       case "Playlist":
@@ -203,7 +186,7 @@ class LibraryItem extends React.Component {
   }
 
   renderCreator(itemType) {
-    const { playlist, album, songs } = this.props;
+    const { playlist, album } = this.props;
 
     switch (itemType) {
       case "Playlist":
@@ -238,6 +221,12 @@ class LibraryItem extends React.Component {
   handleMouseLeave() {
     this.setState({
       isHovering: false
+    })
+  }
+
+  handlePlayHover() {
+    this.setState({
+      playHovering: !this.state.playHovering
     })
   }
 
@@ -278,6 +267,84 @@ class LibraryItem extends React.Component {
     }
   }
 
+  handlePlay() {
+    const {
+      id,
+      itemType,
+      itemLocation,
+      isPlaying,
+      currentSong,
+      currentSongIndex,
+      currentQueueLocation,
+      pageQueue,
+      fetchLibraryItem,
+      playSong,
+      pauseSong,
+    } = this.props;
+
+    if (!isPlaying) {
+      if (currentQueueLocation !== itemLocation) {
+        fetchLibraryItem(id, itemType, itemLocation);
+      } else {
+        playSong(currentSong, currentSongIndex, pageQueue, itemLocation);
+        const audio = document.getElementById("audio");
+        audio.play();
+      }
+    } else if (currentQueueLocation !== itemLocation) {
+      fetchLibraryItem(id, itemType, itemLocation);
+    } else {
+      pauseSong();
+      const audio = document.getElementById("audio");
+      audio.pause();
+    }
+  }
+
+  renderPlayPause() {
+    const {
+      isPlaying,
+      currentQueueLocation,
+      itemLocation,
+    } = this.props;
+
+    const playButton = (
+      <img
+        id={this.state.playHovering ? "library-item-hover" : ""}
+        className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
+        src={window.playButton}
+        alt="Play Button"
+        onMouseEnter={this.handlePlayHover}
+        onMouseLeave={this.handlePlayHover}
+        onClick={(e) => {
+          e.stopPropagation();
+          this.handlePlay();
+        }} />
+    )
+
+    const pauseButton = (
+      <img
+        id={this.state.playHovering ? "library-item-hover" : ""}
+        className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
+        src={window.pauseButton}
+        alt="Play Button"
+        onMouseEnter={this.handlePlayHover}
+        onMouseLeave={this.handlePlayHover}
+        onClick={(e) => {
+          e.stopPropagation();
+          this.handlePlay();
+        }} />
+    )
+
+    if (isPlaying) {
+      if (currentQueueLocation === itemLocation) {
+        return pauseButton;
+      } else {
+        return playButton;
+      }
+    } else {
+      return playButton;
+    }
+  }
+
   render() { 
     const { itemType } = this.props;
     const pathName = this.props.location.pathname.split('/');
@@ -286,19 +353,14 @@ class LibraryItem extends React.Component {
     return (
       <div
         className="library-item"
-        onMouseEnter={(e) => this.handleMouseEnter()}
+        onMouseEnter={() => this.handleMouseEnter()}
         onMouseLeave={() => this.handleMouseLeave()}
         onClick={() => this.handleClick(itemType)}>
         <div className="library-item-header">
           {location === "library" ? this.renderLibraryPhoto() : this.renderPhoto(itemType)}
-          <img
-            className={this.state.isHovering ? "show-library-play" : "hide-library-play"}
-            src={window.playButton}
-            alt="Play Button"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("clicked")
-            }}/>
+          <div className="library-pause-play-container">
+            {this.renderPlayPause()}
+          </div>
         </div>
         <div className="library-item-details">
           {location === "library" ? this.renderLibraryTitle() : this.renderTitle(itemType)}

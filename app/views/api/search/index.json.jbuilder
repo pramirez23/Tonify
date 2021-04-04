@@ -4,8 +4,11 @@ json.artists({})
 json.albums({})
 json.songs({})
 
+pageQueue = @songs.pluck(:id)
+
 json.searchQuery @search_query
 json.playlistIds @playlists.pluck(:id)
+json.pageQueue @songs.pluck(:id)
 
 json.playlists do
   @playlists.each do |playlist|

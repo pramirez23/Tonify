@@ -30,6 +30,7 @@ class Home extends React.Component {
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
+                  itemLocation={artist.itemLocation}
                   key={idx}
                   itemType={"Artist"} />
               ))}
@@ -45,6 +46,7 @@ class Home extends React.Component {
                 <LibraryItemContainer
                   id={album.id}
                   album={album}
+                  itemLocation={album.itemLocation}
                   key={idx}
                   itemType={"Album"} />
               ))}
@@ -60,6 +62,7 @@ class Home extends React.Component {
                 <LibraryItemContainer
                   id={playlist.id}
                   playlist={playlist}
+                  itemLocation={playlist.itemLocation}
                   key={idx}
                   itemType={"Playlist"} />
               ))}

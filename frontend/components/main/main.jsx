@@ -9,7 +9,7 @@ import NavbarContainer from '../navbar/navbar_container';
 import SearchContainer from '../search/search_container';
 import LibraryContainer from '../library/library_container';
 import Loading from '../loading/loading';
-import Playbar from '../playbar/playbar';
+import PlaybarContainer from '../playbar/playbar_container';
 import SidebarContainer from '../sidebar/sidebar_container';
 import { ProtectedRoute } from '../../util/route_util';
 
@@ -35,7 +35,7 @@ const Main = (props) => {
         </Switch>
       </main>
     </div>
-    <ProtectedRoute path="/" component={Playbar} />
+    <ProtectedRoute path="/" component={PlaybarContainer} />
     </>
   )
 }

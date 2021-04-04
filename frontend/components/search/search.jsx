@@ -13,6 +13,7 @@ class Search extends React.Component {
   handleNoResults() {
     const {
       searchPlaylistIds,
+      searchResults,
       artists,
       albums,
       songs
@@ -23,7 +24,7 @@ class Search extends React.Component {
     const albumsLength = Object.entries(albums).length;
     const songsLength = Object.entries(songs).length;
 
-    if (playlistsLength === 0 && artistsLength === 0 && albumsLength === 0 && songsLength == 0) {
+    if (searchResults && playlistsLength === 0 && artistsLength === 0 && albumsLength === 0 && songsLength == 0) {
       return "no-results-found-container";
     } else {
       return "hidden";
@@ -73,10 +74,11 @@ class Search extends React.Component {
             <h2 className="artist-songs-title">Songs</h2>
             <table className="song-columns">
               <tbody>
-                {Object.values(songs).slice(0).map((song, idx) =>
+                {Object.values(songs).sort((a, b) => a.title.localeCompare(b.title)).slice(0).map((song, idx) =>
                   <SongListItem
                     song={song}
                     key={idx}
+                    pageIdx={idx}
                     num={(idx + 1)}
                     currentUser={currentUser}
                   />)}
@@ -87,10 +89,11 @@ class Search extends React.Component {
           <div className={Object.entries(artists).length > 0 ? "artist-discography" : "hidden"}>
             <h2 className="artist-title">Artists</h2>
             <div className="library-index">
-              {Object.values(artists).map(((artist, idx) =>
+              {Object.values(artists).sort((a, b) => a.name.localeCompare(b.name)).map(((artist, idx) =>
                 <LibraryItemContainer
                   id={artist.id}
                   artist={artist}
+                  itemLocation={artist.itemLocation}
                   key={idx}
                   itemType="Artist" />
               ))}
@@ -100,10 +103,11 @@ class Search extends React.Component {
           <div className={Object.entries(albums).length > 0 ? "artist-discography" : "hidden"}>
             <h2 className="artist-title">Albums</h2>
             <div className="library-index">
-              {Object.values(albums).map(((album, idx) =>
+              {Object.values(albums).sort((a, b) => a.title.localeCompare(b.title)).map(((album, idx) =>
                 <LibraryItemContainer
                   id={album.id}
                   album={album}
+                  itemLocation={album.itemLocation}
                   key={idx}
                   itemType="Album" />
               ))}
@@ -113,12 +117,16 @@ class Search extends React.Component {
           <div className={searchPlaylistIds.length > 0 ? "artist-playlists" : "hidden"}>
             <h2 className="artist-title">Playlists</h2>
             <div className="library-index">
-              {Object.values(playlists).filter(playlist => searchPlaylistIds.includes(playlist.id)).map(((playlist, idx) =>
-                <LibraryItemContainer
-                  id={playlist.id}
-                  playlist={playlist}
-                  key={idx}
-                  itemType="Playlist" />
+              {Object.values(playlists)
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .filter(playlist => searchPlaylistIds.includes(playlist.id))
+                .map(((playlist, idx) =>
+                  <LibraryItemContainer
+                    id={playlist.id}
+                    playlist={playlist}
+                    itemLocation={playlist.itemLocation}
+                    key={idx}
+                    itemType="Playlist" />
               ))}
             </div>
           </div>

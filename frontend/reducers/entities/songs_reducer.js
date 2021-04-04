@@ -2,6 +2,7 @@ import { RECEIVE_SONGS } from "../../actions/song_actions";
 import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_ALBUM } from "../../actions/album_actions";
+import { RECEIVE_USER } from "../../actions/user_actions";
 import { RECEIVE_LIKED_SONGS, REMOVE_SONG } from "../../actions/library_actions";
 import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
 
@@ -13,7 +14,11 @@ const songsReducer = (state = {}, action) => {
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.songs);
     case RECEIVE_LIKED_SONGS:
-      return action.likedSongs;
+      if (action.payload.likedSongs) {
+        return action.payload.likedSongs;
+      } else {
+        return state;
+      }
     case RECEIVE_PLAYLIST:
       if (!action.payload) {
         return state;

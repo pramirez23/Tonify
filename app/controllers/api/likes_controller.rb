@@ -7,7 +7,7 @@ class Api::LikesController < ApplicationController
   
     if @like.save
       @user = User.find_by(id: current_user.id)
-      render 'api/users/show'
+        render 'api/users/show'
     else
       render json: @like.errors.full_messages, status: 422
     end
@@ -53,6 +53,7 @@ class Api::LikesController < ApplicationController
         @like.destroy!
         @user = User.find_by(id: current_user.id)
         if destroy_like_params[:from_library]
+          debugger
           render 'api/songs/show'
         else
           render 'api/users/show'
@@ -84,8 +85,9 @@ class Api::LikesController < ApplicationController
 
   def fetch_liked_songs
     @user = User.find_by(id: current_user.id)
-    @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
+    @likes = @user.likes.where(likable_type: "Song").order(:created_at).pluck(:likable_id, :created_at).to_h
     @songs = Song.where(id: @likes.keys)
+    @pageQueue = @likes.keys.reverse
     render 'api/songs/index'
   end
 
@@ -93,6 +95,7 @@ class Api::LikesController < ApplicationController
     @user = User.find_by(id: current_user.id)
     @likes = @user.likes.where(likable_type: "Song").pluck(:likable_id, :created_at).to_h
     @songs = Song.where(id: @likes.keys).limit(8)
+    @pageQueue = @likes.keys.reverse
     render 'api/songs/index'
   end
 

@@ -10,11 +10,12 @@ class Api::PlaylistSongsController < ApplicationController
       song_id: song_id
     })
       
-    @playlist = Playlist.find_by(id: playlist_song_params[:current_playlist_id])
+    @playlist = Playlist.includes(:songs).find_by(id: playlist_song_params[:current_playlist_id])
     @user = User.find_by(id: current_user.id)
 
     if @playlist_song.save
       if @playlist
+        @songs = PlaylistSong.where(playlist_id: @playlist.id).order(:created_at)
         render 'api/playlists/show'
       else
         render 'api/users/show'
@@ -26,7 +27,8 @@ class Api::PlaylistSongsController < ApplicationController
 
   def destroy
     @playlist_song = PlaylistSong.find_by(playlist_song_params)
-    @playlist = Playlist.find_by(id: @playlist_song[:playlist_id])
+    @playlist = Playlist.includes(:songs).find_by(id: @playlist_song[:playlist_id])
+    @songs = PlaylistSong.where(playlist_id: @playlist.id).order(:created_at)
 
     if @playlist_song
       @playlist_song.destroy!
@@ -68,8 +70,8 @@ class Api::PlaylistSongsController < ApplicationController
       song_id: song_id
     })
       
-    @album = Album.find_by(id: playlist_song_params[:album_id])
-
+    @album = Album.includes(:songs).find_by(id: playlist_song_params[:album_id])
+    @songs = Song.where(album_id: playlist_song_params[:album_id])
     if @playlist_song.save
       render 'api/albums/show'
     else

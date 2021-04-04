@@ -6,6 +6,7 @@ export const RECEIVE_LIKED_ARTISTS = "RECEIVE_LIKED_ARTISTS";
 export const RECEIVE_LIKED_ALBUMS = "RECEIVE_LIKED_ALBUMS";
 export const RECEIVE_LIKED_SONGS = "RECEIVE_LIKED_SONGS";
 export const REMOVE_SONG = "REMOVE_SONG";
+export const REMOVE_SONG_FROM_LIBRARY = "REMOVE_SONG_FROM_LIBRARY";
 
 export const receiveLikedPlaylists = likedPlaylists => {
   return {
@@ -28,19 +29,27 @@ export const receiveLikedAlbums = likedAlbums => {
   }
 };
 
-export const receiveLikedSongs = likedSongs => {
+export const receiveLikedSongs = payload => {
   return {
     type: RECEIVE_LIKED_SONGS,
-    likedSongs
+    payload
   }
 };
 
-export const removeSong = song => {
+export const removeSong = payload => {
+  return {
+    type: REMOVE_SONG,
+    payload
+  }
+};
+
+export const removeSongFromLibrary = song => {
+  // used when unliking songs from liked songs page
   return {
     type: REMOVE_SONG,
     song
   }
-};
+}
 
 export const fetchLikedPlaylists = (currentUserId) => dispatch => {
   return LibraryAPIUtil.fetchLikedPlaylists(currentUserId)
@@ -94,7 +103,7 @@ export const unlike = (likableType, likableId) => dispatch => {
 export const unlikeSongFromLibrary = (likableType, likableId) => dispatch => {
   return LibraryAPIUtil.unlikeSongFromLibrary(likableType, likableId)
     .then(
-        song => dispatch(removeSong(song))
+        payload => dispatch(removeSongFromLibrary(payload))
       )
 }
 

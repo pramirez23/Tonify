@@ -44,5 +44,6 @@ Rails.application.routes.draw do
     resources :genres, only: [:show]
     resource :home, only: [:show]
     resources :search, only: [:index]
+    resources :playbar, only: [:index]
   end
 end
