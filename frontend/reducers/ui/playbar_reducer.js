@@ -19,6 +19,7 @@ import { RECEIVE_PLAYLIST } from "../../actions/playlist_actions";
 import { RECEIVE_ARTIST } from "../../actions/artist_actions";
 import { RECEIVE_ALBUM } from "../../actions/album_actions";
 import { RECEIVE_SEARCH_RESULTS } from "../../actions/search_actions";
+import { LOGOUT_CURRENT_USER } from "../../actions/session_actions";
 
 const defaultState = {
   currentSong: null,
@@ -151,6 +152,8 @@ const playbarReducer = (state = defaultState, action) => {
       newState.isShuffled = false;
       newState.shuffledQueue = []
       return newState;
+    case LOGOUT_CURRENT_USER:
+      return defaultState;
     default:
       return state;
   }
