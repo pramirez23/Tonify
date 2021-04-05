@@ -187,7 +187,9 @@ class Playlist extends React.Component {
           <span id="empty-liked-icon" className="material-icons">music_note</span>
           <p className="empty-header">Songs you like will appear here</p>
           <p className="empty-details">Save songs by tapping the heart icon.</p>
-          <button className="find-songs">FIND SONGS</button>
+          <button
+            onClick={() => this.props.history.push('/search')} 
+            className="find-songs">FIND SONGS</button>
         </div>
       )
     }

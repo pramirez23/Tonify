@@ -5834,6 +5834,8 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "emptyOrFilled",
     value: function emptyOrFilled() {
+      var _this4 = this;
+
       var _this$props2 = this.props,
           playlist = _this$props2.playlist,
           currentUser = _this$props2.currentUser,
@@ -5923,6 +5925,9 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         }, "Songs you like will appear here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           className: "empty-details"
         }, "Save songs by tapping the heart icon."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+          onClick: function onClick() {
+            return _this4.props.history.push('/search');
+          },
           className: "find-songs"
         }, "FIND SONGS"));
       }
@@ -6009,7 +6014,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _this$props5 = this.props,
           likedPlaylists = _this$props5.likedPlaylists,
@@ -6045,10 +6050,10 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         renderHeart = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
           className: "far fa-heart",
           onClick: function onClick() {
-            return _this4.props.likePlaylist(playlist.id, "Playlist").then(function () {
-              _this4.props.openAlert("Library Add");
+            return _this5.props.likePlaylist(playlist.id, "Playlist").then(function () {
+              _this5.props.openAlert("Library Add");
 
-              setTimeout(_this4.props.closeAlert, 4000);
+              setTimeout(_this5.props.closeAlert, 4000);
             });
           }
         });
@@ -6057,10 +6062,10 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
           id: "liked-song-heart",
           className: "fas fa-heart",
           onClick: function onClick() {
-            _this4.props.unlikePlaylist(playlist.id, "Playlist").then(function () {
-              _this4.props.openAlert("Library Remove");
+            _this5.props.unlikePlaylist(playlist.id, "Playlist").then(function () {
+              _this5.props.openAlert("Library Remove");
 
-              setTimeout(_this4.props.closeAlert, 4000);
+              setTimeout(_this5.props.closeAlert, 4000);
             });
           }
         });
@@ -6100,7 +6105,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: location === "playlists" ? "playlist-photo" : "hidden",
         onClick: function onClick() {
-          return _this4.handleEdit(playlist.id);
+          return _this5.handleEdit(playlist.id);
         },
         src: playlist && playlist.photo_url ? playlist.photo_url : window.defaultPlaylistPicture
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
@@ -6111,7 +6116,7 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "PLAYLIST"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", {
         className: location === "playlists" && playlistCreator === currentUser ? "playlist-name" : "liked-songs-title",
         onClick: function onClick() {
-          return _this4.handleEdit(playlist.id);
+          return _this5.handleEdit(playlist.id);
         }
       }, playlist ? playlist.name : "Liked Songs"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "description-name-container"
@@ -6128,10 +6133,10 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
       }, location === "playlists" && playlistCreator !== currentUser ? renderHeart : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: location === "playlists" && currentUser === playlistCreator ? "playlist-dropdown" : "invisible",
         onClick: function onClick() {
-          return _this4.handleDropDown();
+          return _this5.handleDropDown();
         },
         ref: function ref(div) {
-          return _this4.dropDown = div;
+          return _this5.dropDown = div;
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         className: "fas fa-ellipsis-h"
@@ -6142,12 +6147,12 @@ var Playlist = /*#__PURE__*/function (_React$Component) {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         onClick: function onClick() {
-          return _this4.handleEdit(playlist.id);
+          return _this5.handleEdit(playlist.id);
         },
         className: "edit-playlist"
       }, "Edit details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         onClick: function onClick() {
-          return _this4.handleDelete(playlist.id);
+          return _this5.handleDelete(playlist.id);
         },
         className: "delete-playlist"
       }, "Delete")))), this.emptyOrFilled());
