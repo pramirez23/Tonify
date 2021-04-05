@@ -7,6 +7,8 @@ tr.song {
 user-select: none;
 }
 
+
+
 img.playlist-photo {
   width: 232px;
   height: 232px;
@@ -270,12 +272,18 @@ td > a:hover, .title-artist-container > a:hover {
   width: 30%;
 }
 
+.playbar-artist-title-container {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 tr.song-column-header {
   border-bottom: 1px solid #404141;
   height: 32px;
 }
 
-.song {
+tr.song {
   height: 60px;
   vertical-align: middle;
   border-radius: 9px;
@@ -283,10 +291,14 @@ tr.song-column-header {
   font-size: 14px;
 }
 
-.song:hover {
+tr.song:hover {
   background: #3a3a3a;
   border-radius: 7px;
   color: white;
+}
+
+tr.song:focus {
+    background: #565656;
 }
 
 tbody:first-child {

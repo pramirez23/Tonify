@@ -1,5 +1,11 @@
-pageQueue = @pageQueue
-json.pageQueue pageQueue
+pageQueue = {}
+page_queue_ids = @pageQueue
+
+page_queue_ids.each_with_index do |id, idx|
+  pageQueue[idx] = id
+end
+
+json.pageQueue(pageQueue)
 
 @songs.each do |song|
   json.likedSongs do

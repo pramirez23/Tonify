@@ -515,6 +515,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "END_LOOP_QUEUE": () => /* binding */ END_LOOP_QUEUE,
 /* harmony export */   "END_QUEUE": () => /* binding */ END_QUEUE,
 /* harmony export */   "BEGIN_LOOP_FROM_END": () => /* binding */ BEGIN_LOOP_FROM_END,
+/* harmony export */   "SHUFFLE_QUEUE": () => /* binding */ SHUFFLE_QUEUE,
+/* harmony export */   "UNSHUFFLE_QUEUE": () => /* binding */ UNSHUFFLE_QUEUE,
 /* harmony export */   "playSong": () => /* binding */ playSong,
 /* harmony export */   "receivePage": () => /* binding */ receivePage,
 /* harmony export */   "receiveLibraryItem": () => /* binding */ receiveLibraryItem,
@@ -523,6 +525,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "beginLoopFromEnd": () => /* binding */ beginLoopFromEnd,
 /* harmony export */   "endLoopQueue": () => /* binding */ endLoopQueue,
 /* harmony export */   "endQueue": () => /* binding */ endQueue,
+/* harmony export */   "shuffleQueue": () => /* binding */ shuffleQueue,
+/* harmony export */   "unshuffleQueue": () => /* binding */ unshuffleQueue,
 /* harmony export */   "fetchLibraryItem": () => /* binding */ fetchLibraryItem,
 /* harmony export */   "fetchPage": () => /* binding */ fetchPage,
 /* harmony export */   "fetchNextSong": () => /* binding */ fetchNextSong,
@@ -545,9 +549,11 @@ var RECEIVE_PAGE = "RECEIVE_PAGE";
 var RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 var RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
 var RECEIVE_LIBRARY_ITEM = "RECEIVE_LIBRARY_ITEM";
-var END_LOOP_QUEUE = "LOOP_QUEUE";
+var END_LOOP_QUEUE = "END_LOOP_QUEUE";
 var END_QUEUE = "END_QUEUE";
 var BEGIN_LOOP_FROM_END = "BEGIN_LOOP_FROM_END";
+var SHUFFLE_QUEUE = "SHUFFLE_QUEUE";
+var UNSHUFFLE_QUEUE = "UNSHUFFLE_QUEUE";
 var playSong = function playSong(song, pageIndex, pageQueue, location) {
   return {
     type: PLAY_SONG,
@@ -598,6 +604,17 @@ var endQueue = function endQueue(pageQueue) {
   return {
     type: END_QUEUE,
     pageQueue: pageQueue
+  };
+};
+var shuffleQueue = function shuffleQueue(shuffledQueue) {
+  return {
+    type: SHUFFLE_QUEUE,
+    shuffledQueue: shuffledQueue
+  };
+};
+var unshuffleQueue = function unshuffleQueue() {
+  return {
+    type: UNSHUFFLE_QUEUE
   };
 };
 var fetchLibraryItem = function fetchLibraryItem(itemId, itemType, itemLocation) {
@@ -3311,19 +3328,29 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
       if (!isPlaying) {
         if (currentQueueLocation !== itemLocation) {
           fetchLibraryItem(id, itemType, itemLocation);
+          var audio = document.getElementById("audio");
+          audio.currentTime = 0;
         } else {
           playSong(currentSong, currentSongIndex, pageQueue, itemLocation);
-          var audio = document.getElementById("audio");
-          audio.play();
+
+          var _audio = document.getElementById("audio");
+
+          _audio.play();
         }
-      } else if (currentQueueLocation !== itemLocation) {
-        fetchLibraryItem(id, itemType, itemLocation);
       } else {
-        pauseSong();
+        if (currentQueueLocation !== itemLocation) {
+          fetchLibraryItem(id, itemType, itemLocation);
 
-        var _audio = document.getElementById("audio");
+          var _audio2 = document.getElementById("audio");
 
-        _audio.pause();
+          _audio2.currentTime = 0;
+        } else {
+          pauseSong();
+
+          var _audio3 = document.getElementById("audio");
+
+          _audio3.pause();
+        }
       }
     }
   }, {
@@ -4563,8 +4590,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
-
 var Playbar = /*#__PURE__*/function (_React$Component) {
   _inherits(Playbar, _React$Component);
 
@@ -4580,7 +4605,8 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
       duration: 0,
       currentTime: 0,
       volume: 1,
-      loop: 0
+      loop: 0,
+      isShuffled: false
     };
     _this.handleMetadata = _this.handleMetadata.bind(_assertThisInitialized(_this));
     _this.handlePrev = _this.handlePrev.bind(_assertThisInitialized(_this));
@@ -4617,76 +4643,115 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handlePrev",
     value: function handlePrev() {
+      // implement modulo in the future
       var _this$props = this.props,
           beginLoopFromEnd = _this$props.beginLoopFromEnd,
           fetchPrevSong = _this$props.fetchPrevSong,
           currentSong = _this$props.currentSong,
           currentSongIndex = _this$props.currentSongIndex,
-          currentQueue = _this$props.currentQueue;
+          currentQueue = _this$props.currentQueue,
+          shuffledQueue = _this$props.shuffledQueue,
+          shuffleIndex = _this$props.shuffleIndex;
       if (!currentSong) return;
-
-      if (currentSongIndex === 0) {
-        var _audio = document.getElementById("audio");
-
-        this.setState({
-          currentTime: 0
-        });
-        _audio.currentTime = 0;
-      } else if (0 < currentSongIndex < currentQueue.length - 1) {}
+      var prevSongIdx = currentQueue[currentSongIndex - 1];
+      var prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1];
+      var prevShuffleSongId = currentQueue[prevShuffleSongIdx];
 
       switch (this.state.loop) {
         // No loop
         case 0:
-          if (currentSongIndex === 0) {
-            var _audio3 = document.getElementById("audio");
+          if (this.state.isShuffled) {
+            if (shuffleIndex === 0) {
+              var _audio2 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio3.currentTime = 0;
-          } else if (currentSongIndex < currentQueue.length - 1) {
-            var _audio4 = document.getElementById("audio");
+              this.setState({
+                currentTime: 0
+              });
+              _audio2.currentTime = 0;
+            } else if (shuffleIndex < shuffledQueue.length - 1) {
+              fetchPrevSong(prevShuffleSongId);
 
-            fetchPrevSong(currentQueue[currentSongIndex - 1]);
-            this.setState({
-              currentTime: 0
-            });
-            _audio4.currentTime = 0;
+              var _audio3 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio3.currentTime = 0;
+            }
+          } else {
+            if (currentSongIndex === 0) {
+              var _audio4 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio4.currentTime = 0;
+            } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+              var _audio5 = document.getElementById("audio");
+
+              fetchPrevSong(prevSongIdx);
+              this.setState({
+                currentTime: 0
+              });
+              _audio5.currentTime = 0;
+            }
           }
 
           break;
         // Repeat all in queue
 
         case 1:
-          if (currentSongIndex === 0) {
-            beginLoopFromEnd(currentQueue);
-            fetchPrevSong(currentQueue[currentQueue.length - 1]);
+          if (this.state.isShuffled) {
+            if (shuffleIndex === 0) {
+              beginLoopFromEnd(currentQueue);
+              fetchPrevSong(currentQueue[shuffledQueue[shuffledQueue.length - 1]]);
 
-            var _audio5 = document.getElementById("audio");
+              var _audio6 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio5.currentTime = 0;
-          } else if (currentSongIndex <= currentQueue.length - 1) {
-            var _audio6 = document.getElementById("audio");
+              this.setState({
+                currentTime: 0
+              });
+              _audio6.currentTime = 0;
+            } else if (shuffleIndex <= shuffledQueue.length - 1) {
+              var _audio7 = document.getElementById("audio");
 
-            fetchPrevSong(currentQueue[currentSongIndex - 1]);
-            this.setState({
-              currentTime: 0
-            });
-            _audio6.currentTime = 0;
+              fetchPrevSong(prevShuffleSongId);
+              this.setState({
+                currentTime: 0
+              });
+              _audio7.currentTime = 0;
+            }
+          } else {
+            if (currentSongIndex === 0) {
+              beginLoopFromEnd(currentQueue);
+              fetchPrevSong(currentQueue[Object.entries(currentQueue).length - 1]);
+
+              var _audio8 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio8.currentTime = 0;
+            } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+              var _audio9 = document.getElementById("audio");
+
+              fetchPrevSong(prevSongIdx);
+              this.setState({
+                currentTime: 0
+              });
+              _audio9.currentTime = 0;
+            }
           }
 
         // Repeat current song
 
         case 2:
-          var _audio2 = document.getElementById("audio");
+          var _audio = document.getElementById("audio");
 
           this.setState({
             currentTime: 0
           });
-          _audio2.currentTime = 0;
+          _audio.currentTime = 0;
 
         default:
           break;
@@ -4695,71 +4760,127 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleNext",
     value: function handleNext() {
+      // implement modulo in the future
       var _this$props2 = this.props,
           fetchNextSong = _this$props2.fetchNextSong,
           currentSong = _this$props2.currentSong,
           currentSongIndex = _this$props2.currentSongIndex,
           currentQueue = _this$props2.currentQueue,
+          shuffledQueue = _this$props2.shuffledQueue,
+          shuffleIndex = _this$props2.shuffleIndex,
           endLoopQueue = _this$props2.endLoopQueue,
           endQueue = _this$props2.endQueue;
       if (!currentSong) return;
+      var nextSongId = currentQueue[currentSongIndex + 1];
+      var nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1];
+      var nextShuffleSongId = currentQueue[nextShuffleSongIdx];
 
       switch (this.state.loop) {
         // No loop
         case 0:
-          if (currentSongIndex === currentQueue.length - 1) {
-            var _audio8 = document.getElementById("audio");
+          if (this.state.isShuffled) {
+            if (shuffleIndex === shuffledQueue.length - 1) {
+              var _audio11 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio8.currentTime = 0;
-            endQueue(currentQueue);
-          } else if (currentSongIndex < currentQueue.length - 1) {
-            fetchNextSong(currentQueue[currentSongIndex + 1]);
+              this.setState({
+                currentTime: 0
+              });
+              _audio11.currentTime = 0;
+              endQueue(currentQueue);
+              this.setState({
+                isShuffled: false
+              });
+            } else if (shuffleIndex < shuffledQueue.length - 1) {
+              fetchNextSong(nextShuffleSongId);
 
-            var _audio9 = document.getElementById("audio");
+              var _audio12 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio9.currentTime = 0;
+              this.setState({
+                currentTime: 0
+              });
+              _audio12.currentTime = 0;
+            }
+          } else {
+            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+              var _audio13 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio13.currentTime = 0;
+              endQueue(currentQueue);
+              this.setState({
+                isShuffled: false
+              });
+            } else if (currentSongIndex < Object.entries(currentQueue).length - 1) {
+              fetchNextSong(nextSongId);
+
+              var _audio14 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio14.currentTime = 0;
+            }
           }
 
           break;
         // Repeat all in queue
 
         case 1:
-          if (currentSongIndex === currentQueue.length - 1) {
-            endLoopQueue();
-            fetchNextSong(currentQueue[0]);
+          if (this.state.isShuffled) {
+            if (shuffleIndex === shuffledQueue.length - 1) {
+              endLoopQueue();
 
-            var _audio10 = document.getElementById("audio");
+              var _audio15 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio10.currentTime = 0;
-          } else if (currentSongIndex < currentQueue.length - 1) {
-            fetchNextSong(currentQueue[currentSongIndex + 1]);
+              this.setState({
+                currentTime: 0
+              });
+              _audio15.currentTime = 0;
+              fetchNextSong(currentQueue[shuffledQueue[0]]);
+            } else if (shuffleIndex < shuffledQueue.length - 1) {
+              fetchNextSong(nextShuffleSongId);
 
-            var _audio11 = document.getElementById("audio");
+              var _audio16 = document.getElementById("audio");
 
-            this.setState({
-              currentTime: 0
-            });
-            _audio11.currentTime = 0;
+              this.setState({
+                currentTime: 0
+              });
+              _audio16.currentTime = 0;
+            }
+          } else {
+            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+              endLoopQueue();
+              fetchNextSong(currentQueue[0]);
+
+              var _audio17 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio17.currentTime = 0;
+            } else if (currentSongIndex < Object.entries(currentQueue).length - 1) {
+              fetchNextSong(nextSongId);
+
+              var _audio18 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio18.currentTime = 0;
+            }
           }
 
         // Repeat current song
 
         case 2:
-          var _audio7 = document.getElementById("audio");
+          var _audio10 = document.getElementById("audio");
 
           this.setState({
             currentTime: 0
           });
-          _audio7.currentTime = 0;
+          _audio10.currentTime = 0;
 
         default:
           break;
@@ -4817,7 +4938,25 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "handleShuffle",
-    value: function handleShuffle() {}
+    value: function handleShuffle() {
+      var _this$props4 = this.props,
+          currentQueue = _this$props4.currentQueue,
+          currentSongIndex = _this$props4.currentSongIndex,
+          shuffleQueue = _this$props4.shuffleQueue,
+          unshuffleQueue = _this$props4.unshuffleQueue;
+      if (Object.entries(currentQueue).length === 0) return;
+      var shuffledQueue = [];
+      var shuffledQueueObj = Object.assign({}, currentQueue);
+      delete shuffledQueueObj[currentSongIndex];
+      shuffledQueue.push(currentSongIndex);
+      shuffledQueue = shuffledQueue.concat(Object.keys(shuffledQueueObj).map(Number).sort(function () {
+        return Math.random() - 0.5;
+      }));
+      this.setState({
+        isShuffled: !this.state.isShuffled
+      });
+      !this.state.isShuffled ? shuffleQueue(shuffledQueue) : unshuffleQueue();
+    }
   }, {
     key: "handleLoop",
     value: function handleLoop() {
@@ -4865,17 +5004,15 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var _this$props4 = this.props,
-          currentSong = _this$props4.currentSong,
-          currentSongIndex = _this$props4.currentSongIndex,
-          currentQueue = _this$props4.currentQueue,
-          likedSongs = _this$props4.likedSongs,
-          likeSong = _this$props4.likeSong,
-          isPlaying = _this$props4.isPlaying,
-          unlikeSong = _this$props4.unlikeSong,
-          unlikeSongFromLibrary = _this$props4.unlikeSongFromLibrary,
-          openAlert = _this$props4.openAlert,
-          closeAlert = _this$props4.closeAlert;
+      var _this$props5 = this.props,
+          currentSong = _this$props5.currentSong,
+          likedSongs = _this$props5.likedSongs,
+          likeSong = _this$props5.likeSong,
+          isPlaying = _this$props5.isPlaying,
+          unlikeSong = _this$props5.unlikeSong,
+          unlikeSongFromLibrary = _this$props5.unlikeSongFromLibrary,
+          openAlert = _this$props5.openAlert,
+          closeAlert = _this$props5.closeAlert;
       var pathName = this.props.location.pathname.split('/');
       var location = pathName[1];
       var renderHeart;
@@ -4946,17 +5083,19 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         onClick: function onClick() {
           return _this2.props.history.push("/albums/".concat(currentSong.album_id));
         }
-      }, currentSong ? currentSong.title : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      }, currentSong ? currentSong.title : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "playbar-artist-title-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: currentSong ? "playbar-artist-title" : "hidden",
         onClick: function onClick() {
           return _this2.props.history.push("/artists/".concat(currentSong.artist_id));
         }
-      }, currentSong ? currentSong.artist : "")), renderHeart), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      }, currentSong ? currentSong.artist : ""))), renderHeart), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-progress-controls-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         id: "playbar-controls"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "playbar-control-button-container",
+        className: this.state.isShuffled ? "random-button-container" : "playbar-control-button-container",
         onClick: this.handleShuffle
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         id: "random",
@@ -5052,6 +5191,8 @@ var mSTP = function mSTP(state) {
       currentQueue = _state$ui$playbar.currentQueue,
       currentSongIndex = _state$ui$playbar.currentSongIndex,
       currentQueueLocation = _state$ui$playbar.currentQueueLocation,
+      shuffledQueue = _state$ui$playbar.shuffledQueue,
+      shuffleIndex = _state$ui$playbar.shuffleIndex,
       userQueue = _state$ui$playbar.userQueue;
   var currentUserLikes = state.entities.users[currentUser].likes;
   var likedSongs = currentUserLikes.songs;
@@ -5064,6 +5205,8 @@ var mSTP = function mSTP(state) {
     currentSongIndex: currentSongIndex,
     currentQueue: currentQueue,
     currentQueueLocation: currentQueueLocation,
+    shuffledQueue: shuffledQueue,
+    shuffleIndex: shuffleIndex,
     userQueue: userQueue
   };
 };
@@ -5108,6 +5251,12 @@ var mDTP = function mDTP(dispatch) {
     },
     beginLoopFromEnd: function beginLoopFromEnd(currentQueue) {
       return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.beginLoopFromEnd)(currentQueue));
+    },
+    shuffleQueue: function shuffleQueue(shuffledQueue) {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.shuffleQueue)(shuffledQueue));
+    },
+    unshuffleQueue: function unshuffleQueue() {
+      return dispatch((0,_actions_playbar_actions__WEBPACK_IMPORTED_MODULE_2__.unshuffleQueue)());
     }
   };
 };
@@ -7373,6 +7522,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     _this.handleDoubleClick = _this.handleDoubleClick.bind(_assertThisInitialized(_this));
     _this.renderPlayOrNum = _this.renderPlayOrNum.bind(_assertThisInitialized(_this));
     _this.handlePlay = _this.handlePlay.bind(_assertThisInitialized(_this));
+    _this.renderSongTitle = _this.renderSongTitle.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -7530,12 +7680,8 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
     key: "handleDoubleClick",
     value: function handleDoubleClick() {
       var _this$props2 = this.props,
-          isPlaying = _this$props2.isPlaying,
-          pauseSong = _this$props2.pauseSong,
           playSong = _this$props2.playSong,
           song = _this$props2.song,
-          currentSong = _this$props2.currentSong,
-          currentQueueLocation = _this$props2.currentQueueLocation,
           pageIdx = _this$props2.pageIdx,
           pageQueue = _this$props2.pageQueue,
           location = _this$props2.location;
@@ -7551,10 +7697,14 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       var isHovering = this.state.isHovering;
       var _this$props3 = this.props,
           currentSongIndex = _this$props3.currentSongIndex,
+          currentQueue = _this$props3.currentQueue,
           currentQueueLocation = _this$props3.currentQueueLocation,
           location = _this$props3.location,
           isPlaying = _this$props3.isPlaying,
           pageIdx = _this$props3.pageIdx,
+          isShuffled = _this$props3.isShuffled,
+          shuffleIndex = _this$props3.shuffleIndex,
+          shuffledQueue = _this$props3.shuffledQueue,
           num = _this$props3.num;
       var playButton = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
         onClick: function onClick(e) {
@@ -7582,22 +7732,38 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
 
       if (isHovering) {
         if (isPlaying) {
-          if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
-            // render pause button for current song and location only
-            return pauseButton;
+          if (isShuffled) {
+            if (pageIdx === shuffledQueue[shuffleIndex]) {
+              return pauseButton;
+            } else {
+              return playButton;
+            }
           } else {
-            // render play button if hovering and song is not currently playing 
-            return playButton;
+            if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+              // render pause button for current song and location only
+              return pauseButton;
+            } else {
+              // render play button if hovering and song is not currently playing 
+              return playButton;
+            }
           }
         } else {
           return playButton;
         }
       } else {
         if (isPlaying) {
-          if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
-            return nowPlaying;
+          if (isShuffled) {
+            if (pageIdx === shuffledQueue[shuffleIndex]) {
+              return nowPlaying;
+            } else {
+              return songNum;
+            }
           } else {
-            return songNum;
+            if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+              return nowPlaying;
+            } else {
+              return songNum;
+            }
           }
         } else {
           return songNum;
@@ -7639,19 +7805,42 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }
     }
   }, {
+    key: "renderSongTitle",
+    value: function renderSongTitle() {
+      var _this$props5 = this.props,
+          isShuffled = _this$props5.isShuffled,
+          shuffleIndex = _this$props5.shuffleIndex,
+          shuffledQueue = _this$props5.shuffledQueue,
+          currentSongIndex = _this$props5.currentSongIndex,
+          currentQueue = _this$props5.currentQueue,
+          currentQueueLocation = _this$props5.currentQueueLocation,
+          pageIdx = _this$props5.pageIdx;
+
+      if (isShuffled) {
+        if (pageIdx === shuffledQueue[shuffleIndex]) {
+          return "is-playing";
+        } else {
+          return "";
+        }
+      } else {
+        if (pageIdx === currentSongIndex && this.props.location.pathname === currentQueueLocation) {
+          return "is-playing";
+        } else {
+          return "";
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
 
-      var _this$props5 = this.props,
-          likedSongs = _this$props5.likedSongs,
-          song = _this$props5.song,
-          album = _this$props5.album,
-          playlists = _this$props5.playlists,
-          currentUser = _this$props5.currentUser,
-          currentSongIndex = _this$props5.currentSongIndex,
-          currentQueueLocation = _this$props5.currentQueueLocation,
-          pageIdx = _this$props5.pageIdx;
+      var _this$props6 = this.props,
+          likedSongs = _this$props6.likedSongs,
+          song = _this$props6.song,
+          album = _this$props6.album,
+          playlists = _this$props6.playlists,
+          currentUser = _this$props6.currentUser;
       var validArtLocation = ["playlists", "library", "artists", "search"];
 
       if (this.props.loading || !song) {
@@ -7725,7 +7914,7 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "title-artist-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-        id: pageIdx === currentSongIndex && this.props.location.pathname === currentQueueLocation ? "is-playing" : "",
+        id: this.renderSongTitle(),
         className: "song-title"
       }, song.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-artist-link-container"
@@ -7861,7 +8050,10 @@ var mSTP = function mSTP(state) {
       currentQueueLocation = _state$ui$playbar.currentQueueLocation,
       currentSongIndex = _state$ui$playbar.currentSongIndex,
       pageQueue = _state$ui$playbar.pageQueue,
-      userQueue = _state$ui$playbar.userQueue;
+      userQueue = _state$ui$playbar.userQueue,
+      isShuffled = _state$ui$playbar.isShuffled,
+      shuffleIndex = _state$ui$playbar.shuffleIndex,
+      shuffledQueue = _state$ui$playbar.shuffledQueue;
   return {
     playlists: playlists,
     currentUser: currentUser,
@@ -7874,7 +8066,10 @@ var mSTP = function mSTP(state) {
     pageQueue: pageQueue,
     songs: songs,
     likedSongs: likedSongs,
-    loading: loading
+    loading: loading,
+    isShuffled: isShuffled,
+    shuffleIndex: shuffleIndex,
+    shuffledQueue: shuffledQueue
   };
 };
 
@@ -8771,9 +8966,16 @@ var defaultState = {
   currentSong: null,
   isPlaying: false,
   currentSongIndex: null,
+  isShuffled: false,
+  shuffleIndex: null,
+  // shuffledQueue: array of shuffled indices from currentQueue
+  shuffledQueue: [],
+  // pageQueue: songId's on a given page in order
   pageQueue: [],
+  // currentQueue: songId's that are currently being played
   currentQueue: [],
   currentQueueLocation: null,
+  // userQueue: array of songId's added to queue by user
   userQueue: []
 };
 
@@ -8813,7 +9015,7 @@ var playbarReducer = function playbarReducer() {
       if (action.payload.song) {
         newState.currentSong = action.payload.song;
       } else {
-        return newState;
+        return defaultState;
       }
 
       newState.currentQueue = action.payload.pageQueue;
@@ -8824,13 +9026,27 @@ var playbarReducer = function playbarReducer() {
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_NEXT_SONG:
       newState.currentSong = action.song;
-      newState.currentSongIndex += 1;
+
+      if (newState.isShuffled) {
+        newState.shuffleIndex += 1;
+        newState.currentSongIndex = newState.shuffledQueue[newState.shuffleIndex];
+      } else {
+        newState.currentSongIndex += 1;
+      }
+
       newState.isPlaying = true;
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.RECEIVE_PREVIOUS_SONG:
       newState.currentSong = action.song;
-      newState.currentSongIndex -= 1;
+
+      if (newState.isShuffled) {
+        newState.shuffleIndex -= 1;
+        newState.currentSongIndex = newState.shuffledQueue[newState.shuffleIndex];
+      } else {
+        newState.currentSongIndex -= 1;
+      }
+
       newState.isPlaying = true;
       return newState;
 
@@ -8854,7 +9070,14 @@ var playbarReducer = function playbarReducer() {
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.END_LOOP_QUEUE:
-      newState.currentSongIndex = -1;
+      // Used when reaching end of page when looping all songs
+      if (newState.isShuffled) {
+        newState.shuffleIndex = -1;
+        newState.currentSongIndex = newState.shuffledQueue[newState.shuffleIndex];
+      } else {
+        newState.currentSongIndex = -1;
+      }
+
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.QUEUE_SONG:
@@ -8862,12 +9085,37 @@ var playbarReducer = function playbarReducer() {
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.END_QUEUE:
-      newState.currentSong = null, newState.isPlaying = false, newState.currentSongIndex = null, newState.currentQueue = action.pageQueue;
+      // Used when reaching end of song queue
+      newState.currentSong = null;
+      newState.isPlaying = false;
+      newState.isShuffled = false;
+      newState.currentSongIndex = null;
+      newState.shuffleIndex = null;
+      newState.currentQueue = action.pageQueue;
       newState.currentQueueLocation = null;
+      newState.shuffledQueue = null;
       return newState;
 
     case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.BEGIN_LOOP_FROM_END:
-      newState.currentSongIndex = action.currentQueue.length;
+      // used when currentQueue is looped and user goes to previous song while on first song of queue,
+      if (newState.isShuffled) {
+        newState.shuffleIndex = newState.shuffledQueue.length;
+      } else {
+        newState.currentSongIndex = Object.entries(newState.currentQueue).length;
+      }
+
+      return newState;
+
+    case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.SHUFFLE_QUEUE:
+      newState.shuffleIndex = 0;
+      newState.isShuffled = true;
+      newState.shuffledQueue = action.shuffledQueue;
+      return newState;
+
+    case _actions_playbar_actions__WEBPACK_IMPORTED_MODULE_0__.UNSHUFFLE_QUEUE:
+      newState.shuffleIndex = null;
+      newState.isShuffled = false;
+      newState.shuffledQueue = [];
       return newState;
 
     default:

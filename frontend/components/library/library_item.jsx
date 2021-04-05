@@ -285,17 +285,23 @@ class LibraryItem extends React.Component {
     if (!isPlaying) {
       if (currentQueueLocation !== itemLocation) {
         fetchLibraryItem(id, itemType, itemLocation);
+        const audio = document.getElementById("audio");
+        audio.currentTime = 0;
       } else {
         playSong(currentSong, currentSongIndex, pageQueue, itemLocation);
         const audio = document.getElementById("audio");
         audio.play();
       }
-    } else if (currentQueueLocation !== itemLocation) {
-      fetchLibraryItem(id, itemType, itemLocation);
     } else {
-      pauseSong();
-      const audio = document.getElementById("audio");
-      audio.pause();
+      if (currentQueueLocation !== itemLocation) {
+        fetchLibraryItem(id, itemType, itemLocation);
+        const audio = document.getElementById("audio");
+        audio.currentTime = 0;
+      } else {
+        pauseSong();
+        const audio = document.getElementById("audio");
+        audio.pause();
+      }
     }
   }
 

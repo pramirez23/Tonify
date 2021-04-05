@@ -9,9 +9,11 @@ export const RECEIVE_PAGE = "RECEIVE_PAGE";
 export const RECEIVE_NEXT_SONG = "RECEIVE_NEXT_SONG";
 export const RECEIVE_PREVIOUS_SONG = "RECEIVE_PREVIOUS_SONG";
 export const RECEIVE_LIBRARY_ITEM = "RECEIVE_LIBRARY_ITEM";
-export const END_LOOP_QUEUE = "LOOP_QUEUE";
+export const END_LOOP_QUEUE = "END_LOOP_QUEUE";
 export const END_QUEUE = "END_QUEUE";
 export const BEGIN_LOOP_FROM_END = "BEGIN_LOOP_FROM_END";
+export const SHUFFLE_QUEUE = "SHUFFLE_QUEUE";
+export const UNSHUFFLE_QUEUE = "UNSHUFFLE_QUEUE";
 
 export const playSong = (song, pageIndex, pageQueue, location) => {
   return {
@@ -70,6 +72,19 @@ export const endQueue = pageQueue => {
   return {
     type: END_QUEUE,
     pageQueue
+  }
+}
+
+export const shuffleQueue = shuffledQueue => {
+  return {
+    type: SHUFFLE_QUEUE,
+    shuffledQueue
+  }
+}
+
+export const unshuffleQueue = () => {
+  return {
+    type: UNSHUFFLE_QUEUE, 
   }
 }
 

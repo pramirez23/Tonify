@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { renderSongDuration } from '../../util/time_util';
 
 class Playbar extends React.Component {
@@ -10,7 +8,8 @@ class Playbar extends React.Component {
       duration: 0,
       currentTime: 0,
       volume: 1,
-      loop: 0
+      loop: 0,
+      isShuffled: false
     }
 
     this.handleMetadata = this.handleMetadata.bind(this);
@@ -23,7 +22,6 @@ class Playbar extends React.Component {
     this.handleShuffle = this.handleShuffle.bind(this);
     this.handleLoop = this.handleLoop.bind(this);
     this.renderLoop = this.renderLoop.bind(this);
-
     this.audio = document.getElementById("audio");
     this.progressBar = document.getElementById("progress-bar");
   }
@@ -43,51 +41,78 @@ class Playbar extends React.Component {
   }
 
   handlePrev() {
+    // implement modulo in the future
     const {
       beginLoopFromEnd,
       fetchPrevSong,
       currentSong,
       currentSongIndex,
       currentQueue,
+      shuffledQueue,
+      shuffleIndex
     } = this.props;
 
     if (!currentSong) return;
 
-    if (currentSongIndex === 0) {
-      const audio = document.getElementById("audio");
-      this.setState({ currentTime: 0 });
-      audio.currentTime = 0;
-    } else if (0 < currentSongIndex < (currentQueue.length - 1)) {
-
-    }
+    const prevSongIdx = currentQueue[currentSongIndex - 1]
+    const prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1]
+    const prevShuffleSongId = currentQueue[prevShuffleSongIdx]
 
     switch (this.state.loop) {
       // No loop
       case 0:
-        if (currentSongIndex === 0) {
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
-        } else if (currentSongIndex < (currentQueue.length - 1)) {
-          const audio = document.getElementById("audio");
-          fetchPrevSong(currentQueue[currentSongIndex - 1])
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
+        if (this.state.isShuffled) {
+          if (shuffleIndex === 0) {
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          } else if (shuffleIndex < shuffledQueue.length - 1) {
+            fetchPrevSong(prevShuffleSongId)
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
+        } else {
+          if (currentSongIndex === 0) {
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+            const audio = document.getElementById("audio");
+            fetchPrevSong(prevSongIdx)
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
         }
         break;
       // Repeat all in queue
       case 1:
-        if (currentSongIndex === 0) {
-          beginLoopFromEnd(currentQueue);
-          fetchPrevSong(currentQueue[currentQueue.length - 1]);
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
-        } else if (currentSongIndex <= (currentQueue.length - 1)) {
-          const audio = document.getElementById("audio");
-          fetchPrevSong(currentQueue[currentSongIndex - 1])
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
+        if (this.state.isShuffled) {
+          if (shuffleIndex === 0) {
+            beginLoopFromEnd(currentQueue);
+            fetchPrevSong(currentQueue[shuffledQueue[shuffledQueue.length - 1]]);
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          } else if (shuffleIndex <= shuffledQueue.length - 1) {
+            const audio = document.getElementById("audio");
+            fetchPrevSong(prevShuffleSongId)
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
+        } else {          
+          if (currentSongIndex === 0) {
+            beginLoopFromEnd(currentQueue);
+            fetchPrevSong(currentQueue[Object.entries(currentQueue).length - 1]);
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+            const audio = document.getElementById("audio");
+            fetchPrevSong(prevSongIdx)
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
         }
       // Repeat current song
       case 2:
@@ -100,51 +125,89 @@ class Playbar extends React.Component {
   }
 
   handleNext() {
+    // implement modulo in the future
     const {
       fetchNextSong,
       currentSong,
       currentSongIndex,
       currentQueue,
+      shuffledQueue,
+      shuffleIndex,
       endLoopQueue,
       endQueue
     } = this.props;
 
     if (!currentSong) return;
 
+    const nextSongId = currentQueue[currentSongIndex + 1]
+    const nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1]
+    const nextShuffleSongId = currentQueue[nextShuffleSongIdx]
+
     switch (this.state.loop) {
       // No loop
       case 0:
-        if (currentSongIndex === currentQueue.length - 1) {
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
-          endQueue(currentQueue);
-        } else if (currentSongIndex < (currentQueue.length - 1)) {
-          fetchNextSong(currentQueue[currentSongIndex + 1])
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
+        if (this.state.isShuffled) {
+          if (shuffleIndex === shuffledQueue.length - 1) {
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+            endQueue(currentQueue);
+            this.setState({ isShuffled: false });
+          } else if (shuffleIndex < shuffledQueue.length - 1) {
+            fetchNextSong(nextShuffleSongId)
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
+        } else {
+          if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+            endQueue(currentQueue);
+            this.setState({ isShuffled: false });
+          } else if (currentSongIndex < (Object.entries(currentQueue).length - 1)) {
+            fetchNextSong(nextSongId)
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
         }
         break;
       // Repeat all in queue
       case 1:
-        if (currentSongIndex === currentQueue.length - 1) {
-          endLoopQueue();
-          fetchNextSong(currentQueue[0]);
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
-        } else if (currentSongIndex < (currentQueue.length - 1)) {
-          fetchNextSong(currentQueue[currentSongIndex + 1])
-          const audio = document.getElementById("audio");
-          this.setState({ currentTime: 0 });
-          audio.currentTime = 0;
+        if (this.state.isShuffled) {
+          if (shuffleIndex === shuffledQueue.length - 1) {
+            endLoopQueue();
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+            fetchNextSong(currentQueue[shuffledQueue[0]]);
+          } else if (shuffleIndex < shuffledQueue.length - 1) {
+            fetchNextSong(nextShuffleSongId)
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
+        } else {
+          if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+            endLoopQueue();
+            fetchNextSong(currentQueue[0]);
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          } else if (currentSongIndex < (Object.entries(currentQueue).length - 1)) {
+            fetchNextSong(nextSongId)
+            const audio = document.getElementById("audio");
+            this.setState({ currentTime: 0 });
+            audio.currentTime = 0;
+          }
         }
-      // Repeat current song
-      case 2:
-        const audio = document.getElementById("audio");
-        this.setState({ currentTime: 0 });
-        audio.currentTime = 0;
+        // Repeat current song
+        case 2:
+          const audio = document.getElementById("audio");
+          this.setState({ currentTime: 0 });
+          audio.currentTime = 0;
       default:
         break;
     }
@@ -200,7 +263,30 @@ class Playbar extends React.Component {
   }
 
   handleShuffle() {
+    const {
+      currentQueue,
+      currentSongIndex,
+      shuffleQueue,
+      unshuffleQueue, 
+    } = this.props;
+    
+    if (Object.entries(currentQueue).length === 0) return;
 
+    let shuffledQueue = [];
+    let shuffledQueueObj = Object.assign({}, currentQueue);
+    delete shuffledQueueObj[currentSongIndex];
+
+    shuffledQueue.push(currentSongIndex)
+
+    shuffledQueue = shuffledQueue.concat(
+      Object.keys(shuffledQueueObj).map(Number).sort(() => Math.random() - 0.5)
+    )
+    
+    this.setState({
+      isShuffled: !this.state.isShuffled
+    })
+
+    !this.state.isShuffled ? shuffleQueue(shuffledQueue) : unshuffleQueue()
   }
 
   handleLoop() {
@@ -238,8 +324,6 @@ class Playbar extends React.Component {
   render() { 
     const {
       currentSong,
-      currentSongIndex,
-      currentQueue,
       likedSongs,
       likeSong,
       isPlaying,
@@ -316,9 +400,11 @@ class Playbar extends React.Component {
             <span
               className={currentSong ? "playbar-song-title" : "hidden"}
               onClick={() => this.props.history.push(`/albums/${currentSong.album_id}`)}>{currentSong ? currentSong.title : ""}</span>
-            <span 
-              className={currentSong ? "playbar-artist-title" : "hidden"}
-              onClick={() => this.props.history.push(`/artists/${currentSong.artist_id}`)}>{currentSong ? currentSong.artist : ""}</span>
+            <div className="playbar-artist-title-container">              
+              <span 
+                className={currentSong ? "playbar-artist-title" : "hidden"}
+                onClick={() => this.props.history.push(`/artists/${currentSong.artist_id}`)}>{currentSong ? currentSong.artist : ""}</span>
+            </div>
           </div>
 
           {renderHeart}
@@ -326,17 +412,23 @@ class Playbar extends React.Component {
 
         <div className="song-progress-controls-container">
           <div id="playbar-controls">
-            <div className="playbar-control-button-container" onClick={this.handleShuffle}>
+            <div
+              className={this.state.isShuffled ? "random-button-container" : "playbar-control-button-container"}
+              onClick={this.handleShuffle}>
               <i id="random" className="fas fa-random"></i>
             </div>
 
-            <div className="playbar-control-button-container" onClick={this.handlePrev}>
+            <div
+              className="playbar-control-button-container"
+              onClick={this.handlePrev}>
               <span id="back" className="material-icons">skip_previous</span>
             </div>
 
             {pauseOrPlay}
 
-            <div className="playbar-control-button-container" onClick={this.handleNext}>
+            <div
+              className="playbar-control-button-container"
+              onClick={this.handleNext}>
               <span id="forward" className="material-icons">skip_next</span>
             </div>
 
