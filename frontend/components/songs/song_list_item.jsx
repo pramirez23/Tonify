@@ -430,8 +430,7 @@ class SongListItem extends React.Component {
 
             <div
               className="add-to-queue"
-              onMouseEnter={(e) => this.handleMouseEnter(e)}
-              onClick={() => console.log("You clicked papi")}>Add to queue</div>
+              onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to queue</div>
 
             <div
               className="song-dropdown-option"

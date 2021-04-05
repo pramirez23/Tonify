@@ -7951,9 +7951,6 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
         className: "add-to-queue",
         onMouseEnter: function onMouseEnter(e) {
           return _this4.handleMouseEnter(e);
-        },
-        onClick: function onClick() {
-          return console.log("You clicked papi");
         }
       }, "Add to queue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-dropdown-option",
