@@ -28,13 +28,21 @@
   color: #B3B3B3;
 }
 
-.playbar-control-button-container, .loop-button-container {
+.playbar-control-button-container, .loop-button-container, .random-button-container {
   height: 30px;
   width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: default;
+}
+
+div.random-button-container {
+  color: #229442;
+}
+
+div.random-button-container:hover {
+  color: #2dbe56;
 }
 
 .playbar-control-button-container {
@@ -79,8 +87,6 @@ span#repeat-all:hover, span#repeat-one:hover {
   font-size: 17px;
 }
 
-
-
 #play:hover, #pause:hover {
   transform: scale(1.07);
 }
@@ -93,6 +99,7 @@ span#repeat-all:hover, span#repeat-one:hover {
   padding-left: 20px;
   height: 100%;
   position: relative;
+  max-width: 28%;
 }
 
 .playbar-song-details-container {
@@ -102,6 +109,8 @@ span#repeat-all:hover, span#repeat-one:hover {
   height: 40px;
   justify-content: space-evenly;
   letter-spacing: 0.12px;
+  overflow: hidden;
+  max-width: 60%;
 }
 
 .song-progress-controls-container {
@@ -145,12 +154,6 @@ img.playbar-cover-art {
   height: 56px;
   width: 56px;
   margin-right: 17px;
-}
-
-.playbar-song-details-container {
-  display: flex;
-  flex-direction: column;
-  margin-right: 15px;
 }
 
 input[type=range] {
@@ -264,6 +267,9 @@ span.song-progress-time {
 span.playbar-song-title {
   font-size: 14px;
   color: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 span.playbar-artist-title {

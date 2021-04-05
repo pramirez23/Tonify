@@ -36,6 +36,7 @@ class SongListItem extends React.Component {
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
     this.renderPlayOrNum = this.renderPlayOrNum.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
+    this.renderSongTitle = this.renderSongTitle.bind(this);
   }
 
   componentDidMount() {
@@ -162,12 +163,8 @@ class SongListItem extends React.Component {
   
   handleDoubleClick() {
     const {
-      isPlaying,
-      pauseSong,
       playSong,
       song,
-      currentSong,
-      currentQueueLocation,
       pageIdx,
       pageQueue,
       location
@@ -183,10 +180,14 @@ class SongListItem extends React.Component {
 
     const {
       currentSongIndex,
+      currentQueue,
       currentQueueLocation,
       location,
       isPlaying,
       pageIdx,
+      isShuffled,
+      shuffleIndex,
+      shuffledQueue,
       num
     } = this.props;
 
@@ -216,22 +217,38 @@ class SongListItem extends React.Component {
 
     if (isHovering) {
       if (isPlaying) {
-        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
-          // render pause button for current song and location only
-          return pauseButton;
+        if (isShuffled) {
+          if (pageIdx === shuffledQueue[shuffleIndex]) {
+            return pauseButton;
+          } else {
+            return playButton;
+          }
         } else {
-          // render play button if hovering and song is not currently playing 
-          return playButton;
+          if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+            // render pause button for current song and location only
+            return pauseButton;
+          } else {
+            // render play button if hovering and song is not currently playing 
+            return playButton;
+          }
         }
       } else {
         return playButton;
       }
     } else {
       if (isPlaying) {
-        if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
-          return nowPlaying;
+        if (isShuffled) {
+          if (pageIdx === shuffledQueue[shuffleIndex]) {
+            return nowPlaying;
+          } else {
+            return songNum;
+          }
         } else {
-          return songNum;
+          if (pageIdx === currentSongIndex && location.pathname === currentQueueLocation) {
+            return nowPlaying;
+          } else {
+            return songNum;
+          }
         }
       } else {
         return songNum;
@@ -271,6 +288,32 @@ class SongListItem extends React.Component {
     } 
   }
 
+  renderSongTitle() {
+    const {
+      isShuffled,
+      shuffleIndex,
+      shuffledQueue,
+      currentSongIndex,
+      currentQueue,
+      currentQueueLocation,
+      pageIdx,
+    } = this.props;
+
+    if (isShuffled) {
+      if (pageIdx === shuffledQueue[shuffleIndex]) {
+        return "is-playing";
+      } else {
+        return "";
+      }
+    } else {
+      if ((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) {
+        return "is-playing";
+      } else {
+        return "";
+      }
+    }
+  }
+
   render() {
     const {
       likedSongs,
@@ -278,9 +321,6 @@ class SongListItem extends React.Component {
       album,
       playlists,
       currentUser,
-      currentSongIndex,
-      currentQueueLocation,
-      pageIdx,
     } = this.props;
 
     const validArtLocation = ["playlists", "library", "artists", "search"];
@@ -349,7 +389,7 @@ class SongListItem extends React.Component {
             <div className="title-details-text-container">
               <div className="title-artist-container">
                 <p
-                  id={((pageIdx === currentSongIndex) && (this.props.location.pathname === currentQueueLocation)) ? "is-playing" : ""}
+                  id={this.renderSongTitle()}
                   className="song-title">{song.title}</p>
                 <div className="song-artist-link-container">
                   <Link
@@ -476,7 +516,10 @@ const mSTP = state => {
     currentQueueLocation,
     currentSongIndex,
     pageQueue,
-    userQueue
+    userQueue,
+    isShuffled,
+    shuffleIndex,
+    shuffledQueue
   } = state.ui.playbar;
 
   return ({
@@ -491,7 +534,10 @@ const mSTP = state => {
     pageQueue,
     songs,
     likedSongs,
-    loading
+    loading,
+    isShuffled,
+    shuffleIndex,
+    shuffledQueue
   });
 };
 

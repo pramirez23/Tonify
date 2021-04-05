@@ -4,7 +4,18 @@ json.artists({})
 json.albums({})
 json.songs({})
 
-pageQueue = @songs.pluck(:id)
+if @songs
+  pageQueue = {}
+  page_queue_ids = @songs.pluck(:id)
+
+  page_queue_ids.each_with_index do |id, idx|
+    pageQueue[idx] = id
+  end
+
+  json.pageQueue(pageQueue)
+else
+  json.pageQueue({})
+end
 
 json.searchQuery @search_query
 json.playlistIds @playlists.pluck(:id)

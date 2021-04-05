@@ -36,4 +36,11 @@ json.playlists do
   end
 end
 
-json.pageQueue @artist.songs.slice(0, 5).pluck(:id)
+pageQueue = {}
+page_queue_ids = @artist.songs.slice(0, 5).pluck(:id)
+
+page_queue_ids.each_with_index do |id, idx|
+  pageQueue[idx] = id
+end
+
+json.pageQueue(pageQueue)

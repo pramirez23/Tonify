@@ -7,7 +7,9 @@ import {
   fetchQueueSong,
   endLoopQueue,
   endQueue,
-  beginLoopFromEnd
+  beginLoopFromEnd,
+  shuffleQueue,
+  unshuffleQueue
 } from "../../actions/playbar_actions";
 
 import { openAlert, closeAlert } from '../../actions/alert_actions';
@@ -24,6 +26,8 @@ const mSTP = (state) => {
     currentQueue,
     currentSongIndex,
     currentQueueLocation,
+    shuffledQueue,
+    shuffleIndex,
     userQueue
   } = state.ui.playbar;
 
@@ -39,6 +43,8 @@ const mSTP = (state) => {
     currentSongIndex,
     currentQueue,
     currentQueueLocation,
+    shuffledQueue,
+    shuffleIndex,
     userQueue
   });
 };
@@ -57,8 +63,10 @@ const mDTP = dispatch => {
     fetchQueueSong: songId => dispatch(fetchQueueSong(songId)),
     endLoopQueue: () => dispatch(endLoopQueue()),
     endQueue: pageQueue => dispatch(endQueue(pageQueue)),
-    beginLoopFromEnd: currentQueue => dispatch(beginLoopFromEnd(currentQueue))
+    beginLoopFromEnd: currentQueue => dispatch(beginLoopFromEnd(currentQueue)),
+    shuffleQueue: shuffledQueue => dispatch(shuffleQueue(shuffledQueue)),
+    unshuffleQueue: () => dispatch(unshuffleQueue())
   };
 };
 
-export default connect(mSTP, mDTP)(Playbar);   
+export default connect(mSTP, mDTP)(Playbar);
