@@ -222,12 +222,12 @@ button.artist-close-modal-button:hover {
 
 .artist-bio-modal-child::-webkit-scrollbar-thumb {
   border-radius: 12px;
-  box-shadow: inset 0 0 6px rgb(0, 0, 0, 30%);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 30%);
   background-color: #414141;
 }
 
 .artist-bio-modal-child::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 10px rgb(0, 0, 0, 80%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 80%);
   border-radius: 10px;
   background-color: #000000;
 }
