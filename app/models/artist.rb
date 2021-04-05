@@ -1,7 +1,7 @@
 class Artist < ApplicationRecord 
   validates :name, presence: true
   
-  has_many_attached :photos
+  has_many_attached :photos, dependent: :destroy
 
   has_many :likes, as: :likable
   has_many :albums
