@@ -4960,8 +4960,10 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleLoop",
     value: function handleLoop() {
+      var currentSong = this.props.currentSong;
       var loop = this.state.loop;
       var newLoopValue = loop + 1;
+      if (!currentSong) return;
 
       if (this.state.loop === 2) {
         this.setState({
@@ -9279,14 +9281,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
-/* harmony import */ var _actions_song_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/song_actions */ "./frontend/actions/song_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
-
- // import { fetchPlaylist, fetchPlaylists, createPlaylist, updatePlaylist, deletePlaylist, addSong, removeSong } from "./util/playlist_api_util"
+ // import { fetchPlaylistSongs } from "./actions/song_actions"
+// import { fetchPlaylist, fetchPlaylists, createPlaylist, updatePlaylist, deletePlaylist, addSong, removeSong } from "./util/playlist_api_util"
 // const playlist1 = {
 //   user_id: 1,
 //   name: "Second Playlist",
@@ -9314,8 +9315,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // window.deletePlaylist = deletePlaylist;
   // window.addSong = addSong;
   // window.removeSong = removeSong;
-  window.fetchPlaylistSongs = _actions_song_actions__WEBPACK_IMPORTED_MODULE_4__.fetchPlaylistSongs; // TESTING END
-
+  // window.fetchPlaylistSongs = fetchPlaylistSongs;
+  // TESTING END
   var store;
 
   if (window.currentUser) {

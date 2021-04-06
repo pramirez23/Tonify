@@ -290,8 +290,11 @@ class Playbar extends React.Component {
   }
 
   handleLoop() {
+    const { currentSong } = this.props;
     const { loop } = this.state;
     const newLoopValue = loop + 1
+
+    if (!currentSong) return;
 
     if (this.state.loop === 2) {
       this.setState({ loop: 0 });
