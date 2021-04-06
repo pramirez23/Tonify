@@ -204,7 +204,7 @@ class LibraryItem extends React.Component {
       case "Album":
         return (
           <span className="library-item-creator">
-            {album.year} • Album
+            {album.year} • {album.single ? "Single" : "Album"}
           </span>
         );
       default:

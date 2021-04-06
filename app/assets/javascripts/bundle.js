@@ -3235,7 +3235,7 @@ var LibraryItem = /*#__PURE__*/function (_React$Component) {
         case "Album":
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
             className: "library-item-creator"
-          }, album.year, " \u2022 Album");
+          }, album.year, " \u2022 ", album.single ? "Single" : "Album");
 
         default:
           break;
