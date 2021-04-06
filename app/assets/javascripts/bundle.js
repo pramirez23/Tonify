@@ -4753,6 +4753,8 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           });
           _audio.currentTime = 0;
 
+          _audio.play();
+
         default:
           break;
       }
@@ -4881,6 +4883,8 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             currentTime: 0
           });
           _audio10.currentTime = 0;
+
+          _audio10.play();
 
         default:
           break;

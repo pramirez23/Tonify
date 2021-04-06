@@ -119,6 +119,7 @@ class Playbar extends React.Component {
         const audio = document.getElementById("audio");
         this.setState({ currentTime: 0 });
         audio.currentTime = 0;
+        audio.play();
       default:
         break;
     }
@@ -208,6 +209,7 @@ class Playbar extends React.Component {
           const audio = document.getElementById("audio");
           this.setState({ currentTime: 0 });
           audio.currentTime = 0;
+          audio.play();
       default:
         break;
     }
