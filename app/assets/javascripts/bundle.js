@@ -4621,9 +4621,20 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   _createClass(Playbar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       document.body.addEventListener("keydown", function (e) {
         if (e.code === "Space" && e.target == document.body) {
           e.preventDefault();
+          var _this2$props = _this2.props,
+              currentSong = _this2$props.currentSong,
+              isPlaying = _this2$props.isPlaying;
+
+          var _audio = document.getElementById("audio");
+
+          if (currentSong) {
+            _this2.handlePlay();
+          }
         }
       });
     }
@@ -4657,38 +4668,38 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         case 0:
           if (this.state.isShuffled) {
             if (shuffleIndex === 0) {
-              var _audio2 = document.getElementById("audio");
-
-              this.setState({
-                currentTime: 0
-              });
-              _audio2.currentTime = 0;
-            } else if (shuffleIndex < shuffledQueue.length - 1) {
-              fetchPrevSong(prevShuffleSongId);
-
               var _audio3 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
               _audio3.currentTime = 0;
-            }
-          } else {
-            if (currentSongIndex === 0) {
+            } else if (shuffleIndex < shuffledQueue.length - 1) {
+              fetchPrevSong(prevShuffleSongId);
+
               var _audio4 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
               _audio4.currentTime = 0;
-            } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+            }
+          } else {
+            if (currentSongIndex === 0) {
               var _audio5 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio5.currentTime = 0;
+            } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
+              var _audio6 = document.getElementById("audio");
 
               fetchPrevSong(prevSongIdx);
               this.setState({
                 currentTime: 0
               });
-              _audio5.currentTime = 0;
+              _audio6.currentTime = 0;
             }
           }
 
@@ -4701,54 +4712,54 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
               beginLoopFromEnd(currentQueue);
               fetchPrevSong(currentQueue[shuffledQueue[shuffledQueue.length - 1]]);
 
-              var _audio6 = document.getElementById("audio");
+              var _audio7 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
-              _audio6.currentTime = 0;
+              _audio7.currentTime = 0;
             } else if (shuffleIndex <= shuffledQueue.length - 1) {
-              var _audio7 = document.getElementById("audio");
+              var _audio8 = document.getElementById("audio");
 
               fetchPrevSong(prevShuffleSongId);
               this.setState({
                 currentTime: 0
               });
-              _audio7.currentTime = 0;
+              _audio8.currentTime = 0;
             }
           } else {
             if (currentSongIndex === 0) {
               beginLoopFromEnd(currentQueue);
               fetchPrevSong(currentQueue[Object.entries(currentQueue).length - 1]);
 
-              var _audio8 = document.getElementById("audio");
+              var _audio9 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
-              _audio8.currentTime = 0;
+              _audio9.currentTime = 0;
             } else if (currentSongIndex <= Object.entries(currentQueue).length - 1) {
-              var _audio9 = document.getElementById("audio");
+              var _audio10 = document.getElementById("audio");
 
               fetchPrevSong(prevSongIdx);
               this.setState({
                 currentTime: 0
               });
-              _audio9.currentTime = 0;
+              _audio10.currentTime = 0;
             }
           }
 
         // Repeat current song
 
         case 2:
-          var _audio = document.getElementById("audio");
+          var _audio2 = document.getElementById("audio");
 
           this.setState({
             currentTime: 0
           });
-          _audio.currentTime = 0;
+          _audio2.currentTime = 0;
 
-          _audio.play();
+          _audio2.play();
 
         default:
           break;
@@ -4777,12 +4788,12 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
         case 0:
           if (this.state.isShuffled) {
             if (shuffleIndex === shuffledQueue.length - 1) {
-              var _audio11 = document.getElementById("audio");
+              var _audio12 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
-              _audio11.currentTime = 0;
+              _audio12.currentTime = 0;
               endQueue(currentQueue);
               this.setState({
                 isShuffled: false
@@ -4790,21 +4801,21 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             } else if (shuffleIndex < shuffledQueue.length - 1) {
               fetchNextSong(nextShuffleSongId);
 
-              var _audio12 = document.getElementById("audio");
-
-              this.setState({
-                currentTime: 0
-              });
-              _audio12.currentTime = 0;
-            }
-          } else {
-            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
               var _audio13 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
               _audio13.currentTime = 0;
+            }
+          } else {
+            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+              var _audio14 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio14.currentTime = 0;
               endQueue(currentQueue);
               this.setState({
                 isShuffled: false
@@ -4812,12 +4823,12 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             } else if (currentSongIndex < Object.entries(currentQueue).length - 1) {
               fetchNextSong(nextSongId);
 
-              var _audio14 = document.getElementById("audio");
+              var _audio15 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
-              _audio14.currentTime = 0;
+              _audio15.currentTime = 0;
             }
           }
 
@@ -4829,27 +4840,15 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             if (shuffleIndex === shuffledQueue.length - 1) {
               endLoopQueue();
 
-              var _audio15 = document.getElementById("audio");
-
-              this.setState({
-                currentTime: 0
-              });
-              _audio15.currentTime = 0;
-              fetchNextSong(currentQueue[shuffledQueue[0]]);
-            } else if (shuffleIndex < shuffledQueue.length - 1) {
-              fetchNextSong(nextShuffleSongId);
-
               var _audio16 = document.getElementById("audio");
 
               this.setState({
                 currentTime: 0
               });
               _audio16.currentTime = 0;
-            }
-          } else {
-            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
-              endLoopQueue();
-              fetchNextSong(currentQueue[0]);
+              fetchNextSong(currentQueue[shuffledQueue[0]]);
+            } else if (shuffleIndex < shuffledQueue.length - 1) {
+              fetchNextSong(nextShuffleSongId);
 
               var _audio17 = document.getElementById("audio");
 
@@ -4857,8 +4856,11 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
                 currentTime: 0
               });
               _audio17.currentTime = 0;
-            } else if (currentSongIndex < Object.entries(currentQueue).length - 1) {
-              fetchNextSong(nextSongId);
+            }
+          } else {
+            if (currentSongIndex === Object.entries(currentQueue).length - 1) {
+              endLoopQueue();
+              fetchNextSong(currentQueue[0]);
 
               var _audio18 = document.getElementById("audio");
 
@@ -4866,20 +4868,29 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
                 currentTime: 0
               });
               _audio18.currentTime = 0;
+            } else if (currentSongIndex < Object.entries(currentQueue).length - 1) {
+              fetchNextSong(nextSongId);
+
+              var _audio19 = document.getElementById("audio");
+
+              this.setState({
+                currentTime: 0
+              });
+              _audio19.currentTime = 0;
             }
           }
 
         // Repeat current song
 
         case 2:
-          var _audio10 = document.getElementById("audio");
+          var _audio11 = document.getElementById("audio");
 
           this.setState({
             currentTime: 0
           });
-          _audio10.currentTime = 0;
+          _audio11.currentTime = 0;
 
-          _audio10.play();
+          _audio11.play();
 
         default:
           break;
@@ -5003,7 +5014,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props5 = this.props,
           currentSong = _this$props5.currentSong,
@@ -5082,14 +5093,14 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: currentSong ? "playbar-song-title" : "hidden",
         onClick: function onClick() {
-          return _this2.props.history.push("/albums/".concat(currentSong.album_id));
+          return _this3.props.history.push("/albums/".concat(currentSong.album_id));
         }
       }, currentSong ? currentSong.title : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "playbar-artist-title-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
         className: currentSong ? "playbar-artist-title" : "hidden",
         onClick: function onClick() {
-          return _this2.props.history.push("/artists/".concat(currentSong.artist_id));
+          return _this3.props.history.push("/artists/".concat(currentSong.artist_id));
         }
       }, currentSong ? currentSong.artist : ""))), renderHeart), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-progress-controls-container"
