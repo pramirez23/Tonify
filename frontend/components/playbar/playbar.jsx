@@ -30,8 +30,7 @@ class Playbar extends React.Component {
     document.body.addEventListener("keydown", (e) => {
       if (e.code === "Space" && e.target == document.body) {
         e.preventDefault();
-        const { currentSong, isPlaying } = this.props;
-        const audio = document.getElementById("audio");
+        const { currentSong } = this.props;
         
         if (currentSong) {
           this.handlePlay();
