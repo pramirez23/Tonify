@@ -212,10 +212,6 @@ class Album extends React.Component {
             {!this.state.hideDropDown && <div className="album-dropdown-options" onClick={e => e.stopPropagation()}>
               <div
                 className="album-dropdown-option"
-                onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to queue</div>
-
-              <div
-                className="album-dropdown-option"
                 onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to Your Library</div>
 
               <div

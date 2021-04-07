@@ -1383,11 +1383,6 @@ var Album = /*#__PURE__*/function (_React$Component) {
         onMouseEnter: function onMouseEnter(e) {
           return _this3.handleMouseEnter(e);
         }
-      }, "Add to queue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "album-dropdown-option",
-        onMouseEnter: function onMouseEnter(e) {
-          return _this3.handleMouseEnter(e);
-        }
       }, "Add to Your Library"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "add-to-playlist",
         onMouseEnter: function onMouseEnter(e) {
@@ -7959,11 +7954,6 @@ var SongListItem = /*#__PURE__*/function (_React$Component) {
           return e.stopPropagation();
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-        className: "add-to-queue",
-        onMouseEnter: function onMouseEnter(e) {
-          return _this4.handleMouseEnter(e);
-        }
-      }, "Add to queue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "song-dropdown-option",
         onMouseEnter: function onMouseEnter(e) {
           return _this4.handleMouseEnter(e);

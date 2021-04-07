@@ -13,7 +13,7 @@
   position: absolute;
   right: 5px;
   background: #282828;
-  height: 179px;
+  height: 144px;
   width: 217px;
   justify-content: center;
   align-items: center;
@@ -26,7 +26,7 @@
   position: absolute;
   right: 5px;
   background: #282828;
-  height: 145px;
+  height: 110px;
   width: 217px;
   justify-content: center;
   align-items: center;
@@ -71,11 +71,11 @@ li.playlist-item:hover {
 }
 
 div.current-before-playlist-add {
-  top: 139px;
+  top: 105px;
 }
 
 div.other-before-playlist-add {
-  top: 106px;
+  top: 71px;
 }
 
 .add-to-playlist {
@@ -95,11 +95,11 @@ div.playlist-selector-container, div.playlist-selector-container-other {
 }
 
 div.playlist-selector-container {
-  top: -206px;
+  top: -241px;
 }
 
 div.playlist-selector-container-other {
-  top: -239px;
+  top: -275px;
 }
 
 div.playlist-selector-container:hover,  div.playlist-selector-container-other:hover {

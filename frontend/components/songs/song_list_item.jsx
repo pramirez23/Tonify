@@ -429,10 +429,6 @@ class SongListItem extends React.Component {
               onMouseDown={(e) => e.stopPropagation()}>
 
             <div
-              className="add-to-queue"
-              onMouseEnter={(e) => this.handleMouseEnter(e)}>Add to queue</div>
-
-            <div
               className="song-dropdown-option"
               onMouseEnter={(e) => this.handleMouseEnter(e)}
               onClick={() => this.props.history.push(`/artists/${song.artist_id}`)}>Go to artist</div>
