@@ -60,13 +60,14 @@ class Playbar extends React.Component {
     if (!currentSong) return;
 
     const prevSongIdx = currentQueue[currentSongIndex - 1]
-    const prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1]
-    const prevShuffleSongId = currentQueue[prevShuffleSongIdx]
 
     switch (this.state.loop) {
       // No loop
       case 0:
         if (this.state.isShuffled) {
+          const prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1]
+          const prevShuffleSongId = currentQueue[prevShuffleSongIdx]
+
           if (shuffleIndex === 0) {
             const audio = document.getElementById("audio");
             this.setState({ currentTime: 0 });
@@ -93,6 +94,9 @@ class Playbar extends React.Component {
       // Repeat all in queue
       case 1:
         if (this.state.isShuffled) {
+          const prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1]
+          const prevShuffleSongId = currentQueue[prevShuffleSongIdx]
+          
           if (shuffleIndex === 0) {
             beginLoopFromEnd(currentQueue);
             fetchPrevSong(currentQueue[shuffledQueue[shuffledQueue.length - 1]]);
@@ -146,13 +150,14 @@ class Playbar extends React.Component {
     if (!currentSong) return;
 
     const nextSongId = currentQueue[currentSongIndex + 1]
-    const nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1]
-    const nextShuffleSongId = currentQueue[nextShuffleSongIdx]
 
     switch (this.state.loop) {
       // No loop
       case 0:
         if (this.state.isShuffled) {
+          const nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1]
+          const nextShuffleSongId = currentQueue[nextShuffleSongIdx]
+
           if (shuffleIndex === shuffledQueue.length - 1) {
             const audio = document.getElementById("audio");
             this.setState({ currentTime: 0 });
@@ -183,6 +188,9 @@ class Playbar extends React.Component {
       // Repeat all in queue
       case 1:
         if (this.state.isShuffled) {
+          const nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1]
+          const nextShuffleSongId = currentQueue[nextShuffleSongIdx]
+
           if (shuffleIndex === shuffledQueue.length - 1) {
             endLoopQueue();
             const audio = document.getElementById("audio");

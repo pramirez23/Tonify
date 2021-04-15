@@ -4656,13 +4656,14 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           shuffleIndex = _this$props.shuffleIndex;
       if (!currentSong) return;
       var prevSongIdx = currentQueue[currentSongIndex - 1];
-      var prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1];
-      var prevShuffleSongId = currentQueue[prevShuffleSongIdx];
 
       switch (this.state.loop) {
         // No loop
         case 0:
           if (this.state.isShuffled) {
+            var prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1];
+            var prevShuffleSongId = currentQueue[prevShuffleSongIdx];
+
             if (shuffleIndex === 0) {
               var _audio2 = document.getElementById("audio");
 
@@ -4704,6 +4705,9 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
 
         case 1:
           if (this.state.isShuffled) {
+            var _prevShuffleSongIdx = shuffledQueue[shuffleIndex - 1];
+            var _prevShuffleSongId = currentQueue[_prevShuffleSongIdx];
+
             if (shuffleIndex === 0) {
               beginLoopFromEnd(currentQueue);
               fetchPrevSong(currentQueue[shuffledQueue[shuffledQueue.length - 1]]);
@@ -4717,7 +4721,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
             } else if (shuffleIndex <= shuffledQueue.length - 1) {
               var _audio7 = document.getElementById("audio");
 
-              fetchPrevSong(prevShuffleSongId);
+              fetchPrevSong(_prevShuffleSongId);
               this.setState({
                 currentTime: 0
               });
@@ -4776,13 +4780,14 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
           endQueue = _this$props2.endQueue;
       if (!currentSong) return;
       var nextSongId = currentQueue[currentSongIndex + 1];
-      var nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1];
-      var nextShuffleSongId = currentQueue[nextShuffleSongIdx];
 
       switch (this.state.loop) {
         // No loop
         case 0:
           if (this.state.isShuffled) {
+            var nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1];
+            var nextShuffleSongId = currentQueue[nextShuffleSongIdx];
+
             if (shuffleIndex === shuffledQueue.length - 1) {
               var _audio11 = document.getElementById("audio");
 
@@ -4833,6 +4838,9 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
 
         case 1:
           if (this.state.isShuffled) {
+            var _nextShuffleSongIdx = shuffledQueue[shuffleIndex + 1];
+            var _nextShuffleSongId = currentQueue[_nextShuffleSongIdx];
+
             if (shuffleIndex === shuffledQueue.length - 1) {
               endLoopQueue();
 
@@ -4844,7 +4852,7 @@ var Playbar = /*#__PURE__*/function (_React$Component) {
               _audio15.currentTime = 0;
               fetchNextSong(currentQueue[shuffledQueue[0]]);
             } else if (shuffleIndex < shuffledQueue.length - 1) {
-              fetchNextSong(nextShuffleSongId);
+              fetchNextSong(_nextShuffleSongId);
 
               var _audio16 = document.getElementById("audio");
 
@@ -5195,6 +5203,7 @@ var mSTP = function mSTP(state) {
   var playlists = state.entities.playlists;
   var _state$ui$playbar = state.ui.playbar,
       isPlaying = _state$ui$playbar.isPlaying,
+      isShuffled = _state$ui$playbar.isShuffled,
       currentSong = _state$ui$playbar.currentSong,
       currentQueue = _state$ui$playbar.currentQueue,
       currentSongIndex = _state$ui$playbar.currentSongIndex,
@@ -5208,6 +5217,7 @@ var mSTP = function mSTP(state) {
     currentUser: currentUser,
     likedSongs: likedSongs,
     isPlaying: isPlaying,
+    isShuffled: isShuffled,
     playlists: playlists,
     currentSong: currentSong,
     currentSongIndex: currentSongIndex,

@@ -22,6 +22,7 @@ const mSTP = (state) => {
   
   const {
     isPlaying,
+    isShuffled,
     currentSong,
     currentQueue,
     currentSongIndex,
@@ -38,6 +39,7 @@ const mSTP = (state) => {
     currentUser: currentUser,
     likedSongs,
     isPlaying,
+    isShuffled,
     playlists,
     currentSong,
     currentSongIndex,
