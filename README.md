@@ -23,13 +23,48 @@
 <div><img src="/app/assets/images/signup_demo.gif" alt="signup-demo"></div>
 <br/>
 
-- Users can generate playlists:
+- Users can search and browse for music:
 
 <br/>
-<div><img src="/app/assets/images/playlist_demo.gif" alt="playlist-demo"></div>
+<div><img src="/app/assets/images/search_browse_demo.gif" alt="search-demo"></div>
 <br/>
 
-## Coming Soon
-- Users will be able to stream and continuously listen to music
-- Users will be able to visit artist and album pages to stream music and add songs to their library or playlist
-- Users will be able to browse and search for available songs
+- Users can continuously play music while navigating the application: 
+
+<br/>
+<div><img src="/app/assets/images/continuous_play_demo.gif" alt="continuous-play-demo"></div>
+<br/>
+
+- Users can visit artist pages, follow them, browse their discography, and read their bio:
+
+<br/>
+<div><img src="/app/assets/images/artist_page_demo.gif" alt="artist-page-demo"></div>
+<br/>
+
+<br/>
+<div><img src="/app/assets/images/artist_browse_demo.gif" alt="artist-browse-demo"></div>
+<br/>
+
+- Users can browse and add albums to their personal libraries:
+
+<br/>
+<div><img src="/app/assets/images/album_demo.gif" alt="album-demo"></div>
+<br/>
+
+- Users can generate and delete playlists:
+
+<br/>
+<div><img src="/app/assets/images/create_delete_demo.gif" alt="playlist-create-delete-demo"></div>
+<br/>
+
+- Users can add songs to their own playlists:
+
+<br/>
+<div><img src="/app/assets/images/playlist_add_demo.gif" alt="playlist-add-demo"></div>
+<br/>
+
+- Users can upload photos for their playlists:
+
+<br/>
+<div><img src="/app/assets/images/upload_photo_demo.gif" alt="playlist-photo-demo"></div>
+<br/>
