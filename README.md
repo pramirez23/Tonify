@@ -42,7 +42,7 @@
 <br/>
 
 <br/>
-<div><img src="/app/assets/images/artist_browse_demo.gif" alt="artist-browse-demo"></div>
+<div><img src="/app/assets/images/artist-browse-demo.gif" alt="artist-browse-demo"></div>
 <br/>
 
 - Users can browse and add albums to their personal libraries:
