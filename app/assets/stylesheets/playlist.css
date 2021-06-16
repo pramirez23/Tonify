@@ -232,7 +232,6 @@ td > a:hover, .title-artist-container > a:hover {
 }
 
 .artist-song-title-column {
-  width: 85vw;
   line-height: 1.45;
   height: 50px;
 }
